@@ -1,3 +1,0 @@
-# Removed
-
-Temporary file neutralized.
