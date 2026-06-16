@@ -1,37 +1,59 @@
-# Portfolio — Hounlete Koffi Rudolf
+# Portfolio — Rudolf Hounlete
 
-Portfolio personnel d'un élève ingénieur à l'École Centrale Casablanca (profil data engineering / ML / développement).
+Portfolio personnel d'un élève ingénieur à l'École Centrale Casablanca
+(profil data engineering / ML / développement).
 
 🔗 **Site live :** https://rudolf-hounlete-portfolio.vercel.app
 
-![aperçu](docs/preview.png)
-<!-- TODO: à confirmer par Rudolf — ajouter une capture d'écran à docs/preview.png -->
+## Stack
 
-## Stack technique
+- **Vite + React + TypeScript** — application single-page, navigation par ancres.
+- **Tailwind CSS** — design system par tokens (CSS variables) avec thème clair/sombre.
+- **Polices** : Space Grotesk (titres), Inter (corps), JetBrains Mono (labels/code).
+- **Déploiement** : Vercel (preset Vite, `vercel.json`).
 
-Site statique, sans dépendance d'exécution ni build :
+## Contenu = source de vérité
 
-- **HTML** sémantique (un seul fichier `index.html`)
-- **CSS** « maison » : design system à base de variables (couleurs, échelle typographique, rythme d'espacement 4/8 px, rayons et ombres), mode clair/sombre, responsive mobile-first
-- **JavaScript** vanilla : thème clair/sombre (respect de `prefers-color-scheme` + persistance), navigation et section active, apparitions au scroll, rendu des certifications depuis une structure de données
-- **Polices** : JetBrains Mono + Space Grotesk (Google Fonts)
+Tout le contenu vit dans `src/data/` (fichiers typés), séparé du markup.
+**Modifier un projet ou une certif = éditer la donnée, pas un composant.**
 
-## Déploiement
+| Fichier | Contenu |
+|---------|---------|
+| `src/data/profile.ts` | Identité, à propos, contact (email, GitHub, LinkedIn, CV) |
+| `src/data/projects.ts` | Les 4 projets (titre, tagline, bullets, stack, liens Code/Démo) |
+| `src/data/skills.ts` | Compétences regroupées |
+| `src/data/education.ts` | Formation |
+| `src/data/certifications.ts` | Certifications & langues |
+| `src/data/nav.ts` | Sections de navigation |
+| `src/data/types.ts` | Types partagés |
 
-Hébergé sur **Vercel** en statique. Tout pousse depuis la racine du dépôt ; aucune étape de build n'est nécessaire.
-
-## Prévisualisation locale
+## Lancer en local
 
 ```bash
-# Depuis la racine du dépôt
-python3 -m http.server 8000
-# puis ouvrir http://localhost:8000
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # build de production -> dist/
+npm run preview    # prévisualiser le build -> http://localhost:4173
 ```
 
-## Structure
+## TODO (à compléter par Rudolf)
 
-```
-.
-├── index.html   # page unique (HTML + CSS + JS inline)
-└── README.md
-```
+- [ ] **LinkedIn** : renseigner l'URL dans `src/data/profile.ts` (`contact.linkedin`).
+- [ ] **CV PDF** : déposer le PDF dans `public/` puis pointer `contact.cv`
+      (ex. `'/cv-rudolf-hounlete.pdf'`).
+- [ ] **Projet 02 — Feux rouges** : ajouter le lien repo quand le projet est
+      publié (`projects.ts`, projet `02`).
+- [ ] **Démos** : ajouter les URLs de démo si disponibles (`projects.ts`).
+
+## Liens repos confirmés
+
+| # | Projet | Repo |
+|---|--------|------|
+| 01 | Aide à la décision clinique | `Rudolf-Staline/Coding-week-project` |
+| 02 | Feux rouges intelligents | projet en cours (lien à venir) |
+| 03 | Plateforme d'analyse Forex | `Rudolf-Staline/forex-supervised-scanner` |
+| 04 | Clarté (Android) | `Rudolf-Staline/Clarte` |
+
+## Historique
+
+L'ancien site statique est conservé dans [`legacy/index.html`](legacy/index.html).
