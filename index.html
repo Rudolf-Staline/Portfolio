@@ -11,8 +11,8 @@
       content="Rudolf Hounlete, élève ingénieur à l'École Centrale Casablanca (promo 2028). Data engineering, IA appliquée et développement. Projets, compétences et parcours."
     />
     <meta name="author" content="Rudolf Hounlete" />
-    <meta name="theme-color" content="#0d0d10" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#08090d" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -47,10 +47,12 @@
       (function () {
         try {
           var stored = localStorage.getItem('theme');
-          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          var theme = stored || (prefersDark ? 'dark' : 'light');
+          // Dark-first: default to dark unless the visitor chose light before.
+          var theme = stored || 'dark';
           if (theme === 'dark') document.documentElement.classList.add('dark');
-        } catch (e) {}
+        } catch (e) {
+          document.documentElement.classList.add('dark');
+        }
       })();
     </script>
 

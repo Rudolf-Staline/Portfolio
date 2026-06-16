@@ -3,49 +3,50 @@
 @tailwind utilities;
 
 /* ============================================================
-   Atlas scientifique — design tokens
-   A swiss / scientific-publication system: ivory & ink base,
-   a single amber accent, fine 1px rules, sharp corners.
-   Colors are stored as space-separated RGB channels so Tailwind
-   can apply opacity via `rgb(var(--token) / <alpha-value>)`.
+   Design tokens — "Studio" direction
+   Dark-first, polished: deep ink surfaces, a violet→cyan accent
+   used sparingly via gradients, soft rounded cards, gentle glows.
+   Colors are space-separated RGB channels for Tailwind alpha.
    ============================================================ */
 @layer base {
   :root {
-    /* Light — warm paper / printed page */
-    --bg: 247 245 240;
-    --surface: 252 251 248;
-    --surface-2: 240 237 230;
-    --line: 222 217 206;
-    --line-strong: 28 28 32;
-    --ink: 24 24 27;
-    --muted: 84 84 92;
-    --faint: 138 136 130;
-    /* amber #d97706 — fills, rules, markers */
-    --accent: 217 119 6;
-    /* amber #92400e — accessible amber for TEXT on light (AA) */
-    --accent-text: 146 64 14;
-    --accent-soft: 249 238 220;
-    --accent-ink: 28 22 8;
-    --shadow: 40 35 25;
+    /* Light */
+    --bg: 251 251 253;
+    --surface: 255 255 255;
+    --surface-2: 245 246 250;
+    --line: 226 228 236;
+    --ink: 17 18 27;
+    --muted: 78 84 102;
+    --faint: 139 145 163;
+    --accent: 99 90 230;      /* indigo-violet */
+    --accent-2: 6 148 210;    /* cyan-blue */
+    --accent-text: 79 70 220; /* AA on light */
+    --accent-soft: 238 236 252;
+    --accent-ink: 255 255 255;
+    --shadow: 30 27 60;
+    --glow-a: 124 109 246;
+    --glow-b: 34 211 238;
+    /* Deeper gradient for white-text surfaces (AA in both themes) */
+    --grad-cta: linear-gradient(120deg, #5145e3, #2563eb);
   }
 
   .dark {
-    /* Dark — deep ink, not pure black */
-    --bg: 13 13 16;
-    --surface: 19 19 23;
-    --surface-2: 26 26 31;
-    --line: 39 39 46;
-    --line-strong: 222 217 206;
-    --ink: 235 235 238;
-    --muted: 162 162 170;
-    --faint: 108 108 118;
-    /* amber #f59e0b pops on dark */
-    --accent: 245 158 11;
-    /* amber #fbbf24 for amber TEXT on dark (AA) */
-    --accent-text: 251 191 36;
-    --accent-soft: 38 29 12;
-    --accent-ink: 24 18 6;
+    /* Dark (default feel) */
+    --bg: 8 9 13;
+    --surface: 17 19 26;
+    --surface-2: 24 27 37;
+    --line: 38 42 55;
+    --ink: 236 238 245;
+    --muted: 158 164 182;
+    --faint: 104 110 130;
+    --accent: 130 116 248;
+    --accent-2: 56 200 248;
+    --accent-text: 183 178 252; /* AA on dark */
+    --accent-soft: 28 26 52;
+    --accent-ink: 255 255 255;
     --shadow: 0 0 0;
+    --glow-a: 124 109 246;
+    --glow-b: 34 211 238;
   }
 
   * {
@@ -58,23 +59,21 @@
 
   body {
     @apply bg-bg text-ink font-sans antialiased;
-    font-feature-settings: 'cv05', 'ss01', 'tnum';
+    font-feature-settings: 'cv05', 'ss01';
     transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   ::selection {
-    background-color: rgb(var(--accent) / 0.28);
+    background-color: rgb(var(--accent) / 0.3);
     color: rgb(var(--ink));
   }
 
-  /* Visible, consistent focus ring for keyboard users */
   :focus-visible {
     outline: 2px solid rgb(var(--accent));
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: 6px;
   }
 
-  /* Respect reduced-motion across the board */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -92,20 +91,73 @@
     @apply mx-auto w-full max-w-content px-5 sm:px-8;
   }
 
-  /* Mono micro-label — used for eyebrows, data and indices */
   .eyebrow {
-    @apply font-mono text-xs uppercase tracking-[0.22em] text-accent-text;
+    @apply font-mono text-xs font-medium uppercase tracking-[0.18em] text-accent-text;
   }
   .mono-label {
-    @apply font-mono text-[0.7rem] uppercase tracking-[0.2em] text-faint;
+    @apply font-mono text-[0.72rem] uppercase tracking-[0.16em] text-faint;
   }
 
-  /* Technical tag — sharp, mono, swiss */
+  /* Soft card with subtle lift + glow on hover */
+  .card {
+    @apply rounded-2xl border border-line bg-surface shadow-soft transition-all duration-200;
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 hover:border-accent/40 hover:shadow-lift;
+  }
+
+  /* Gradient hairline frame (premium border) */
+  .frame-gradient {
+    position: relative;
+  }
+  .frame-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgb(var(--accent) / 0.7),
+      rgb(var(--accent-2) / 0.5) 55%,
+      rgb(var(--line) / 0.4)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .gradient-text {
+    background-image: linear-gradient(
+      120deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-2))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-accent-ink transition-all duration-200;
+    background-image: var(--grad-cta);
+    box-shadow: 0 8px 24px -10px rgb(var(--glow-a) / 0.7);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.07);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink transition-colors duration-200 hover:border-accent/50 hover:text-accent-text;
+  }
+
   .tag {
-    @apply inline-flex items-center rounded-sm border border-line bg-surface px-2.5 py-1 font-mono text-xs text-muted transition-colors;
+    @apply inline-flex items-center rounded-full border border-line bg-surface-2 px-3 py-1 font-mono text-xs text-muted transition-colors;
   }
 
-  /* Animated amber underline link (ink text + amber rule grows on hover) */
+  /* Animated underline link */
   .link-line {
     @apply relative inline-flex items-center gap-1.5 text-ink transition-colors duration-200 hover:text-accent-text;
   }
@@ -118,7 +170,7 @@
     width: 100%;
     transform: scaleX(0);
     transform-origin: left;
-    background-color: rgb(var(--accent));
+    background-image: linear-gradient(90deg, rgb(var(--accent)), rgb(var(--accent-2)));
     transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .link-line:hover::after,
@@ -126,10 +178,9 @@
     transform: scaleX(1);
   }
 
-  /* Scroll-reveal: starts hidden, becomes visible when .is-visible is set */
   .reveal {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(16px);
     transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
       transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -146,12 +197,19 @@
 }
 
 @layer utilities {
-  /* Signature motif — faint dot lattice */
-  .bg-lattice {
-    background-image: radial-gradient(
-      rgb(var(--line-strong) / 0.5) 1px,
-      transparent 1px
+  /* Soft radial glow — the signature ambient background */
+  .glow-spot {
+    background: radial-gradient(
+      circle at center,
+      rgb(var(--glow-a) / 0.5),
+      transparent 70%
     );
-    background-size: 22px 22px;
+  }
+  .glow-spot-2 {
+    background: radial-gradient(
+      circle at center,
+      rgb(var(--glow-b) / 0.4),
+      transparent 70%
+    );
   }
 }
