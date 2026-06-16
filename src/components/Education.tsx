@@ -11,7 +11,11 @@ export function Education() {
             <li className="relative mb-9 last:mb-0">
               <span
                 aria-hidden
-                className="absolute -left-[1.7rem] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-accent bg-bg sm:-left-[2.2rem]"
+                className="absolute -left-[1.7rem] top-1.5 h-3 w-3 rounded-full ring-4 ring-bg sm:-left-[2.2rem]"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(120deg, rgb(var(--accent)), rgb(var(--accent-2)))',
+                }}
               />
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                 <h3 className="font-display text-lg font-semibold text-ink">
