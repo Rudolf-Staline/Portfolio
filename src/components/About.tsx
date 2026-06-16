@@ -15,12 +15,19 @@ export function About() {
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="rounded border border-line bg-surface p-6">
+          <div className="card p-6">
             <p className="mono-label mb-4">Centres d'intérêt</p>
-            <ul className="space-y-3">
+            <ul className="space-y-3.5">
               {profile.interests.map((interest) => (
                 <li key={interest} className="flex items-center gap-3 text-ink">
-                  <span aria-hidden className="h-px w-3 shrink-0 bg-accent" />
+                  <span
+                    aria-hidden
+                    className="h-1.5 w-1.5 shrink-0 rounded-full"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(120deg, rgb(var(--accent)), rgb(var(--accent-2)))',
+                    }}
+                  />
                   <span className="text-base">{interest}</span>
                 </li>
               ))}

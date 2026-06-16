@@ -13,7 +13,7 @@ export function ThemeToggle({ theme, onToggle }: ThemeToggleProps) {
       onClick={onToggle}
       aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
       aria-pressed={isDark}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface text-muted transition-colors hover:border-accent hover:text-accent"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-surface text-muted transition-colors hover:border-accent/50 hover:text-accent-text"
     >
       {isDark ? <SunIcon /> : <MoonIcon />}
     </button>

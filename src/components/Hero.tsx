@@ -1,78 +1,52 @@
 import { profile, contact } from '../data/profile'
 import { ArrowUpRight, DownloadIcon, GitHubIcon, LinkedInIcon, MailIcon } from './icons'
-import { SolitonWave } from './Motif'
 
 export function Hero() {
   return (
     <section
       id="accueil"
-      className="relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20"
+      className="relative overflow-hidden pt-32 pb-20 sm:pt-36 sm:pb-28"
     >
-      {/* Signature background: faint dot lattice + a soliton profile */}
+      {/* Ambient glows */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div
-          className="bg-lattice absolute inset-0 opacity-60 dark:opacity-40"
-          style={{
-            maskImage:
-              'radial-gradient(ellipse 78% 58% at 50% 6%, #000 32%, transparent 80%)',
-            WebkitMaskImage:
-              'radial-gradient(ellipse 78% 58% at 50% 6%, #000 32%, transparent 80%)',
-          }}
-        />
-        <SolitonWave
-          className="absolute inset-x-0 bottom-[-1px] h-36 w-full sm:h-52"
-          opacity={0.45}
-        />
+        <div className="glow-spot absolute -top-32 -left-24 h-[34rem] w-[34rem] rounded-full blur-3xl opacity-60" />
+        <div className="glow-spot-2 absolute -top-10 right-[-10rem] h-[28rem] w-[28rem] rounded-full blur-3xl opacity-50" />
       </div>
 
       <div className="container-content">
-        {/* Meta row */}
-        <div className="flex items-center justify-between border-b border-line pb-4">
-          <span className="mono-label">00 / Index</span>
-          <span className="inline-flex items-center gap-2 font-mono text-xs text-muted">
-            <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
-            {profile.availability}
-          </span>
-        </div>
+        <div className="grid items-center gap-12 lg:grid-cols-[1.45fr_1fr] lg:gap-16">
+          {/* Left: positioning */}
+          <div className="animate-fade-up">
+            <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/60 px-3 py-1 text-sm text-muted backdrop-blur">
+              <span
+                aria-hidden
+                className="h-2 w-2 rounded-full"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(120deg, rgb(var(--accent)), rgb(var(--accent-2)))',
+                }}
+              />
+              {profile.availability}
+            </p>
 
-        {/* Masthead name */}
-        <div className="animate-fade-up pt-10 sm:pt-14">
-          <h1 className="font-display text-5xl font-bold leading-[0.95] tracking-tight text-ink sm:text-6xl lg:text-7xl">
-            Rudolf
-            <br />
-            Hounlete
-          </h1>
+            <h1 className="mt-6 font-display text-5xl font-bold leading-[1.04] tracking-tight text-ink sm:text-6xl">
+              Rudolf <span className="gradient-text">Hounlete</span>
+            </h1>
 
-          {/* Axis rule: short amber segment + fine line */}
-          <div className="mt-7 flex items-center" aria-hidden>
-            <span className="h-px w-16 bg-accent" />
-            <span className="h-px flex-1 bg-line" />
-          </div>
-        </div>
-
-        {/* Lower band: positioning + spec sheet */}
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
-          <div
-            className="animate-fade-up"
-            style={{ animationDelay: '90ms' }}
-          >
-            <p className="max-w-xl font-display text-xl font-medium text-ink sm:text-2xl">
+            <p className="mt-5 max-w-xl text-xl font-medium text-ink/90">
               {profile.title}
             </p>
-            <p className="mt-3 font-mono text-sm text-accent-text">
+            <p className="mt-2 font-mono text-sm text-accent-text">
               {profile.subtitle}
             </p>
 
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
               {profile.pitch}
             </p>
 
             {/* CTAs */}
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <a
-                href="#projets"
-                className="group inline-flex items-center gap-2 rounded-sm bg-accent px-5 py-3 font-mono text-sm font-medium text-accent-ink transition-transform duration-200 hover:-translate-y-0.5"
-              >
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a href="#projets" className="btn-primary group">
                 Voir les projets
                 <ArrowUpRight
                   width={16}
@@ -82,18 +56,14 @@ export function Hero() {
               </a>
 
               {contact.cv ? (
-                <a
-                  href={contact.cv}
-                  download
-                  className="inline-flex items-center gap-2 rounded-sm border border-line bg-surface px-5 py-3 font-mono text-sm font-medium text-ink transition-colors duration-200 hover:border-accent hover:text-accent-text"
-                >
+                <a href={contact.cv} download className="btn-ghost">
                   <DownloadIcon width={16} height={16} />
                   Télécharger le CV
                 </a>
               ) : (
                 <span
                   title="CV PDF à venir — à fournir par Rudolf"
-                  className="inline-flex cursor-not-allowed items-center gap-2 rounded-sm border border-dashed border-line bg-surface px-5 py-3 font-mono text-sm font-medium text-faint"
+                  className="inline-flex cursor-not-allowed items-center gap-2 rounded-full border border-dashed border-line px-5 py-2.5 text-sm font-semibold text-faint"
                 >
                   <DownloadIcon width={16} height={16} />
                   CV — bientôt
@@ -101,15 +71,15 @@ export function Hero() {
               )}
             </div>
 
-            {/* Social row */}
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 font-mono text-sm">
+            {/* Socials */}
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
               <a
                 href={contact.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link-line text-muted"
               >
-                <GitHubIcon width={16} height={16} /> GitHub
+                <GitHubIcon width={17} height={17} /> GitHub
               </a>
               {contact.linkedin ? (
                 <a
@@ -118,28 +88,28 @@ export function Hero() {
                   rel="noopener noreferrer"
                   className="link-line text-muted"
                 >
-                  <LinkedInIcon width={16} height={16} /> LinkedIn
+                  <LinkedInIcon width={17} height={17} /> LinkedIn
                 </a>
               ) : (
                 <span
                   title="URL LinkedIn à fournir par Rudolf"
                   className="inline-flex cursor-not-allowed items-center gap-1.5 text-faint"
                 >
-                  <LinkedInIcon width={16} height={16} /> LinkedIn — bientôt
+                  <LinkedInIcon width={17} height={17} /> LinkedIn — bientôt
                 </span>
               )}
               <a href={`mailto:${contact.email}`} className="link-line text-muted">
-                <MailIcon width={16} height={16} /> Email
+                <MailIcon width={17} height={17} /> Email
               </a>
             </div>
           </div>
 
-          {/* Spec sheet — instrument-style fact panel */}
+          {/* Right: profile fact card */}
           <div
-            className="animate-fade-up self-start"
-            style={{ animationDelay: '160ms' }}
+            className="animate-fade-up lg:justify-self-end"
+            style={{ animationDelay: '120ms' }}
           >
-            <SpecSheet />
+            <ProfileCard />
           </div>
         </div>
       </div>
@@ -147,26 +117,32 @@ export function Hero() {
   )
 }
 
-/** Factual data sheet — all values sourced from the CV. */
-function SpecSheet() {
+/** Glassy fact panel with a gradient hairline frame. Values from the CV. */
+function ProfileCard() {
   return (
-    <div className="rounded border border-line bg-surface/80 shadow-card backdrop-blur-sm">
-      <div className="flex items-center justify-between border-b border-line px-4 py-2.5">
-        <span className="mono-label">Fiche profil</span>
-        <span className="font-mono text-[0.7rem] text-faint">rudolf.profil</span>
+    <div className="frame-gradient w-full max-w-sm rounded-2xl bg-surface/70 shadow-lift backdrop-blur-xl">
+      <div className="flex items-center justify-between border-b border-line px-5 py-3.5">
+        <span className="font-mono text-xs uppercase tracking-[0.16em] text-faint">
+          Profil
+        </span>
+        <span className="flex gap-1.5" aria-hidden>
+          <span className="h-2 w-2 rounded-full bg-accent/70" />
+          <span className="h-2 w-2 rounded-full bg-accent-2/70" />
+          <span className="h-2 w-2 rounded-full bg-faint/40" />
+        </span>
       </div>
-      <dl>
+      <dl className="px-5 py-2">
         {profile.facts.map((f, i) => (
           <div
             key={f.k}
-            className={`flex items-baseline justify-between gap-4 px-4 py-3 ${
-              i !== 0 ? 'border-t border-line' : ''
+            className={`flex items-baseline justify-between gap-4 py-3 ${
+              i !== 0 ? 'border-t border-line/70' : ''
             }`}
           >
             <dt className="font-mono text-xs uppercase tracking-wider text-faint">
               {f.k}
             </dt>
-            <dd className="text-right font-mono text-sm text-ink">{f.v}</dd>
+            <dd className="text-right text-sm font-medium text-ink">{f.v}</dd>
           </div>
         ))}
       </dl>
