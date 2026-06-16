@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c0d12"/>
+      <stop offset="1" stop-color="#15171f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.25" cy="0.1" r="0.8">
+      <stop offset="0" stop-color="#4f46e5" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#4f46e5" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <text x="80" y="250" font-family="'JetBrains Mono', monospace" font-size="26" letter-spacing="6" fill="#818cf8">DATA ENGINEERING · IA APPLIQUÉE</text>
+  <text x="76" y="350" font-family="'Space Grotesk', sans-serif" font-size="92" font-weight="700" fill="#e9eaf0">Rudolf Hounlete</text>
+  <text x="80" y="430" font-family="'Space Grotesk', sans-serif" font-size="36" fill="#9ea2b0">Élève ingénieur · École Centrale Casablanca · 2028</text>
+  <text x="80" y="560" font-family="'JetBrains Mono', monospace" font-size="24" fill="#6e7280">github.com/rudolf-staline</text>
+</svg>
