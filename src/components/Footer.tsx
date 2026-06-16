@@ -13,17 +13,20 @@ export function Footer() {
             href={contact.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted transition-colors hover:text-accent"
+            className="text-muted transition-colors hover:text-accent-text"
           >
             GitHub
           </a>
           <a
             href={`mailto:${contact.email}`}
-            className="text-muted transition-colors hover:text-accent"
+            className="text-muted transition-colors hover:text-accent-text"
           >
             Email
           </a>
-          <a href="#accueil" className="text-muted transition-colors hover:text-accent">
+          <a
+            href="#accueil"
+            className="text-muted transition-colors hover:text-accent-text"
+          >
             Haut de page ↑
           </a>
         </div>

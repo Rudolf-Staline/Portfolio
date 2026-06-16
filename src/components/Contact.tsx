@@ -7,19 +7,18 @@ export function Contact() {
   return (
     <Section
       id="contact"
+      index="06"
       eyebrow="Contact"
       title="Travaillons ensemble."
       intro="Je cherche un premier stage technique en data engineering, IA appliquée ou développement. Le plus simple : un email."
     >
       <Reveal>
-        <div className="flex flex-col gap-6 rounded-xl border border-line bg-surface p-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-6 rounded border border-line bg-surface p-7 sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-faint">
-              Email
-            </p>
+            <p className="mono-label">Email</p>
             <a
               href={`mailto:${contact.email}`}
-              className="mt-1 inline-block font-display text-xl font-semibold text-ink transition-colors hover:text-accent sm:text-2xl"
+              className="link-line mt-2 inline-block font-display text-xl font-semibold sm:text-2xl"
             >
               {contact.email}
             </a>
@@ -31,7 +30,7 @@ export function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-line text-muted transition-colors hover:border-accent hover:text-accent-text"
             >
               <GitHubIcon width={20} height={20} />
             </a>
@@ -42,7 +41,7 @@ export function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-line text-muted transition-colors hover:border-accent hover:text-accent-text"
               >
                 <LinkedInIcon width={20} height={20} />
               </a>
@@ -50,7 +49,7 @@ export function Contact() {
               <span
                 title="URL LinkedIn à fournir par Rudolf"
                 aria-label="LinkedIn — à venir"
-                className="inline-flex h-11 w-11 cursor-not-allowed items-center justify-center rounded-full border border-dashed border-line text-faint"
+                className="inline-flex h-11 w-11 cursor-not-allowed items-center justify-center rounded-sm border border-dashed border-line text-faint"
               >
                 <LinkedInIcon width={20} height={20} />
               </span>
@@ -59,7 +58,7 @@ export function Contact() {
             <a
               href={`mailto:${contact.email}`}
               aria-label="Envoyer un email"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-line text-muted transition-colors hover:border-accent hover:text-accent-text"
             >
               <MailIcon width={20} height={20} />
             </a>

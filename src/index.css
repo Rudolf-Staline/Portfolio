@@ -3,38 +3,48 @@
 @tailwind utilities;
 
 /* ============================================================
-   Design tokens
+   Atlas scientifique — design tokens
+   A swiss / scientific-publication system: ivory & ink base,
+   a single amber accent, fine 1px rules, sharp corners.
    Colors are stored as space-separated RGB channels so Tailwind
    can apply opacity via `rgb(var(--token) / <alpha-value>)`.
    ============================================================ */
 @layer base {
   :root {
-    /* Light — warm paper */
-    --bg: 250 248 244;
-    --surface: 255 254 251;
-    --surface-2: 244 241 235;
-    --line: 226 221 211;
-    --ink: 26 27 33;
-    --muted: 90 92 102;
-    --faint: 138 140 150;
-    --accent: 79 70 229; /* indigo */
-    --accent-soft: 232 230 252;
-    --accent-ink: 255 255 255;
-    --shadow: 40 35 60;
+    /* Light — warm paper / printed page */
+    --bg: 247 245 240;
+    --surface: 252 251 248;
+    --surface-2: 240 237 230;
+    --line: 222 217 206;
+    --line-strong: 28 28 32;
+    --ink: 24 24 27;
+    --muted: 84 84 92;
+    --faint: 138 136 130;
+    /* amber #d97706 — fills, rules, markers */
+    --accent: 217 119 6;
+    /* amber #92400e — accessible amber for TEXT on light (AA) */
+    --accent-text: 146 64 14;
+    --accent-soft: 249 238 220;
+    --accent-ink: 28 22 8;
+    --shadow: 40 35 25;
   }
 
   .dark {
-    /* Dark — deep ink */
-    --bg: 12 13 18;
-    --surface: 21 23 31;
-    --surface-2: 28 31 41;
-    --line: 42 46 58;
-    --ink: 233 234 240;
-    --muted: 158 162 176;
-    --faint: 110 114 128;
-    --accent: 129 140 248; /* lighter indigo for contrast on dark */
-    --accent-soft: 30 32 52;
-    --accent-ink: 12 13 18;
+    /* Dark — deep ink, not pure black */
+    --bg: 13 13 16;
+    --surface: 19 19 23;
+    --surface-2: 26 26 31;
+    --line: 39 39 46;
+    --line-strong: 222 217 206;
+    --ink: 235 235 238;
+    --muted: 162 162 170;
+    --faint: 108 108 118;
+    /* amber #f59e0b pops on dark */
+    --accent: 245 158 11;
+    /* amber #fbbf24 for amber TEXT on dark (AA) */
+    --accent-text: 251 191 36;
+    --accent-soft: 38 29 12;
+    --accent-ink: 24 18 6;
     --shadow: 0 0 0;
   }
 
@@ -48,19 +58,20 @@
 
   body {
     @apply bg-bg text-ink font-sans antialiased;
-    font-feature-settings: 'cv05', 'ss01';
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-feature-settings: 'cv05', 'ss01', 'tnum';
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   ::selection {
-    background-color: rgb(var(--accent) / 0.25);
+    background-color: rgb(var(--accent) / 0.28);
+    color: rgb(var(--ink));
   }
 
   /* Visible, consistent focus ring for keyboard users */
   :focus-visible {
     outline: 2px solid rgb(var(--accent));
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 2px;
   }
 
   /* Respect reduced-motion across the board */
@@ -81,24 +92,46 @@
     @apply mx-auto w-full max-w-content px-5 sm:px-8;
   }
 
+  /* Mono micro-label — used for eyebrows, data and indices */
   .eyebrow {
-    @apply font-mono text-xs uppercase tracking-[0.2em] text-accent;
+    @apply font-mono text-xs uppercase tracking-[0.22em] text-accent-text;
+  }
+  .mono-label {
+    @apply font-mono text-[0.7rem] uppercase tracking-[0.2em] text-faint;
   }
 
+  /* Technical tag — sharp, mono, swiss */
   .tag {
-    @apply inline-flex items-center rounded-sm border border-line bg-surface-2 px-2.5 py-1 font-mono text-xs text-muted transition-colors;
+    @apply inline-flex items-center rounded-sm border border-line bg-surface px-2.5 py-1 font-mono text-xs text-muted transition-colors;
   }
 
-  .link-underline {
-    @apply relative inline-flex items-center gap-1.5 text-ink transition-colors hover:text-accent;
+  /* Animated amber underline link (ink text + amber rule grows on hover) */
+  .link-line {
+    @apply relative inline-flex items-center gap-1.5 text-ink transition-colors duration-200 hover:text-accent-text;
+  }
+  .link-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1.5px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    background-color: rgb(var(--accent));
+    transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-line:hover::after,
+  .link-line:focus-visible::after {
+    transform: scaleX(1);
   }
 
   /* Scroll-reveal: starts hidden, becomes visible when .is-visible is set */
   .reveal {
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(14px);
+    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .reveal.is-visible {
     opacity: 1;
@@ -109,5 +142,16 @@
       opacity: 1;
       transform: none;
     }
+  }
+}
+
+@layer utilities {
+  /* Signature motif — faint dot lattice */
+  .bg-lattice {
+    background-image: radial-gradient(
+      rgb(var(--line-strong) / 0.5) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
   }
 }

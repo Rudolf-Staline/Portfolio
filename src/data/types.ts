@@ -33,6 +33,11 @@ export type Project = {
   status?: string
   /** Highlight the flagship project visually. */
   featured?: boolean
+  /**
+   * Reserved slot whose real content is not yet provided.
+   * Renders a minimal "à venir" card — no invented bullets/links.
+   */
+  placeholder?: boolean
 }
 
 export type SkillGroup = {

@@ -1,18 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0c0d12"/>
-      <stop offset="1" stop-color="#15171f"/>
+      <stop offset="0" stop-color="#0d0d10"/>
+      <stop offset="1" stop-color="#16161b"/>
     </linearGradient>
-    <radialGradient id="glow" cx="0.25" cy="0.1" r="0.8">
-      <stop offset="0" stop-color="#4f46e5" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#4f46e5" stop-opacity="0"/>
+    <pattern id="lattice" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#ffffff" fill-opacity="0.05"/>
+    </pattern>
+    <radialGradient id="glow" cx="0.2" cy="0.0" r="0.9">
+      <stop offset="0" stop-color="#f59e0b" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#f59e0b" stop-opacity="0"/>
     </radialGradient>
   </defs>
+
   <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#lattice)"/>
   <rect width="1200" height="630" fill="url(#glow)"/>
-  <text x="80" y="250" font-family="'JetBrains Mono', monospace" font-size="26" letter-spacing="6" fill="#818cf8">DATA ENGINEERING · IA APPLIQUÉE</text>
-  <text x="76" y="350" font-family="'Space Grotesk', sans-serif" font-size="92" font-weight="700" fill="#e9eaf0">Rudolf Hounlete</text>
-  <text x="80" y="430" font-family="'Space Grotesk', sans-serif" font-size="36" fill="#9ea2b0">Élève ingénieur · École Centrale Casablanca · 2028</text>
-  <text x="80" y="560" font-family="'JetBrains Mono', monospace" font-size="24" fill="#6e7280">github.com/rudolf-staline</text>
+
+  <!-- soliton profile -->
+  <path d="M0 560 C 260 560 360 360 520 360 C 660 360 720 470 820 470 C 920 470 980 540 1200 540"
+    fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-opacity="0.5"/>
+
+  <text x="80" y="220" font-family="'JetBrains Mono', monospace" font-size="24" letter-spacing="6" fill="#fbbf24">DATA ENGINEERING · IA APPLIQUÉE</text>
+  <rect x="80" y="244" width="64" height="3" fill="#f59e0b"/>
+  <text x="76" y="350" font-family="'Space Grotesk', sans-serif" font-size="96" font-weight="700" fill="#ebebee">Rudolf Hounlete</text>
+  <text x="80" y="424" font-family="'Space Grotesk', sans-serif" font-size="34" fill="#a2a2aa">Élève ingénieur · École Centrale Casablanca · 2028</text>
+  <text x="80" y="585" font-family="'JetBrains Mono', monospace" font-size="22" fill="#6e6e78">github.com/rudolf-staline</text>
 </svg>
