@@ -7,6 +7,7 @@ import type { Project } from './types'
  *   02 → projet en cours (pas de repo public encore) — TODO lien
  *   03 → forex-supervised-scanner
  *   04 → Clarte
+ *   05 → Solitons : aucun repo trouvé sur le compte — slot réservé, contenu à venir.
  * Demos: aucune confirmée pour l'instant — TODO à confirmer par Rudolf.
  */
 export const projects: Project[] = [
@@ -83,5 +84,22 @@ export const projects: Project[] = [
       code: 'https://github.com/Rudolf-Staline/Clarte',
       demo: null, // n/a — application mobile
     },
+  },
+  {
+    // Projet réel — contenu pas encore fourni par Rudolf. NE PAS inventer.
+    // Slot réservé dans la grille ; remplir les champs ci-dessous quand
+    // Rudolf fournit le texte, puis retirer `placeholder: true`.
+    index: '05',
+    title: 'Solitons',
+    context: 'Projet expérimental', // TODO: contexte exact à confirmer par Rudolf
+    period: '', // TODO: dates à confirmer par Rudolf
+    tagline: '', // TODO: une phrase — ce que le projet explore ou démontre
+    highlights: [], // TODO: 2–3 bullets à fournir par Rudolf
+    stack: [], // TODO: ex. Python · NumPy · SciPy · simulation numérique
+    links: {
+      code: null, // TODO: repo à confirmer (peut ne pas exister encore)
+      demo: null,
+    },
+    placeholder: true,
   },
 ]

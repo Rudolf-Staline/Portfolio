@@ -15,6 +15,16 @@ export const profile = {
     'Échecs',
     'Lecture scientifique',
   ],
+  /** Availability line shown in the hero. */
+  availability: 'Disponible pour un stage technique',
+  /** Spec-sheet facts (hero panel). Strictly from the CV — no invention. */
+  facts: [
+    { k: 'École', v: 'Centrale Casablanca' },
+    { k: 'Promotion', v: '2028' },
+    { k: 'Domaines', v: 'Data · IA · Dev' },
+    { k: 'Langues', v: 'FR C1 · EN B2' },
+    { k: 'Recherche', v: 'Stage technique' },
+  ],
 } as const
 
 export const contact = {
