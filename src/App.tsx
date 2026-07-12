@@ -6,12 +6,12 @@ import { skills } from './data/skills'
 const email = 'rudolfhounlete1@gmail.com'
 const github = 'https://github.com/rudolf-staline'
 
-function Arrow({ diagonal = true }: { diagonal?: boolean }) {
-  return <span aria-hidden="true">{diagonal ? '↗' : '→'}</span>
+function Arrow() {
+  return <span aria-hidden="true">↗</span>
 }
 
-function ProjectIndex({ value }: { value: string }) {
-  return <span className="project-index" aria-hidden="true">P/{value}</span>
+function Cross() {
+  return <span className="cross" aria-hidden="true">+</span>
 }
 
 function App() {
@@ -28,21 +28,21 @@ function App() {
     <div className="site-shell">
       <a className="skip-link" href="#main">Aller au contenu</a>
 
-      <header className="topbar">
-        <a className="identity" href="#top" aria-label="Retour en haut">
-          <span className="identity-mark">RH</span>
-          <span className="identity-copy">Rudolf Hounlété<br /><small>Portfolio d’ingénieur</small></span>
+      <header className="masthead">
+        <a className="wordmark" href="#top" aria-label="Retour en haut">
+          <span>R/H</span>
+          <b>Rudolf<br />Hounlété</b>
         </a>
 
         <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Navigation principale">
-          <a href="#projets" onClick={() => setMenuOpen(false)}>Projets</a>
-          <a href="#approche" onClick={() => setMenuOpen(false)}>Approche</a>
-          <a href="#parcours" onClick={() => setMenuOpen(false)}>Parcours</a>
-          <a href={`mailto:${email}`} onClick={() => setMenuOpen(false)}>Contact</a>
+          <a href="#work" onClick={() => setMenuOpen(false)}>01 / Work</a>
+          <a href="#method" onClick={() => setMenuOpen(false)}>02 / Method</a>
+          <a href="#ledger" onClick={() => setMenuOpen(false)}>03 / Ledger</a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>04 / Contact</a>
         </nav>
 
-        <a className="topbar-cta" href="/CV_Rudolf_HOUNLETE.pdf" download>
-          Télécharger le CV <Arrow />
+        <a className="cv-link" href="/CV_Rudolf_HOUNLETE.pdf" download>
+          CV.PDF <Arrow />
         </a>
 
         <button
@@ -58,82 +58,90 @@ function App() {
 
       <main id="main">
         <section className="hero" id="top">
-          <div className="hero-grid" aria-hidden="true" />
-          <div className="hero-label">CASABLANCA / 2026 / PORTFOLIO 02</div>
-
-          <div className="hero-heading">
-            <p className="eyebrow"><span>Élève ingénieur</span> · logiciel, IA appliquée, données</p>
-            <h1>
-              Je construis des systèmes<br />
-              <em>qui résistent au réel.</em>
-            </h1>
+          <div className="hero-system-bar">
+            <span>PORTFOLIO / REV.03</span>
+            <span>CASABLANCA — MA</span>
+            <span className="status"><i /> OPEN TO ENGINEERING INTERNSHIP</span>
           </div>
 
-          <div className="hero-foot">
-            <p className="hero-intro">
-              Du problème mal cadré au prototype testable : architecture, données,
-              modèle et interface réunis dans une même logique de produit.
+          <div className="hero-name" aria-label="Rudolf Hounlété">
+            <span className="first-name">RUDOLF</span>
+            <span className="last-name">HOUNLÉTÉ</span>
+          </div>
+
+          <div className="hero-bottom">
+            <p className="hero-manifesto">
+              Je ne collectionne pas les technologies.<br />
+              <strong>Je construis des systèmes, je teste leurs limites et je documente ce qui résiste.</strong>
             </p>
 
-            <aside className="hero-brief" aria-label="Informations principales">
-              <div><span>01</span><p>École Centrale Casablanca<br /><b>Cycle ingénieur</b></p></div>
-              <div><span>02</span><p>Recherche<br /><b>Stage ingénieur</b></p></div>
-              <div><span>03</span><p>Mobilité<br /><b>Maroc · International</b></p></div>
-            </aside>
+            <div className="hero-spec">
+              <div><span>DISCIPLINES</span><b>SOFTWARE / ML / DATA / SYSTEMS</b></div>
+              <div><span>POSITION</span><b>ÉLÈVE INGÉNIEUR — CENTRALE CASABLANCA</b></div>
+              <div><span>INTENT</span><b>TAKE OWNERSHIP. SHIP. LEARN FAST.</b></div>
+            </div>
           </div>
 
-          <div className="hero-signature" aria-hidden="true">HOUNLÉTÉ</div>
+          <div className="hero-stamp" aria-hidden="true">
+            <span>BUILD</span><span>TEST</span><span>BREAK</span><span>REPEAT</span>
+          </div>
         </section>
 
-        <section className="manifesto" aria-label="Positionnement">
-          <span>Développement logiciel</span>
-          <i>×</i>
-          <span>Machine learning</span>
-          <i>×</i>
-          <span>Systèmes expérimentaux</span>
-          <i>×</i>
-          <span>Analyse quantitative</span>
-        </section>
+        <div className="ticker" aria-label="Domaines techniques">
+          <div>
+            <span>DEVELOPMENT</span><Cross /><span>MACHINE LEARNING</span><Cross />
+            <span>EXPERIMENTAL SYSTEMS</span><Cross /><span>QUANTITATIVE THINKING</span><Cross />
+            <span>DEVELOPMENT</span><Cross /><span>MACHINE LEARNING</span><Cross />
+          </div>
+        </div>
 
-        <section className="projects-section" id="projets">
-          <header className="section-header">
-            <div className="section-code">01 / TRAVAUX SÉLECTIONNÉS</div>
+        <section className="work-section" id="work">
+          <header className="brutal-heading">
+            <span className="section-number">01</span>
             <div>
-              <h2>Des projets comme<br /><em>preuves de travail.</em></h2>
-              <p>Chaque projet montre une manière de raisonner : décomposer, tester, mesurer, puis améliorer.</p>
+              <p>SELECTED WORK / FIVE CASE FILES</p>
+              <h2>PREUVES<br />DE TRAVAIL.</h2>
             </div>
+            <p className="heading-note">Pas de galerie décorative. Chaque dossier montre un problème, une intervention et une manière de raisonner.</p>
           </header>
 
-          <div className="project-list">
-            {visibleProjects.map((project) => (
-              <article className={project.featured ? 'project featured' : 'project'} key={project.index}>
-                <ProjectIndex value={project.index} />
+          <div className="case-files">
+            {visibleProjects.map((project, index) => (
+              <article className="case-file" key={project.index}>
+                <div className="case-index">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <small>{project.featured ? 'PRIMARY' : 'CASE FILE'}</small>
+                </div>
 
-                <div className="project-title-block">
-                  <div className="project-context">
+                <div className="case-title">
+                  <div className="case-meta">
                     <span>{project.context}</span>
                     <span>{project.period}</span>
                   </div>
                   <h3>{project.title}</h3>
-                  <p className="project-tagline">{project.tagline}</p>
+                  <p>{project.tagline}</p>
                 </div>
 
-                <div className="project-evidence">
+                <div className="case-proof">
+                  <p className="proof-label">INTERVENTION /</p>
                   <ol>
                     {project.highlights.slice(0, 3).map((highlight, itemIndex) => (
-                      <li key={highlight}><span>{String(itemIndex + 1).padStart(2, '0')}</span>{highlight}</li>
+                      <li key={highlight}>
+                        <span>{String(itemIndex + 1).padStart(2, '0')}</span>
+                        <p>{highlight}</p>
+                      </li>
                     ))}
                   </ol>
-                  <div className="stack">{project.stack.map((item) => <span key={item}>{item}</span>)}</div>
                 </div>
 
-                <div className="project-link">
+                <div className="case-footer">
+                  <p>{project.stack.join(' — ')}</p>
                   {project.links.code ? (
-                    <a href={project.links.code} target="_blank" rel="noreferrer" aria-label={`Voir le dépôt de ${project.title}`}>
-                      Code <Arrow />
+                    <a href={project.links.code} target="_blank" rel="noreferrer">
+                      OPEN REPOSITORY <Arrow />
                     </a>
                   ) : (
-                    <span>{project.status ?? 'Projet académique'}</span>
+                    <span>{project.status ?? 'ACADEMIC PROJECT'}</span>
                   )}
                 </div>
               </article>
@@ -141,68 +149,98 @@ function App() {
           </div>
         </section>
 
-        <section className="approach-section" id="approche">
-          <div className="approach-intro">
-            <div className="section-code light">02 / MANIÈRE DE TRAVAILLER</div>
-            <h2>Pas d’outil<br />sans <em>raison.</em></h2>
-            <p>
-              Je pars du système : contraintes, flux, hypothèses, points de rupture. Le choix technique vient après.
-            </p>
-          </div>
+        <section className="method-section" id="method">
+          <header className="method-header">
+            <span className="section-number inverse">02</span>
+            <p>OPERATING PRINCIPLES</p>
+            <h2>RIGUEUR<br />AVANT<br /><i>DÉCORATION.</i></h2>
+          </header>
 
-          <div className="principles">
-            <article><span>01</span><h3>Comprendre</h3><p>Clarifier les variables, les utilisateurs et les compromis avant d’écrire la solution.</p></article>
-            <article><span>02</span><h3>Rendre testable</h3><p>Transformer les intuitions en composants mesurables, reproductibles et faciles à contredire.</p></article>
-            <article><span>03</span><h3>Relier</h3><p>Faire tenir ensemble données, modèle, backend et interface au lieu d’optimiser chaque couche isolément.</p></article>
+          <div className="principle-grid">
+            <article>
+              <span>01 / SYSTEM FIRST</span>
+              <h3>Le système avant l’outil.</h3>
+              <p>Je cartographie les contraintes, les flux et les points de rupture avant de choisir une technologie.</p>
+            </article>
+            <article>
+              <span>02 / TEST BEFORE CLAIM</span>
+              <h3>Une hypothèse doit pouvoir perdre.</h3>
+              <p>J’essaie de rendre mes décisions mesurables, reproductibles et faciles à contredire.</p>
+            </article>
+            <article>
+              <span>03 / END TO END</span>
+              <h3>Le modèle seul n’est pas le produit.</h3>
+              <p>Données, logique métier, backend et interface doivent fonctionner comme un seul mécanisme.</p>
+            </article>
+            <article>
+              <span>04 / DOCUMENT THE EDGE</span>
+              <h3>Les limites font partie du résultat.</h3>
+              <p>Je documente ce qui échoue, ce qui reste incertain et ce qui doit être renforcé ensuite.</p>
+            </article>
           </div>
+        </section>
 
-          <div className="capability-matrix">
+        <section className="ledger-section" id="ledger">
+          <header className="brutal-heading ledger-heading">
+            <span className="section-number">03</span>
+            <div>
+              <p>CAPABILITY + TRAJECTORY LEDGER</p>
+              <h2>REGISTRE<br />TECHNIQUE.</h2>
+            </div>
+          </header>
+
+          <div className="ledger-table capabilities">
+            <div className="ledger-head"><span>ID</span><span>CAPABILITY</span><span>TOOLS / PRACTICE</span></div>
             {skills.map((group, index) => (
-              <div className="capability-row" key={group.label}>
+              <div className="ledger-row" key={group.label}>
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <h3>{group.label}</h3>
                 <p>{group.items.join(' / ')}</p>
               </div>
             ))}
           </div>
-        </section>
 
-        <section className="journey-section" id="parcours">
-          <header className="section-header compact">
-            <div className="section-code">03 / FORMATION</div>
-            <div><h2>Parcours<br /><em>académique.</em></h2></div>
-          </header>
-
-          <div className="timeline">
-            {education.map((item, index) => (
-              <article key={`${item.school}-${item.detail}`}>
-                <span className="timeline-index">{String(index + 1).padStart(2, '0')}</span>
-                <p className="timeline-period">{item.period}</p>
-                <h3>{item.school}</h3>
-                <p>{item.detail}{item.location ? ` · ${item.location}` : ''}</p>
-              </article>
-            ))}
+          <div className="education-block">
+            <div className="education-title">
+              <span>TRAJECTORY</span>
+              <h3>FORMATION<br />ACADÉMIQUE</h3>
+            </div>
+            <div className="education-list">
+              {education.map((item, index) => (
+                <article key={`${item.school}-${item.detail}`}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <time>{item.period}</time>
+                  <h4>{item.school}</h4>
+                  <p>{item.detail}{item.location ? ` — ${item.location}` : ''}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="contact-section">
-          <div className="contact-copy">
-            <div className="section-code light">04 / CONTACT</div>
-            <p className="contact-kicker">Une équipe exigeante. Un problème réel. Un périmètre à prendre.</p>
-            <h2>Parlons d’un<br /><em>stage utile.</em></h2>
+        <section className="contact-section" id="contact">
+          <div className="contact-side">
+            <span>04 / CONTACT</span>
+            <p>AVAILABLE FOR<br />ENGINEERING<br />INTERNSHIP</p>
           </div>
 
-          <div className="contact-actions">
-            <a href={`mailto:${email}`}><span>Écrire</span><b>{email}</b><Arrow /></a>
-            <a href={github} target="_blank" rel="noreferrer"><span>Explorer</span><b>GitHub</b><Arrow /></a>
-            <a href="/CV_Rudolf_HOUNLETE.pdf" download><span>Consulter</span><b>Curriculum vitæ</b><Arrow /></a>
+          <div className="contact-main">
+            <p>UN PROBLÈME RÉEL.<br />UNE ÉQUIPE EXIGEANTE.<br />UN PÉRIMÈTRE À PRENDRE.</p>
+            <h2>LET’S<br />BUILD.</h2>
+
+            <div className="contact-links">
+              <a href={`mailto:${email}`}><span>MAIL</span><b>{email}</b><Arrow /></a>
+              <a href={github} target="_blank" rel="noreferrer"><span>CODE</span><b>github.com/rudolf-staline</b><Arrow /></a>
+              <a href="/CV_Rudolf_HOUNLETE.pdf" download><span>FILE</span><b>CV_Rudolf_HOUNLETE.pdf</b><Arrow /></a>
+            </div>
           </div>
         </section>
       </main>
 
       <footer>
-        <span>Rudolf Hounlété · Casablanca, Maroc</span>
-        <span>Conçu comme un dossier de travail · 2026</span>
+        <span>RUDOLF HOUNLÉTÉ / CASABLANCA</span>
+        <span>NO TEMPLATE. NO NOISE. JUST WORK.</span>
+        <span>© 2026</span>
       </footer>
     </div>
   )
