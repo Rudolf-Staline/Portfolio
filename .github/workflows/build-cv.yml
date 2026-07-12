@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - agent/brutalisme-precision
     paths:
       - "cv/CV_Rudolf_HOUNLETE.html"
       - ".github/workflows/build-cv.yml"
@@ -39,5 +40,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/CV_Rudolf_HOUNLETE.pdf
-          git commit -m "build(cv): regenerate portfolio PDF"
+          git commit -m "build(cv): regenerate brutalist PDF"
           git push
