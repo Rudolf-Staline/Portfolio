@@ -1,0 +1,43 @@
+name: Build CV PDF
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - redesign/dossier-ingenieur
+    paths:
+      - "cv/CV_Rudolf_HOUNLETE.html"
+      - ".github/workflows/build-cv.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install WeasyPrint
+        run: pip install --disable-pip-version-check weasyprint==66.0
+
+      - name: Render CV PDF
+        run: weasyprint cv/CV_Rudolf_HOUNLETE.html public/CV_Rudolf_HOUNLETE.pdf
+
+      - name: Commit generated PDF
+        run: |
+          if git diff --quiet -- public/CV_Rudolf_HOUNLETE.pdf; then
+            echo "CV PDF is already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/CV_Rudolf_HOUNLETE.pdf
+          git commit -m "build(cv): regenerate portfolio PDF"
+          git push
