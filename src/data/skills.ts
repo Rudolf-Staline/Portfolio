@@ -3,24 +3,18 @@ import type { SkillGroup } from './types'
 export const skills: SkillGroup[] = [
   {
     label: 'Langages',
-    items: ['Python', 'Kotlin', 'TypeScript', 'SQL'],
+    items: ['Python', 'TypeScript', 'Kotlin', 'SQL', 'C / C++'],
   },
   {
-    label: 'Frameworks',
-    items: ['Flask', 'React + Vite', 'Tailwind', 'Jetpack Compose'],
+    label: 'Produit & web',
+    items: ['React', 'Vite', 'Flask', 'Jetpack Compose', 'API REST'],
   },
   {
     label: 'IA & données',
-    items: [
-      'Classification supervisée',
-      'SHAP / XAI',
-      'YOLOv8',
-      'Backtesting',
-      'Analyse quantitative',
-    ],
+    items: ['scikit-learn', 'SHAP / XAI', 'YOLOv8', 'Pandas', 'Backtesting'],
   },
   {
-    label: 'Outils',
-    items: ['Git', 'Linux', 'VS Code', 'LaTeX', 'Raspberry Pi'],
+    label: 'Ingénierie',
+    items: ['Git', 'Linux', 'Tests', 'LaTeX', 'Raspberry Pi', 'LTspice'],
   },
 ]
