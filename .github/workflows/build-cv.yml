@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - redesign/dossier-ingenieur
+      - main
     paths:
       - "cv/CV_Rudolf_HOUNLETE.html"
       - ".github/workflows/build-cv.yml"
