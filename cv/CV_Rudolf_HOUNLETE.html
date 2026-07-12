@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>CV — HOUNLETE Rudolf</title>
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+:root { --paper:#f3eee4; --ink:#111317; --navy:#132b3a; --orange:#e65d2f; --muted:#666761; }
+html, body { margin:0; width:210mm; height:297mm; background:white; }
+body { font-family:'DejaVu Sans',Arial,sans-serif; color:var(--ink); }
+.page { width:210mm; height:297mm; padding:5.5mm; background:white; overflow:hidden; }
+.sheet { position:relative; width:100%; height:100%; background:var(--paper); overflow:hidden; }
+.accent { height:9mm; display:grid; grid-template-columns:47mm 1fr; }
+.accent i:first-child { background:var(--orange); }
+.accent i:last-child { background:var(--navy); }
+.header { height:29mm; display:grid; grid-template-columns:1fr 48mm; align-items:center; padding:4mm 4mm 3mm 2mm; }
+.name { font-size:12.6mm; line-height:.88; letter-spacing:-.75mm; font-weight:800; }
+.name em { font-family:'DejaVu Serif',serif; color:var(--orange); font-weight:400; font-style:italic; }
+.role { margin-top:2.4mm; color:var(--navy); font-family:'DejaVu Sans Mono',monospace; font-size:2.25mm; font-weight:700; letter-spacing:.22mm; }
+.header-meta { text-align:right; align-self:start; padding-top:1mm; color:var(--muted); font-size:2.45mm; line-height:1.45; }
+.header-meta b { display:block; margin-bottom:1.5mm; color:var(--orange); font-family:'DejaVu Sans Mono',monospace; font-size:2.15mm; letter-spacing:.2mm; }
+.content { display:grid; grid-template-columns:49mm 1fr; height:calc(100% - 38mm); }
+.sidebar { padding:9mm 4.2mm 5mm; background:var(--navy); color:white; }
+.main { padding:9mm 4mm 5mm 5mm; }
+.label { margin:0 0 2.1mm; color:var(--orange); font-size:2.25mm; font-weight:800; text-transform:uppercase; letter-spacing:.12mm; }
+.sblock { margin-bottom:4.2mm; }
+.sidebar p { margin:0 0 1.15mm; font-size:2.35mm; line-height:1.38; }
+.sidebar .mono { font-family:'DejaVu Sans Mono',monospace; font-size:2.08mm; overflow-wrap:anywhere; }
+.qr { width:24mm; height:24mm; margin:2.3mm 0 .9mm; padding:1mm; background:white; }
+.qr img { width:100%; height:100%; display:block; }
+.qrcap { color:#d7e0e3; font-family:'DejaVu Sans Mono',monospace; font-size:1.75mm; }
+.skill-title { margin-top:1.7mm!important; color:var(--orange); font-family:'DejaVu Sans Mono',monospace; font-size:2mm!important; font-weight:700; text-transform:uppercase; }
+.section-title { display:flex; align-items:baseline; gap:3mm; margin:0 0 2mm; padding-bottom:1.2mm; border-bottom:.35mm solid var(--orange); font-size:3mm; font-weight:800; text-transform:uppercase; }
+.section-title span { color:var(--orange); font-family:'DejaVu Sans Mono',monospace; font-size:2.2mm; }
+.profile { margin:0 0 3mm; font-size:2.7mm; line-height:1.43; }
+.project { margin-bottom:2.4mm; }
+.project h3 { margin:0 0 .6mm; font-size:3.15mm; line-height:1.15; }
+.project h3 small { color:var(--orange); font-family:'DejaVu Sans Mono',monospace; font-size:1.85mm; font-weight:400; }
+.project p { margin:0; color:var(--muted); font-size:2.35mm; line-height:1.34; }
+.other { margin:0 0 2.5mm; color:var(--muted); font-family:'DejaVu Sans Mono',monospace; font-size:1.9mm; line-height:1.35; }
+.education { display:grid; grid-template-columns:28mm 1fr; row-gap:2.2mm; margin-bottom:2.8mm; }
+.education time { color:var(--orange); font-family:'DejaVu Sans Mono',monospace; font-size:2mm; font-weight:700; }
+.education h3 { margin:0 0 .3mm; font-size:2.75mm; }
+.education p { margin:0; color:var(--muted); font-size:2.15mm; line-height:1.25; }
+.approach { display:grid; grid-template-columns:repeat(3,1fr); margin-top:1mm; }
+.approach article { padding:1.8mm 2.2mm 0 0; }
+.approach article+article { padding-left:2.2mm; border-left:.25mm solid #c9c1b5; }
+.approach h3 { margin:0 0 .7mm; font-size:2.45mm; }
+.approach p { margin:0; color:var(--muted); font-size:1.95mm; line-height:1.35; }
+.availability { margin-top:5mm; width:78%; padding:2.3mm 3mm; color:white; background:var(--navy); font-family:'DejaVu Sans Mono',monospace; font-size:1.9mm; font-weight:700; letter-spacing:.08mm; }
+.watermark { position:absolute; right:6mm; bottom:-7mm; z-index:0; color:rgba(19,43,58,.055); font-size:58mm; line-height:.8; font-weight:900; letter-spacing:-5mm; }
+.side-sign { position:absolute; left:8mm; bottom:7mm; z-index:1; color:rgba(255,255,255,.18); font-family:'DejaVu Sans Mono',monospace; font-size:1.65mm; letter-spacing:.55mm; }
+</style>
+</head>
+<body>
+<div class="page"><div class="sheet"><div class="watermark">RH</div><div class="side-sign">BUILD / TEST / LEARN / 2026</div>
+  <div class="accent"><i></i><i></i></div>
+  <header class="header">
+    <div>
+      <div class="name">HOUNLETE <em>Rudolf</em></div>
+      <div class="role">ÉLÈVE INGÉNIEUR · LOGICIEL · IA APPLIQUÉE · DONNÉES</div>
+    </div>
+    <div class="header-meta"><b>DOSSIER / 2026</b>Casablanca, Maroc<br>Nationalité béninoise</div>
+  </header>
+  <div class="content">
+    <aside class="sidebar">
+      <div class="sblock"><h2 class="label">Contact</h2><p class="mono">+212 7 75 39 01 60</p><p class="mono">rudolfhounlete1@gmail.com</p><p class="mono">Casablanca, Maroc</p></div>
+      <div class="sblock"><h2 class="label">Liens</h2><p class="mono">rudolf-hounlete-portfolio.vercel.app</p><p class="mono">github.com/rudolf-staline</p><div class="qr"><img src="data:image/png;base64,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" alt="QR code vers le portfolio"></div><div class="qrcap">PORTFOLIO / SCANNER</div></div>
+      <div class="sblock"><h2 class="label">Compétences</h2>
+        <p class="skill-title">Langages</p><p>Python · TypeScript · Kotlin · SQL · C/C++</p>
+        <p class="skill-title">Web & produit</p><p>React · Vite · Flask · Jetpack Compose · API REST</p>
+        <p class="skill-title">IA & données</p><p>scikit-learn · SHAP · YOLOv8 · Pandas · Backtesting</p>
+        <p class="skill-title">Ingénierie</p><p>Git · Linux · Tests · LaTeX · Raspberry Pi · LTspice</p>
+      </div>
+      <div class="sblock"><h2 class="label">Langues</h2><p>Français — courant</p><p>Anglais — intermédiaire</p></div>
+      <div class="sblock"><h2 class="label">Intérêts</h2><p>Systèmes intelligents · finance quantitative · entrepreneuriat</p></div>
+    </aside>
+    <main class="main">
+      <h2 class="section-title"><span>01</span>Profil</h2>
+      <p class="profile">Élève ingénieur généraliste à l’École Centrale Casablanca, je construis des produits techniques de bout en bout : données, modèles, backend et interface. Je cherche un stage où prendre en charge un périmètre concret, mesurer mes choix et livrer.</p>
+      <h2 class="section-title"><span>02</span>Projets sélectionnés</h2>
+      <article class="project"><h3>Aide à la décision clinique <small>/ PYTHON · SCIKIT-LEARN · SHAP · FLASK</small></h3><p>Pipeline d’appendicite pédiatrique : nettoyage, comparaison de classifieurs, interprétabilité SHAP, interface Flask et tests automatisés.</p></article>
+      <article class="project"><h3>Feux rouges intelligents <small>/ YOLOV8 · K-MEANS · RASPBERRY PI</small></h3><p>Estimation des flux, décision sur les phases compatibles et asservissement d’une maquette de carrefour soumise aux contraintes de sécurité.</p></article>
+      <article class="project"><h3>Clarté — journal Android privé <small>/ KOTLIN · COMPOSE · ROOM · AES-GCM</small></h3><p>Application local-first avec synchronisation, chiffrement de bout en bout, sauvegarde récupérable et centre de confidentialité explicite.</p></article>
+      <article class="project"><h3>Propagation de solitons <small>/ PYTHON · LTSPICE · INSTRUMENTATION</small></h3><p>Ligne non linéaire, acquisitions cellule par cellule, traitement des signaux et confrontation aux simulations LTspice et Sine-Gordon.</p></article>
+      <p class="other">AUTRE TRAVAIL / Forex supervised scanner — architecture Python modulaire et backtesting de stratégies.</p>
+      <h2 class="section-title"><span>03</span>Formation</h2>
+      <div class="education">
+        <time>2025 →</time><div><h3>École Centrale Casablanca</h3><p>Cycle ingénieur généraliste · Maroc</p></div>
+        <time>2022—2025</time><div><h3>IMSP</h3><p>Licence en Technologies de l’Information et de la Communication · Bénin</p></div>
+        <time>2022—2025</time><div><h3>IMSP</h3><p>Classes préparatoires MPSI / PCSI · Bénin</p></div>
+        <time>2022</time><div><h3>Baccalauréat</h3><p>Option Mathématiques et Sciences technologiques · Bénin</p></div>
+      </div>
+      <h2 class="section-title"><span>04</span>Approche</h2>
+      <div class="approach">
+        <article><h3>Système avant outil</h3><p>Cartographier les contraintes et les flux avant de choisir la technologie.</p></article>
+        <article><h3>Test plutôt que promesse</h3><p>Formuler des hypothèses mesurables et chercher rapidement ce qui les contredit.</p></article>
+        <article><h3>Produit complet</h3><p>Relier données, modèle, backend et interface dans une même logique.</p></article>
+      </div>
+      <div class="availability">DISPONIBLE POUR UN STAGE INGÉNIEUR · MAROC / INTERNATIONAL</div>
+    </main>
+  </div>
+</div></div>
+</body>
+</html>

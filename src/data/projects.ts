@@ -1,15 +1,5 @@
 import type { Project } from './types'
 
-/**
- * Official project list (source of truth = CV).
- * Repo mappings confirmed by Rudolf:
- *   01 → Coding-week-project
- *   02 → projet en cours (pas de repo public encore) — TODO lien
- *   03 → forex-supervised-scanner
- *   04 → Clarte
- *   05 → Solitons : aucun repo trouvé sur le compte — slot réservé, contenu à venir.
- * Demos: aucune confirmée pour l'instant — TODO à confirmer par Rudolf.
- */
 export const projects: Project[] = [
   {
     index: '01',
@@ -17,16 +7,16 @@ export const projects: Project[] = [
     context: 'Coding Week · Centrale Casablanca',
     period: '2026',
     tagline:
-      "Pipeline d'aide au diagnostic d'appendicite pédiatrique — données, modèle, interface et tests livrés dans la semaine.",
+      "Un pipeline complet d’aide au diagnostic d’appendicite pédiatrique, conçu pour rester compréhensible jusque dans la décision du modèle.",
     highlights: [
-      'Nettoyage des données et comparaison de modèles de classification supervisée',
-      'Identification des variables discriminantes via SHAP pour garder la décision auditable',
-      'Interface Flask + tests automatisés sur les étapes critiques du pipeline',
+      'Nettoyage des données et comparaison rigoureuse de modèles de classification',
+      'Analyse SHAP pour identifier les variables réellement discriminantes',
+      'Interface Flask et tests automatisés sur les étapes critiques du pipeline',
     ],
     stack: ['Python', 'scikit-learn', 'SHAP', 'Flask', 'Pytest'],
     links: {
       code: 'https://github.com/Rudolf-Staline/Coding-week-project',
-      demo: null, // TODO: à confirmer par Rudolf
+      demo: null,
     },
     featured: true,
   },
@@ -36,70 +26,66 @@ export const projects: Project[] = [
     context: 'Learning by Doing · Centrale Casablanca',
     period: '2025 — 2026',
     tagline:
-      'Carrefour intelligent — phases adaptées au trafic réel, sans jamais violer les règles de sécurité entre voies.',
+      'Une maquette de carrefour qui adapte les phases au trafic observé, sans sacrifier les contraintes de sécurité entre voies.',
     highlights: [
-      'Détection des flux par vision (YOLOv8) et clustering K-Means',
-      'Logique de décision sur les combinaisons de voies autorisées',
-      "Asservissement d'une maquette physique via Raspberry Pi",
+      'Estimation des flux par vision avec YOLOv8 et segmentation par K-Means',
+      'Logique de décision fondée sur les combinaisons de voies compatibles',
+      'Asservissement de la maquette physique avec Raspberry Pi',
     ],
     stack: ['YOLOv8', 'Computer Vision', 'K-Means', 'Raspberry Pi', 'Python'],
-    links: {
-      code: null, // Projet en cours — TODO: lien à fournir par Rudolf
-      demo: null,
-    },
-    status: 'Projet en cours',
+    links: { code: null, demo: null },
+    status: 'Projet académique',
   },
   {
     index: '03',
-    title: "Plateforme d'analyse Forex",
+    title: 'Plateforme d’analyse Forex',
     context: 'Projet personnel',
     period: '2026',
     tagline:
-      "Base Python pour tester des stratégies de marché sans réécrire l'architecture à chaque hypothèse.",
+      'Une base Python modulaire pour tester des hypothèses de marché sans réécrire l’architecture à chaque nouvelle stratégie.',
     highlights: [
-      'Séparation stricte provider / broker / watchlist — données, exécution et suivi isolés',
-      'Module de backtesting modulaire pour comparer les signaux',
-      "Architecture évolutive : ajout d'une stratégie sans toucher au reste du code",
+      'Séparation nette des responsabilités : données, broker, watchlist et signaux',
+      'Moteur de backtesting pour comparer les stratégies sur une base commune',
+      'Architecture extensible : une nouvelle logique s’ajoute sans casser le noyau',
     ],
     stack: ['Python', 'Pandas', 'Backtesting', 'Architecture logicielle'],
     links: {
       code: 'https://github.com/Rudolf-Staline/forex-supervised-scanner',
-      demo: null, // TODO: à confirmer par Rudolf
+      demo: null,
     },
   },
   {
     index: '04',
-    title: "Clarté · application Android d'introspection",
+    title: 'Clarté · journal Android privé',
     context: 'Projet personnel',
     period: '2026',
     tagline:
-      'Application local-first, où chaque choix de confidentialité est explicite côté utilisateur.',
+      'Une application d’introspection local-first où la confidentialité n’est pas un texte juridique, mais un comportement visible du produit.',
     highlights: [
-      'Interface Kotlin / Jetpack Compose avec logique local-first',
-      'Sauvegarde et récupération fiabilisées, sans serveur tiers',
-      "Refonte de l'onboarding, des messages d'erreur et du centre de confidentialité",
+      'Application native Kotlin et Jetpack Compose avec stockage local prioritaire',
+      'Synchronisation, sauvegarde et chiffrement conçus sans retour silencieux au clair',
+      'Refonte de l’onboarding, du centre de confidentialité et des erreurs utilisateur',
     ],
-    stack: ['Kotlin', 'Jetpack Compose', 'Local-first', 'UX'],
+    stack: ['Kotlin', 'Jetpack Compose', 'Room', 'Firebase', 'AES-GCM'],
     links: {
       code: 'https://github.com/Rudolf-Staline/Clarte',
-      demo: null, // n/a — application mobile
+      demo: null,
     },
   },
   {
-    // Projet réel — contenu pas encore fourni par Rudolf. NE PAS inventer.
-    // Slot réservé dans la grille ; remplir les champs ci-dessous quand
-    // Rudolf fournit le texte, puis retirer `placeholder: true`.
     index: '05',
-    title: 'Solitons',
-    context: 'Projet expérimental', // TODO: contexte exact à confirmer par Rudolf
-    period: '', // TODO: dates à confirmer par Rudolf
-    tagline: '', // TODO: une phrase — ce que le projet explore ou démontre
-    highlights: [], // TODO: 2–3 bullets à fournir par Rudolf
-    stack: [], // TODO: ex. Python · NumPy · SciPy · simulation numérique
-    links: {
-      code: null, // TODO: repo à confirmer (peut ne pas exister encore)
-      demo: null,
-    },
-    placeholder: true,
+    title: 'Propagation de solitons',
+    context: 'Formation expérimentale · Centrale Casablanca',
+    period: '2026',
+    tagline:
+      'Une étude croisée de la propagation non linéaire, de la ligne électrique réelle jusqu’aux modèles numériques de type Sine-Gordon.',
+    highlights: [
+      'Montage d’une ligne non linéaire et acquisitions cellule par cellule à l’oscilloscope',
+      'Simulation LTspice d’une chaîne de 20 cellules et traitement Python des signaux',
+      'Comparaison des approches électrique, hydraulique et mécanique',
+    ],
+    stack: ['Python', 'LTspice', 'Traitement du signal', 'Simulation numérique', 'Instrumentation'],
+    links: { code: null, demo: null },
+    status: 'Projet expérimental',
   },
 ]
