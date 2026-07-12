@@ -17,7 +17,7 @@ body { font-family:'DejaVu Sans',Arial,sans-serif; color:var(--ink); }
 .mast { height:47mm; display:grid; grid-template-columns:1fr 43mm; border-bottom:.9mm solid var(--ink); }
 .identity { position:relative; padding:4.5mm 5mm 3mm; background:var(--ink); color:var(--paper); overflow:hidden; }
 .identity .name { font-family:'DejaVu Sans',Arial,sans-serif; font-size:14.2mm; line-height:.78; letter-spacing:-.9mm; font-weight:900; text-transform:uppercase; }
-.identity .name span:last-child { color:transparent; -webkit-text-stroke:.35mm var(--paper); }
+.identity .name span:last-child { color:var(--red); }
 .identity .role { position:absolute; right:5mm; bottom:3.5mm; font-family:'DejaVu Sans Mono',monospace; font-size:2mm; font-weight:700; letter-spacing:.22mm; text-align:right; }
 .mark { display:flex; flex-direction:column; justify-content:space-between; padding:3.8mm; background:var(--red); color:var(--paper); }
 .mark strong { font-family:'DejaVu Sans Mono',monospace; font-size:8mm; line-height:1; }
@@ -37,7 +37,7 @@ body { font-family:'DejaVu Sans',Arial,sans-serif; color:var(--ink); }
 .availability span { font-family:'DejaVu Sans Mono',monospace; font-size:1.7mm; }
 .section { margin-bottom:3.5mm; }
 .section-head { display:grid; grid-template-columns:12mm 1fr; align-items:end; margin-bottom:2mm; border-bottom:.65mm solid var(--ink); }
-.section-head span { height:7mm; display:grid; place-items:center; color:var(--paper); background:var(--red); font-family:'DejaVu Sans Mono',monospace; font-size:1.9mm; font-weight:700; }
+.section-head span { height:7mm; display:flex; align-items:center; justify-content:center; color:var(--paper); background:var(--red); font-family:'DejaVu Sans Mono',monospace; font-size:1.9mm; font-weight:700; }
 .section-head h2 { margin:0; padding:0 0 1.2mm 2.5mm; font-size:3.2mm; letter-spacing:.08mm; }
 .profile { margin:0; font-size:2.55mm; line-height:1.44; }
 .project-grid { display:grid; grid-template-columns:1fr 1fr; border-top:.35mm solid var(--ink); border-left:.35mm solid var(--ink); }
