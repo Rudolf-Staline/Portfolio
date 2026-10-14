@@ -49,3 +49,5 @@ Les anciens composants et `legacy/index.html` sont conservés pour référence ;
 Les médailles et classements sont repris du CV de Rudolf de septembre 2026. Les liens externes ouvrent la compétition ou les expérimentations disponibles, sans prétendre être des liens directs vers son profil.
 
 Le site comporte huit sections au format slide. Le défilement vertical est natif : les panneaux suivent la molette ou le geste tactile, puis s’alignent grâce à CSS Scroll Snap. Les sections longues restent lisibles dans le même flux, sans zone de défilement interne ni temporisation bloquant la molette. Les liens directs, le clavier et les contrôles de navigation utilisent le même conteneur.
+
+Chaque panneau occupe toute la largeur et au moins toute la hauteur visible (`100dvh`). L’en-tête et les contrôles sont superposés ; ils ne réduisent plus la surface des slides.

@@ -209,3 +209,20 @@ main.wrap.slide-deck { height: calc(100dvh - 168px); margin-top: 12px; overflow-
 .deck-scroll-hint { color: #938a9f; font-size: 10px; white-space: nowrap; }
 @media (max-width: 1000px) { .deck-scroll-hint { display: none; } }
 @media print { main.wrap.slide-deck { scroll-snap-type: none; }.slide-deck > section { min-height: 0; } }
+
+/* Edge-to-edge panels; navigation overlays the slide instead of shrinking it. */
+@media screen {
+  main.wrap.slide-deck { width: 100%; height: 100dvh; margin: 0; border-radius: 0; }
+  .slide-deck > section { min-height: 100dvh; border-radius: 0; padding: 118px max(6vw, calc((100vw - 1120px) / 2)) 98px; }
+  .header.wrap { position: fixed; inset: 0 0 auto; width: 100%; padding-inline: max(6vw, calc((100vw - 1120px) / 2)); z-index: 10; border: 0; background: #ffffffeb; backdrop-filter: blur(12px); }
+  .deck-controls.wrap { position: fixed; inset: auto 0 0; width: 100%; padding-inline: max(6vw, calc((100vw - 1120px) / 2)); z-index: 8; background: #ffffffeb; backdrop-filter: blur(12px); }
+  .header.on-dark, .deck-controls.on-dark { background: #302052eb; color: #ede4fc; }
+  .on-dark .wordmark span, .on-dark .deck-label strong { color: #c9a8ff; }
+  .on-dark .deck-label strong span, .on-dark .deck-scroll-hint { color: #c4b3dc; }
+  .on-dark .deck-dots button[aria-current="step"] span { background: #c9a8ff; }
+}
+@media screen and (max-width: 700px) {
+  .slide-deck > section { padding: 98px 25px 92px; }
+  .header.wrap, .deck-controls.wrap { padding-inline: 25px; }
+  .navigation { left: 14px; right: 14px; color: var(--ink); }
+}

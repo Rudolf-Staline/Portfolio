@@ -60,6 +60,7 @@ function App() {
   const [selected, setSelected] = useState<Project | null>(null)
   const [slideIndex, setSlideIndex] = useState(slideFromHash)
   const activeSlide = slides[slideIndex]
+  const chromeTheme = ['apropos', 'contact'].includes(activeSlide.id) ? ' on-dark' : ''
   const deck = useRef<HTMLElement>(null)
   const navigateTo = (index: number, behavior: ScrollBehavior = 'smooth') => {
     const next = Math.max(0, Math.min(slides.length - 1, index))
@@ -159,7 +160,7 @@ function App() {
   return (
     <>
       <a className="skip-link" href="#main">Aller à la slide</a>
-      <header className="header wrap">
+      <header className={`header wrap${chromeTheme}`}>
         <a className="wordmark" href="#accueil" aria-label="Rudolf Hounlete — accueil">Rudolf<br />Hounlete<span>.</span></a>
         <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? 'Fermer' : 'Menu'} <span aria-hidden="true">{menuOpen ? '−' : '+'}</span></button>
         <nav id="navigation" className={menuOpen ? 'navigation is-open' : 'navigation'} aria-label="Navigation principale">
@@ -227,7 +228,7 @@ function App() {
 
         <section className="contact-section" id="contact"><div><p className="eyebrow"><span /> Contact</p><h2>Un stage dans votre équipe<span> ?</span></h2><p>Je recherche un stage en développement logiciel ou en machine learning appliqué. Si mon parcours correspond à ce que vous cherchez, je serais heureux d’échanger sur votre équipe et les projets auxquels je pourrais contribuer.</p></div><a className="button button-dark" href={`mailto:${contact.email}?subject=Proposition%20de%20stage`}>Proposer un stage <span className="round-arrow"><Arrow diagonal /></span></a><div className="contact-links"><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><a className="text-link" href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>{contact.linkedin && <a className="text-link" href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>}</div></section>
       </main>
-      <footer className="wrap deck-controls" aria-label="Navigation des slides">
+      <footer className={`wrap deck-controls${chromeTheme}`} aria-label="Navigation des slides">
         <div className="deck-label" aria-live="polite"><strong>{String(slideIndex + 1).padStart(2, '0')}<span> / {String(slides.length).padStart(2, '0')}</span></strong><span>{activeSlide.label}</span><span className="deck-scroll-hint">Défilez pour naviguer</span></div>
         <nav className="deck-dots" aria-label="Choisir une slide">{slides.map((slide, index) => <button key={slide.id} type="button" onClick={() => navigateTo(index)} aria-label={`Slide ${index + 1} : ${slide.label}`} aria-current={slideIndex === index ? 'step' : undefined} title={slide.label}><span /></button>)}</nav>
         <div className="deck-arrows"><button type="button" onClick={() => navigateTo(slideIndex - 1)} disabled={slideIndex === 0} aria-label="Slide précédente">←</button><button type="button" onClick={() => navigateTo(slideIndex + 1)} disabled={slideIndex === slides.length - 1} aria-label="Slide suivante">→</button></div>
