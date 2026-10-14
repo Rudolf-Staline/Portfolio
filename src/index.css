@@ -543,7 +543,7 @@ h1, h2, h3, .wordmark, .about-facts strong { font-family: 'Sora', sans-serif; }
 @media screen and (min-width: 701px) {
   .slide-deck .scene-stage { padding-inline: 4vw; }
   .header.wrap, .deck-controls.wrap { padding-inline: 4vw; }
-  .slide-deck h1 { font-size: clamp(80px, 8.5vw, 152px); }
+  .slide-deck h1 { font-size: clamp(64px, 8.5vw, 152px); }
   .slide-deck .hero-art-frame { max-width: clamp(400px, 36vw, 660px); }
   .hero-description { max-width: 42ch; }
   .expertise-layout { grid-template-columns: 1fr 1.45fr; gap: 5vw; }
