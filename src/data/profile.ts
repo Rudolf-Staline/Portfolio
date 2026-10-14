@@ -9,7 +9,7 @@ export const profile = {
   pitch:
     "Je construis des applications web et des modèles de machine learning, avec Python et TypeScript.",
   about: [
-    "Je suis élève ingénieur généraliste à l’École Centrale Casablanca, après une licence en TIC et des classes préparatoires à l’IMSP, au Bénin. Mes projets relient le développement logiciel aux modèles : classification, simulation probabiliste et planification sous contraintes.",
+    "Je suis élève ingénieur généraliste à l’École Centrale Casablanca, après une licence en TIC et des classes préparatoires à l’IMSP, au Bénin. Mes projets relient le développement logiciel aux modèles : classification tabulaire, données satellitaires, reconnaissance vocale et simulation probabiliste.",
     "Chez CHOUBEL, mon stage a porté sur RiskSim, un simulateur Monte Carlo doté d’une interface React. J’ai travaillé sur le moteur Python et le parcours d’utilisation, jusqu’à la distribution Windows. Je cherche maintenant un stage technique pour contribuer à un produit au sein d’une équipe et approfondir mes compétences en logiciel ou en machine learning.",
   ],
   interests: [

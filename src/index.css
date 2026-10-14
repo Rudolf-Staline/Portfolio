@@ -152,3 +152,5 @@ footer a:hover { color: var(--ink); }
   .contact-section { padding: 28px 22px; grid-template-columns: 1fr; gap: 20px; }.contact-section .button { justify-self: start; }.contact-email { font-size: 12px; margin-top: 0; max-width: 100%; overflow-wrap: anywhere; }footer { flex-direction: column; gap: 18px; padding-block: 30px; }footer > div { justify-content: space-between; }.project-dialog { padding: 24px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }*, *::before, *::after { animation: none !important; transition: none !important; } }
+
+.project-status { margin-top: 12px; font-size: 11px; color: var(--muted); }

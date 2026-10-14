@@ -11,7 +11,7 @@ export const skills: SkillGroup[] = [
   },
   {
     label: 'IA & données',
-    items: ['scikit-learn', 'SHAP / XAI', 'YOLOv8', 'Pandas', 'Backtesting'],
+    items: ['scikit-learn', 'LightGBM', 'PyTorch', 'Optuna', 'SHAP', 'Pandas', 'YOLOv8'],
   },
   {
     label: 'Ingénierie',
