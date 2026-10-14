@@ -55,3 +55,5 @@ Chaque panneau occupe toute la largeur et au moins toute la hauteur visible (`10
 Les titres et les blocs apparaissent en cascade lorsqu’ils deviennent visibles dans le conteneur de défilement (Intersection Observer). Les entrées se rejouent au retour ; les détails ambiants s’arrêtent hors écran. Cartes, liens, boutons et dialogues ont des transitions dédiées. La préférence de réduction des animations est respectée, y compris si elle change pendant la consultation.
 
 Le défilement pilote également la profondeur des panneaux (échelle, déplacement, fondu et arrondis), avec une position stable pendant la lecture des sections longues. Les positions de navigation utilisent les dimensions de mise en page pour rester indépendantes des transformations. Une parallaxe à la souris anime les éléments autour du portrait ; une fine barre indique la progression.
+
+Sur ordinateur, les compositions utilisent la largeur disponible avec une marge de 4 % de chaque côté, sans plafond central de 1 120 ou 1 360 px. Les titres, le portrait, les grilles et les textes se mettent à l’échelle sur grand écran ; la longueur des paragraphes reste limitée pour la lecture.
