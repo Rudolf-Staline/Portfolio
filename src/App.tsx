@@ -26,33 +26,8 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? '↗' : '→'}</span>
 }
 
-/** Abstract illustrations, not screenshots or measured project results. */
-function ProjectVisual({ project }: { project: Project }) {
-  const kind = project.visual ?? 'code'
-  return (
-    <div className={`project-visual visual-${kind}`} aria-hidden="true">
-      {kind === 'simulation' ? (
-        <svg viewBox="0 0 360 210" fill="none">
-          <path d="M35 170H330M35 35V170" stroke="currentColor" opacity=".18" />
-          {[12, 22, 40, 69, 104, 125, 110, 86, 58, 36, 22, 12].map((height, i) => <rect key={i} x={54 + i * 21} y={170 - height} width="15" height={height} rx="3" fill={i > 7 ? '#c69329' : '#efc75e'} />)}
-          <path d="M52 153C105 152 112 50 179 52C220 53 242 120 307 147" stroke="#25241f" strokeWidth="2" strokeDasharray="4 5" />
-        </svg>
-      ) : kind === 'calendar' ? (
-        <div className="calendar-art"><div className="calendar-head"><span /> <span /> <span /></div><div className="calendar-grid">{Array.from({ length: 20 }, (_, i) => <div key={i}>{[2, 5, 7, 11, 16].includes(i) && <span className={`event event-${i % 3}`} />}</div>)}</div></div>
-      ) : kind === 'journal' ? (
-        <div className="journal-art"><span className="journal-sun" /><div /><div /><div /><span className="journal-dot" /></div>
-      ) : kind === 'signal' ? (
-        <svg viewBox="0 0 360 210" fill="none"><path d="M30 60H330M30 105H330M30 150H330" stroke="currentColor" opacity=".1"/><path d="M25 108C40 108 42 45 61 45S81 167 103 167S128 54 150 54S173 147 198 147S221 73 246 73S276 130 302 130S318 104 336 104" stroke="#655984" strokeWidth="3"/><path d="M25 115C54 115 79 81 104 81S154 132 182 132S231 92 260 92S307 115 336 115" stroke="#c3b2d2" strokeWidth="2"/></svg>
-      ) : kind === 'vision' ? (
-        <svg viewBox="0 0 360 210" fill="none"><path d="M150 20V190M210 20V190M30 75H330M30 135H330" stroke="#bcc5b3" strokeWidth="15"/><path d="M180 25V65M180 145V185M35 105H125M235 105H325" stroke="#fff" strokeWidth="2" strokeDasharray="8 8"/>{[[120, 45], [212, 139], [255, 68]].map(([x, y], i) => <g key={i}><rect x={x} y={y} width="24" height="32" rx="4" fill="#698566"/><rect x={x - 6} y={y - 6} width="36" height="44" rx="3" stroke="#334d30" strokeDasharray="4 3"/></g>)}</svg>
-      ) : kind === 'model' ? (
-        <svg viewBox="0 0 360 210" fill="none">{[[65, 65], [65, 145]].flatMap(([x, y]) => [[180, 45], [180, 105], [180, 165]].map(([a, b]) => <path key={`${y}-${b}`} d={`M${x} ${y}L${a} ${b}L295 105`} stroke="#a7b9ab"/>))}{[[65, 65], [65, 145], [180, 45], [180, 105], [180, 165], [295, 105]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r={i === 5 ? 18 : 12} fill={i === 5 ? '#e5be5e' : '#7c9b88'} stroke="#f2f5ed" strokeWidth="5"/>)}</svg>
-      ) : (
-        <div className="code-art"><span /><span /><span /><span /><span /><span /></div>
-      )}
-      <span className="visual-caption">Illustration du projet</span>
-    </div>
-  )
+function BronzeMedal() {
+  return <svg className="medal-emblem" viewBox="0 0 80 92" fill="none" role="img" aria-label="Médaille de bronze"><path d="M16 3h18l12 31-18 9L16 3Z" fill="#9f805b"/><path d="M46 3h18L52 43l-18-9L46 3Z" fill="#d3b68b"/><circle cx="40" cy="59" r="28" fill="#b67c43"/><circle cx="40" cy="59" r="22" stroke="#efd1a6" strokeWidth="2"/><path d="m40 45 4 8 9 2-7 6 2 9-8-5-8 5 2-9-7-6 9-2 4-8Z" fill="#f6e3c9"/></svg>
 }
 
 function App() {
@@ -191,36 +166,26 @@ function App() {
         </section>
 
         <section className="section expertise-section" id="competences">
-          <div className="section-heading"><div><p className="eyebrow"><span /> Compétences</p><h2>Mes outils de travail<span>.</span></h2></div><p className="section-note">Du traitement des données à l’application.</p></div>
-          <div className="skill-list">{skills.map(group => <div key={group.label}><span className="skill-symbol" aria-hidden="true">{group.label === 'Langages' ? '</>' : group.label === 'Web & produit' ? '▣' : group.label === 'IA & données' ? '◈' : '⌘'}</span><h3>{group.label}</h3><p>{group.items.join(' · ')}</p></div>)}</div>
+          <div className="expertise-layout">
+            <div className="expertise-lead"><p className="eyebrow"><span /> Compétences</p><h2>Des modèles<br />aux applications<span>.</span></h2><p className="section-intro">Les outils que j’utilise pour préparer les données, entraîner les modèles et développer les applications.</p><a className="text-link" href="#projets">Les voir dans mes projets <Arrow diagonal /></a><span className="expertise-decoration" aria-hidden="true">&#123; &#125;</span></div>
+            <div className="expertise-grid">{skills.map((group, index) => <article className="expertise-group" key={group.label}><div className="expertise-group-heading"><span className="group-number">0{index + 1}</span><h3>{group.label}</h3></div><div className="tool-tags">{group.items.map((item, i) => <span className={i < 2 ? 'primary-tool' : ''} key={item}>{item}</span>)}</div></article>)}</div>
+          </div>
         </section>
 
         <section className="section competition-section" id="competitions">
-          <div className="section-heading"><div><p className="eyebrow"><span /> Kaggle & Zindi</p><h2>Résultats en compétition<span>.</span></h2></div><span className="section-note">2026 · 3 médailles de bronze</span></div>
-          <p className="section-intro">Sur Kaggle et Zindi, j’ai abordé des problèmes très différents : reconnaître la parole dans plusieurs langues, repérer des bassins aquacoles depuis l’espace et prédire le stress financier. Voici les résultats de ces participations.</p>
-          <div className="competition-list">{competitions.map(entry => (
-            <article className="competition-row" key={entry.name}>
-              <div className="competition-mark">{entry.medal ? <svg viewBox="0 0 40 48" fill="none" aria-label="Médaille de bronze" role="img"><path d="M8 2h9l7 17-9 5L8 2Z" fill="#c9ba98"/><path d="M23 2h9l-7 22-9-5 7-17Z" fill="#ead8ac"/><circle cx="20" cy="31" r="14" fill="#b78046"/><circle cx="20" cy="31" r="10" stroke="#eac59b"/><path d="m20 24 2 4 5 1-4 3 1 5-4-3-4 3 1-5-4-3 5-1 2-4Z" fill="#f4dcc0"/></svg> : <span aria-hidden="true">↗</span>}</div>
-              <div className="competition-info"><p className="project-meta">{entry.platform} · {entry.year}</p><h3>{entry.name}</h3><p>{entry.detail}</p></div>
-              <div className="competition-result"><strong>{entry.result}</strong>{entry.medal && entry.result !== 'Médaille de bronze' && <span>Bronze</span>}<div className="competition-links">{entry.projectId && <button className="text-link" type="button" onClick={() => setSelected(projects.find(project => project.index === entry.projectId)!)}>Solution <Arrow diagonal /></button>}{entry.href && <a className="text-link" href={entry.href} target="_blank" rel="noreferrer">{entry.linkLabel} <Arrow diagonal /></a>}</div></div>
-            </article>
-          ))}</div>
+          <div className="awards-heading"><div><p className="eyebrow"><span /> Kaggle & Zindi · 2026</p><h2>En compétition<span>.</span></h2></div><div className="award-total"><strong>3</strong><span>médailles<br />de bronze</span></div></div>
+          <div className="medal-grid">{competitions.filter(entry => entry.medal).map(entry => <article className="medal-card" key={entry.name}><div className="medal-card-top"><span className="platform-label">{entry.platform}</span><BronzeMedal /></div><p className="medal-label">Médaille de bronze</p><h3>{entry.name}</h3><p className="award-description">{entry.detail}</p>{entry.result !== 'Médaille de bronze' && <p className="award-placement">{entry.result}</p>}<div className="award-links">{entry.projectId && <button className="text-link" type="button" onClick={() => setSelected(projects.find(project => project.index === entry.projectId)!)}>Ma solution <Arrow diagonal /></button>}{entry.href && <a className="text-link" href={entry.href} target="_blank" rel="noreferrer">{entry.linkLabel} <Arrow diagonal /></a>}</div></article>)}</div>
+          <div className="ranking-grid">{competitions.filter(entry => !entry.medal).map(entry => <article className="ranking-card" key={entry.name}><div className="ranking-position"><strong>{entry.result.split(' / ')[0]}</strong><span>sur {entry.result.split(' / ')[1]}</span></div><div><p className="platform-label">{entry.platform} · {entry.year}</p><h3>{entry.name}</h3><p className="award-description">{entry.detail}</p></div><div className="award-links">{entry.projectId && <button className="text-link" type="button" onClick={() => setSelected(projects.find(project => project.index === entry.projectId)!)}>Ma solution <Arrow diagonal /></button>}{entry.href && <a className="text-link" href={entry.href} target="_blank" rel="noreferrer">Code <Arrow diagonal /></a>}</div></article>)}</div>
         </section>
 
         <section className="section internship-section" id="experience">
-          <div className="section-heading"><div><p className="eyebrow"><span /> Expérience professionnelle</p><h2>CHOUBEL<span>.</span></h2></div><span className="section-note">Stage d’observation · 15 juillet — 28 août 2026</span></div>
-          <div className="internship-content"><div><h3>RiskSim — Simulateur de risques projet</h3><p>Durant mon stage chez CHOUBEL, j’ai développé RiskSim pour analyser les risques d’un projet à partir d’un registre Excel. L’utilisateur peut modifier ses hypothèses, comparer des scénarios et calculer des réserves budgétaires.</p><p>J’ai travaillé sur le moteur Python, puis fait évoluer l’interface de Streamlit vers React. La préparation de la distribution Windows et de la documentation a prolongé ce travail jusqu’à la prise en main de l’application.</p><button className="text-link" type="button" onClick={() => setSelected(internship)}>Voir le projet <Arrow diagonal /></button></div><div className="internship-delivery"><span>Travail réalisé</span><ul><li>Moteur de simulation et analyse de sensibilité</li><li>Migration de Streamlit vers React</li><li>Distribution Windows et documentation</li></ul><p>Python · NumPy · React · TypeScript</p></div></div>
+          <div className="internship-layout"><div className="internship-story"><p className="eyebrow"><span /> Expérience · CHOUBEL</p><h2>RiskSim<span>.</span></h2><p className="internship-subtitle">Simuler les risques d’un projet.</p><p className="internship-date">Stage d’observation<br />15 juillet — 28 août 2026</p><p>Durant mon stage chez CHOUBEL, j’ai développé RiskSim pour analyser les risques d’un projet à partir d’un registre Excel. L’utilisateur peut modifier ses hypothèses, comparer des scénarios et calculer des réserves budgétaires.</p><p>J’ai travaillé sur le moteur Python, puis fait évoluer l’interface de Streamlit vers React. La préparation de la distribution Windows et de la documentation a prolongé ce travail jusqu’à la prise en main de l’application.</p><button className="button button-primary" type="button" onClick={() => setSelected(internship)}>Explorer le projet <Arrow diagonal /></button></div>
+          <div className="internship-blueprint"><div className="blueprint-heading"><span>Du registre à l’application</span><span aria-hidden="true">↗</span></div><ol className="delivery-steps"><li><span className="delivery-number">01</span><div><h3>Importer les risques</h3><p>Registre Excel · hypothèses · corrélations</p></div></li><li><span className="delivery-number">02</span><div><h3>Simuler les scénarios</h3><p>Moteur Python · Monte Carlo · sensibilité</p></div></li><li><span className="delivery-number">03</span><div><h3>Explorer les résultats</h3><p>Interface React · réserves budgétaires</p></div></li></ol><div className="delivery-release"><span className="release-dot" /><div><strong>Application Windows</strong><p>Distribution et documentation préparées</p></div></div><div className="blueprint-stack">Python / NumPy / React / TypeScript</div></div></div>
         </section>
 
         <section className="section projects-section" id="projets">
-          <div className="section-heading"><div><p className="eyebrow"><span /> Logiciel & ingénierie</p><h2>Projets sélectionnés<span>.</span></h2></div><span className="section-note">Projets personnels et académiques</span></div>
-          <p className="section-intro">En parallèle des compétitions, je développe des outils et des prototypes. Cette sélection présente aussi bien des projets personnels que des travaux réalisés pendant ma formation.</p>
-          <div className="project-grid">{featuredProjects.map(project => (
-            <article className="project-card" key={project.index}>
-              <button type="button" className="project-preview" onClick={() => setSelected(project)} aria-label={`Découvrir ${project.title}`}><ProjectVisual project={project} /><span className="preview-arrow"><Arrow diagonal /></span></button>
-              <div className="project-copy"><p className="project-meta">{project.category ?? project.context}<span>{project.period}</span></p><h3>{project.title}</h3><p className="project-summary">{project.tagline}</p>{project.status && <p className="project-status">{project.status}</p>}<button className="text-link" type="button" onClick={() => setSelected(project)}>Voir la fiche <Arrow diagonal /></button>{project.links.code && <a className="text-link project-code-link" href={project.links.code} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>}{project.links.demo && <a className="text-link project-code-link" href={project.links.demo} target="_blank" rel="noreferrer">Démo <Arrow diagonal /></a>}</div>
-            </article>
-          ))}</div>
+          <div className="section-heading"><div><p className="eyebrow"><span /> Logiciel & ingénierie</p><h2>Projets sélectionnés<span>.</span></h2></div><p className="section-note">Des outils développés en parallèle des compétitions.</p></div>
+          <div className="work-grid">{featuredProjects.map((project, i) => <article className={i === 0 ? 'work-card work-featured' : 'work-card'} key={project.index}><div className="work-card-top"><span className="work-number">0{i + 1}</span><span>{project.period}</span></div><div className="work-content"><p className="work-category">{project.category ?? project.context}</p><h3>{project.title}</h3><p className="work-description">{project.tagline}</p>{project.fact && <p className="work-fact">{project.fact}</p>}<div className="work-stack">{project.stack.slice(0, 4).map(item => <span key={item}>{item}</span>)}</div></div><div className="work-links"><button className="text-link" type="button" onClick={() => setSelected(project)}>Voir le projet <Arrow diagonal /></button>{project.links.code && <a className="text-link" href={project.links.code} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>}{project.links.demo && <a className="text-link" href={project.links.demo} target="_blank" rel="noreferrer">Démo <Arrow diagonal /></a>}</div></article>)}</div>
           <details className="other-projects"><summary>Autres travaux</summary>{otherProjects.map(project => <article key={project.index}><h3>{project.title}</h3><p>{project.tagline}</p><button className="text-link" type="button" onClick={() => setSelected(project)}>Voir le projet <Arrow diagonal /></button></article>)}</details>
         </section>
 

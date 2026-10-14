@@ -295,3 +295,132 @@ h1, h2, h3, .wordmark, .about-facts strong { font-family: 'Sora', sans-serif; }
   .section-note, .project-meta { font-size: 12px; }
   .internship-content h3 { font-size: 24px; }
 }
+
+/* Section compositions, sized as complete slides rather than page fragments. */
+@media screen {
+  .slide-deck > section.section { padding-block: 120px 100px; scroll-margin-top: 0; }
+  .slide-deck > .hero, .slide-deck > .contact-section { scroll-margin-top: 0; }
+  .slide-deck > .expertise-section, .slide-deck > .internship-section { display: grid; align-content: center; }
+  .slide-deck > .competition-section, .slide-deck > .projects-section { display: flex; flex-direction: column; justify-content: center; }
+}
+.expertise-layout { display: grid; grid-template-columns: .9fr 1.35fr; gap: 72px; align-items: center; }
+.expertise-lead { position: relative; }
+.expertise-lead h2 { margin-block: 24px; font-size: clamp(42px, 4.2vw, 64px); }
+.expertise-lead .section-intro { font-size: 18px; max-width: 350px; margin: 0 0 22px; }
+.expertise-decoration { display: block; color: #e8defa; font-family: 'Sora', sans-serif; font-size: 110px; font-weight: 600; letter-spacing: -.12em; line-height: 1; margin-top: 32px; }
+.expertise-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #d9cbed; border-left: 1px solid #d9cbed; }
+.expertise-group { padding: 34px 26px 38px; min-height: 235px; border-right: 1px solid #d9cbed; border-bottom: 1px solid #d9cbed; }
+.expertise-group:nth-child(2), .expertise-group:nth-child(3) { background: #f8f5fd; }
+.expertise-group-heading { display: flex; gap: 12px; align-items: baseline; margin-bottom: 25px; }
+.group-number { color: #8c60d0; font-size: 12px; }
+.expertise-group h3 { font-size: 21px; }
+.tool-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 9px 8px; }
+.tool-tags span { color: #625372; font-size: 14px; border: 1px solid #ded3ed; padding: 7px 10px; border-radius: 4px; background: white; }
+.tool-tags .primary-tool { color: var(--deep); font-size: 17px; font-weight: 650; border: 0; background: transparent; padding: 0 8px 6px 0; }
+.awards-heading { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-bottom: 38px; }
+.awards-heading h2 { margin-top: 20px; }
+.award-total { display: flex; align-items: center; gap: 20px; }
+.award-total strong { font-family: 'Sora', sans-serif; font-size: 94px; line-height: 1; color: var(--accent); font-weight: 500; letter-spacing: -.08em; }
+.award-total span { font-size: 15px; line-height: 1.6; color: var(--muted); }
+.medal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.medal-card { display: flex; flex-direction: column; padding: 24px 26px; min-width: 0; border: 1px solid #e4d7c7; border-radius: 6px; background: #fffdf8; position: relative; }
+.medal-card-top { display: flex; align-items: flex-start; justify-content: space-between; min-height: 76px; }
+.platform-label { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #81728d; }
+.medal-emblem { width: 62px; height: 72px; margin-top: -5px; }
+.medal-label { color: #a5713e; font-size: 12px; margin: 6px 0 12px; font-weight: 650; }
+.medal-card h3 { font-size: 24px; line-height: 1.3; }
+.award-description { color: var(--muted); font-size: 15px; line-height: 1.65; margin-top: 12px; }
+.award-placement { font-size: 14px; font-weight: 700; margin-top: 16px; }
+.award-links { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: auto; padding-top: 18px; }
+.award-links .text-link { font-size: 13px; }
+.ranking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 28px; }
+.ranking-card { display: grid; grid-template-columns: 80px 1fr; gap: 8px 20px; border-top: 1px solid #dbd1e8; padding-top: 25px; }
+.ranking-position { grid-row: span 2; display: flex; flex-direction: column; }
+.ranking-position strong { font-family: 'Sora', sans-serif; font-size: 48px; color: var(--accent); font-weight: 500; letter-spacing: -.05em; }
+.ranking-position span { font-size: 13px; color: var(--muted); }
+.ranking-card h3 { font-size: 19px; margin-top: 8px; }
+.ranking-card .award-description { font-size: 14px; margin-top: 5px; }
+.ranking-card .award-links { grid-column: 2; padding-top: 0; }
+.internship-layout { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 70px; }
+.internship-story h2 { margin-top: 22px; font-size: clamp(64px, 6vw, 88px); }
+.internship-subtitle { font-size: 23px; font-weight: 600; margin-top: 12px; }
+.internship-date { border-left: 2px solid var(--accent); padding-left: 15px; color: #7e6b97; font-size: 13px; line-height: 1.7; margin: 25px 0; }
+.internship-story > p:not(.eyebrow):not(.internship-subtitle):not(.internship-date) { font-size: 17px; line-height: 1.8; color: var(--muted); margin-top: 16px; }
+.internship-story .button { margin-top: 27px; }
+.internship-blueprint { background: var(--deep); color: #fff; padding: 32px; border-radius: 6px; position: relative; overflow: hidden; }
+.blueprint-heading { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ffffff24; padding-bottom: 25px; font-size: 13px; color: #d6baff; }
+.blueprint-heading > span:last-child { font-size: 26px; }
+.delivery-steps { list-style: none; margin: 0; padding: 30px 0 26px; }
+.delivery-steps li { display: grid; grid-template-columns: 40px 1fr; gap: 18px; padding: 20px 0; position: relative; }
+.delivery-number { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid #bd9de657; color: #d7b9ff; font-size: 12px; border-radius: 50%; }
+.delivery-steps li:not(:last-child)::after { content: ''; position: absolute; left: 17px; top: 62px; height: 28px; border-left: 1px solid #bd9de63b; }
+.delivery-steps h3 { font-size: 21px; }
+.delivery-steps p { color: #baacca; font-size: 13px; line-height: 1.7; margin-top: 8px; }
+.delivery-release { display: flex; gap: 15px; align-items: center; padding: 22px; background: #ffffff09; border: 1px solid #ffffff1c; }
+.release-dot { width: 8px; height: 8px; background: #c7b0ee; border-radius: 50%; box-shadow: 0 0 0 5px #c7b0ee12; }
+.delivery-release strong { font-size: 15px; font-weight: 600; }
+.delivery-release p { font-size: 12px; color: #baacca; margin-top: 6px; line-height: 1.6; }
+.blueprint-stack { margin-top: 24px; color: #bdabcf; font-size: 11px; letter-spacing: .03em; }
+.work-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 0 28px; }
+.work-card { min-width: 0; padding: 22px 0; border-top: 1px solid #d8cce9; display: grid; grid-template-columns: 32px 1fr; gap: 12px 18px; }
+.work-card-top { grid-row: span 2; display: flex; flex-direction: column; gap: 10px; font-size: 10px; color: #92849f; }
+.work-number { color: var(--accent); font-size: 16px; font-weight: 600; }
+.work-category { color: #8a769d; font-size: 11px; margin-bottom: 7px; }
+.work-content h3 { font-size: 23px; line-height: 1.35; }
+.work-description { font-size: 15px; color: var(--muted); line-height: 1.75; margin-top: 10px; }
+.work-stack { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; font-size: 11px; color: #8b789e; }
+.work-links { display: flex; gap: 25px; grid-column: 2; }
+.work-links .text-link { font-size: 13px; }
+.work-featured { grid-row: span 3; grid-template-columns: 1fr; gap: 26px; padding: 34px; border: 0; border-radius: 6px; background: var(--deep); color: white; align-content: space-between; }
+.work-featured .work-card-top { grid-row: auto; flex-direction: row; justify-content: space-between; font-size: 12px; }
+.work-featured .work-number { font-size: 44px; font-family: 'Sora', sans-serif; color: #bea0ef; font-weight: 400; }
+.work-featured .work-category { color: #b5a0cf; font-size: 13px; margin-bottom: 22px; }
+.work-featured .work-content h3 { font-size: clamp(30px, 3vw, 42px); line-height: 1.2; }
+.work-featured .work-description { color: #d8cce8; font-size: 17px; line-height: 1.8; margin-top: 25px; }
+.work-fact { margin-top: 26px; padding-top: 22px; border-top: 1px solid #ffffff26; font-size: 14px; color: #dfccfa; }
+.work-featured .work-stack { color: #bca6d6; margin-top: 22px; font-size: 12px; }
+.work-featured .work-links { grid-column: 1; color: white; }
+.work-featured .work-links .text-link { font-size: 15px; }
+@media (min-width: 1500px) {
+  .slide-deck > .expertise-section.section, .slide-deck > .competition-section.section, .slide-deck > .internship-section.section, .slide-deck > .projects-section.section { padding-inline: max(8vw, calc((100vw - 1360px) / 2)); }
+}
+@media (max-width: 1000px) {
+  .expertise-layout, .internship-layout { gap: 36px; }
+  .expertise-group { padding: 24px 18px; }
+  .expertise-group h3 { font-size: 18px; }
+  .medal-card { padding: 20px; }
+  .medal-card h3 { font-size: 20px; }
+  .ranking-card { grid-template-columns: 65px 1fr; gap: 10px; }
+  .internship-blueprint { padding: 25px; }
+  .delivery-steps h3 { font-size: 18px; }
+}
+@media (max-width: 700px) {
+  .slide-deck > section.section { padding-block: 104px 98px; }
+  .expertise-layout, .internship-layout { grid-template-columns: 1fr; gap: 35px; }
+  .expertise-lead h2 { font-size: 40px; }
+  .expertise-lead .section-intro { font-size: 16px; }
+  .expertise-decoration { display: none; }
+  .expertise-group { min-height: 210px; padding: 24px 15px; }
+  .expertise-group-heading { flex-direction: column; gap: 8px; margin-bottom: 18px; }
+  .expertise-group h3 { font-size: 17px; }
+  .tool-tags span { font-size: 12px; padding: 6px 7px; }
+  .tool-tags .primary-tool { font-size: 15px; }
+  .awards-heading { align-items: start; gap: 20px; margin-bottom: 26px; }
+  .award-total { gap: 10px; }
+  .award-total strong { font-size: 60px; }
+  .award-total span { font-size: 11px; }
+  .medal-grid, .ranking-grid, .work-grid { grid-template-columns: 1fr; }
+  .medal-card { padding: 25px; }
+  .medal-card-top { min-height: 65px; }
+  .medal-card h3 { font-size: 24px; }
+  .ranking-position strong { font-size: 42px; }
+  .ranking-card { grid-template-columns: 70px 1fr; }
+  .internship-story h2 { font-size: 68px; }
+  .internship-subtitle { font-size: 21px; }
+  .internship-story > p:not(.eyebrow):not(.internship-subtitle):not(.internship-date) { font-size: 16px; }
+  .work-featured { grid-row: auto; margin-bottom: 28px; padding: 28px; }
+  .work-featured .work-content h3 { font-size: 36px; }
+  .work-featured .work-description { font-size: 16px; }
+  .work-card:not(.work-featured) { padding-block: 27px; }
+}
+@media (max-width: 380px) { .expertise-grid { grid-template-columns: 1fr; }.awards-heading { flex-direction: column; }.award-total strong { font-size: 48px; } }
