@@ -25,9 +25,4 @@ export const competitions = [
     medal: null, result: '2e / 77', detail: 'Modélisation du risque de crédit',
     href: null, linkLabel: null, projectId: null,
   },
-  {
-    name: 'Climate Risk & Health', platform: 'Zindi', year: '2026',
-    medal: null, result: '18e / 628', detail: 'Top 2,9 % · Risque climatique et santé',
-    href: null, linkLabel: null, projectId: null,
-  },
 ] as const
