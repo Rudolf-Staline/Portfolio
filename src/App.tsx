@@ -76,22 +76,32 @@ function App() {
           <a href="#competitions" onClick={() => setMenuOpen(false)}>Compétitions</a>
           <a href="#projets" onClick={() => setMenuOpen(false)}>Projets</a>
           <a href="#experience" onClick={() => setMenuOpen(false)}>Expérience</a>
-          <a href="#contact" className="nav-contact" onClick={() => setMenuOpen(false)}>Stage <Arrow diagonal /></a>
+          <a href="#contact" className="nav-contact" onClick={() => setMenuOpen(false)}>Contact <Arrow diagonal /></a>
         </nav>
       </header>
 
       <main id="main" className="wrap">
         <section className="hero" id="accueil">
           <div className="hero-copy">
-            <p className="hello">Élève ingénieur · Centrale Casablanca</p>
-            <h1>{profile.heroTitle}<span className="hero-specialty">{profile.heroFocus}</span></h1>
+            <p className="hello">Bonjour, moi c’est Rudolf.</p>
+            <h1>Rudolf<br />Hounlete<span>.</span></h1><p className="hero-specialty">{profile.heroFocus}</p>
             <p className="hero-description">{profile.heroDescription}</p>
             <p className="hero-location">Casablanca, Maroc</p><a className="hero-distinction" href="#competitions"><span className="bronze-dot" aria-hidden="true" />3 médailles de bronze · Kaggle & Zindi <Arrow diagonal /></a>
-            <div className="hero-actions"><a className="button button-yellow" href="#projets">Voir mes projets <span className="round-arrow"><Arrow /></span></a><a className="button button-outline" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Télécharger mon CV <Arrow diagonal /></a></div>
+            <div className="hero-actions"><a className="button button-primary" href="#projets">Voir mes projets <span className="round-arrow"><Arrow /></span></a><a className="button button-outline" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Télécharger mon CV <Arrow diagonal /></a></div>
           </div>
-          <div className="hero-art has-portrait">
+          <div className="hero-art-frame"><div className="hero-art has-portrait">
             <img className="hero-portrait" src="/portrait-rudolf.png" alt="Portrait de Rudolf Hounlete" width="1254" height="1254" fetchPriority="high" decoding="async" />
-          </div>
+          </div><span className="hero-orbit" aria-hidden="true" /></div>
+        </section>
+
+        <section className="section about-section" id="apropos">
+          <div><p className="eyebrow"><span /> À propos</p><h2>Un parcours entre<br />modèles et applications<span>.</span></h2>{profile.about.map(paragraph => <p className="about-text" key={paragraph}>{paragraph}</p>)}<a className="text-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <Arrow diagonal /></a></div>
+          <div className="about-facts"><div><strong>3</strong><span>Médailles de bronze<br />Kaggle & Zindi</span></div><div><strong>2026</strong><span>Stage chez CHOUBEL<br />RiskSim · Python & React</span></div></div>
+        </section>
+
+        <section className="section expertise-section" id="competences">
+          <div className="section-heading"><div><p className="eyebrow"><span /> Compétences</p><h2>Mes outils de travail<span>.</span></h2></div><p className="section-note">Du traitement des données à l’application.</p></div>
+          <div className="skill-list">{skills.map(group => <div key={group.label}><span className="skill-symbol" aria-hidden="true">{group.label === 'Langages' ? '</>' : group.label === 'Web & produit' ? '▣' : group.label === 'IA & données' ? '◈' : '⌘'}</span><h3>{group.label}</h3><p>{group.items.join(' · ')}</p></div>)}</div>
         </section>
 
         <section className="section competition-section" id="competitions">
@@ -123,11 +133,6 @@ function App() {
           <details className="other-projects"><summary>Autres travaux</summary>{otherProjects.map(project => <article key={project.index}><h3>{project.title}</h3><p>{project.tagline}</p><button className="text-link" type="button" onClick={() => setSelected(project)}>Voir le projet <Arrow diagonal /></button></article>)}</details>
         </section>
 
-        <section className="section about-section" id="apropos">
-          <div><p className="eyebrow"><span /> À propos</p><h2>À propos de moi<span>.</span></h2>{profile.about.map(paragraph => <p className="about-text" key={paragraph}>{paragraph}</p>)}<a className="text-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <Arrow diagonal /></a></div>
-          <div className="skill-list">{skills.map(group => <div key={group.label}><h3>{group.label}</h3><p>{group.items.join(' · ')}</p></div>)}</div>
-        </section>
-
         <section className="section journey-section" id="parcours"><div className="section-heading"><div><p className="eyebrow"><span /> Formation</p><h2>Mon parcours<span>.</span></h2></div></div><div className="education-list">{education.map(item => <article key={item.school + item.detail}><span className="education-period">{item.period}</span><div><h3>{item.school}</h3><p>{item.detail}</p></div><span className="education-place">{item.location}</span></article>)}</div></section>
 
         <section className="contact-section" id="contact"><div><p className="eyebrow"><span /> Contact</p><h2>Un stage dans votre équipe<span> ?</span></h2><p>Je recherche un stage en développement logiciel ou en machine learning appliqué. Si mon parcours correspond à ce que vous cherchez, je serais heureux d’échanger sur votre équipe et les projets auxquels je pourrais contribuer.</p></div><a className="button button-dark" href={`mailto:${contact.email}?subject=Proposition%20de%20stage`}>Proposer un stage <span className="round-arrow"><Arrow diagonal /></span></a><div className="contact-links"><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><a className="text-link" href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>{contact.linkedin && <a className="text-link" href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>}</div></section>
@@ -135,7 +140,7 @@ function App() {
       <footer className="wrap"><p>Rudolf Hounlete · {new Date().getFullYear()}</p><div><a href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a><a href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>CV <Arrow diagonal /></a><a href="#accueil">En haut <span aria-hidden="true">↑</span></a></div></footer>
 
       <dialog ref={dialog} className="project-dialog" aria-labelledby="project-dialog-title" onCancel={closeProject} onClose={() => setSelected(null)} onClick={event => { if (event.target === event.currentTarget) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeProject() } }}>
-        {selected && <><div className="dialog-heading"><p className="eyebrow">{selected.category ?? selected.context}</p><button className="dialog-close" type="button" onClick={closeProject} aria-label="Fermer la fiche projet" autoFocus>×</button></div><h2 id="project-dialog-title">{selected.title}</h2><p className="dialog-context">{selected.context} · {selected.period}{selected.status && ` · ${selected.status}`}</p><p className="dialog-summary">{selected.tagline}</p>{selected.challenge && <><h3>Problème traité</h3><p className="case-text">{selected.challenge}</p></>}<h3>Travail réalisé</h3><ul>{selected.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul>{selected.outcome && <><h3>Livrable et résultats</h3><p className="case-text">{selected.outcome}</p></>}{selected.limitation && <><h3>Limites et enseignements</h3><p className="case-text">{selected.limitation}</p></>}{selected.evidence && <a className="text-link" href={selected.evidence.href} target="_blank" rel="noreferrer">{selected.evidence.label} <Arrow diagonal /></a>}<div className="stack">{selected.stack.map(item => <span key={item}>{item}</span>)}</div><div className="dialog-links">{selected.links.code && <a className="button button-yellow" href={selected.links.code} target="_blank" rel="noreferrer">Voir le code <Arrow diagonal /></a>}{selected.links.demo && <a className="text-link" href={selected.links.demo} target="_blank" rel="noreferrer">Ouvrir la démo <Arrow diagonal /></a>}</div></>}
+        {selected && <><div className="dialog-heading"><p className="eyebrow">{selected.category ?? selected.context}</p><button className="dialog-close" type="button" onClick={closeProject} aria-label="Fermer la fiche projet" autoFocus>×</button></div><h2 id="project-dialog-title">{selected.title}</h2><p className="dialog-context">{selected.context} · {selected.period}{selected.status && ` · ${selected.status}`}</p><p className="dialog-summary">{selected.tagline}</p>{selected.challenge && <><h3>Problème traité</h3><p className="case-text">{selected.challenge}</p></>}<h3>Travail réalisé</h3><ul>{selected.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul>{selected.outcome && <><h3>Livrable et résultats</h3><p className="case-text">{selected.outcome}</p></>}{selected.limitation && <><h3>Limites et enseignements</h3><p className="case-text">{selected.limitation}</p></>}{selected.evidence && <a className="text-link" href={selected.evidence.href} target="_blank" rel="noreferrer">{selected.evidence.label} <Arrow diagonal /></a>}<div className="stack">{selected.stack.map(item => <span key={item}>{item}</span>)}</div><div className="dialog-links">{selected.links.code && <a className="button button-primary" href={selected.links.code} target="_blank" rel="noreferrer">Voir le code <Arrow diagonal /></a>}{selected.links.demo && <a className="text-link" href={selected.links.demo} target="_blank" rel="noreferrer">Ouvrir la démo <Arrow diagonal /></a>}</div></>}
       </dialog>
     </>
   )
