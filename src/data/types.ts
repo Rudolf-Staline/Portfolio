@@ -26,6 +26,7 @@ export type Project = {
   period: string
   /** One-sentence summary of the project's value. */
   tagline: string
+  cardDescription?: string
   /** 2–3 concrete bullet points. */
   highlights: string[]
   challenge?: string

@@ -424,3 +424,18 @@ h1, h2, h3, .wordmark, .about-facts strong { font-family: 'Sora', sans-serif; }
   .work-card:not(.work-featured) { padding-block: 27px; }
 }
 @media (max-width: 380px) { .expertise-grid { grid-template-columns: 1fr; }.awards-heading { flex-direction: column; }.award-total strong { font-size: 48px; } }
+
+@media (min-width: 701px) {
+  .work-card:not(.work-featured) { padding-block: 13px; gap: 5px 18px; }
+  .work-card:not(.work-featured) .work-description { font-size: 16px; line-height: 1.55; margin-top: 8px; }
+  .work-card:not(.work-featured) .work-content h3 { font-size: 21px; }
+  .work-card:not(.work-featured) .work-stack { margin-top: 8px; }
+  .work-card:not(.work-featured) .work-links .text-link { padding-block: 4px; }
+  .work-featured { padding: 28px; gap: 20px; }
+  .work-featured .work-category { margin-bottom: 16px; }
+  .work-featured .work-content h3 { font-size: clamp(30px, 2.7vw, 38px); }
+  .work-featured .work-description { margin-top: 18px; font-size: 16px; line-height: 1.7; }
+  .work-featured .work-fact { margin-top: 18px; padding-top: 16px; }
+  .work-featured .work-stack { margin-top: 16px; }
+  .projects-section .other-projects { margin-top: 14px; padding-top: 12px; }
+}

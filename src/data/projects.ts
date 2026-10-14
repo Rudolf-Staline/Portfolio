@@ -115,6 +115,7 @@ export const projects: Project[] = [
   },
   {
     index: '01',
+    cardDescription: 'Ce prototype réunit classification, explications SHAP et interface Flask pour explorer les données de l’appendicite pédiatrique.',
     visual: 'model',
     category: 'Machine learning · Santé',
     title: 'Aide à la décision clinique',
@@ -138,6 +139,7 @@ export const projects: Project[] = [
   },
   {
     index: '02',
+    cardDescription: 'Une maquette de carrefour qui adapte les feux au trafic estimé par vision, avec YOLOv8 et un Raspberry Pi.',
     visual: 'vision',
     category: 'Vision · Système embarqué',
     title: 'Feux rouges intelligents',
@@ -157,6 +159,7 @@ export const projects: Project[] = [
   },
   {
     index: '03',
+    cardDescription: 'Une application Python pour explorer les données Forex et comparer des stratégies avec des modules de signaux et de backtesting.',
     visual: 'code',
     category: 'Python · Analyse quantitative',
     title: 'Plateforme d’analyse Forex',
