@@ -6,7 +6,7 @@ export const skills: SkillGroup[] = [
     items: ['Python', 'TypeScript', 'Kotlin', 'SQL', 'C / C++'],
   },
   {
-    label: 'Produit & web',
+    label: 'Web & produit',
     items: ['React', 'Vite', 'Flask', 'Jetpack Compose', 'API REST'],
   },
   {

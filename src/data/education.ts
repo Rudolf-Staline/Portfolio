@@ -4,7 +4,7 @@ export const education: EducationEntry[] = [
   {
     school: 'École Centrale Casablanca',
     detail: 'Cycle ingénieur généraliste',
-    period: '2025 → aujourd’hui',
+    period: '2025 — aujourd’hui',
     location: 'Maroc',
   },
   {
@@ -16,7 +16,8 @@ export const education: EducationEntry[] = [
   {
     school: 'IMSP',
     detail: 'Classes préparatoires MPSI / PCSI',
-    period: '2022 — 2025',
+    // Dates à confirmer ; la proposition 2020–2022 précède le baccalauréat.
+    period: '',
     location: 'Bénin',
   },
   {

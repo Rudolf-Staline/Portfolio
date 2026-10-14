@@ -2,15 +2,16 @@ export const profile = {
   name: 'Rudolf Hounlete',
   title: 'Élève ingénieur — École Centrale Casablanca · Promotion 2028',
   subtitle: 'Data engineering · IA appliquée · sciences appliquées',
-  heroTitle: 'Je développe des applications',
-  heroFocus: 'et des modèles de machine learning.',
-  heroDescription: 'Élève ingénieur à Centrale Casablanca, je cherche un stage en développement logiciel ou en machine learning appliqué.',
+  heroTitle: 'Je conçois des applications',
+  heroFocus: 'et j’entraîne des modèles de machine learning qui résolvent des problèmes concrets.',
+  heroDescription: 'Élève ingénieur à Centrale Casablanca, je recherche un stage de fin d’année en développement logiciel ou en machine learning appliqué.',
   /** Short, factual positioning line used in the hero. */
   pitch:
     "Je construis des applications web et des modèles de machine learning, avec Python et TypeScript.",
   about: [
-    "Je suis élève ingénieur généraliste à l’École Centrale Casablanca. J’ai suivi une licence en TIC et des classes préparatoires à l’IMSP, au Bénin.",
-    "Je travaille principalement en Python et TypeScript. Mes projets portent sur la classification, les données satellitaires, la reconnaissance vocale et la simulation Monte Carlo. Chez CHOUBEL, j’ai développé le moteur Python et l’interface React de RiskSim, puis préparé sa distribution Windows.",
+    "Je suis élève ingénieur généraliste à l’École Centrale Casablanca, après une licence en TIC et des classes préparatoires scientifiques à l’IMSP, au Bénin.",
+    "Mon terrain de jeu : la classification sur données tabulaires et satellitaires, la transcription vocale multilingue et la simulation de risque. Ce qui me motive, c’est d’aller au-delà du notebook : empaqueter un modèle dans une CLI, l’intégrer dans une interface React ou le déployer sur un poste client.",
+    "Lors de mon stage chez CHOUBEL, j’ai développé le moteur Python et l’interface React de RiskSim, un outil de simulation de risques projet, puis préparé sa distribution Windows.",
   ],
   interests: [
     'Finance quantitative',

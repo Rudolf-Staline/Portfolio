@@ -83,7 +83,7 @@ function App() {
             <h1>{profile.heroTitle}<br /><span>{profile.heroFocus}</span></h1>
             <p className="hero-description">{profile.heroDescription}</p>
             <p className="hero-location">Casablanca, Maroc · Python · TypeScript · React</p>
-            <div className="hero-actions"><a className="button button-yellow" href="#projets">Voir mes projets <span className="round-arrow"><Arrow /></span></a><a className="text-link" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Mon CV <Arrow diagonal /></a></div>
+            <div className="hero-actions"><a className="button button-yellow" href="#projets">Voir mes projets <span className="round-arrow"><Arrow /></span></a><a className="button button-outline" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Télécharger mon CV <Arrow diagonal /></a></div>
           </div>
           <div className="hero-art has-portrait">
             <img className="hero-portrait" src="/portrait-rudolf.png" alt="Portrait de Rudolf Hounlete" width="1254" height="1254" fetchPriority="high" decoding="async" />
@@ -100,7 +100,7 @@ function App() {
           <div className="project-grid">{visibleProjects.map(project => (
             <article className="project-card" key={project.index}>
               <button type="button" className="project-preview" onClick={() => setSelected(project)} aria-label={`Découvrir ${project.title}`}><ProjectVisual project={project} /><span className="preview-arrow"><Arrow diagonal /></span></button>
-              <div className="project-copy"><p className="project-meta">{project.category ?? project.context}<span>{project.period}</span></p><h3>{project.title}</h3><p className="project-summary">{project.tagline}</p>{project.fact && <p className="project-fact">{project.fact}</p>}{project.status && <p className="project-status">{project.status}</p>}<button className="text-link" type="button" onClick={() => setSelected(project)}>Découvrir le projet <Arrow diagonal /></button></div>
+              <div className="project-copy"><p className="project-meta">{project.category ?? project.context}<span>{project.period}</span></p><h3>{project.title}</h3><p className="project-summary">{project.tagline}</p>{project.fact && <p className="project-fact">{project.fact}</p>}{project.status && <p className="project-status">{project.status}</p>}<button className="text-link" type="button" onClick={() => setSelected(project)}>Voir la fiche <Arrow diagonal /></button>{project.links.code && <a className="text-link project-code-link" href={project.links.code} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>}{project.links.demo && <a className="text-link project-code-link" href={project.links.demo} target="_blank" rel="noreferrer">Démo <Arrow diagonal /></a>}</div>
             </article>
           ))}</div>
         </section>
@@ -112,7 +112,7 @@ function App() {
 
         <section className="section journey-section" id="parcours"><div className="section-heading"><div><p className="eyebrow"><span /> Formation</p><h2>Mon parcours<span>.</span></h2></div></div><div className="education-list">{education.map(item => <article key={item.school + item.detail}><span className="education-period">{item.period}</span><div><h3>{item.school}</h3><p>{item.detail}</p></div><span className="education-place">{item.location}</span></article>)}</div></section>
 
-        <section className="contact-section" id="contact"><div><p className="eyebrow"><span /> Contact</p><h2>Un stage dans votre équipe<span> ?</span></h2><p>Je recherche un stage technique en développement logiciel ou en machine learning appliqué. Mon CV et mes projets donnent un aperçu de mon travail.</p></div><a className="button button-dark" href={`mailto:${contact.email}?subject=Proposition%20de%20stage`}>Proposer un stage <span className="round-arrow"><Arrow diagonal /></span></a><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a></section>
+        <section className="contact-section" id="contact"><div><p className="eyebrow"><span /> Contact</p><h2>Un stage dans votre équipe<span> ?</span></h2><p>Je recherche un stage technique en développement logiciel ou en machine learning appliqué. Mon CV détaille mes expériences ; mes dépôts GitHub montrent mon code.</p></div><a className="button button-dark" href={`mailto:${contact.email}?subject=Proposition%20de%20stage`}>Proposer un stage <span className="round-arrow"><Arrow diagonal /></span></a><div className="contact-links"><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><a className="text-link" href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>{contact.linkedin && <a className="text-link" href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>}</div></section>
       </main>
       <footer className="wrap"><p>Rudolf Hounlete · {new Date().getFullYear()}</p><div><a href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a><a href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>CV <Arrow diagonal /></a><a href="#accueil">En haut <span aria-hidden="true">↑</span></a></div></footer>
 

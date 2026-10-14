@@ -157,3 +157,9 @@ footer a:hover { color: var(--ink); }
 
 .project-fact { margin-top: 12px; padding-left: 12px; border-left: 3px solid var(--yellow); font-size: 12px; line-height: 1.6; font-weight: 500; }
 .case-text { color: var(--muted); font-size: 14px; line-height: 1.75; margin: 10px 0 20px; }
+
+.project-code-link { margin-left: 24px; }
+.contact-links { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; grid-column: 1 / -1; }
+
+.button-outline { border: 1px solid var(--line); background: transparent; }
+.button-outline:hover { background: #f3ca6926; }
