@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&family=Sora:wght@400..800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root { font-family: 'DM Sans', sans-serif; color: #201637; background: #f4f2f9; font-synthesis: none; --paper: #fff; --ink: #201637; --muted: #686276; --accent: #7440d7; --deep: #302052; --line: #e6e0f0; }
+:root { font-family: 'Manrope', sans-serif; color: #201637; background: #f4f2f9; font-synthesis: none; --paper: #fff; --ink: #201637; --muted: #686276; --accent: #7440d7; --deep: #302052; --line: #e6e0f0; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 24px; }
 body { margin: 0; min-width: 320px; }
@@ -225,4 +225,73 @@ main.wrap.slide-deck { height: calc(100dvh - 168px); margin-top: 12px; overflow-
   .slide-deck > section { padding: 98px 25px 92px; }
   .header.wrap, .deck-controls.wrap { padding-inline: 25px; }
   .navigation { left: 14px; right: 14px; color: var(--ink); }
+}
+
+/* Display typography and reading sizes for the full-screen composition. */
+h1, h2, h3, .wordmark, .about-facts strong { font-family: 'Sora', sans-serif; }
+.slide-deck h1 { font-size: clamp(80px, 8.2vw, 114px); line-height: 1.02; letter-spacing: -.065em; font-weight: 700; }
+.slide-deck h2 { font-size: clamp(42px, 4vw, 56px); line-height: 1.16; letter-spacing: -.045em; font-weight: 600; }
+.slide-deck h3 { letter-spacing: -.035em; font-weight: 600; }
+.slide-deck > .hero { grid-template-columns: 1.2fr 1fr; }
+.slide-deck .hero-art-frame { max-width: 480px; }
+.hero-art.has-portrait { max-width: none; }
+.slide-deck .hello { font-size: 20px; }
+.slide-deck .hero-specialty { font-size: 17px; margin-top: 28px; }
+.slide-deck .hero-description { max-width: 560px; font-size: 18px; line-height: 1.7; margin-top: 24px; }
+.hero-location, .hero-distinction { font-size: 14px; }
+.navigation { font-size: 15px; font-weight: 600; }
+.button { font-size: 15px; padding: 15px 21px; }
+.text-link, .competition-links .text-link { font-size: 15px; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; }
+.section-note, .project-meta { font-size: 14px; }
+.slide-deck .section-intro, .about-text, .internship-content p, .contact-section p:not(.eyebrow) { font-size: 18px; line-height: 1.75; }
+.slide-deck .section-heading { margin-bottom: 32px; }
+.about-facts strong { font-size: 68px; letter-spacing: -.055em; }
+.about-facts span { font-size: 15px; }
+.skill-list h3 { font-size: 20px; }
+.skill-list p { font-size: 16px; line-height: 1.8; }
+.competition-info h3, .project-copy h3 { font-size: 24px; }
+.competition-info > p:last-child { font-size: 16px; line-height: 1.65; }
+.competition-result strong { font-size: 22px; }
+.competition-result > span { font-size: 14px; }
+.internship-content h3 { font-size: 28px; }
+.internship-delivery > span, .internship-delivery ul { font-size: 16px; }
+.internship-delivery p { font-size: 14px; }
+.project-summary, .other-projects p { font-size: 17px; line-height: 1.75; }
+.project-status, .education-period, .education-place { font-size: 14px; }
+.education-list h3 { font-size: 24px; }
+.education-list p { font-size: 17px; }
+.contact-email { font-size: 17px; }
+.dialog-summary { font-size: 18px; line-height: 1.75; }
+.case-text, .project-dialog ul { font-size: 16px; }
+@media (min-width: 701px) and (max-height: 800px) {
+  .slide-deck h1 { font-size: clamp(76px, 7.2vw, 100px); }
+  .slide-deck .hero-art-frame { max-width: 420px; }
+  .slide-deck .hello { margin-bottom: 12px; }
+  .slide-deck .hero-specialty, .slide-deck .hero-description, .slide-deck .hero-actions { margin-top: 18px; }
+}
+@media (max-width: 1000px) and (min-width: 701px) {
+  .slide-deck h1 { font-size: clamp(64px, 8.2vw, 82px); }
+  .slide-deck h2 { font-size: 42px; }
+  .slide-deck .hero-art-frame { max-width: 380px; }
+}
+@media (max-width: 700px) {
+  .slide-deck > .hero { grid-template-columns: 1fr; }
+  .slide-deck h1 { font-size: clamp(50px, 13vw, 76px); letter-spacing: -.06em; }
+  .slide-deck h2 { font-size: clamp(32px, 8vw, 42px); }
+  .slide-deck .hello { font-size: 17px; }
+  .slide-deck .hero-specialty { font-size: 14px; margin-top: 22px; }
+  .slide-deck .hero-description, .slide-deck .section-intro, .about-text, .internship-content p, .contact-section p:not(.eyebrow) { font-size: 16px; }
+  .slide-deck .hero-art-frame { max-width: 330px; }
+  .button, .text-link, .competition-links .text-link { font-size: 14px; }
+  .button { padding: 13px 15px; gap: 10px; }
+  .hero-distinction { font-size: 12px; }
+  .skill-list h3 { font-size: 17px; }
+  .skill-list p { font-size: 14px; }
+  .competition-info h3, .project-copy h3, .education-list h3 { font-size: 21px; }
+  .competition-info > p:last-child, .project-summary, .education-list p { font-size: 16px; }
+  .about-facts strong { font-size: 48px; }
+  .about-facts span { font-size: 13px; }
+  .section-note, .project-meta { font-size: 12px; }
+  .internship-content h3 { font-size: 24px; }
 }

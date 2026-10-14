@@ -6,7 +6,7 @@ Portfolio personnel : développement logiciel, machine learning et systèmes exp
 
 ## Design
 
-Fond clair, violet profond et typographie DM Sans, avec une composition inspirée du modèle Canva « Web Designer Online Portfolio » de Cosmic Latte. L’accueil présente un nom affirmé, un bandeau de spécialité et le portrait dans un disque violet. La présentation, les compétences, les compétitions, l’expérience et les projets alternent entre panneaux clairs et foncés.
+Fond clair, violet profond et titres en Sora et textes en Manrope, avec une composition inspirée du modèle Canva « Web Designer Online Portfolio » de Cosmic Latte. L’accueil présente un nom affirmé, un bandeau de spécialité et le portrait dans un disque violet. La présentation, les compétences, les compétitions, l’expérience et les projets alternent entre panneaux clairs et foncés.
 
 Les projets disposent d’une illustration abstraite et d’une fiche détaillée. Les visuels portent la mention « Illustration du projet » : ce ne sont pas des captures des applications ni des résultats mesurés. Les compétitions Financial Stress Prediction, GeoAI et WAXAL complètent les projets Autonomous AutoML, RiskSim et les travaux académiques. Les fiches distinguent les travaux en cours des livrables disponibles.
 
