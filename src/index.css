@@ -150,3 +150,57 @@ footer { display: flex; justify-content: space-between; gap: 25px; padding-block
 }
 @media (max-width: 380px) { .skill-list { grid-template-columns: 1fr; }.hero-distinction { font-size: 10px; }.hero-actions { align-items: stretch; flex-direction: column; }.hero-actions .button { justify-content: space-between; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }*, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* Presentation mode: one section per viewport, with independent overflow. */
+body { height: 100dvh; overflow: hidden; }
+.header { height: 82px; min-height: 82px; }
+main.wrap.slide-deck { height: calc(100dvh - 168px); margin-top: 12px; overflow: hidden; position: relative; }
+.slide-deck:focus { outline: none; }
+.slide-deck > section { height: 100%; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #bba2df transparent; animation: slide-enter .35s ease both; }
+.slide-deck > section[hidden] { display: none !important; }
+.slide-deck > .hero { min-height: 0; padding-block: 38px; }
+.slide-deck h1 { font-size: clamp(55px, 5.5vw, 76px); }
+.slide-deck .hero-art-frame { max-width: 400px; justify-self: center; }
+.slide-deck > .section { padding-block: 40px; }
+.slide-deck > .about-section { align-content: start; }
+.slide-deck > .expertise-section, .slide-deck > .journey-section { display: flex; flex-direction: column; justify-content: flex-start; }
+.slide-deck .about-text { margin-top: 18px; }
+.slide-deck .competition-row { padding-block: 17px; }
+.slide-deck .section-heading { margin-bottom: 24px; }
+.slide-deck .section-intro { font-size: 14px; margin-bottom: 24px; }
+.deck-controls { height: 74px; padding: 12px 4px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
+.deck-controls .deck-label { display: flex; align-items: center; gap: 18px; font-size: 12px; }
+.deck-label strong { font-size: 15px; color: var(--accent); font-weight: 700; }
+.deck-label strong span { color: #9990a8; font-weight: 500; font-size: 12px; }
+.deck-controls .deck-dots { display: flex; gap: 2px; }
+.deck-dots button { width: 26px; height: 32px; background: transparent; display: grid; place-items: center; }
+.deck-dots button span { width: 6px; height: 6px; background: #c8bfd7; border-radius: 50%; transition: width .2s, background .2s; }
+.deck-dots button[aria-current="step"] span { width: 18px; border-radius: 4px; background: var(--accent); }
+.deck-controls .deck-arrows { justify-content: flex-end; gap: 10px; }
+.deck-arrows button { width: 42px; height: 42px; border-radius: 9px; background: var(--accent); color: white; font-size: 22px; transition: background .2s; }
+.deck-arrows button:hover:not(:disabled) { background: #6230bc; }
+.deck-arrows button:disabled { background: #e6e0ef; color: #a298b0; cursor: default; }
+@keyframes slide-enter { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
+@media (max-height: 760px) and (min-width: 701px) {
+  .slide-deck > .hero { padding-block: 26px; }
+  .slide-deck .hero-description { font-size: 13px; margin-top: 16px; }
+  .slide-deck .hero-specialty { margin-top: 18px; font-size: 13px; }
+  .slide-deck .hero-art-frame { max-width: 340px; }
+  .slide-deck .hero-actions { margin-top: 18px; }
+}
+@media (max-width: 700px) {
+  .header { height: 72px; min-height: 72px; }
+  main.wrap.slide-deck { height: calc(100dvh - 150px); margin-top: 10px; }
+  .slide-deck > .hero { padding: 30px 25px; align-content: start; }
+  .slide-deck h1 { font-size: clamp(50px, 12vw, 68px); }
+  .slide-deck > .section { padding-block: 32px; }
+  .slide-deck > .expertise-section, .slide-deck > .journey-section { justify-content: flex-start; }
+  .slide-deck > .about-section { align-content: start; }
+  .slide-deck > .contact-section { align-content: start; }
+  .deck-controls { height: 68px; grid-template-columns: 1fr auto; gap: 12px; }
+  .deck-controls .deck-label { gap: 12px; font-size: 11px; }
+  .deck-controls .deck-dots { display: none; }
+  .deck-arrows button { width: 40px; height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) { .slide-deck > section { animation: none; } }
+@media print { body { height: auto; overflow: visible; }main.wrap.slide-deck { height: auto; overflow: visible; }.slide-deck > section[hidden], .slide-deck > section { display: block !important; height: auto; overflow: visible; animation: none; break-before: page; }.deck-controls, .header, .hero-actions { display: none; } }
