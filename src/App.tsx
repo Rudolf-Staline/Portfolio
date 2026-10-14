@@ -242,7 +242,7 @@ function App() {
           <div className="about-grid">
             <div className="about-lead">
               <p className="eyebrow"><span />À propos</p>
-              <h2>Un parcours entre modèles<br />et applications<span className="period" aria-hidden="true">.</span></h2>
+              <h2>Un parcours entre modèles<br /><em>et applications</em><span className="period" aria-hidden="true">.</span></h2>
               <a className="text-link on-dark-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <Arrow diagonal /></a>
             </div>
             <div className="about-body">
