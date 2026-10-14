@@ -461,8 +461,8 @@ h1, h2, h3, .wordmark, .about-facts strong { font-family: 'Sora', sans-serif; }
   .motion-scene .hero-copy, .motion-scene .hero-art { animation: none; }
   .motion-item { opacity: 0; transform: translate3d(0, 28px, 0); transition: opacity .65s ease, transform .85s cubic-bezier(.16,1,.3,1); }
   .motion-item.is-visible, .motion-item:focus-within { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: var(--motion-delay, 0ms); }
-  .motion-item[data-motion-kind="heading"] { clip-path: inset(0 0 100% 0); transform: translate3d(0, 36px, 0); transition: opacity .6s ease, transform 1s cubic-bezier(.16,1,.3,1), clip-path 1s cubic-bezier(.16,1,.3,1); }
-  .motion-item[data-motion-kind="heading"].is-visible, .motion-item[data-motion-kind="heading"]:focus-within { clip-path: inset(-10% -5% -10% -5%); transform: none; }
+  .motion-item[data-motion-kind="heading"] { transform: translate3d(0, 36px, 0); transition: opacity .6s ease, transform 1s cubic-bezier(.16,1,.3,1); }
+  .motion-item[data-motion-kind="heading"].is-visible, .motion-item[data-motion-kind="heading"]:focus-within { transform: none; }
   .motion-scene .hero-orbit { animation: orbit-drift 7s ease-in-out infinite alternate; animation-play-state: paused; }
   .motion-scene.scene-visible .hero-orbit { animation-play-state: running; }
   .motion-scene .hero-art-frame::before { animation: shape-drift 9s ease-in-out infinite alternate; animation-play-state: paused; }
