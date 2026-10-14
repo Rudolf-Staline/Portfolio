@@ -67,7 +67,6 @@ export const projects: Project[] = [
     ],
     stack: ['Python', 'scikit-learn', 'Optuna', 'SQLite', 'Pytest'],
     links: { code: 'https://github.com/Rudolf-Staline/autonomous-automl', demo: null },
-    status: "Projet personnel · Build Week",
     featured: true,
   },
   {

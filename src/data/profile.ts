@@ -11,7 +11,7 @@ export const profile = {
   about: [
     "Mon parcours a commencé à l’IMSP, au Bénin, où j’ai suivi une licence en TIC et des classes préparatoires scientifiques. J’ai ensuite rejoint l’École Centrale Casablanca pour poursuivre ma formation d’ingénieur.",
     "Je travaille surtout avec Python et TypeScript. Ce qui m’intéresse, c’est aussi ce qui vient après le modèle : pouvoir le réutiliser, comprendre ses résultats et construire une interface pour l’exploiter. C’est ce que j’ai fait avec RiskSim, du moteur de simulation à l’application Windows.",
-    "Les compétitions Kaggle et Zindi occupent une place importante dans mes projets. J’y ai travaillé sur des données financières, des observations satellitaires et la reconnaissance vocale multilingue. Ces participations m’ont valu trois médailles de bronze ; les résultats et les travaux associés sont présentés plus haut.",
+    "Les compétitions Kaggle et Zindi occupent une place importante dans mes projets. J’y ai travaillé sur des données financières, des observations satellitaires et la reconnaissance vocale multilingue. Ces participations m’ont valu trois médailles de bronze.",
   ],
   interests: [
     'Finance quantitative',
