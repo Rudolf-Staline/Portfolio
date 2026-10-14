@@ -1,1 +1,10 @@
-PLACEHOLDER
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&family=Sora:wght@400..800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* See local Portfolio-main for full file - RESTORE IN PROGRESS */
+:root { font-family: 'Manrope', sans-serif; color: #201637; background: #f4f2f9; font-synthesis: none; --paper: #fff; --ink: #201637; --muted: #686276; --accent: #7440d7; --deep: #302052; --line: #e6e0f0; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { margin: 0; min-width: 320px; }
