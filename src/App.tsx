@@ -61,20 +61,18 @@ function App() {
   const [slideIndex, setSlideIndex] = useState(slideFromHash)
   const activeSlide = slides[slideIndex]
   const deck = useRef<HTMLElement>(null)
-  const touchStart = useRef<{ x: number; y: number; atTop: boolean; atBottom: boolean } | null>(null)
-  const scrollEntry = useRef<'start' | 'end'>('start')
-  const wheelGesture = useRef({ last: 0, total: 0, direction: 0, consumed: false, internal: false, lockedUntil: 0 })
-  const navigateTo = (index: number, entry: 'start' | 'end' = 'start') => {
-    scrollEntry.current = entry
+  const navigateTo = (index: number, behavior: ScrollBehavior = 'smooth') => {
     const next = Math.max(0, Math.min(slides.length - 1, index))
-    setSlideIndex(next)
+    const container = deck.current
+    const section = container?.querySelector<HTMLElement>(`#${slides[next].id}`)
+    if (!container || !section) return
+    const top = section.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop
+    container.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior })
     setMenuOpen(false)
-    const hash = `#${slides[next].id}`
-    if (window.location.hash !== hash) window.history.pushState(null, '', hash)
   }
 
   useEffect(() => {
-    const syncHash = () => { setSlideIndex(slideFromHash()); setMenuOpen(false) }
+    const syncHash = () => navigateTo(slideFromHash())
     const followAnchor = (event: MouseEvent) => {
       if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
       const target = event.target instanceof Element ? event.target.closest('a') : null
@@ -95,11 +93,29 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const section = deck.current?.querySelector<HTMLElement>(`#${activeSlide.id}`)
-    if (section) section.scrollTop = scrollEntry.current === 'end' ? section.scrollHeight - section.clientHeight : 0
-    scrollEntry.current = 'start'
-    deck.current?.focus({ preventScroll: true })
-  }, [activeSlide.id])
+    navigateTo(slideFromHash(), 'instant')
+    const container = deck.current
+    if (!container) return
+    let frame = 0
+    const syncPosition = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        const top = container.getBoundingClientRect().top
+        const sections = Array.from(container.querySelectorAll<HTMLElement>(':scope > section'))
+        // The panel crossing the middle of the viewport is the current section.
+        const index = sections.findIndex(section => {
+          const bounds = section.getBoundingClientRect()
+          return bounds.top <= top + container.clientHeight / 2 && bounds.bottom > top + container.clientHeight / 2
+        })
+        if (index < 0) return
+        setSlideIndex(index)
+        const hash = `#${slides[index].id}`
+        if (window.location.hash !== hash) window.history.replaceState(null, '', hash)
+      })
+    }
+    container.addEventListener('scroll', syncPosition, { passive: true })
+    return () => { container.removeEventListener('scroll', syncPosition); cancelAnimationFrame(frame) }
+  }, [])
 
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
@@ -113,56 +129,6 @@ function App() {
     window.addEventListener('keydown', key)
     return () => window.removeEventListener('keydown', key)
   }, [slideIndex, selected, menuOpen])
-
-  useEffect(() => {
-    const onWheel = (event: WheelEvent) => {
-      if (selected || menuOpen || event.ctrlKey || Math.abs(event.deltaX) >= Math.abs(event.deltaY)) return
-      const section = deck.current?.querySelector<HTMLElement>(`#${activeSlide.id}`)
-      if (!section || !event.deltaY) return
-      const now = performance.now()
-      const gesture = wheelGesture.current
-      const direction = Math.sign(event.deltaY)
-      // A gesture is consumed once, including its trackpad momentum tail.
-      if (now - gesture.last > 180 || gesture.direction !== direction) {
-        gesture.total = 0
-        gesture.consumed = false
-        gesture.internal = false
-      }
-      gesture.last = now
-      gesture.direction = direction
-      if (gesture.consumed || now < gesture.lockedUntil) {
-        gesture.consumed = true
-        event.preventDefault()
-        return
-      }
-      const canScroll = direction > 0
-        ? section.scrollTop + section.clientHeight < section.scrollHeight - 2
-        : section.scrollTop > 2
-      if (canScroll) {
-        gesture.internal = true
-        gesture.total = 0
-        // The pointer may be over the header or the controls rather than the slide.
-        if (!(event.target instanceof Node) || !section.contains(event.target)) {
-          event.preventDefault()
-          const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? section.clientHeight : 1
-          section.scrollTop += event.deltaY * unit
-        }
-        return
-      }
-      event.preventDefault()
-      if (gesture.internal) { gesture.consumed = true; return }
-      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? section.clientHeight : 1
-      gesture.total += event.deltaY * unit
-      if (Math.abs(gesture.total) < 40) return
-      const next = slideIndex + direction
-      if (next < 0 || next >= slides.length) return
-      gesture.consumed = true
-      gesture.lockedUntil = now + 700
-      navigateTo(next, direction < 0 ? 'end' : 'start')
-    }
-    window.addEventListener('wheel', onWheel, { passive: false })
-    return () => window.removeEventListener('wheel', onWheel)
-  }, [slideIndex, activeSlide.id, selected, menuOpen])
 
   const dialog = useRef<HTMLDialogElement>(null)
   const visibleProjects = projects.filter(project => !project.placeholder)
@@ -202,29 +168,8 @@ function App() {
         </nav>
       </header>
 
-      <main id="main" className="wrap slide-deck" ref={deck} tabIndex={-1} aria-label={`${activeSlide.label} — slide ${slideIndex + 1} sur ${slides.length}`} onTouchStart={event => {
-        const touch = event.touches[0]
-        const section = deck.current?.querySelector<HTMLElement>(`#${activeSlide.id}`)
-        touchStart.current = touch && section ? {
-          x: touch.clientX, y: touch.clientY,
-          atTop: section.scrollTop <= 2,
-          atBottom: section.scrollTop + section.clientHeight >= section.scrollHeight - 2,
-        } : null
-      }} onTouchEnd={event => {
-        const start = touchStart.current
-        touchStart.current = null
-        const touch = event.changedTouches[0]
-        if (!start || !touch || selected || menuOpen) return
-        const dx = touch.clientX - start.x
-        const dy = touch.clientY - start.y
-        if (Math.abs(dy) > 70 && Math.abs(dy) > Math.abs(dx) * 2) {
-          if (dy < 0 && start.atBottom) navigateTo(slideIndex + 1)
-          if (dy > 0 && start.atTop) navigateTo(slideIndex - 1, 'end')
-        } else if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 2) {
-          navigateTo(slideIndex + (dx < 0 ? 1 : -1))
-        }
-      }}>
-        <section className="hero" id="accueil" aria-hidden={activeSlide.id !== 'accueil'} style={{ transform: `translateY(${(slides.findIndex(slide => slide.id === 'accueil') - slideIndex) * 100}%)` }} {...(activeSlide.id !== 'accueil' ? { inert: '' } : {})}>
+      <main id="main" className="wrap slide-deck" ref={deck} tabIndex={-1} aria-label="Portfolio de Rudolf Hounlete">
+        <section className="hero" id="accueil">
           <div className="hero-copy">
             <p className="hello">Bonjour, moi c’est Rudolf.</p>
             <h1>Rudolf<br />Hounlete<span>.</span></h1><p className="hero-specialty">{profile.heroFocus}</p>
@@ -237,17 +182,17 @@ function App() {
           </div><span className="hero-orbit" aria-hidden="true" /></div>
         </section>
 
-        <section className="section about-section" id="apropos" aria-hidden={activeSlide.id !== 'apropos'} style={{ transform: `translateY(${(slides.findIndex(slide => slide.id === 'apropos') - slideIndex) * 100}%)` }} {...(activeSlide.id !== 'apropos' ? { inert: '' } : {})}>
+        <section className="section about-section" id="apropos">
           <div><p className="eyebrow"><span /> À propos</p><h2>Un parcours entre<br />modèles et applications<span>.</span></h2>{profile.about.map(paragraph => <p className="about-text" key={paragraph}>{paragraph}</p>)}<a className="text-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <Arrow diagonal /></a></div>
           <div className="about-facts"><div><strong>3</strong><span>Médailles de bronze<br />Kaggle & Zindi</span></div><div><strong>2026</strong><span>Stage chez CHOUBEL<br />RiskSim · Python & React</span></div></div>
         </section>
 
-        <section className="section expertise-section" id="competences" aria-hidden={activeSlide.id !== 'competences'} style={{ transform: `translateY(${(slides.findIndex(slide => slide.id === 'competences') - slideIndex) * 100}%)` }} {...(activeSlide.id !== 'competences' ? { inert: '' } : {})}>
+        <section className="section expertise-section" id="competences">
           <div className="section-heading"><div><p className="eyebrow"><span /> Compétences</p><h2>Mes outils de travail<span>.</span></h2></div><p className="section-note">Du traitement des données à l’application.</p></div>
           <div className="skill-list">{skills.map(group => <div key={group.label}><span className="skill-symbol" aria-hidden="true">{group.label === 'Langages' ? '</>' : group.label === 'Web & produit' ? '▣' : group.label === 'IA & données' ? '◈' : '⌘'}</span><h3>{group.label}</h3><p>{group.items.join(' · ')}</p></div>)}</div>
         </section>
 
-        <section className="section competition-section" id="competitions" aria-hidden={activeSlide.id !== 'competitions'} style={{ transform: `translateY(${(slides.findIndex(slide => slide.id === 'competitions') - slideIndex) * 100}%)` }} {...(activeSlide.id !== 'competitions' ? { inert: '' } : {})}>
+        <section className="section competition-section" id="competitions">
           <div className="section-heading"><div><p className="eyebrow"><span /> Kaggle & Zindi</p><h2>Résultats en compétition<span>.</span></h2></div><span className="section-note">2026 · 3 médailles de bronze</span></div>
           <p className="section-intro">Sur Kaggle et Zindi, j’ai abordé des problèmes très différents : reconnaître la parole dans plusieurs langues, repérer des bassins aquacoles depuis l’espace et prédire le stress financier. Voici les résultats de ces participations.</p>
           <div className="competition-list">{competitions.map(entry => (
@@ -259,12 +204,12 @@ function App() {
           ))}</div>
         </section>
 
-        <section className="section internship-section" id="experience" aria-hidden={activeSlide.id !== 'experience'} style={{ transform: `translateY(${(slides.findIndex(slide => slide.id === 'experience') - slideIndex) * 100}%)` }} {...(activeSlide.id !== 'experience' ? { inert: '' } : {})}>
+        <section className="section internship-section" id="experience">
           <div className="section-heading"><div><p className="eyebrow"><span /> Expérience professionnelle</p><h2>CHOUBEL<span>.</span></h2></div><span className="section-note">Stage d’observation · 15 juillet — 28 août 2026</span></div>
           <div className="internship-content"><div><h3>RiskSim — Simulateur de risques projet</h3><p>Durant mon stage chez CHOUBEL, j’ai développé RiskSim pour analyser les risques d’un projet à partir d’un registre Excel. L’utilisateur peut modifier ses hypothèses, comparer des scénarios et calculer des réserves budgétaires.</p><p>J’ai travaillé sur le moteur Python, puis fait évoluer l’interface de Streamlit vers React. La préparation de la distribution Windows et de la documentation a prolongé ce travail jusqu’à la prise en main de l’application.</p><button className="text-link" type="button" onClick={() => setSelected(internship)}>Voir le projet <Arrow diagonal /></button></div><div className="internship-delivery"><span>Travail réalisé</span><ul><li>Moteur de simulation et analyse de sensibilité</li><li>Migration de Streamlit vers React</li><li>Distribution Windows et documentation</li></ul><p>Python · NumPy · React · TypeScript</p></div></div>
         </section>
 
-        <section className="section projects-section" id="projets" aria-hidden={activeSlide.id !== 'projets'} style={{ transform: `translateY(${(slides.findIndex(slide => slide.id === 'projets') - slideIndex) * 100}%)` }} {...(activeSlide.id !== 'projets' ? { inert: '' } : {})}>
+        <section className="section projects-section" id="projets">
           <div className="section-heading"><div><p className="eyebrow"><span /> Logiciel & ingénierie</p><h2>Projets sélectionnés<span>.</span></h2></div><span className="section-note">Projets personnels et académiques</span></div>
           <p className="section-intro">En parallèle des compétitions, je développe des outils et des prototypes. Cette sélection présente aussi bien des projets personnels que des travaux réalisés pendant ma formation.</p>
           <div className="project-grid">{featuredProjects.map(project => (
@@ -276,9 +221,9 @@ function App() {
           <details className="other-projects"><summary>Autres travaux</summary>{otherProjects.map(project => <article key={project.index}><h3>{project.title}</h3><p>{project.tagline}</p><button className="text-link" type="button" onClick={() => setSelected(project)}>Voir le projet <Arrow diagonal /></button></article>)}</details>
         </section>
 
-        <section className="section journey-section" id="parcours" aria-hidden={activeSlide.id !== 'parcours'} style={{ transform: `translateY(${(slides.findIndex(slide => slide.id === 'parcours') - slideIndex) * 100}%)` }} {...(activeSlide.id !== 'parcours' ? { inert: '' } : {})}><div className="section-heading"><div><p className="eyebrow"><span /> Formation</p><h2>Mon parcours<span>.</span></h2></div></div><div className="education-list">{education.map(item => <article key={item.school + item.detail}><span className="education-period">{item.period}</span><div><h3>{item.school}</h3><p>{item.detail}</p></div><span className="education-place">{item.location}</span></article>)}</div></section>
+        <section className="section journey-section" id="parcours"><div className="section-heading"><div><p className="eyebrow"><span /> Formation</p><h2>Mon parcours<span>.</span></h2></div></div><div className="education-list">{education.map(item => <article key={item.school + item.detail}><span className="education-period">{item.period}</span><div><h3>{item.school}</h3><p>{item.detail}</p></div><span className="education-place">{item.location}</span></article>)}</div></section>
 
-        <section className="contact-section" id="contact" aria-hidden={activeSlide.id !== 'contact'} style={{ transform: `translateY(${(slides.findIndex(slide => slide.id === 'contact') - slideIndex) * 100}%)` }} {...(activeSlide.id !== 'contact' ? { inert: '' } : {})}><div><p className="eyebrow"><span /> Contact</p><h2>Un stage dans votre équipe<span> ?</span></h2><p>Je recherche un stage en développement logiciel ou en machine learning appliqué. Si mon parcours correspond à ce que vous cherchez, je serais heureux d’échanger sur votre équipe et les projets auxquels je pourrais contribuer.</p></div><a className="button button-dark" href={`mailto:${contact.email}?subject=Proposition%20de%20stage`}>Proposer un stage <span className="round-arrow"><Arrow diagonal /></span></a><div className="contact-links"><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><a className="text-link" href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>{contact.linkedin && <a className="text-link" href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>}</div></section>
+        <section className="contact-section" id="contact"><div><p className="eyebrow"><span /> Contact</p><h2>Un stage dans votre équipe<span> ?</span></h2><p>Je recherche un stage en développement logiciel ou en machine learning appliqué. Si mon parcours correspond à ce que vous cherchez, je serais heureux d’échanger sur votre équipe et les projets auxquels je pourrais contribuer.</p></div><a className="button button-dark" href={`mailto:${contact.email}?subject=Proposition%20de%20stage`}>Proposer un stage <span className="round-arrow"><Arrow diagonal /></span></a><div className="contact-links"><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><a className="text-link" href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>{contact.linkedin && <a className="text-link" href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>}</div></section>
       </main>
       <footer className="wrap deck-controls" aria-label="Navigation des slides">
         <div className="deck-label" aria-live="polite"><strong>{String(slideIndex + 1).padStart(2, '0')}<span> / {String(slides.length).padStart(2, '0')}</span></strong><span>{activeSlide.label}</span><span className="deck-scroll-hint">Défilez pour naviguer</span></div>

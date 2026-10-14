@@ -151,14 +151,15 @@ footer { display: flex; justify-content: space-between; gap: 25px; padding-block
 @media (max-width: 380px) { .skill-list { grid-template-columns: 1fr; }.hero-distinction { font-size: 10px; }.hero-actions { align-items: stretch; flex-direction: column; }.hero-actions .button { justify-content: space-between; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }*, *::before, *::after { animation: none !important; transition: none !important; } }
 
-/* Presentation mode: one section per viewport, with independent overflow. */
+/* Native vertical slides: the gesture moves the panels continuously. */
 body { height: 100dvh; overflow: hidden; }
 .header { height: 82px; min-height: 82px; }
-main.wrap.slide-deck { height: calc(100dvh - 168px); margin-top: 12px; overflow: hidden; position: relative; }
+main.wrap.slide-deck { height: calc(100dvh - 168px); margin-top: 12px; overflow-x: hidden; overflow-y: auto; position: relative; scroll-snap-type: y mandatory; overscroll-behavior-y: contain; scrollbar-width: none; }
 .slide-deck:focus { outline: none; }
-.slide-deck > section { height: 100%; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #bba2df transparent; animation: slide-enter .35s ease both; }
+.slide-deck > section { min-height: 100%; height: auto; overflow: visible; scroll-snap-align: start; scroll-snap-stop: always; }
+.slide-deck::-webkit-scrollbar { display: none; }
 .slide-deck > section[hidden] { display: none !important; }
-.slide-deck > .hero { min-height: 0; padding-block: 38px; }
+.slide-deck > .hero { min-height: 100%; padding-block: 38px; }
 .slide-deck h1 { font-size: clamp(55px, 5.5vw, 76px); }
 .slide-deck .hero-art-frame { max-width: 400px; justify-self: center; }
 .slide-deck > .section { padding-block: 40px; }
@@ -205,13 +206,6 @@ main.wrap.slide-deck { height: calc(100dvh - 168px); margin-top: 12px; overflow:
 @media (prefers-reduced-motion: reduce) { .slide-deck > section { animation: none; } }
 @media print { body { height: auto; overflow: visible; }main.wrap.slide-deck { height: auto; overflow: visible; }.slide-deck > section[hidden], .slide-deck > section { display: block !important; height: auto; overflow: visible; animation: none; break-before: page; }.deck-controls, .header, .hero-actions { display: none; } }
 
-/* The scroll gesture moves the entire slide, rather than scrolling the document. */
-.slide-deck > section { position: absolute; inset: 0; width: 100%; height: 100%; animation: none; transition: transform .65s cubic-bezier(.22,.75,.2,1), visibility 0s; will-change: transform; background-color: white; }
-.slide-deck > .about-section, .slide-deck > .contact-section { background-color: var(--deep); }
-.slide-deck > .competition-section { background-color: #f7f4fc; }
-.slide-deck > .projects-section { background-color: #f8f6fc; }
-.slide-deck > section[aria-hidden="true"] { visibility: hidden; pointer-events: none; transition: transform .65s cubic-bezier(.22,.75,.2,1), visibility 0s .65s; }
 .deck-scroll-hint { color: #938a9f; font-size: 10px; white-space: nowrap; }
 @media (max-width: 1000px) { .deck-scroll-hint { display: none; } }
-@media (prefers-reduced-motion: reduce) { .slide-deck > section, .slide-deck > section[aria-hidden="true"] { transition: none; } }
-@media print { .slide-deck > section { position: static; transform: none !important; visibility: visible !important; } }
+@media print { main.wrap.slide-deck { scroll-snap-type: none; }.slide-deck > section { min-height: 0; } }
