@@ -2,16 +2,15 @@ export const profile = {
   name: 'Rudolf Hounlete',
   title: 'Élève ingénieur — École Centrale Casablanca · Promotion 2028',
   subtitle: 'Data engineering · IA appliquée · sciences appliquées',
-  heroTitle: 'Je conçois des applications',
-  heroFocus: 'et j’entraîne des modèles de machine learning qui résolvent des problèmes concrets.',
-  heroDescription: 'Élève ingénieur à Centrale Casablanca, je recherche un stage de fin d’année en développement logiciel ou en machine learning appliqué.',
+  heroTitle: 'Rudolf Hounlete',
+  heroFocus: 'Machine learning & développement logiciel.',
+  heroDescription: 'Élève ingénieur à l’École Centrale Casablanca. Je recherche un stage en développement logiciel ou en machine learning appliqué.',
   /** Short, factual positioning line used in the hero. */
   pitch:
     "Je construis des applications web et des modèles de machine learning, avec Python et TypeScript.",
   about: [
-    "Je suis élève ingénieur généraliste à l’École Centrale Casablanca, après une licence en TIC et des classes préparatoires scientifiques à l’IMSP, au Bénin.",
-    "Mon terrain de jeu : la classification sur données tabulaires et satellitaires, la transcription vocale multilingue et la simulation de risque. Ce qui me motive, c’est d’aller au-delà du notebook : empaqueter un modèle dans une CLI, l’intégrer dans une interface React ou le déployer sur un poste client.",
-    "Lors de mon stage chez CHOUBEL, j’ai développé le moteur Python et l’interface React de RiskSim, un outil de simulation de risques projet, puis préparé sa distribution Windows.",
+    "Élève ingénieur à l’École Centrale Casablanca, je travaille sur des projets de machine learning et de développement logiciel. J’ai obtenu trois médailles de bronze sur Kaggle et Zindi.",
+    "J’utilise principalement Python pour l’analyse des données, les modèles et la simulation, et TypeScript avec React pour les interfaces. Ma formation associe une licence en TIC et des classes préparatoires scientifiques à l’IMSP, au Bénin.",
   ],
   interests: [
     'Finance quantitative',

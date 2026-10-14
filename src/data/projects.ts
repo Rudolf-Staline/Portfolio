@@ -10,9 +10,9 @@ export const projects: Project[] = [
     period: '2026',
     tagline: "Modèle LightGBM pour prédire le stress financier à partir de données transactionnelles, avec des variables calculées sur une fenêtre de six mois.",
     challenge: "Comparer les agrégats et les tendances des transactions sans perdre l’information contenue dans les valeurs mensuelles.",
-    outcome: "EXP005 utilise 257 variables et atteint une ROC AUC moyenne de 0,885 en validation croisée, avec un écart-type de 0,0076. Sur le jeu de validation séparé, la ROC AUC est de 0,883.",
+    outcome: "La participation est classée 4e sur 262. Le dépôt public conserve des expériences antérieures : EXP005 utilise 257 variables et atteint une ROC AUC moyenne de 0,885 en validation croisée, avec un écart-type de 0,0076. Sur le jeu de validation séparé, la ROC AUC est de 0,883.",
     limitation: "Dans EXP007, retirer 12 variables réduit le modèle à 245 variables, mais ne fait pas progresser la ROC AUC moyenne : 0,8849 contre 0,8851. Ces chiffres décrivent des expériences locales, pas le classement final de la compétition.",
-    fact: "ROC AUC : 0,885 · validation croisée de l’expérience EXP005",
+    fact: "4e / 262 · classement privé Zindi",
     evidence: {"label": "Consulter les métriques EXP005", "href": "https://github.com/Rudolf-Staline/financial-stress-prediction/blob/main/EXP005_metadata.json"},
     highlights: [
       'Baseline LightGBM puis comparaison de plusieurs préparations des données',
@@ -43,7 +43,7 @@ export const projects: Project[] = [
     ],
     stack: ['Python', 'LightGBM', 'PyTorch', 'GRU', 'Sentinel-1 / 2'],
     links: { code: 'https://github.com/Rudolf-Staline/GeoAi', demo: null },
-    status: 'En cours',
+    status: 'Bronze · Zindi',
     featured: true,
   },
   {
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     ],
     stack: ['Python', 'scikit-learn', 'Optuna', 'SQLite', 'Pytest'],
     links: { code: 'https://github.com/Rudolf-Staline/autonomous-automl', demo: null },
-    status: "Disponible",
+    status: "Projet personnel · Build Week",
     featured: true,
   },
   {
@@ -112,7 +112,7 @@ export const projects: Project[] = [
     ],
     stack: ['Python', 'PyTorch', 'CTC', 'MMS', 'Traitement audio'],
     links: { code: null, demo: null },
-    status: 'En cours',
+    status: 'Bronze · Zindi',
   },
   {
     index: '01',

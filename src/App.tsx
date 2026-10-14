@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { competitions } from './data/competitions'
 import { projects } from './data/projects'
 import { education } from './data/education'
 import { skills } from './data/skills'
@@ -43,6 +44,9 @@ function App() {
   const [selected, setSelected] = useState<Project | null>(null)
   const dialog = useRef<HTMLDialogElement>(null)
   const visibleProjects = projects.filter(project => !project.placeholder)
+  const featuredProjects = visibleProjects.filter(project => ['automl', '01', '02', '03'].includes(project.index))
+  const otherProjects = visibleProjects.filter(project => project.index === '05')
+  const internship = projects.find(project => project.index === 'risksim')!
 
   useEffect(() => {
     const element = dialog.current
@@ -69,9 +73,9 @@ function App() {
         <a className="wordmark" href="#accueil" aria-label="Rudolf Hounlete — accueil">Rudolf<br />Hounlete<span>.</span></a>
         <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? 'Fermer' : 'Menu'} <span aria-hidden="true">{menuOpen ? '−' : '+'}</span></button>
         <nav id="navigation" className={menuOpen ? 'navigation is-open' : 'navigation'} aria-label="Navigation principale">
-          <a href="#parcours" onClick={() => setMenuOpen(false)}>Parcours</a>
+          <a href="#competitions" onClick={() => setMenuOpen(false)}>Compétitions</a>
           <a href="#projets" onClick={() => setMenuOpen(false)}>Projets</a>
-          <a href="#apropos" onClick={() => setMenuOpen(false)}>À propos</a>
+          <a href="#experience" onClick={() => setMenuOpen(false)}>Expérience</a>
           <a href="#contact" className="nav-contact" onClick={() => setMenuOpen(false)}>Stage <Arrow diagonal /></a>
         </nav>
       </header>
@@ -79,10 +83,10 @@ function App() {
       <main id="main" className="wrap">
         <section className="hero" id="accueil">
           <div className="hero-copy">
-            <p className="hello"><span className="hello-mark" aria-hidden="true">✳</span> Bonjour, moi c’est Rudolf.</p>
-            <h1>{profile.heroTitle}<br /><span>{profile.heroFocus}</span></h1>
+            <p className="hello">Élève ingénieur · Centrale Casablanca</p>
+            <h1>{profile.heroTitle}<span className="hero-specialty">{profile.heroFocus}</span></h1>
             <p className="hero-description">{profile.heroDescription}</p>
-            <p className="hero-location">Casablanca, Maroc · Python · TypeScript · React</p>
+            <p className="hero-location">Casablanca, Maroc</p><a className="hero-distinction" href="#competitions"><span className="bronze-dot" aria-hidden="true" />3 médailles de bronze · Kaggle & Zindi <Arrow diagonal /></a>
             <div className="hero-actions"><a className="button button-yellow" href="#projets">Voir mes projets <span className="round-arrow"><Arrow /></span></a><a className="button button-outline" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Télécharger mon CV <Arrow diagonal /></a></div>
           </div>
           <div className="hero-art has-portrait">
@@ -90,19 +94,31 @@ function App() {
           </div>
         </section>
 
-        <section className="experience-strip" aria-label="Parcours en bref">
-          <p className="eyebrow"><span /> Parcours & expérience</p>
-          <div className="experience-items"><div><strong>Centrale Casablanca</strong><span>Cycle ingénieur généraliste</span></div><div><strong>IMSP</strong><span>Licence TIC · Classes préparatoires</span></div><div><strong>CHOUBEL</strong><span>Stage · Développement de RiskSim</span></div></div>
+        <section className="section competition-section" id="competitions">
+          <div className="section-heading"><div><p className="eyebrow"><span /> Kaggle & Zindi</p><h2>Résultats en compétition<span>.</span></h2></div><span className="section-note">2026 · 3 médailles de bronze</span></div>
+          <div className="competition-list">{competitions.map(entry => (
+            <article className="competition-row" key={entry.name}>
+              <div className="competition-mark">{entry.medal ? <svg viewBox="0 0 40 48" fill="none" aria-label="Médaille de bronze" role="img"><path d="M8 2h9l7 17-9 5L8 2Z" fill="#c9ba98"/><path d="M23 2h9l-7 22-9-5 7-17Z" fill="#ead8ac"/><circle cx="20" cy="31" r="14" fill="#b78046"/><circle cx="20" cy="31" r="10" stroke="#eac59b"/><path d="m20 24 2 4 5 1-4 3 1 5-4-3-4 3 1-5-4-3 5-1 2-4Z" fill="#f4dcc0"/></svg> : <span aria-hidden="true">↗</span>}</div>
+              <div className="competition-info"><p className="project-meta">{entry.platform} · {entry.year}</p><h3>{entry.name}</h3><p>{entry.detail}</p></div>
+              <div className="competition-result"><strong>{entry.result}</strong>{entry.medal && entry.result !== 'Médaille de bronze' && <span>Bronze</span>}<div className="competition-links">{entry.projectId && <button className="text-link" type="button" onClick={() => setSelected(projects.find(project => project.index === entry.projectId)!)}>Solution <Arrow diagonal /></button>}{entry.href && <a className="text-link" href={entry.href} target="_blank" rel="noreferrer">{entry.linkLabel} <Arrow diagonal /></a>}</div></div>
+            </article>
+          ))}</div>
+        </section>
+
+        <section className="section internship-section" id="experience">
+          <div className="section-heading"><div><p className="eyebrow"><span /> Expérience professionnelle</p><h2>CHOUBEL<span>.</span></h2></div><span className="section-note">Stage d’observation · 15 juillet — 28 août 2026</span></div>
+          <div className="internship-content"><div><h3>RiskSim — Simulateur de risques projet</h3><p>J’ai développé un simulateur Monte Carlo permettant d’importer un registre de risques Excel, de comparer des scénarios et de calculer des réserves budgétaires. Le projet comprend un moteur Python, une interface React et une distribution Windows.</p><button className="text-link" type="button" onClick={() => setSelected(internship)}>Voir le projet <Arrow diagonal /></button></div><div className="internship-delivery"><span>Travail réalisé</span><ul><li>Moteur de simulation et analyse de sensibilité</li><li>Migration de Streamlit vers React</li><li>Distribution Windows et documentation</li></ul><p>Python · NumPy · React · TypeScript</p></div></div>
         </section>
 
         <section className="section projects-section" id="projets">
-          <div className="section-heading"><div><p className="eyebrow"><span /> Machine learning & ingénierie</p><h2>Compétitions et projets<span>.</span></h2></div><span className="section-note">Zindi · Build Week · Projets appliqués</span></div>
-          <div className="project-grid">{visibleProjects.map(project => (
+          <div className="section-heading"><div><p className="eyebrow"><span /> Logiciel & ingénierie</p><h2>Projets sélectionnés<span>.</span></h2></div><span className="section-note">Projets personnels et académiques</span></div>
+          <div className="project-grid">{featuredProjects.map(project => (
             <article className="project-card" key={project.index}>
               <button type="button" className="project-preview" onClick={() => setSelected(project)} aria-label={`Découvrir ${project.title}`}><ProjectVisual project={project} /><span className="preview-arrow"><Arrow diagonal /></span></button>
-              <div className="project-copy"><p className="project-meta">{project.category ?? project.context}<span>{project.period}</span></p><h3>{project.title}</h3><p className="project-summary">{project.tagline}</p>{project.fact && <p className="project-fact">{project.fact}</p>}{project.status && <p className="project-status">{project.status}</p>}<button className="text-link" type="button" onClick={() => setSelected(project)}>Voir la fiche <Arrow diagonal /></button>{project.links.code && <a className="text-link project-code-link" href={project.links.code} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>}{project.links.demo && <a className="text-link project-code-link" href={project.links.demo} target="_blank" rel="noreferrer">Démo <Arrow diagonal /></a>}</div>
+              <div className="project-copy"><p className="project-meta">{project.category ?? project.context}<span>{project.period}</span></p><h3>{project.title}</h3><p className="project-summary">{project.tagline}</p>{project.status && <p className="project-status">{project.status}</p>}<button className="text-link" type="button" onClick={() => setSelected(project)}>Voir la fiche <Arrow diagonal /></button>{project.links.code && <a className="text-link project-code-link" href={project.links.code} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>}{project.links.demo && <a className="text-link project-code-link" href={project.links.demo} target="_blank" rel="noreferrer">Démo <Arrow diagonal /></a>}</div>
             </article>
           ))}</div>
+          <details className="other-projects"><summary>Autres travaux</summary>{otherProjects.map(project => <article key={project.index}><h3>{project.title}</h3><p>{project.tagline}</p><button className="text-link" type="button" onClick={() => setSelected(project)}>Voir le projet <Arrow diagonal /></button></article>)}</details>
         </section>
 
         <section className="section about-section" id="apropos">

@@ -163,3 +163,43 @@ footer a:hover { color: var(--ink); }
 
 .button-outline { border: 1px solid var(--line); background: transparent; }
 .button-outline:hover { background: #f3ca6926; }
+
+.hero-specialty { display: block; margin-top: 14px; max-width: 460px; font-size: clamp(22px, 2.3vw, 29px); line-height: 1.35; letter-spacing: -.8px; }
+.hero-distinction { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; font-size: 13px; font-weight: 500; }
+.bronze-dot { width: 11px; height: 11px; border-radius: 50%; background: #b78046; box-shadow: 0 0 0 4px #b7804618; }
+.competition-section { padding-top: 40px; }
+.competition-list { border-top: 1px solid var(--line); }
+.competition-row { display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: 24px; padding: 25px 0; border-bottom: 1px solid var(--line); }
+.competition-mark svg { display: block; width: 38px; height: 46px; }
+.competition-mark > span { font-size: 24px; color: #91856c; }
+.competition-info h3 { margin: 6px 0 7px; font-size: 20px; }
+.competition-info > p:last-child { font-size: 13px; line-height: 1.6; color: var(--muted); }
+.competition-result { min-width: 175px; text-align: right; }
+.competition-result strong { display: block; font-size: 19px; font-weight: 500; letter-spacing: -.4px; }
+.competition-result > span { display: block; color: #936538; font-size: 12px; margin-top: 4px; }
+.competition-links { display: flex; justify-content: flex-end; gap: 18px; margin-top: 8px; }
+.competition-links .text-link { font-size: 12px; }
+.internship-section { border-bottom: 1px solid var(--line); }
+.internship-content { display: grid; grid-template-columns: 1.25fr 1fr; gap: 70px; }
+.internship-content h3 { font-size: 23px; margin-bottom: 18px; }
+.internship-content p { font-size: 15px; line-height: 1.8; color: var(--muted); }
+.internship-content .text-link { margin-top: 18px; }
+.internship-delivery { border-left: 3px solid var(--yellow); padding-left: 25px; }
+.internship-delivery > span { font-size: 12px; font-weight: 500; }
+.internship-delivery ul { margin: 16px 0; padding-left: 17px; font-size: 14px; line-height: 1.9; }
+.internship-delivery p { font-size: 12px; }
+.other-projects { margin-top: 38px; border-block: 1px solid var(--line); padding: 20px 0; }
+.other-projects summary { cursor: pointer; font-size: 14px; }
+.other-projects article { padding-top: 24px; }
+.other-projects h3 { font-size: 20px; margin-bottom: 10px; }
+.other-projects p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+@media (max-width: 700px) {
+  .hero-specialty { font-size: 24px; }
+  .competition-row { grid-template-columns: 34px 1fr; gap: 15px; padding: 22px 0; }
+  .competition-mark svg { width: 30px; height: 40px; }
+  .competition-info h3 { font-size: 18px; }
+  .competition-result { grid-column: 2; text-align: left; min-width: 0; }
+  .competition-links { justify-content: flex-start; }
+  .competition-result strong { font-size: 17px; }
+  .internship-content { grid-template-columns: 1fr; gap: 28px; }
+}
