@@ -243,7 +243,7 @@ function App() {
             <div className="about-lead">
               <p className="eyebrow"><span />À propos</p>
               <h2>Un parcours entre modèles<br /><em>et applications</em><span className="period" aria-hidden="true">.</span></h2>
-              <a className="text-link on-dark-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <Arrow diagonal /></a>
+              <a className="text-link on-dark-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <span className="sr-only">(s'ouvre dans un nouvel onglet)</span> <Arrow diagonal /></a>
             </div>
             <div className="about-body">
               {profile.about.map(paragraph => <p className="about-text" key={paragraph.slice(0, 24)}>{paragraph}</p>)}
@@ -297,7 +297,7 @@ function App() {
                   </div>
                   <div className="result-links">
                     {entry.projectId && <button className="text-link" type="button" onClick={() => setSelected(projects.find(project => project.index === entry.projectId)!)}>Ma solution <Arrow diagonal /></button>}
-                    {entry.href && <a className="text-link" href={entry.href} target="_blank" rel="noreferrer">{entry.linkLabel} <Arrow diagonal /></a>}
+                    {entry.href && <a className="text-link" href={entry.href} target="_blank" rel="noreferrer">{entry.linkLabel} <span className="sr-only">(s'ouvre dans un nouvel onglet)</span> <Arrow diagonal /></a>}
                   </div>
                 </li>
               )
@@ -351,8 +351,8 @@ function App() {
                 </div>
                 <div className="project-actions">
                   <button className="text-link" type="button" onClick={() => setSelected(project)}>Ouvrir la fiche <Arrow diagonal /></button>
-                  {project.links.code && <a className="text-link" href={project.links.code} target="_blank" rel="noreferrer">Code <Arrow diagonal /></a>}
-                  {project.links.demo && <a className="text-link" href={project.links.demo} target="_blank" rel="noreferrer">Démo <Arrow diagonal /></a>}
+                  {project.links.code && <a className="text-link" href={project.links.code} target="_blank" rel="noreferrer">Code <span className="sr-only">(s'ouvre dans un nouvel onglet)</span> <Arrow diagonal /></a>}
+                  {project.links.demo && <a className="text-link" href={project.links.demo} target="_blank" rel="noreferrer">Démo <span className="sr-only">(s'ouvre dans un nouvel onglet)</span> <Arrow diagonal /></a>}
                 </div>
               </article>
             ))}
@@ -394,8 +394,8 @@ function App() {
           <a className="button button-light" href={`mailto:${contact.email}?subject=Proposition%20de%20stage`}>Proposer un stage <Arrow diagonal /></a>
           <div className="contact-links">
             <a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a>
-            <a className="text-link on-dark-link" href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
-            {contact.linkedin && <a className="text-link on-dark-link" href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>}
+            <a className="text-link on-dark-link" href={contact.github} target="_blank" rel="noreferrer">GitHub <span className="sr-only">(s'ouvre dans un nouvel onglet)</span> <Arrow diagonal /></a>
+            {contact.linkedin && <a className="text-link on-dark-link" href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn <span className="sr-only">(s'ouvre dans un nouvel onglet)</span> <Arrow diagonal /></a>}
           </div>
         </div></section>
       </main>
@@ -418,7 +418,7 @@ function App() {
       </footer>
 
       <dialog ref={dialog} className="project-dialog" aria-labelledby="project-dialog-title" onCancel={closeProject} onClose={() => setSelected(null)} onClick={event => { if (event.target === event.currentTarget) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeProject() } }}>
-        {selected && <><div className="dialog-heading"><p className="eyebrow">{selected.category ?? selected.context}</p><button className="dialog-close" type="button" onClick={closeProject} aria-label="Fermer la fiche projet" autoFocus>×</button></div><h2 id="project-dialog-title">{selected.title}</h2><p className="dialog-context">{selected.context} · {selected.period}{selected.status && ` · ${selected.status}`}</p><p className="dialog-summary">{selected.tagline}</p>{selected.challenge && <><h3>Problème traité</h3><p className="case-text">{selected.challenge}</p></>}<h3>Travail réalisé</h3><ul>{selected.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul>{selected.outcome && <><h3>Livrable et résultats</h3><p className="case-text">{selected.outcome}</p></>}{selected.limitation && <><h3>Limites et enseignements</h3><p className="case-text">{selected.limitation}</p></>}{selected.evidence && <a className="text-link" href={selected.evidence.href} target="_blank" rel="noreferrer">{selected.evidence.label} <Arrow diagonal /></a>}<div className="stack">{selected.stack.map(item => <span key={item}>{item}</span>)}</div><div className="dialog-links">{selected.links.code && <a className="button button-primary" href={selected.links.code} target="_blank" rel="noreferrer">Voir le code <Arrow diagonal /></a>}{selected.links.demo && <a className="text-link" href={selected.links.demo} target="_blank" rel="noreferrer">Ouvrir la démo <Arrow diagonal /></a>}</div></>}
+        {selected && <><div className="dialog-heading"><p className="eyebrow">{selected.category ?? selected.context}</p><button className="dialog-close" type="button" onClick={closeProject} aria-label="Fermer la fiche projet" autoFocus>×</button></div><h2 id="project-dialog-title">{selected.title}</h2><p className="dialog-context">{selected.context} · {selected.period}{selected.status && ` · ${selected.status}`}</p><p className="dialog-summary">{selected.tagline}</p>{selected.challenge && <><h3>Problème traité</h3><p className="case-text">{selected.challenge}</p></>}<h3>Travail réalisé</h3><ul>{selected.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul>{selected.outcome && <><h3>Livrable et résultats</h3><p className="case-text">{selected.outcome}</p></>}{selected.limitation && <><h3>Limites et enseignements</h3><p className="case-text">{selected.limitation}</p></>}{selected.evidence && <a className="text-link" href={selected.evidence.href} target="_blank" rel="noreferrer">{selected.evidence.label} <span className="sr-only">(s'ouvre dans un nouvel onglet)</span> <Arrow diagonal /></a>}<div className="stack">{selected.stack.map(item => <span key={item}>{item}</span>)}</div><div className="dialog-links">{selected.links.code && <a className="button button-primary" href={selected.links.code} target="_blank" rel="noreferrer">Voir le code <span className="sr-only">(s'ouvre dans un nouvel onglet)</span> <Arrow diagonal /></a>}{selected.links.demo && <a className="text-link" href={selected.links.demo} target="_blank" rel="noreferrer">Ouvrir la démo <span className="sr-only">(s'ouvre dans un nouvel onglet)</span> <Arrow diagonal /></a>}</div></>}
       </dialog>
     </>
   )
