@@ -28,6 +28,11 @@ export type Project = {
   tagline: string
   /** 2–3 concrete bullet points. */
   highlights: string[]
+  challenge?: string
+  outcome?: string
+  limitation?: string
+  fact?: string
+  evidence?: Link
   /** Technology tags. */
   stack: string[]
   links: ProjectLink

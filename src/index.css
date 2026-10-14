@@ -154,3 +154,6 @@ footer a:hover { color: var(--ink); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }*, *::before, *::after { animation: none !important; transition: none !important; } }
 
 .project-status { margin-top: 12px; font-size: 11px; color: var(--muted); }
+
+.project-fact { margin-top: 12px; padding-left: 12px; border-left: 3px solid var(--yellow); font-size: 12px; line-height: 1.6; font-weight: 500; }
+.case-text { color: var(--muted); font-size: 14px; line-height: 1.75; margin: 10px 0 20px; }
