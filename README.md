@@ -6,7 +6,7 @@ Portfolio personnel : développement logiciel, machine learning et systèmes exp
 
 ## Design
 
-Fond blanc cassé, jaune doux, typographie DM Sans et composition aérée, inspirés du portfolio jaune retenu comme référence. L’accueil présente le profil à gauche et une composition de touches jaunes animées à droite. Aucun portrait ni photographie n’est utilisé.
+Fond blanc cassé, jaune doux, typographie DM Sans et composition aérée, inspirés du portfolio jaune retenu comme référence. L’accueil présente le profil à gauche et un portrait détouré devant une composition de touches jaunes animées à droite. Le portrait conserve un fond transparent et bénéficie d’une retouche légère du visage.
 
 Les projets disposent d’une illustration abstraite et d’une fiche détaillée. Les visuels portent la mention « Illustration du projet » : ce ne sont pas des captures des applications ni des résultats mesurés. Le contenu comprend RiskSim, Horizon et les projets déjà présents dans le portfolio.
 
@@ -32,6 +32,7 @@ npm run preview
 | `src/App.tsx` | Composition de la page et fiches projets |
 | `src/index.css` | Styles, responsive et animations |
 | `public/CV_Rudolf_HOUNLETE.pdf` | CV téléchargeable |
+| `public/portrait-rudolf.webp` | Portrait détouré, optimisé pour le web |
 
 Pour un projet, `visual` sélectionne une illustration (`simulation`, `calendar`, `model`, `vision`, `journal`, `signal` ou `code`). Les liens absents ne produisent pas de bouton vide. RiskSim n’affiche pas de lien vers son dépôt privé.
 
