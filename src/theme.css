@@ -1,49 +1,50 @@
 /* ══════════════════════════════════════════════════════════════════
    Rudolf Hounlete — Portfolio · Design tokens
+   « Atelier » : ink bleu-nuit, papier crème, accent vermillon.
    Single source of truth for palette, typography and spacing.
    Fonts are loaded from src/index.css (must stay the first @import).
    ══════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Surfaces & ink — warm neutrals, near-black text on off-white paper. */
-  --paper: #f7f6f3;
-  --surface: #fffefb;
-  --surface-2: #f1efe9;
-  --ink: #141317;
-  --ink-2: #46444e;
-  --muted: #7d7a85;
-  --line: #e2dfd7;
-  --line-strong: #cfcbbf;
+  /* Surfaces & ink — cool midnight ink on warm cream paper. */
+  --paper: #f3efe6;
+  --surface: #fbf9f4;
+  --surface-2: #ece7db;
+  --ink: #151a2c;
+  --ink-2: #3d4458;
+  --muted: #7a8091;
+  --line: #ddd6c8;
+  --line-strong: #c4bcab;
 
-  /* Accents — a single signal colour (vermilion) + one support hue (moss). */
-  --accent: #cf4520;
-  --accent-hover: #ae3817;
-  --accent-wash: #cf452012;
-  --accent-on: #ffffff;
-  --moss: #3f5f43;
+  /* Accents — vermilion signal + gold for medals + pine support. */
+  --accent: #e0431f;
+  --accent-hover: #c2361a;
+  --accent-wash: rgb(224 67 31 / .06);
+  --accent-on: #fffaf5;
+  --moss: #2f5d50;
 
-  /* Bronze keeps its own identity for the medals section. */
   --bronze: #a5713e;
-  --bronze-soft: #f7efe2;
-  --bronze-line: #e6d3b5;
+  --bronze-soft: #f6eddd;
+  --bronze-line: #e3d2b2;
 
   /* Dark panels (about / experience / contact slides). */
-  --dark: #17151d;
-  --dark-2: #211e2a;
-  --dark-line: #ffffff1f;
-  --dark-text: #edebe6;
-  --dark-muted: #a5a1ab;
-  --dark-accent: #ff8a5e;
+  --dark: #0d1120;
+  --dark-2: #161c31;
+  --dark-line: rgb(243 239 230 / .14);
+  --dark-text: #eee9dd;
+  --dark-muted: #9aa1b4;
+  --dark-accent: #ff7a4d;
+  --gold: #d9a441;
 
-  /* Typography. */
-  --font-display: 'Sora', 'Helvetica Neue', Arial, sans-serif;
-  --font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  /* Typography — editorial serif display, humanist body, mono labels. */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Instrument Sans', 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
 
   /* Geometry — restrained radii, generous gutters. */
-  --radius-sm: 6px;
-  --radius-md: 14px;
-  --radius-lg: 24px;
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
   --gutter: max(6vw, calc((100vw - 1240px) / 2));
 
   /* Motion tokens. */
