@@ -69,6 +69,8 @@ function App() {
     const top = section.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop
     container.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior })
     setMenuOpen(false)
+    const hash = `#${slides[next].id}`
+    if (window.location.hash !== hash) window.history.pushState(null, '', hash)
   }
 
   useEffect(() => {
