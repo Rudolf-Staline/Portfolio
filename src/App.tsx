@@ -1,210 +1,125 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { projects } from './data/projects'
 import { education } from './data/education'
 import { skills } from './data/skills'
+import { contact, profile } from './data/profile'
+import type { Project } from './data/types'
 
-const email = 'rudolfhounlete1@gmail.com'
-const github = 'https://github.com/rudolf-staline'
-
-function Arrow({ diagonal = true }: { diagonal?: boolean }) {
+function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? '↗' : '→'}</span>
 }
 
-function ProjectIndex({ value }: { value: string }) {
-  return <span className="project-index" aria-hidden="true">P/{value}</span>
+/** Abstract illustrations, not screenshots or measured project results. */
+function ProjectVisual({ project }: { project: Project }) {
+  const kind = project.visual ?? 'code'
+  return (
+    <div className={`project-visual visual-${kind}`} aria-hidden="true">
+      {kind === 'simulation' ? (
+        <svg viewBox="0 0 360 210" fill="none">
+          <path d="M35 170H330M35 35V170" stroke="currentColor" opacity=".18" />
+          {[12, 22, 40, 69, 104, 125, 110, 86, 58, 36, 22, 12].map((height, i) => <rect key={i} x={54 + i * 21} y={170 - height} width="15" height={height} rx="3" fill={i > 7 ? '#c69329' : '#efc75e'} />)}
+          <path d="M52 153C105 152 112 50 179 52C220 53 242 120 307 147" stroke="#25241f" strokeWidth="2" strokeDasharray="4 5" />
+        </svg>
+      ) : kind === 'calendar' ? (
+        <div className="calendar-art"><div className="calendar-head"><span /> <span /> <span /></div><div className="calendar-grid">{Array.from({ length: 20 }, (_, i) => <div key={i}>{[2, 5, 7, 11, 16].includes(i) && <span className={`event event-${i % 3}`} />}</div>)}</div></div>
+      ) : kind === 'journal' ? (
+        <div className="journal-art"><span className="journal-sun" /><div /><div /><div /><span className="journal-dot" /></div>
+      ) : kind === 'signal' ? (
+        <svg viewBox="0 0 360 210" fill="none"><path d="M30 60H330M30 105H330M30 150H330" stroke="currentColor" opacity=".1"/><path d="M25 108C40 108 42 45 61 45S81 167 103 167S128 54 150 54S173 147 198 147S221 73 246 73S276 130 302 130S318 104 336 104" stroke="#655984" strokeWidth="3"/><path d="M25 115C54 115 79 81 104 81S154 132 182 132S231 92 260 92S307 115 336 115" stroke="#c3b2d2" strokeWidth="2"/></svg>
+      ) : kind === 'vision' ? (
+        <svg viewBox="0 0 360 210" fill="none"><path d="M150 20V190M210 20V190M30 75H330M30 135H330" stroke="#bcc5b3" strokeWidth="15"/><path d="M180 25V65M180 145V185M35 105H125M235 105H325" stroke="#fff" strokeWidth="2" strokeDasharray="8 8"/>{[[120, 45], [212, 139], [255, 68]].map(([x, y], i) => <g key={i}><rect x={x} y={y} width="24" height="32" rx="4" fill="#698566"/><rect x={x - 6} y={y - 6} width="36" height="44" rx="3" stroke="#334d30" strokeDasharray="4 3"/></g>)}</svg>
+      ) : kind === 'model' ? (
+        <svg viewBox="0 0 360 210" fill="none">{[[65, 65], [65, 145]].flatMap(([x, y]) => [[180, 45], [180, 105], [180, 165]].map(([a, b]) => <path key={`${y}-${b}`} d={`M${x} ${y}L${a} ${b}L295 105`} stroke="#a7b9ab"/>))}{[[65, 65], [65, 145], [180, 45], [180, 105], [180, 165], [295, 105]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r={i === 5 ? 18 : 12} fill={i === 5 ? '#e5be5e' : '#7c9b88'} stroke="#f2f5ed" strokeWidth="5"/>)}</svg>
+      ) : (
+        <div className="code-art"><span /><span /><span /><span /><span /><span /></div>
+      )}
+      <span className="visual-caption">Illustration du projet</span>
+    </div>
+  )
 }
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const visibleProjects = projects.filter((project) => !project.placeholder)
+  const [selected, setSelected] = useState<Project | null>(null)
+  const dialog = useRef<HTMLDialogElement>(null)
+  const visibleProjects = projects.filter(project => !project.placeholder)
 
   useEffect(() => {
-    const closeMenu = () => setMenuOpen(false)
-    window.addEventListener('resize', closeMenu)
-    return () => window.removeEventListener('resize', closeMenu)
-  }, [])
+    const element = dialog.current
+    if (!selected || !element) return
+    element.showModal()
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previous }
+  }, [selected])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const close = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenuOpen(false) }
+    window.addEventListener('keydown', close)
+    return () => window.removeEventListener('keydown', close)
+  }, [menuOpen])
+
+  const closeProject = () => { dialog.current?.close(); setSelected(null) }
 
   return (
-    <div className="site-shell">
+    <>
       <a className="skip-link" href="#main">Aller au contenu</a>
-
-      <header className="topbar">
-        <a className="identity" href="#top" aria-label="Retour en haut">
-          <span className="identity-mark">RH</span>
-          <span className="identity-copy">Rudolf Hounlété<br /><small>Portfolio d’ingénieur</small></span>
-        </a>
-
-        <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Navigation principale">
-          <a href="#projets" onClick={() => setMenuOpen(false)}>Projets</a>
-          <a href="#approche" onClick={() => setMenuOpen(false)}>Approche</a>
+      <header className="header wrap">
+        <a className="wordmark" href="#accueil" aria-label="Rudolf Hounlete — accueil">Rudolf<br />Hounlete<span>.</span></a>
+        <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? 'Fermer' : 'Menu'} <span aria-hidden="true">{menuOpen ? '−' : '+'}</span></button>
+        <nav id="navigation" className={menuOpen ? 'navigation is-open' : 'navigation'} aria-label="Navigation principale">
           <a href="#parcours" onClick={() => setMenuOpen(false)}>Parcours</a>
-          <a href={`mailto:${email}`} onClick={() => setMenuOpen(false)}>Contact</a>
+          <a href="#projets" onClick={() => setMenuOpen(false)}>Projets</a>
+          <a href="#apropos" onClick={() => setMenuOpen(false)}>À propos</a>
+          <a href="#contact" className="nav-contact" onClick={() => setMenuOpen(false)}>Contact <Arrow diagonal /></a>
         </nav>
-
-        <a className="topbar-cta" href="/CV_Rudolf_HOUNLETE.pdf" download>
-          Télécharger le CV <Arrow />
-        </a>
-
-        <button
-          className="menu-button"
-          type="button"
-          aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          <span /><span />
-        </button>
       </header>
 
-      <main id="main">
-        <section className="hero" id="top">
-          <div className="hero-grid" aria-hidden="true" />
-          <div className="hero-label">CASABLANCA / 2026 / PORTFOLIO 02</div>
-
-          <div className="hero-heading">
-            <p className="eyebrow"><span>Élève ingénieur</span> · logiciel, IA appliquée, données</p>
-            <h1>
-              Je construis des systèmes<br />
-              <em>qui résistent au réel.</em>
-            </h1>
+      <main id="main" className="wrap">
+        <section className="hero" id="accueil">
+          <div className="hero-copy">
+            <p className="hello"><span className="hello-mark" aria-hidden="true">✳</span> Bonjour, moi c’est Rudolf.</p>
+            <h1>Élève ingénieur.<br />Je développe des applications et des modèles de <span className="underlined">machine learning.</span></h1>
+            <p className="hero-location">École Centrale Casablanca · Maroc</p>
+            <div className="hero-actions"><a className="button button-yellow" href="#projets">Voir mes projets <span className="round-arrow"><Arrow /></span></a><a className="text-link" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Mon CV <Arrow diagonal /></a></div>
           </div>
-
-          <div className="hero-foot">
-            <p className="hero-intro">
-              Du problème mal cadré au prototype testable : architecture, données,
-              modèle et interface réunis dans une même logique de produit.
-            </p>
-
-            <aside className="hero-brief" aria-label="Informations principales">
-              <div><span>01</span><p>École Centrale Casablanca<br /><b>Cycle ingénieur</b></p></div>
-              <div><span>02</span><p>Recherche<br /><b>Stage ingénieur</b></p></div>
-              <div><span>03</span><p>Mobilité<br /><b>Maroc · International</b></p></div>
-            </aside>
-          </div>
-
-          <div className="hero-signature" aria-hidden="true">HOUNLÉTÉ</div>
-        </section>
-
-        <section className="manifesto" aria-label="Positionnement">
-          <span>Développement logiciel</span>
-          <i>×</i>
-          <span>Machine learning</span>
-          <i>×</i>
-          <span>Systèmes expérimentaux</span>
-          <i>×</i>
-          <span>Analyse quantitative</span>
-        </section>
-
-        <section className="projects-section" id="projets">
-          <header className="section-header">
-            <div className="section-code">01 / TRAVAUX SÉLECTIONNÉS</div>
-            <div>
-              <h2>Des projets comme<br /><em>preuves de travail.</em></h2>
-              <p>Chaque projet montre une manière de raisonner : décomposer, tester, mesurer, puis améliorer.</p>
-            </div>
-          </header>
-
-          <div className="project-list">
-            {visibleProjects.map((project) => (
-              <article className={project.featured ? 'project featured' : 'project'} key={project.index}>
-                <ProjectIndex value={project.index} />
-
-                <div className="project-title-block">
-                  <div className="project-context">
-                    <span>{project.context}</span>
-                    <span>{project.period}</span>
-                  </div>
-                  <h3>{project.title}</h3>
-                  <p className="project-tagline">{project.tagline}</p>
-                </div>
-
-                <div className="project-evidence">
-                  <ol>
-                    {project.highlights.slice(0, 3).map((highlight, itemIndex) => (
-                      <li key={highlight}><span>{String(itemIndex + 1).padStart(2, '0')}</span>{highlight}</li>
-                    ))}
-                  </ol>
-                  <div className="stack">{project.stack.map((item) => <span key={item}>{item}</span>)}</div>
-                </div>
-
-                <div className="project-link">
-                  {project.links.code ? (
-                    <a href={project.links.code} target="_blank" rel="noreferrer" aria-label={`Voir le dépôt de ${project.title}`}>
-                      Code <Arrow />
-                    </a>
-                  ) : (
-                    <span>{project.status ?? 'Projet académique'}</span>
-                  )}
-                </div>
-              </article>
-            ))}
+          <div className="hero-art" aria-hidden="true">
+            <svg viewBox="0 0 520 450" fill="none"><g className="yellow-strokes" stroke="#f3ca69" strokeLinecap="round"><path className="stroke stroke-one" d="M118 170L344 55" strokeWidth="62"/><path className="stroke stroke-two" d="M95 300L410 143" strokeWidth="68"/><path className="stroke stroke-three" d="M168 389L427 263" strokeWidth="62"/></g><circle cx="85" cy="100" r="5" fill="#282720"/><path d="M443 355V378M432 366H455" stroke="#282720" strokeWidth="2"/></svg>
+            <div className="art-caption"><span /> Construire. Comprendre. Explorer.</div>
           </div>
         </section>
 
-        <section className="approach-section" id="approche">
-          <div className="approach-intro">
-            <div className="section-code light">02 / MANIÈRE DE TRAVAILLER</div>
-            <h2>Pas d’outil<br />sans <em>raison.</em></h2>
-            <p>
-              Je pars du système : contraintes, flux, hypothèses, points de rupture. Le choix technique vient après.
-            </p>
-          </div>
-
-          <div className="principles">
-            <article><span>01</span><h3>Comprendre</h3><p>Clarifier les variables, les utilisateurs et les compromis avant d’écrire la solution.</p></article>
-            <article><span>02</span><h3>Rendre testable</h3><p>Transformer les intuitions en composants mesurables, reproductibles et faciles à contredire.</p></article>
-            <article><span>03</span><h3>Relier</h3><p>Faire tenir ensemble données, modèle, backend et interface au lieu d’optimiser chaque couche isolément.</p></article>
-          </div>
-
-          <div className="capability-matrix">
-            {skills.map((group, index) => (
-              <div className="capability-row" key={group.label}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <h3>{group.label}</h3>
-                <p>{group.items.join(' / ')}</p>
-              </div>
-            ))}
-          </div>
+        <section className="experience-strip" aria-label="Parcours en bref">
+          <p className="eyebrow"><span /> Parcours & expérience</p>
+          <div className="experience-items"><div><strong>Centrale Casablanca</strong><span>Cycle ingénieur généraliste</span></div><div><strong>IMSP</strong><span>Licence TIC · Classes préparatoires</span></div><div><strong>CHOUBEL</strong><span>Stage · Développement de RiskSim</span></div></div>
         </section>
 
-        <section className="journey-section" id="parcours">
-          <header className="section-header compact">
-            <div className="section-code">03 / FORMATION</div>
-            <div><h2>Parcours<br /><em>académique.</em></h2></div>
-          </header>
-
-          <div className="timeline">
-            {education.map((item, index) => (
-              <article key={`${item.school}-${item.detail}`}>
-                <span className="timeline-index">{String(index + 1).padStart(2, '0')}</span>
-                <p className="timeline-period">{item.period}</p>
-                <h3>{item.school}</h3>
-                <p>{item.detail}{item.location ? ` · ${item.location}` : ''}</p>
-              </article>
-            ))}
-          </div>
+        <section className="section projects-section" id="projets">
+          <div className="section-heading"><div><p className="eyebrow"><span /> Du code aux applications</p><h2>Une sélection de projets<span>.</span></h2></div><span className="section-note">Logiciel · IA · Simulation</span></div>
+          <div className="project-grid">{visibleProjects.map(project => (
+            <article className="project-card" key={project.index}>
+              <button type="button" className="project-preview" onClick={() => setSelected(project)} aria-label={`Découvrir ${project.title}`}><ProjectVisual project={project} /><span className="preview-arrow"><Arrow diagonal /></span></button>
+              <div className="project-copy"><p className="project-meta">{project.category ?? project.context}<span>{project.period}</span></p><h3>{project.title}</h3><p className="project-summary">{project.tagline}</p><button className="text-link" type="button" onClick={() => setSelected(project)}>Découvrir le projet <Arrow diagonal /></button></div>
+            </article>
+          ))}</div>
         </section>
 
-        <section className="contact-section">
-          <div className="contact-copy">
-            <div className="section-code light">04 / CONTACT</div>
-            <p className="contact-kicker">Une équipe exigeante. Un problème réel. Un périmètre à prendre.</p>
-            <h2>Parlons d’un<br /><em>stage utile.</em></h2>
-          </div>
-
-          <div className="contact-actions">
-            <a href={`mailto:${email}`}><span>Écrire</span><b>{email}</b><Arrow /></a>
-            <a href={github} target="_blank" rel="noreferrer"><span>Explorer</span><b>GitHub</b><Arrow /></a>
-            <a href="/CV_Rudolf_HOUNLETE.pdf" download><span>Consulter</span><b>Curriculum vitæ</b><Arrow /></a>
-          </div>
+        <section className="section about-section" id="apropos">
+          <div><p className="eyebrow"><span /> À propos</p><h2>Le code comme<br />terrain d’exploration<span>.</span></h2><p className="about-text">{profile.pitch} Du développement web à la simulation, j’aime relier les modèles à une application concrète, puis tester ce qui fonctionne.</p><a className="text-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <Arrow diagonal /></a></div>
+          <div className="skill-list">{skills.map(group => <div key={group.label}><h3>{group.label}</h3><p>{group.items.join(' · ')}</p></div>)}</div>
         </section>
+
+        <section className="section journey-section" id="parcours"><div className="section-heading"><div><p className="eyebrow"><span /> Formation</p><h2>D’où je viens<span>.</span></h2></div></div><div className="education-list">{education.map(item => <article key={item.school + item.detail}><span className="education-period">{item.period}</span><div><h3>{item.school}</h3><p>{item.detail}</p></div><span className="education-place">{item.location}</span></article>)}</div></section>
+
+        <section className="contact-section" id="contact"><div><p className="eyebrow"><span /> Contact</p><h2>Un projet, une idée ?<br />Parlons-en<span>.</span></h2><p>Pour un stage, une collaboration ou une question sur mon travail.</p></div><a className="button button-dark" href={`mailto:${contact.email}`}>M’écrire <span className="round-arrow"><Arrow diagonal /></span></a><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a></section>
       </main>
+      <footer className="wrap"><p>Rudolf Hounlete · {new Date().getFullYear()}</p><div><a href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a><a href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>CV <Arrow diagonal /></a><a href="#accueil">En haut <span aria-hidden="true">↑</span></a></div></footer>
 
-      <footer>
-        <span>Rudolf Hounlété · Casablanca, Maroc</span>
-        <span>Conçu comme un dossier de travail · 2026</span>
-      </footer>
-    </div>
+      <dialog ref={dialog} className="project-dialog" aria-labelledby="project-dialog-title" onCancel={closeProject} onClose={() => setSelected(null)} onClick={event => { if (event.target === event.currentTarget) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeProject() } }}>
+        {selected && <><div className="dialog-heading"><p className="eyebrow">{selected.category ?? selected.context}</p><button className="dialog-close" type="button" onClick={closeProject} aria-label="Fermer la fiche projet" autoFocus>×</button></div><h2 id="project-dialog-title">{selected.title}</h2><p className="dialog-context">{selected.context} · {selected.period}</p><p className="dialog-summary">{selected.tagline}</p><h3>Le travail réalisé</h3><ul>{selected.highlights.map(highlight => <li key={highlight}>{highlight}</li>)}</ul><div className="stack">{selected.stack.map(item => <span key={item}>{item}</span>)}</div><div className="dialog-links">{selected.links.code && <a className="button button-yellow" href={selected.links.code} target="_blank" rel="noreferrer">Voir le code <Arrow diagonal /></a>}{selected.links.demo && <a className="text-link" href={selected.links.demo} target="_blank" rel="noreferrer">Ouvrir la démo <Arrow diagonal /></a>}</div></>}
+      </dialog>
+    </>
   )
 }
 

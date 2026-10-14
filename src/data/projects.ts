@@ -2,7 +2,43 @@ import type { Project } from './types'
 
 export const projects: Project[] = [
   {
+    index: 'risksim',
+    title: 'RiskSim',
+    category: 'Simulation · Risque projet',
+    visual: 'simulation',
+    context: 'Stage · CHOUBEL',
+    period: '2026',
+    tagline: 'Un simulateur Monte Carlo pour explorer l’incertitude d’un projet, comparer des scénarios et analyser les risques.',
+    highlights: [
+      'Moteur Python : distributions, corrélations et validation des hypothèses',
+      'Analyse des résultats : percentiles, sensibilité et convergence',
+      'Interface React pour importer un registre de risques, simuler et comparer des scénarios',
+    ],
+    stack: ['Python', 'NumPy', 'React', 'TypeScript', 'Monte Carlo'],
+    links: { code: null, demo: null },
+    status: 'Projet de stage',
+    featured: true,
+  },
+  {
+    index: 'horizon',
+    title: 'Horizon',
+    category: 'Application web · Planification',
+    visual: 'calendar',
+    context: 'Projet personnel',
+    period: '2026',
+    tagline: 'Un calendrier interactif pour organiser les tâches et proposer une planification adaptée aux contraintes de la journée.',
+    highlights: [
+      'Calendrier avec déplacement, redimensionnement et annulation des modifications',
+      'Moteur de planification : échéances, tâches fixes ou flexibles et détection des conflits',
+      'Synchronisation par compte, sauvegardes et export ICS',
+    ],
+    stack: ['React', 'TypeScript', 'Vite', 'Supabase', 'Vitest'],
+    links: { code: 'https://github.com/Rudolf-Staline/horizon-planner', demo: null },
+  },
+  {
     index: '01',
+    visual: 'model',
+    category: 'Machine learning · Santé',
     title: 'Aide à la décision clinique',
     context: 'Coding Week · Centrale Casablanca',
     period: '2026',
@@ -22,6 +58,8 @@ export const projects: Project[] = [
   },
   {
     index: '02',
+    visual: 'vision',
+    category: 'Vision · Système embarqué',
     title: 'Feux rouges intelligents',
     context: 'Learning by Doing · Centrale Casablanca',
     period: '2025 — 2026',
@@ -38,6 +76,8 @@ export const projects: Project[] = [
   },
   {
     index: '03',
+    visual: 'code',
+    category: 'Python · Analyse quantitative',
     title: 'Plateforme d’analyse Forex',
     context: 'Projet personnel',
     period: '2026',
@@ -56,6 +96,8 @@ export const projects: Project[] = [
   },
   {
     index: '04',
+    visual: 'journal',
+    category: 'Android · Confidentialité',
     title: 'Clarté · journal Android privé',
     context: 'Projet personnel',
     period: '2026',
@@ -74,6 +116,8 @@ export const projects: Project[] = [
   },
   {
     index: '05',
+    visual: 'signal',
+    category: 'Physique · Simulation',
     title: 'Propagation de solitons',
     context: 'Formation expérimentale · Centrale Casablanca',
     period: '2026',

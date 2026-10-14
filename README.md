@@ -1,59 +1,46 @@
 # Portfolio — Rudolf Hounlete
 
-Portfolio personnel d'un élève ingénieur à l'École Centrale Casablanca
-(profil data engineering / ML / développement).
+Portfolio personnel : développement logiciel, machine learning et systèmes expérimentaux.
 
-🔗 **Site live :** https://rudolf-hounlete-portfolio.vercel.app
+**Site :** https://rudolf-hounlete-portfolio.vercel.app
 
-## Stack
+## Design
 
-- **Vite + React + TypeScript** — application single-page, navigation par ancres.
-- **Tailwind CSS** — design system par tokens (CSS variables) avec thème clair/sombre.
-- **Polices** : Space Grotesk (titres), Inter (corps), JetBrains Mono (labels/code).
-- **Déploiement** : Vercel (preset Vite, `vercel.json`).
+Fond blanc cassé, jaune doux, typographie DM Sans et composition aérée, inspirés du portfolio jaune retenu comme référence. L’accueil présente le profil à gauche et une composition de touches jaunes animées à droite. Aucun portrait ni photographie n’est utilisé.
 
-## Contenu = source de vérité
+Les projets disposent d’une illustration abstraite et d’une fiche détaillée. Les visuels portent la mention « Illustration du projet » : ce ne sont pas des captures des applications ni des résultats mesurés. Le contenu comprend RiskSim, Horizon et les projets déjà présents dans le portfolio.
 
-Tout le contenu vit dans `src/data/` (fichiers typés), séparé du markup.
-**Modifier un projet ou une certif = éditer la donnée, pas un composant.**
+## Développement
+
+```bash
+npm ci
+npm run dev
+npm run build
+npm run preview
+```
+
+`npm run build` vérifie TypeScript puis génère la version de production dans `dist/`. Vercel utilise le preset Vite et la configuration `vercel.json`.
+
+## Contenu
 
 | Fichier | Contenu |
 |---------|---------|
-| `src/data/profile.ts` | Identité, à propos, contact (email, GitHub, LinkedIn, CV) |
-| `src/data/projects.ts` | Les 4 projets (titre, tagline, bullets, stack, liens Code/Démo) |
-| `src/data/skills.ts` | Compétences regroupées |
+| `src/data/projects.ts` | Présentation, réalisations, technologies, liens et type d’illustration des projets |
+| `src/data/profile.ts` | Profil et coordonnées |
 | `src/data/education.ts` | Formation |
-| `src/data/certifications.ts` | Certifications & langues |
-| `src/data/nav.ts` | Sections de navigation |
-| `src/data/types.ts` | Types partagés |
+| `src/data/skills.ts` | Compétences regroupées |
+| `src/App.tsx` | Composition de la page et fiches projets |
+| `src/index.css` | Styles, responsive et animations |
+| `public/CV_Rudolf_HOUNLETE.pdf` | CV téléchargeable |
 
-## Lancer en local
+Pour un projet, `visual` sélectionne une illustration (`simulation`, `calendar`, `model`, `vision`, `journal`, `signal` ou `code`). Les liens absents ne produisent pas de bouton vide. RiskSim n’affiche pas de lien vers son dépôt privé.
 
-```bash
-npm install
-npm run dev        # http://localhost:5173
-npm run build      # build de production -> dist/
-npm run preview    # prévisualiser le build -> http://localhost:4173
-```
+## Accessibilité et interactions
 
-## TODO (à compléter par Rudolf)
+- Menu mobile avec état annoncé et fermeture par Échap.
+- Fiches projets en dialogue natif : focus à l’ouverture, fermeture par Échap, bouton et clic hors de la fiche.
+- Navigation clavier, lien d’évitement et focus visibles.
+- Défilement et animations désactivés avec `prefers-reduced-motion`.
+- Contact par email et téléchargement du CV sans service tiers.
 
-- [ ] **LinkedIn** : renseigner l'URL dans `src/data/profile.ts` (`contact.linkedin`).
-- [ ] **CV PDF** : déposer le PDF dans `public/` puis pointer `contact.cv`
-      (ex. `'/cv-rudolf-hounlete.pdf'`).
-- [ ] **Projet 02 — Feux rouges** : ajouter le lien repo quand le projet est
-      publié (`projects.ts`, projet `02`).
-- [ ] **Démos** : ajouter les URLs de démo si disponibles (`projects.ts`).
-
-## Liens repos confirmés
-
-| # | Projet | Repo |
-|---|--------|------|
-| 01 | Aide à la décision clinique | `Rudolf-Staline/Coding-week-project` |
-| 02 | Feux rouges intelligents | projet en cours (lien à venir) |
-| 03 | Plateforme d'analyse Forex | `Rudolf-Staline/forex-supervised-scanner` |
-| 04 | Clarté (Android) | `Rudolf-Staline/Clarte` |
-
-## Historique
-
-L'ancien site statique est conservé dans [`legacy/index.html`](legacy/index.html).
+Les anciens composants et `legacy/index.html` sont conservés pour référence ; la page active est composée dans `src/App.tsx`.

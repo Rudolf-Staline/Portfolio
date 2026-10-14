@@ -16,9 +16,11 @@ export type ProjectLink = {
 }
 
 export type Project = {
-  /** Display index, e.g. "01". */
+  /** Stable project identifier. */
   index: string
   title: string
+  category?: string
+  visual?: 'simulation' | 'calendar' | 'model' | 'vision' | 'journal' | 'signal' | 'code'
   /** Context line: "Coding Week · Centrale Casablanca". */
   context: string
   period: string

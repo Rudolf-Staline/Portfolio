@@ -32,8 +32,8 @@ export const contact = {
   github: 'https://github.com/rudolf-staline',
   // TODO: à confirmer par Rudolf — URL LinkedIn
   linkedin: null as string | null,
-  // TODO: déposer le PDF dans /public et renseigner le chemin (ex. '/cv-rudolf-hounlete.pdf')
-  cv: null as string | null,
+  // CV servi depuis le dossier public.
+  cv: '/CV_Rudolf_HOUNLETE.pdf' as string | null,
 } as const
 
 /** Links shown in the hero and footer. `href: null` => rendered as TODO. */
