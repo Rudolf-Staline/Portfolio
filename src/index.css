@@ -44,8 +44,8 @@ h1 { max-width: 550px; font-size: clamp(30px, 3.15vw, 43px); line-height: 1.2; l
 .text-link span { transition: transform .2s; }
 .text-link:hover span { transform: translate(3px, -2px); }
 .hero-art { position: relative; width: 100%; animation: arrive 1s .15s both; }
-.hero-portrait { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 91%; height: 96%; object-fit: contain; object-position: center bottom; }
-.hero-art.has-portrait { overflow: hidden; }
+.hero-portrait { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.hero-art.has-portrait { max-width: 420px; aspect-ratio: 1; justify-self: center; border-radius: 50%; background: var(--yellow); overflow: hidden; }
 .hero-art svg { display: block; width: 100%; overflow: visible; }
 .stroke { transform-box: fill-box; transform-origin: center; animation: drift 9s ease-in-out infinite; }
 .stroke-two { animation-delay: -3s; }

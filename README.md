@@ -6,7 +6,7 @@ Portfolio personnel : développement logiciel, machine learning et systèmes exp
 
 ## Design
 
-Fond blanc cassé, jaune doux, typographie DM Sans et composition aérée, inspirés du portfolio jaune retenu comme référence. L’accueil présente le profil à gauche et un portrait détouré à droite, devant les touches jaunes animées. Le portrait retenu est une édition générative à partir des photographies originales : posture légèrement de trois quarts, cheveux coiffés, chemise bleu ciel, maquillage discret et fond transparent.
+Fond blanc cassé, jaune doux, typographie DM Sans et composition aérée, inspirés du portfolio jaune retenu comme référence. L’accueil présente le profil à gauche et un portrait détouré à droite, cadré dans un disque jaune. Le portrait retenu est une édition générative à partir des photographies originales : posture légèrement de trois quarts, cheveux coiffés, chemise bleu ciel, maquillage discret et fond transparent.
 
 Les projets disposent d’une illustration abstraite et d’une fiche détaillée. Les visuels portent la mention « Illustration du projet » : ce ne sont pas des captures des applications ni des résultats mesurés. Le contenu comprend RiskSim, Horizon et les projets déjà présents dans le portfolio.
 
