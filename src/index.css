@@ -203,3 +203,6 @@ footer a:hover { color: var(--ink); }
   .competition-result strong { font-size: 17px; }
   .internship-content { grid-template-columns: 1fr; gap: 28px; }
 }
+
+.section-intro { max-width: 720px; margin: -10px 0 32px; font-size: 15px; line-height: 1.8; color: var(--muted); }
+.internship-content p + p { margin-top: 14px; }

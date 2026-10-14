@@ -4,13 +4,14 @@ export const profile = {
   subtitle: 'Data engineering · IA appliquée · sciences appliquées',
   heroTitle: 'Rudolf Hounlete',
   heroFocus: 'Machine learning & développement logiciel.',
-  heroDescription: 'Élève ingénieur à l’École Centrale Casablanca. Je recherche un stage en développement logiciel ou en machine learning appliqué.',
+  heroDescription: 'Mes projets vont de la reconnaissance vocale aux outils de simulation. Je recherche un stage pour poursuivre ce travail au sein d’une équipe, en développement logiciel ou en machine learning appliqué.',
   /** Short, factual positioning line used in the hero. */
   pitch:
     "Je construis des applications web et des modèles de machine learning, avec Python et TypeScript.",
   about: [
-    "Élève ingénieur à l’École Centrale Casablanca, je travaille sur des projets de machine learning et de développement logiciel. J’ai obtenu trois médailles de bronze sur Kaggle et Zindi.",
-    "J’utilise principalement Python pour l’analyse des données, les modèles et la simulation, et TypeScript avec React pour les interfaces. Ma formation associe une licence en TIC et des classes préparatoires scientifiques à l’IMSP, au Bénin.",
+    "Mon parcours a commencé à l’IMSP, au Bénin, où j’ai suivi une licence en TIC et des classes préparatoires scientifiques. J’ai ensuite rejoint l’École Centrale Casablanca pour poursuivre ma formation d’ingénieur.",
+    "Je travaille surtout avec Python et TypeScript. Ce qui m’intéresse, c’est aussi ce qui vient après le modèle : pouvoir le réutiliser, comprendre ses résultats et construire une interface pour l’exploiter. C’est ce que j’ai fait avec RiskSim, du moteur de simulation à l’application Windows.",
+    "Les compétitions Kaggle et Zindi occupent une place importante dans mes projets. J’y ai travaillé sur des données financières, des observations satellitaires et la reconnaissance vocale multilingue. Ces participations m’ont valu trois médailles de bronze ; les résultats et les travaux associés sont présentés plus haut.",
   ],
   interests: [
     'Finance quantitative',
