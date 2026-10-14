@@ -72,7 +72,7 @@ function App() {
           <a href="#parcours" onClick={() => setMenuOpen(false)}>Parcours</a>
           <a href="#projets" onClick={() => setMenuOpen(false)}>Projets</a>
           <a href="#apropos" onClick={() => setMenuOpen(false)}>À propos</a>
-          <a href="#contact" className="nav-contact" onClick={() => setMenuOpen(false)}>Contact <Arrow diagonal /></a>
+          <a href="#contact" className="nav-contact" onClick={() => setMenuOpen(false)}>Stage <Arrow diagonal /></a>
         </nav>
       </header>
 
@@ -80,8 +80,9 @@ function App() {
         <section className="hero" id="accueil">
           <div className="hero-copy">
             <p className="hello"><span className="hello-mark" aria-hidden="true">✳</span> Bonjour, moi c’est Rudolf.</p>
-            <h1>Élève ingénieur.<br />Je développe des applications et des modèles de <span className="underlined">machine learning.</span></h1>
-            <p className="hero-location">École Centrale Casablanca · Maroc</p>
+            <h1>{profile.heroTitle}<br /><span>{profile.heroFocus}</span></h1>
+            <p className="hero-description">{profile.heroDescription}</p>
+            <p className="hero-location">Casablanca, Maroc · Python · TypeScript · React</p>
             <div className="hero-actions"><a className="button button-yellow" href="#projets">Voir mes projets <span className="round-arrow"><Arrow /></span></a><a className="text-link" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Mon CV <Arrow diagonal /></a></div>
           </div>
           <div className="hero-art has-portrait">
@@ -95,7 +96,7 @@ function App() {
         </section>
 
         <section className="section projects-section" id="projets">
-          <div className="section-heading"><div><p className="eyebrow"><span /> Du code aux applications</p><h2>Une sélection de projets<span>.</span></h2></div><span className="section-note">Logiciel · IA · Simulation</span></div>
+          <div className="section-heading"><div><p className="eyebrow"><span /> Projets sélectionnés</p><h2>Ce que j’ai construit<span>.</span></h2></div><span className="section-note">Logiciel · IA · Simulation</span></div>
           <div className="project-grid">{visibleProjects.map(project => (
             <article className="project-card" key={project.index}>
               <button type="button" className="project-preview" onClick={() => setSelected(project)} aria-label={`Découvrir ${project.title}`}><ProjectVisual project={project} /><span className="preview-arrow"><Arrow diagonal /></span></button>
@@ -105,13 +106,13 @@ function App() {
         </section>
 
         <section className="section about-section" id="apropos">
-          <div><p className="eyebrow"><span /> À propos</p><h2>Le code comme<br />terrain d’exploration<span>.</span></h2><p className="about-text">{profile.pitch} Du développement web à la simulation, j’aime relier les modèles à une application concrète, puis tester ce qui fonctionne.</p><a className="text-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <Arrow diagonal /></a></div>
+          <div><p className="eyebrow"><span /> À propos</p><h2>Du développement<br />aux modèles<span>.</span></h2>{profile.about.map(paragraph => <p className="about-text" key={paragraph}>{paragraph}</p>)}<a className="text-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <Arrow diagonal /></a></div>
           <div className="skill-list">{skills.map(group => <div key={group.label}><h3>{group.label}</h3><p>{group.items.join(' · ')}</p></div>)}</div>
         </section>
 
-        <section className="section journey-section" id="parcours"><div className="section-heading"><div><p className="eyebrow"><span /> Formation</p><h2>D’où je viens<span>.</span></h2></div></div><div className="education-list">{education.map(item => <article key={item.school + item.detail}><span className="education-period">{item.period}</span><div><h3>{item.school}</h3><p>{item.detail}</p></div><span className="education-place">{item.location}</span></article>)}</div></section>
+        <section className="section journey-section" id="parcours"><div className="section-heading"><div><p className="eyebrow"><span /> Formation</p><h2>Mon parcours<span>.</span></h2></div></div><div className="education-list">{education.map(item => <article key={item.school + item.detail}><span className="education-period">{item.period}</span><div><h3>{item.school}</h3><p>{item.detail}</p></div><span className="education-place">{item.location}</span></article>)}</div></section>
 
-        <section className="contact-section" id="contact"><div><p className="eyebrow"><span /> Contact</p><h2>Un projet, une idée ?<br />Parlons-en<span>.</span></h2><p>Pour un stage, une collaboration ou une question sur mon travail.</p></div><a className="button button-dark" href={`mailto:${contact.email}`}>M’écrire <span className="round-arrow"><Arrow diagonal /></span></a><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a></section>
+        <section className="contact-section" id="contact"><div><p className="eyebrow"><span /> Contact</p><h2>Un stage dans votre équipe<span> ?</span></h2><p>Je recherche un stage technique en développement logiciel ou en machine learning appliqué. Mon CV et mes projets donnent un aperçu de mon travail.</p></div><a className="button button-dark" href={`mailto:${contact.email}?subject=Proposition%20de%20stage`}>Proposer un stage <span className="round-arrow"><Arrow diagonal /></span></a><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a></section>
       </main>
       <footer className="wrap"><p>Rudolf Hounlete · {new Date().getFullYear()}</p><div><a href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a><a href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>CV <Arrow diagonal /></a><a href="#accueil">En haut <span aria-hidden="true">↑</span></a></div></footer>
 

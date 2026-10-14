@@ -7,16 +7,34 @@ export const projects: Project[] = [
     category: 'Simulation · Risque projet',
     visual: 'simulation',
     context: 'Stage · CHOUBEL',
-    period: '2026',
-    tagline: 'Un simulateur Monte Carlo pour explorer l’incertitude d’un projet, comparer des scénarios et analyser les risques.',
+    period: 'Juil. — août 2026',
+    tagline: 'D’un registre de risques Excel à une distribution simulée : estimer les réserves et identifier les hypothèses qui pèsent sur un projet.',
     highlights: [
-      'Moteur Python : distributions, corrélations et validation des hypothèses',
-      'Analyse des résultats : percentiles, sensibilité et convergence',
-      'Interface React pour importer un registre de risques, simuler et comparer des scénarios',
+      'Moteur Monte Carlo Python avec distributions paramétrables, corrélations et rejet des matrices invalides',
+      'Analyse des percentiles P50/P80/P90, de la sensibilité et de la convergence sur des cas synthétiques',
+      'Passage de Streamlit à React : import Excel, édition des hypothèses et comparaison de scénarios',
+      'Distribution Windows avec lancement local et documentation de prise en main',
     ],
     stack: ['Python', 'NumPy', 'React', 'TypeScript', 'Monte Carlo'],
     links: { code: null, demo: null },
     status: 'Projet de stage',
+    featured: true,
+  },
+  {
+    index: 'financial-stress',
+    title: 'Prédiction du stress financier',
+    category: 'Machine learning · Compétition Zindi',
+    visual: 'model',
+    context: 'Financial Stress Prediction Challenge',
+    period: '2026',
+    tagline: 'Des expériences de classification pour comparer les choix de préparation des données et de sélection de variables.',
+    highlights: [
+      'Baseline LightGBM puis comparaison de plusieurs préparations des données',
+      'Sélection de variables et optimisation multiobjectif avec Optuna',
+      'Résultats de validation croisée, importances des variables et paramètres conservés par expérience',
+    ],
+    stack: ['Python', 'LightGBM', 'Optuna', 'Classification'],
+    links: { code: 'https://github.com/Rudolf-Staline/financial-stress-prediction', demo: null },
     featured: true,
   },
   {
@@ -26,7 +44,7 @@ export const projects: Project[] = [
     visual: 'calendar',
     context: 'Projet personnel',
     period: '2026',
-    tagline: 'Un calendrier interactif pour organiser les tâches et proposer une planification adaptée aux contraintes de la journée.',
+    tagline: 'Un calendrier qui propose où placer les tâches en tenant compte des échéances, des créneaux disponibles et des engagements fixes.',
     highlights: [
       'Calendrier avec déplacement, redimensionnement et annulation des modifications',
       'Moteur de planification : échéances, tâches fixes ou flexibles et détection des conflits',
@@ -43,10 +61,10 @@ export const projects: Project[] = [
     context: 'Coding Week · Centrale Casablanca',
     period: '2026',
     tagline:
-      "Un pipeline complet d’aide au diagnostic d’appendicite pédiatrique, conçu pour rester compréhensible jusque dans la décision du modèle.",
+      "Un projet de classification de l’appendicite pédiatrique, avec comparaison des modèles et explication des prédictions par SHAP.",
     highlights: [
       'Nettoyage des données et comparaison rigoureuse de modèles de classification',
-      'Analyse SHAP pour identifier les variables réellement discriminantes',
+      'Analyse SHAP des contributions des variables aux prédictions',
       'Interface Flask et tests automatisés sur les étapes critiques du pipeline',
     ],
     stack: ['Python', 'scikit-learn', 'SHAP', 'Flask', 'Pytest'],
@@ -82,11 +100,11 @@ export const projects: Project[] = [
     context: 'Projet personnel',
     period: '2026',
     tagline:
-      'Une base Python modulaire pour tester des hypothèses de marché sans réécrire l’architecture à chaque nouvelle stratégie.',
+      'Un outil Python d’analyse Forex qui sépare les données, les signaux et le backtesting des stratégies.',
     highlights: [
       'Séparation nette des responsabilités : données, broker, watchlist et signaux',
       'Moteur de backtesting pour comparer les stratégies sur une base commune',
-      'Architecture extensible : une nouvelle logique s’ajoute sans casser le noyau',
+      'Modules distincts pour les stratégies et le moteur d’analyse',
     ],
     stack: ['Python', 'Pandas', 'Backtesting', 'Architecture logicielle'],
     links: {
@@ -102,10 +120,10 @@ export const projects: Project[] = [
     context: 'Projet personnel',
     period: '2026',
     tagline:
-      'Une application d’introspection local-first où la confidentialité n’est pas un texte juridique, mais un comportement visible du produit.',
+      'Un journal Android avec stockage local, sauvegardes et chiffrement, développé en Kotlin et Jetpack Compose.',
     highlights: [
       'Application native Kotlin et Jetpack Compose avec stockage local prioritaire',
-      'Synchronisation, sauvegarde et chiffrement conçus sans retour silencieux au clair',
+      'Gestion de la synchronisation, des sauvegardes et du chiffrement AES-GCM',
       'Refonte de l’onboarding, du centre de confidentialité et des erreurs utilisateur',
     ],
     stack: ['Kotlin', 'Jetpack Compose', 'Room', 'Firebase', 'AES-GCM'],

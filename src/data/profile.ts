@@ -2,12 +2,15 @@ export const profile = {
   name: 'Rudolf Hounlete',
   title: 'Élève ingénieur — École Centrale Casablanca · Promotion 2028',
   subtitle: 'Data engineering · IA appliquée · sciences appliquées',
+  heroTitle: 'Je développe des applications',
+  heroFocus: 'et des modèles de machine learning.',
+  heroDescription: 'Élève ingénieur à Centrale Casablanca, je cherche un stage en développement logiciel ou en machine learning appliqué.',
   /** Short, factual positioning line used in the hero. */
   pitch:
-    "Je travaille sur des projets où le code aide à comprendre ou à décider.",
+    "Je construis des applications web et des modèles de machine learning, avec Python et TypeScript.",
   about: [
-    "Je travaille sur des projets où le code aide à comprendre ou à décider. Mon réflexe : partir d'un sujet mal cadré, le découper proprement, livrer une première version testable.",
-    "Je cherche une première immersion professionnelle pour voir comment ces réflexes se traduisent dans une équipe technique.",
+    "Je suis élève ingénieur généraliste à l’École Centrale Casablanca, après une licence en TIC et des classes préparatoires à l’IMSP, au Bénin. Mes projets relient le développement logiciel aux modèles : classification, simulation probabiliste et planification sous contraintes.",
+    "Chez CHOUBEL, mon stage a porté sur RiskSim, un simulateur Monte Carlo doté d’une interface React. J’ai travaillé sur le moteur Python et le parcours d’utilisation, jusqu’à la distribution Windows. Je cherche maintenant un stage technique pour contribuer à un produit au sein d’une équipe et approfondir mes compétences en logiciel ou en machine learning.",
   ],
   interests: [
     'Finance quantitative',
