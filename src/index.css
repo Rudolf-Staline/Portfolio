@@ -204,3 +204,14 @@ main.wrap.slide-deck { height: calc(100dvh - 168px); margin-top: 12px; overflow:
 }
 @media (prefers-reduced-motion: reduce) { .slide-deck > section { animation: none; } }
 @media print { body { height: auto; overflow: visible; }main.wrap.slide-deck { height: auto; overflow: visible; }.slide-deck > section[hidden], .slide-deck > section { display: block !important; height: auto; overflow: visible; animation: none; break-before: page; }.deck-controls, .header, .hero-actions { display: none; } }
+
+/* The scroll gesture moves the entire slide, rather than scrolling the document. */
+.slide-deck > section { position: absolute; inset: 0; width: 100%; height: 100%; animation: none; transition: transform .65s cubic-bezier(.22,.75,.2,1), visibility 0s; will-change: transform; background-color: white; }
+.slide-deck > .about-section, .slide-deck > .contact-section { background-color: var(--deep); }
+.slide-deck > .competition-section { background-color: #f7f4fc; }
+.slide-deck > .projects-section { background-color: #f8f6fc; }
+.slide-deck > section[aria-hidden="true"] { visibility: hidden; pointer-events: none; transition: transform .65s cubic-bezier(.22,.75,.2,1), visibility 0s .65s; }
+.deck-scroll-hint { color: #938a9f; font-size: 10px; white-space: nowrap; }
+@media (max-width: 1000px) { .deck-scroll-hint { display: none; } }
+@media (prefers-reduced-motion: reduce) { .slide-deck > section, .slide-deck > section[aria-hidden="true"] { transition: none; } }
+@media print { .slide-deck > section { position: static; transform: none !important; visibility: visible !important; } }

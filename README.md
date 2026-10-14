@@ -49,3 +49,5 @@ Les anciens composants et `legacy/index.html` sont conservés pour référence ;
 Les médailles et classements sont repris du CV de Rudolf de septembre 2026. Les liens externes ouvrent la compétition ou les expérimentations disponibles, sans prétendre être des liens directs vers son profil.
 
 Le site fonctionne comme une présentation de huit slides : flèches, sélecteur, clavier (gauche/droite, Page précédente/suivante, début/fin) et balayage horizontal sur écran tactile. Chaque slide conserve un défilement vertical si nécessaire ; les liens directs et l’historique du navigateur restent utilisables.
+
+La molette et le balayage vertical pilotent les transitions entre slides. Une section longue défile d’abord en interne. La transition suivante attend un nouveau geste au bord de la section ; l’inertie du trackpad ne fait pas sauter plusieurs slides.
