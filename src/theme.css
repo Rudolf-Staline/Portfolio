@@ -1,0 +1,55 @@
+/* ══════════════════════════════════════════════════════════════════
+   Rudolf Hounlete — Portfolio · Design tokens
+   Single source of truth for palette, typography and spacing.
+   Fonts are loaded from src/index.css (must stay the first @import).
+   ══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Surfaces & ink — warm neutrals, near-black text on off-white paper. */
+  --paper: #f7f6f3;
+  --surface: #fffefb;
+  --surface-2: #f1efe9;
+  --ink: #141317;
+  --ink-2: #46444e;
+  --muted: #7d7a85;
+  --line: #e2dfd7;
+  --line-strong: #cfcbbf;
+
+  /* Accents — a single signal colour (vermilion) + one support hue (moss). */
+  --accent: #cf4520;
+  --accent-hover: #ae3817;
+  --accent-wash: #cf452012;
+  --accent-on: #ffffff;
+  --moss: #3f5f43;
+
+  /* Bronze keeps its own identity for the medals section. */
+  --bronze: #a5713e;
+  --bronze-soft: #f7efe2;
+  --bronze-line: #e6d3b5;
+
+  /* Dark panels (about / experience / contact slides). */
+  --dark: #17151d;
+  --dark-2: #211e2a;
+  --dark-line: #ffffff1f;
+  --dark-text: #edebe6;
+  --dark-muted: #a5a1ab;
+  --dark-accent: #ff8a5e;
+
+  /* Typography. */
+  --font-display: 'Sora', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* Geometry — restrained radii, generous gutters. */
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --gutter: max(6vw, calc((100vw - 1240px) / 2));
+
+  /* Motion tokens. */
+  --ease-out-soft: cubic-bezier(.22, 1, .36, 1);
+  --ease-in-out-soft: cubic-bezier(.65, 0, .35, 1);
+  --duration-fast: .2s;
+  --duration-base: .45s;
+  --duration-slow: .8s;
+}

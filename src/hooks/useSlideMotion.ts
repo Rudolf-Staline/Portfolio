@@ -7,21 +7,21 @@ export function useSlideMotion(deck: RefObject<HTMLElement>) {
     if (!root || !('IntersectionObserver' in window)) return
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
     const selectors = [
-      '.hero-copy > *', '.hero-art-frame',
-      '.about-section h2', '.about-section .eyebrow', '.about-text', '.about-section .text-link', '.about-facts > div',
-      '.expertise-lead > :not(.expertise-decoration)', '.expertise-group',
-      '.awards-heading h2', '.awards-heading .eyebrow', '.award-total', '.medal-card', '.ranking-card',
-      '.internship-story > *', '.internship-blueprint',
-      '.projects-section .section-heading h2', '.projects-section .eyebrow', '.projects-section .section-note', '.work-card', '.other-projects',
-      '.journey-section h2', '.journey-section .eyebrow', '.education-list article',
-      '.contact-section h2', '.contact-section .eyebrow', '.contact-section p:not(.eyebrow)', '.contact-section > .button', '.contact-links',
+      '.hero-copy > *', '.hero-side > *',
+      '.about-lead > *', '.about-body > *',
+      '.skills-head > *', '.skill-row', '.skills-link',
+      '.awards-head > *', '.result-row',
+      '.work-story > *', '.pipeline',
+      '.projects-head > *', '.project-entry',
+      '.journey-stage > *',
+      '.contact-stage > *',
     ].join(', ')
     const elements = Array.from(root.querySelectorAll<HTMLElement>(selectors))
     const scenes = Array.from(root.querySelectorAll<HTMLElement>(':scope > section'))
     let phaseFrame = 0
     let pointerFrame = 0
     let positions: { scene: HTMLElement; top: number; height: number }[] = []
-    const portrait = root.querySelector<HTMLElement>('.hero-art-frame')
+    const portrait = root.querySelector<HTMLElement>('.hero-portrait')
     const phaseProperties = ['--scene-scale', '--scene-shift', '--scene-opacity', '--scene-radius', '--scene-sheen']
     const resetPointer = () => {
       cancelAnimationFrame(pointerFrame)
@@ -96,7 +96,7 @@ export function useSlideMotion(deck: RefObject<HTMLElement>) {
       elements.forEach(element => {
         const siblings = Array.from(element.parentElement?.children ?? [])
         element.style.setProperty('--motion-delay', `${Math.min(siblings.indexOf(element) * 65, 260)}ms`)
-        element.dataset.motionKind = element.matches('h1, h2') ? 'heading' : element.matches('.expertise-group, .medal-card, .work-card, .internship-blueprint') ? 'card' : 'block'
+        element.dataset.motionKind = element.matches('h1, h2') ? 'heading' : element.matches('.skill-row, .result-row, .project-entry, .pipeline, .medal-strip') ? 'card' : 'block'
         element.classList.add('motion-item')
         reveals!.observe(element)
       })
