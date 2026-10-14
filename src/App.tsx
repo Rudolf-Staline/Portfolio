@@ -44,7 +44,7 @@ function App() {
     const container = deck.current
     const section = container?.querySelector<HTMLElement>(`#${slides[next].id}`)
     if (!container || !section) return
-    const top = section.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop
+    const top = section.offsetTop
     container.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior })
     setMenuOpen(false)
     const hash = `#${slides[next].id}`
@@ -80,12 +80,11 @@ function App() {
     const syncPosition = () => {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
-        const top = container.getBoundingClientRect().top
+        const midpoint = container.scrollTop + container.clientHeight / 2
         const sections = Array.from(container.querySelectorAll<HTMLElement>(':scope > section'))
         // The panel crossing the middle of the viewport is the current section.
         const index = sections.findIndex(section => {
-          const bounds = section.getBoundingClientRect()
-          return bounds.top <= top + container.clientHeight / 2 && bounds.bottom > top + container.clientHeight / 2
+          return section.offsetTop <= midpoint && section.offsetTop + section.offsetHeight > midpoint
         })
         if (index < 0) return
         setSlideIndex(index)

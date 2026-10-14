@@ -53,3 +53,5 @@ Le site comporte huit sections au format slide. Le défilement vertical est nati
 Chaque panneau occupe toute la largeur et au moins toute la hauteur visible (`100dvh`). L’en-tête et les contrôles sont superposés ; ils ne réduisent plus la surface des slides.
 
 Les titres et les blocs apparaissent en cascade lorsqu’ils deviennent visibles dans le conteneur de défilement (Intersection Observer). Les entrées se rejouent au retour ; les détails ambiants s’arrêtent hors écran. Cartes, liens, boutons et dialogues ont des transitions dédiées. La préférence de réduction des animations est respectée, y compris si elle change pendant la consultation.
+
+Le défilement pilote également la profondeur des panneaux (échelle, déplacement, fondu et arrondis), avec une position stable pendant la lecture des sections longues. Les positions de navigation utilisent les dimensions de mise en page pour rester indépendantes des transformations. Une parallaxe à la souris anime les éléments autour du portrait ; une fine barre indique la progression.
