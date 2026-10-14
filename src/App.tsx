@@ -23,6 +23,10 @@ function slideFromHash() {
   return index < 0 ? 0 : index
 }
 
+function reducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? '↗' : '→'}</span>
 }
@@ -39,13 +43,33 @@ function App() {
   const chromeTheme = ['apropos', 'contact'].includes(activeSlide.id) ? ' on-dark' : ''
   const deck = useRef<HTMLElement>(null)
   useSlideMotion(deck)
+  const lastSlideIndex = useRef(slideIndex)
+  const programmaticScroll = useRef(false)
   const navigateTo = (index: number, behavior: ScrollBehavior = 'smooth') => {
     const next = Math.max(0, Math.min(slides.length - 1, index))
     const container = deck.current
     const section = container?.querySelector<HTMLElement>(`#${slides[next].id}`)
     if (!container || !section) return
     const top = section.offsetTop
-    container.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior })
+    const reduced = reducedMotion()
+    // Directional slide choreography between panels, when the browser supports it.
+    const direction = reduced || next === lastSlideIndex.current ? null
+      : next > lastSlideIndex.current ? 'vt-forward' : 'vt-back'
+    const scroll = () => {
+      programmaticScroll.current = true
+      container.scrollTo({ top, behavior: reduced ? 'instant' : behavior })
+      window.setTimeout(() => { programmaticScroll.current = false }, reduced ? 80 : 950)
+    }
+    lastSlideIndex.current = next
+    if (direction && 'startViewTransition' in document) {
+      const root = document.documentElement
+      root.classList.remove('vt-forward', 'vt-back')
+      root.classList.add(direction)
+      const transition = (document as Document & { startViewTransition: (callback: () => void) => { finished: Promise<void> } }).startViewTransition(scroll)
+      transition.finished.finally(() => root.classList.remove('vt-forward', 'vt-back'))
+    } else {
+      scroll()
+    }
     setMenuOpen(false)
     const hash = `#${slides[next].id}`
     if (window.location.hash !== hash) window.history.pushState(null, '', hash)
@@ -77,6 +101,7 @@ function App() {
     const container = deck.current
     if (!container) return
     let frame = 0
+    let settleTimer = 0
     const syncPosition = () => {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
@@ -88,12 +113,29 @@ function App() {
         })
         if (index < 0) return
         setSlideIndex(index)
+        lastSlideIndex.current = index
         const hash = `#${slides[index].id}`
         if (window.location.hash !== hash) window.history.replaceState(null, '', hash)
+        // Free-scrolling settles back onto the nearest panel edge.
+        clearTimeout(settleTimer)
+        if (programmaticScroll.current || reducedMotion()) return
+        settleTimer = window.setTimeout(() => {
+          if (programmaticScroll.current) return
+          const settled = container.scrollTop + container.clientHeight / 2
+          let best = 0
+          let bestDistance = Infinity
+          sections.forEach((section, i) => {
+            const distance = Math.abs(section.offsetTop - settled)
+            if (distance < bestDistance) { bestDistance = distance; best = i }
+          })
+          if (Math.abs(container.scrollTop - sections[best].offsetTop) > 4) {
+            navigateTo(best)
+          }
+        }, 180)
       })
     }
     container.addEventListener('scroll', syncPosition, { passive: true })
-    return () => { container.removeEventListener('scroll', syncPosition); cancelAnimationFrame(frame) }
+    return () => { container.removeEventListener('scroll', syncPosition); cancelAnimationFrame(frame); clearTimeout(settleTimer) }
   }, [])
 
   useEffect(() => {

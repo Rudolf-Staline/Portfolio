@@ -154,9 +154,9 @@ footer { display: flex; justify-content: space-between; gap: 25px; padding-block
 /* Native vertical slides: the gesture moves the panels continuously. */
 body { height: 100dvh; overflow: hidden; }
 .header { height: 82px; min-height: 82px; }
-main.wrap.slide-deck { height: calc(100dvh - 168px); margin-top: 12px; overflow-x: hidden; overflow-y: auto; position: relative; scroll-snap-type: y mandatory; overscroll-behavior-y: contain; scrollbar-width: none; }
+main.wrap.slide-deck { height: calc(100dvh - 168px); margin-top: 12px; overflow-x: hidden; overflow-y: auto; position: relative; overscroll-behavior-y: contain; scrollbar-width: none; }
 .slide-deck:focus { outline: none; }
-.slide-deck > section { min-height: 100%; height: auto; overflow: visible; scroll-snap-align: start; scroll-snap-stop: always; }
+.slide-deck > section { min-height: 100%; height: auto; overflow: visible; }
 .slide-deck::-webkit-scrollbar { display: none; }
 .slide-deck > section[hidden] { display: none !important; }
 .slide-deck > .hero { min-height: 100%; padding-block: 38px; }
@@ -608,4 +608,66 @@ h1, h2, h3, .wordmark, .about-facts strong { font-family: 'Sora', sans-serif; }
   .education-period, .education-place { font-size: 18px; }
   .contact-section p:not(.eyebrow) { font-size: 23px; }
   .contact-email { font-size: 21px; }
+}
+
+/* ── Transition layer: shared timing tokens, view-transition choreography, ambient detail. ── */
+@property --scene-sheen { syntax: '<number>'; inherits: false; initial-value: 0; }
+:root {
+  --ease-out-soft: cubic-bezier(.22,1,.36,1);
+  --ease-in-out-soft: cubic-bezier(.65,0,.35,1);
+  --duration-fast: .2s;
+  --duration-base: .45s;
+  --duration-slow: .8s;
+}
+@media screen and (prefers-reduced-motion: no-preference) {
+  /* Directional slide choreography between panels, driven by the View Transitions API. */
+  @keyframes panel-forward-enter { from { opacity: 0; transform: translate3d(0, 7vh, 0) scale(.985); } to { opacity: 1; transform: none; } }
+  @keyframes panel-forward-exit { from { opacity: 1; transform: none; } to { opacity: 0; transform: translate3d(0, -5vh, 0) scale(.98); } }
+  @keyframes panel-back-enter { from { opacity: 0; transform: translate3d(0, -7vh, 0) scale(.98); } to { opacity: 1; transform: none; } }
+  @keyframes panel-back-exit { from { opacity: 1; transform: none; } to { opacity: 0; transform: translate3d(0, 5vh, 0) scale(.985); } }
+  @keyframes chrome-fade { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
+  html.vt-forward::view-transition-old(root), html.vt-back::view-transition-old(root) { animation-timing-function: var(--ease-in-out-soft); animation-fill-mode: both; }
+  html.vt-forward::view-transition-new(root), html.vt-back::view-transition-new(root) { animation-timing-function: var(--ease-out-soft); animation-fill-mode: both; }
+  html.vt-forward::view-transition-old(root) { animation-name: panel-forward-exit; animation-duration: calc(var(--duration-slow) * .55); }
+  html.vt-forward::view-transition-new(root) { animation-name: panel-forward-enter; animation-duration: var(--duration-slow); }
+  html.vt-back::view-transition-old(root) { animation-name: panel-back-exit; animation-duration: calc(var(--duration-slow) * .55); }
+  html.vt-back::view-transition-new(root) { animation-name: panel-back-enter; animation-duration: var(--duration-slow); }
+  .header { view-transition-name: deck-chrome-top; }
+  .deck-controls { view-transition-name: deck-chrome-bottom; }
+  ::view-transition-old(deck-chrome-top), ::view-transition-old(deck-chrome-bottom) { animation: chrome-fade calc(var(--duration-base) * .6) ease both; }
+  ::view-transition-new(deck-chrome-top), ::view-transition-new(deck-chrome-bottom) { animation: chrome-fade var(--duration-base) var(--ease-out-soft) both; }
+
+  /* Light sweep on the active dot, breathing glow behind the portrait. */
+  .deck-dots button[aria-current="step"] span { position: relative; overflow: hidden; }
+  .deck-dots button[aria-current="step"] span::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, #ffffffb8 50%, transparent 80%); transform: translateX(-120%); animation: dot-sheen 2.8s var(--ease-in-out-soft) infinite; }
+  @keyframes dot-sheen { 0%, 55% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+  .hero-art.has-portrait { position: relative; }
+  .hero-art.has-portrait::after { content: ''; position: absolute; inset: -9%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, #7440d730, transparent 72%); animation: portrait-breathe 6.5s ease-in-out infinite; pointer-events: none; }
+  @keyframes portrait-breathe { 0%, 100% { opacity: .55; transform: scale(.97); } 50% { opacity: 1; transform: scale(1.03); } }
+
+  /* Sheen band travelling across featured cards on hover. */
+  .work-featured, .medal-card { position: relative; overflow: hidden; }
+  .work-featured::after, .medal-card::after { content: ''; position: absolute; top: 0; bottom: 0; width: 55%; left: -70%; background: linear-gradient(100deg, transparent, #ffffff2e, transparent); transform: skewX(-14deg); opacity: 0; pointer-events: none; transition: transform .9s var(--ease-out-soft), opacity .4s ease; }
+  .work-featured:hover::after, .medal-card.is-visible:hover::after { transform: translateX(260%) skewX(-14deg); opacity: 1; }
+
+  /* Depth cue while a panel is being dragged out of phase. */
+  .slide-deck > section.motion-scene > .scene-stage { box-shadow: 0 20px 80px rgb(32 22 55 / calc(var(--scene-sheen, 0) * .3)); }
+
+  /* Rhythm: eyebrow dot pulse, underline wipe, dialog backdrop zoom. */
+  .motion-scene.scene-visible .eyebrow > span { animation: eyebrow-pulse 2.6s ease-in-out infinite; }
+  @keyframes eyebrow-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.45); opacity: .55; } }
+  .navigation > a:not(.nav-contact)::after { transition: transform .38s var(--ease-out-soft); }
+  .project-dialog[open]::backdrop { animation: backdrop-zoom .35s var(--ease-out-soft) both; }
+  @keyframes backdrop-zoom { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: none; } }
+
+  /* Feedback micro-motion: pressed controls settle back quickly. */
+  .button:active, .deck-arrows button:active { transition-duration: var(--duration-fast); }
+  .deck-arrows button:not(:disabled):active { transform: translateY(0) scale(.94); }
+  .text-link:hover span { transform: translate(4px,-2px); transition: transform .3s var(--ease-out-soft); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck-dots button[aria-current="step"] span::after,
+  .hero-art.has-portrait::after,
+  .work-featured::after, .medal-card::after,
+  .motion-scene.scene-visible .eyebrow > span { animation: none !important; }
 }

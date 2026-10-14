@@ -22,7 +22,7 @@ export function useSlideMotion(deck: RefObject<HTMLElement>) {
     let pointerFrame = 0
     let positions: { scene: HTMLElement; top: number; height: number }[] = []
     const portrait = root.querySelector<HTMLElement>('.hero-art-frame')
-    const phaseProperties = ['--scene-scale', '--scene-shift', '--scene-opacity', '--scene-radius']
+    const phaseProperties = ['--scene-scale', '--scene-shift', '--scene-opacity', '--scene-radius', '--scene-sheen']
     const resetPointer = () => {
       cancelAnimationFrame(pointerFrame)
       portrait?.style.setProperty('--portrait-x', '0px')
@@ -43,6 +43,7 @@ export function useSlideMotion(deck: RefObject<HTMLElement>) {
         scene.style.setProperty('--scene-shift', `${(entering > leaving ? 85 : -65) * phase}px`)
         scene.style.setProperty('--scene-opacity', String(1 - phase * 0.65))
         scene.style.setProperty('--scene-radius', `${phase * 36}px`)
+        scene.style.setProperty('--scene-sheen', String(phase))
       })
     }
     const schedulePhase = () => {
