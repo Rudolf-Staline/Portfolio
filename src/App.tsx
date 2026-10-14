@@ -86,7 +86,7 @@ function App() {
           </div>
           <div className="hero-art has-portrait">
             <svg viewBox="0 0 520 450" fill="none" aria-hidden="true"><g className="yellow-strokes" stroke="#f3ca69" strokeLinecap="round"><path className="stroke stroke-one" d="M118 170L344 55" strokeWidth="62"/><path className="stroke stroke-two" d="M95 300L410 143" strokeWidth="68"/><path className="stroke stroke-three" d="M168 389L427 263" strokeWidth="62"/></g><circle cx="85" cy="100" r="5" fill="#282720"/><path d="M443 355V378M432 366H455" stroke="#282720" strokeWidth="2"/></svg>
-            <img className="hero-portrait" src="/portrait-rudolf.webp" alt="Portrait de Rudolf Hounlete" width="1254" height="1254" fetchPriority="high" decoding="async" />
+            <img className="hero-portrait" src="/portrait-rudolf.webp" alt="Portrait de Rudolf Hounlete" width="1122" height="1402" fetchPriority="high" decoding="async" />
           </div>
         </section>
 
