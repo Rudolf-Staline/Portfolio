@@ -81,6 +81,7 @@ function App() {
   const navigate = (id: string, behavior: ScrollBehavior = 'smooth', push = true) => {
     const element = document.getElementById(id)
     if (!element) return
+    if (element.matches('.project-expanded')) element.classList.add('direct-arrival')
     const motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior
     element.scrollIntoView({ behavior: motion, block: 'start' })
     const index = panels.findIndex(panel => panel.id === id)
