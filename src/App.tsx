@@ -184,11 +184,12 @@ function App() {
 
       <main id="main" className="wrap slide-deck" ref={deck} tabIndex={-1} aria-label="Portfolio de Rudolf Hounlete">
         <section className="hero" id="accueil"><div className="scene-stage hero editorial-hero">
-          <div className="hero-topline"><p>Bonjour, moi c’est Rudolf.</p><p>Casablanca, Maroc / Portfolio 2026</p></div>
-          <div className="hero-title-block"><h1>Rudolf<span>Hounlete<i className="hero-dot">.</i></span></h1><svg className="hero-spark" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 3C44 28 52 36 77 40C52 44 44 52 40 77C36 52 28 44 3 40C28 36 36 28 40 3Z" fill="currentColor"/></svg></div>
-          <div className="hero-bottom"><div className="hero-introduction"><p className="hero-specialty">{profile.heroFocus}</p><p className="hero-description">{profile.heroDescription}</p><div className="hero-actions"><a className="button button-primary" href="#projets">Voir mes projets <Arrow diagonal /></a><a className="button button-outline" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Mon CV <Arrow diagonal /></a></div></div>
-          <div className="hero-art-frame"><div className="hero-art has-portrait"><img className="hero-portrait" src="/portrait-rudolf.png" alt="Portrait de Rudolf Hounlete" width="1254" height="1254" fetchPriority="high" decoding="async" /></div><span className="hero-orbit" aria-hidden="true" /></div>
-          <a className="hero-achievement" href="#competitions"><span className="achievement-number">3<span>↗</span></span><strong>Médailles de bronze</strong><span>Kaggle & Zindi</span><span className="achievement-link">Voir les compétitions <Arrow diagonal /></span></a></div>
+          <div className="hero-topline"><p>Bonjour, moi c’est Rudolf.</p><p>Portfolio étudiant / 2026</p></div>
+          <div className="hero-title-block"><h1>Rudolf<span>Hounlete<i className="hero-dot">.</i></span></h1></div>
+          <div className="hero-introduction"><p className="hero-specialty">{profile.heroFocus}</p><p className="hero-description">{profile.heroDescription}</p><div className="hero-actions"><a className="button button-primary" href="#projets">Voir mes projets <Arrow diagonal /></a><a className="button button-outline" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Mon CV <Arrow diagonal /></a></div></div>
+          <div className="hero-art-frame"><div className="hero-art has-portrait"><img className="hero-portrait" src="/portrait-rudolf.png" alt="Portrait de Rudolf Hounlete" width="1254" height="1254" fetchPriority="high" decoding="async" /></div><div className="portrait-caption"><span>Ingénieur en formation</span><span>Casablanca<br />Maroc</span></div></div>
+          <nav className="hero-cover-index" aria-label="Sommaire du portfolio"><span>Au sommaire</span><a href="#competitions">01 / Compétitions</a><a href="#projets">02 / Projets</a><a href="#experience">03 / RiskSim</a></nav>
+          <a className="hero-achievement" href="#competitions"><span className="achievement-number">3</span><strong>Médailles de bronze</strong><span>Kaggle & Zindi</span><span className="achievement-link">Voir les compétitions <Arrow diagonal /></span></a>
         </div></section>
 
         <section className="section about-section" id="apropos"><div className="scene-stage section about-section">
@@ -212,7 +213,7 @@ function App() {
 
         <section className="section internship-section" id="experience"><div className="scene-stage section internship-section">
           <div className="experience-heading"><p className="eyebrow"><span /> Expérience · CHOUBEL · 2026</p><h2>RiskSim<span>.</span></h2><p>{projectStories.risksim.subtitle}</p></div>
-          <div className="experience-cinema"><ProjectVisual kind="risk"/></div><div className="experience-editorial"><div className="experience-copy"><p className="internship-date">Stage d’observation<br />15 juillet — 28 août 2026</p>{projectStories.risksim.paragraphs.map(text=><p key={text}>{text}</p>)}<div className="experience-delivered"><span>Du moteur à l’application</span><p>{projectStories.risksim.result}</p></div><button className="button button-primary" type="button" onClick={()=>openProject(internship)}>Lire la fiche technique <Arrow diagonal /></button></div><div className="experience-media"><ProjectGallery kind="risksim"/></div></div>
+          <div className="experience-editorial"><div className="experience-media"><div className="experience-cinema"><ProjectVisual kind="risk"/></div><ProjectGallery kind="risksim"/></div><div className="experience-copy"><p className="internship-date">Stage d’observation<br />15 juillet — 28 août 2026</p>{projectStories.risksim.paragraphs.map(text=><p key={text}>{text}</p>)}<div className="experience-delivered"><span>Du moteur à l’application</span><p>{projectStories.risksim.result}</p></div><button className="button button-primary" type="button" onClick={()=>openProject(internship)}>Lire la fiche technique <Arrow diagonal /></button></div></div>
         </div></section>
 
         <section className="section projects-section" id="projets"><div className="scene-stage section projects-section">
