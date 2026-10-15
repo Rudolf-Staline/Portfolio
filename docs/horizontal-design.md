@@ -24,3 +24,9 @@ Les projets sont présentés comme de grandes pages numérotées. Le titre préc
 `src/pages.css` ajoute une arrivée en perspective liée à la progression du défilement, une ombre de feuille, une barre de lecture et un en-tête de projet collant. Les animations CSS liées au défilement sont activées via `@supports` ; les autres navigateurs reçoivent une animation d’entrée à l’intersection. Aucun gestionnaire ne capture la molette, aucune hauteur de page n’est verrouillée, et aucun paragraphe n’est masqué. Le mode mouvement réduit désactive ces effets.
 
 Les animations de signal et les balayages sont décoratifs, ne représentent pas de mesures et suivent la même commande de pause que l’image. Les animations hors champ sont suspendues. Tous les liens vers les projets, le thème et les 41 paragraphes restent disponibles.
+
+## Ajustements des présentations RiskSim et PediAppend
+
+RiskSim commence par la problématique et les quatre paragraphes de présentation. Les deux captures sont ensuite regroupées dans une section dédiée, côte à côte sur ordinateur et l’une après l’autre sur mobile. La carte compacte de l’accueil présente également le texte avant sa capture.
+
+PediAppend montre désormais deux vues de son interface Flask, rendues à partir des templates du dépôt source : le formulaire de démographie et l’étape des symptômes. Aucune donnée patient ou prédiction n’est affichée. Les visuels SHAP/ROC sont conservés dans les assets ; la galerie privilégie l’interface. Voir `docs/pediappend-captures.md` pour la provenance.

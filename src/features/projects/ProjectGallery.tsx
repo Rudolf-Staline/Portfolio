@@ -4,12 +4,12 @@ const galleries = {
     {src:'/projects/risksim-results.png', label:'Résultats', alt:'Capture RiskSim S5 : distribution des coûts, percentiles, courbe cumulée et classement de sensibilité du scénario de démonstration.', caption:'Capture réelle de l’écran de résultats S5. Les chiffres de ce scénario illustrent l’interface ; ils ne sont pas des résultats client.'},
   ],
   clinical: [
-    {src:'/projects/shap_summary_bar.png',label:'Importance SHAP',alt:'Graphique SHAP du dépôt PediAppend : importance moyenne des quinze premières variables pour le modèle évalué.',caption:'Export du dépôt PediAppend · importance moyenne des variables selon SHAP. Une contribution au modèle n’établit pas une relation causale.'},
-    {src:'/projects/roc_curve.png',label:'Courbe ROC',alt:'Courbe ROC exportée par le pipeline d’évaluation du projet académique PediAppend.',caption:'Export du dépôt PediAppend · courbe ROC du modèle évalué sur le jeu du projet. Ce graphique ne constitue pas une validation clinique.'},
+    {src:'/projects/pediappend-interface-formulaire.jpg',label:'Le formulaire de l’application',alt:'Interface du prototype Flask PediAppend : formulaire de démographie vide, avec calcul de l’âge et saisie des caractéristiques du patient.',caption:'Vue du formulaire Flask, rendue à partir des templates du dépôt PediAppend. Prototype académique ; aucune donnée patient ni prédiction.'},
+    {src:'/projects/pediappend-interface-symptomes.jpg',label:'La saisie des symptômes',alt:'Interface du prototype Flask PediAppend : étape des symptômes, avec les signes cliniques proposés et les contrôles de saisie.',caption:'Étape Symptômes du formulaire PediAppend, rendue depuis le code du projet. Cette vue illustre l’interface et ne constitue pas une validation clinique.'},
   ],
 }
 export function ProjectGallery({kind}:{kind:keyof typeof galleries}) {
-  return <div className={`project-gallery expanded-gallery gallery-${kind}`} role="group" aria-label={kind==='risksim'?'Captures de RiskSim':'Graphiques de PediAppend'}>
-    {galleries[kind].map(image => <figure key={image.src}><h4>{image.label}</h4><img src={image.src} alt={image.alt} loading="lazy" decoding="async" width={kind==='risksim'?1440:1200} height={1100}/><figcaption>{image.caption}</figcaption></figure>)}
+  return <div className={`project-gallery expanded-gallery gallery-${kind}`} role="group" aria-label={kind==='risksim'?'Captures de RiskSim':'Interface de PediAppend'}>
+    {galleries[kind].map(image => <figure key={image.src}><h4>{image.label}</h4><img src={image.src} alt={image.alt} loading="lazy" decoding="async" width={kind==='risksim'?1440:1357} height={kind==='risksim'?1100:932}/><figcaption>{image.caption}</figcaption></figure>)}
   </div>
 }
