@@ -7,14 +7,14 @@ export function useSlideMotion(deck: RefObject<HTMLElement>) {
     if (!root || !('IntersectionObserver' in window)) return
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
     const selectors = [
-      '.hero-copy > *', '.hero-art-frame',
+      '.hero-copy > *', '.hero-art-frame', '.hero-topline > *', '.editorial-hero h1', '.hero-introduction > *', '.hero-achievement',
       '.about-section h2', '.about-section .eyebrow', '.about-text', '.about-section .text-link', '.about-facts > div',
       '.expertise-lead > :not(.expertise-decoration)', '.expertise-group',
       '.awards-heading h2', '.awards-heading .eyebrow', '.award-total', '.medal-card', '.ranking-card',
-      '.internship-story > *', '.internship-blueprint', '.delivery-steps > li', '.delivery-release', '.blueprint-stack',
+      '.internship-story > *', '.internship-blueprint',
       '.projects-section .section-heading h2', '.projects-section .eyebrow', '.projects-section .section-note', '.work-card', '.other-projects',
       '.journey-section h2', '.journey-section .eyebrow', '.education-list article',
-      '.contact-section h2', '.contact-section .eyebrow', '.contact-section p:not(.eyebrow)', '.contact-section .button', '.contact-links',
+      '.contact-section h2', '.contact-section .eyebrow', '.contact-section p:not(.eyebrow)', '.contact-section > .button', '.contact-links',
     ].join(', ')
     const elements = Array.from(root.querySelectorAll<HTMLElement>(selectors))
     const scenes = Array.from(root.querySelectorAll<HTMLElement>(':scope > section'))
@@ -39,10 +39,10 @@ export function useSlideMotion(deck: RefObject<HTMLElement>) {
         const entering = Math.max(0, top - scroll) / viewport
         const leaving = Math.max(0, scroll - (top + height - viewport)) / viewport
         const phase = Math.min(1, Math.max(entering, leaving))
-        scene.style.setProperty('--scene-scale', String(1 - phase * 0.035))
-        scene.style.setProperty('--scene-shift', `${(entering > leaving ? 28 : -20) * phase}px`)
-        scene.style.setProperty('--scene-opacity', String(1 - phase * 0.25))
-        scene.style.setProperty('--scene-radius', `${phase * 16}px`)
+        scene.style.setProperty('--scene-scale', String(1 - phase * 0.12))
+        scene.style.setProperty('--scene-shift', `${(entering > leaving ? 85 : -65) * phase}px`)
+        scene.style.setProperty('--scene-opacity', String(1 - phase * 0.65))
+        scene.style.setProperty('--scene-radius', `${phase * 36}px`)
       })
     }
     const schedulePhase = () => {

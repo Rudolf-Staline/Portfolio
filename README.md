@@ -6,7 +6,7 @@ Portfolio personnel : développement logiciel, machine learning et systèmes exp
 
 ## Design
 
-Fond ivoire, violet profond et typographie Sora / Manrope, avec une composition éditoriale. Le monogramme « rh. », les boutons arrondis et le portrait encadré donnent une identité commune aux huit sections. Les panneaux clairs et foncés alternent, avec des cartes de compétences, de compétitions et de projets harmonisées. Sur mobile, le portrait et les actions principales précèdent la présentation détaillée.
+Direction éditoriale inspirée du modèle Framer [Majd](https://majd-portfolio.framer.website/) de Mejed Alkoutaini : fond ivoire, typographie noire affirmée, accent terre cuite et navigation flottante. L’accueil utilise le nom sur toute la largeur, puis une composition réunissant présentation, portrait circulaire et médailles. Les autres sections reprennent la palette et les contrastes. Le site est développé en React ; les éléments graphiques du modèle ne sont pas réutilisés.
 
 Les projets disposent d’une fiche détaillée et d’une présentation typographique : Autonomous AutoML est mis en avant, accompagné de trois projets académiques ou personnels. Les compétences utilisent une grille de technologies ; les trois médailles et les deux classements ont des présentations distinctes. RiskSim présente les étapes de son fonctionnement, sans faux écran ni résultat simulé. Les compétitions Financial Stress Prediction, GeoAI et WAXAL complètent les projets Autonomous AutoML, RiskSim et les travaux académiques. Les fiches distinguent les travaux en cours des livrables disponibles.
 
@@ -30,8 +30,8 @@ npm run preview
 | `src/data/education.ts` | Formation |
 | `src/data/skills.ts` | Compétences regroupées |
 | `src/App.tsx` | Composition de la page et fiches projets |
-| `src/index.css` | Structure, navigation et animations |
-| `src/design.css` | Identité visuelle, typographie, cartes et adaptation mobile |
+| `src/index.css` | Styles, responsive et animations |
+| `src/editorial.css` | Direction visuelle Majd et composition de l’accueil |
 | `public/CV_Rudolf_HOUNLETE.pdf` | CV téléchargeable |
 | `public/portrait-rudolf.png` | Portrait retenu, chemise bleu ciel et fond transparent |
 
@@ -45,7 +45,7 @@ Pour un projet, `visual` sélectionne une illustration (`simulation`, `calendar`
 - Défilement et animations désactivés avec `prefers-reduced-motion`.
 - Contact par email et téléchargement du CV sans service tiers.
 
-`legacy/index.html` est conservé pour référence ; la page active est composée dans `src/App.tsx`. Les anciens composants inutilisés ont été supprimés.
+Les anciens composants et `legacy/index.html` sont conservés pour référence ; la page active est composée dans `src/App.tsx`.
 
 Les médailles et classements sont repris du CV de Rudolf de septembre 2026. Les liens externes ouvrent la compétition ou les expérimentations disponibles, sans prétendre être des liens directs vers son profil.
 
@@ -57,4 +57,4 @@ Les titres et les blocs apparaissent en cascade lorsqu’ils deviennent visibles
 
 Le défilement pilote également la profondeur des panneaux (échelle, déplacement, fondu et arrondis), avec une position stable pendant la lecture des sections longues. Les positions de navigation utilisent les dimensions de mise en page pour rester indépendantes des transformations. Une parallaxe à la souris anime les éléments autour du portrait ; une fine barre indique la progression.
 
-Sur ordinateur, les compositions utilisent la largeur disponible avec une marge de 5 % de chaque côté, portée à 7 % sur très grand écran. Les titres, le portrait, les grilles et les textes se mettent à l’échelle ; la longueur des paragraphes reste limitée pour la lecture. Les mouvements de profondeur restent discrets et la navigation principale souligne la section active.
+Sur ordinateur, les compositions utilisent la largeur disponible avec une marge de 4 % de chaque côté, sans plafond central de 1 120 ou 1 360 px. Les titres, le portrait, les grilles et les textes se mettent à l’échelle sur grand écran ; la longueur des paragraphes reste limitée pour la lecture.
