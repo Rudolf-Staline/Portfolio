@@ -3,7 +3,7 @@ export const competitions = [
   {
     name: 'NeuroGolf Championship', platform: 'Kaggle', year: '2026',
     medal: 'Bronze', result: '220e / 2 963 équipes', detail: 'Top 7,4 % · Réseaux compacts pour les transformations de grilles ARC-AGI',
-    href: 'https://www.kaggle.com/competitions/neurogolf-2026/leaderboard', linkLabel: 'Compétition', projectId: null,
+    href: 'https://www.kaggle.com/competitions/neurogolf-2026/leaderboard', linkLabel: 'Compétition', projectId: 'neurogolf',
   },
   {
     name: 'Google WAXAL ASR', platform: 'Zindi', year: '2026',
@@ -23,6 +23,6 @@ export const competitions = [
   {
     name: 'African Credit Scoring', platform: 'Zindi', year: '2026',
     medal: null, result: '2e / 77', detail: 'Modélisation du risque de crédit',
-    href: null, linkLabel: null, projectId: null,
+    href: null, linkLabel: null, projectId: 'credit',
   },
 ] as const

@@ -2,6 +2,22 @@ import type { Project } from './types'
 
 export const projects: Project[] = [
   {
+    index: 'neurogolf', title: 'NeuroGolf Championship', category: 'Compétition Kaggle · Réseaux compacts',
+    context: 'Kaggle · NeuroGolf Championship', period: '2026',
+    tagline: 'Participation à une compétition de transformations de grilles ARC-AGI avec des réseaux compacts.',
+    highlights: ['Médaille de bronze Kaggle', '220e sur 2 963 équipes · top 7,4 %'],
+    stack: ['Réseaux de neurones', 'ARC-AGI'],
+    links: {code: null, demo: null}, status: 'Bronze · Kaggle',
+    evidence: {label: 'Consulter la compétition', href: 'https://www.kaggle.com/competitions/neurogolf-2026/leaderboard'},
+  },
+  {
+    index: 'credit', title: 'African Credit Scoring', category: 'Compétition Zindi · Risque de crédit',
+    context: 'Zindi · African Credit Scoring', period: '2026',
+    tagline: 'Participation à une compétition de modélisation du risque de crédit.',
+    highlights: ['2e sur 77 participants'], stack: ['Machine learning', 'Risque de crédit'],
+    links: {code: null, demo: null}, fact: '2e / 77 · Zindi',
+  },
+  {
     index: 'financial-stress',
     title: "Stress financier — Prédiction transactionnelle",
     category: 'Machine learning · Compétition Zindi',

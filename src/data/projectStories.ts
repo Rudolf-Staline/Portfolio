@@ -7,6 +7,25 @@ export type ProjectStory = {
   note?: string
 }
 export const projectStories: Record<string, ProjectStory> = {
+  neurogolf: {
+    subtitle: 'Des transformations de grilles avec des réseaux compacts.',
+    paragraphs: [
+      'NeuroGolf Championship est une compétition Kaggle consacrée aux transformations de grilles ARC-AGI. Elle associe le raisonnement sur des motifs visuels à une contrainte de compacité des réseaux proposés.',
+      'Ma participation s’est classée 220e sur 2 963 équipes, dans les 7,4 % premiers, et a obtenu une médaille de bronze. Le lien vers la compétition permet de consulter son contexte et son classement.',
+    ],
+    method: 'Transformations de grilles ARC-AGI et réseaux de neurones compacts.',
+    result: 'Médaille de bronze Kaggle · 220e sur 2 963 équipes.',
+    note: 'La scène de tuiles est une illustration du sujet ; elle ne représente pas une tâche ou une solution soumise à la compétition.',
+  },
+  credit: {
+    subtitle: 'Une compétition autour de la modélisation du risque de crédit.',
+    paragraphs: [
+      'African Credit Scoring fait partie de mes participations sur Zindi. Cette compétition porte sur la modélisation du risque de crédit ; ma participation y a obtenu la deuxième place sur 77.',
+    ],
+    method: 'Compétition de machine learning consacrée au risque de crédit.',
+    result: '2e sur 77 · Zindi.',
+    note: 'Cette présentation reprend le classement. Aucun dépôt public ni détail supplémentaire sur la solution n’est disponible sur cette page.',
+  },
   automl: {
     subtitle: 'Du fichier CSV à une expérience que l’on peut reprendre et examiner.',
     paragraphs: [

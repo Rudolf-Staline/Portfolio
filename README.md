@@ -76,3 +76,5 @@ Les textes distinguent les classements de compétition et les scores locaux. Le 
 ## Scènes cinématographiques
 
 Les illustrations d’ouverture des projets utilisent désormais toute la largeur, avec une mise en scène photographique pour GeoAI et le carrefour, et des compositions 3D procédurales pour les autres sujets. Les descriptions restent sous les scènes et les captures réelles dans les fiches. La provenance, les briefs et les fichiers sont décrits dans [la direction visuelle](docs/cinema-art-direction.md). Les anciens schémas interactifs sont remplacés par des commandes de cadrage et de pause.
+
+Les onze projets et compétitions ont chacun un décor cinématographique WebP, y compris WAXAL, NeuroGolf et African Credit Scoring dans la section Compétitions. Les images sont chargées à la demande ; les captures réelles restent distinguées dans les fiches.

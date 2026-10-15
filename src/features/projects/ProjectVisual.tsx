@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { CinematicCanvas, type CinemaKind } from './CinematicCanvas'
 const scenes: Record<CinemaKind,{title:string[];eyebrow:string;detail:string;image?:string}> = {
-  automl:{title:['Autonomous','AutoML.'],eyebrow:'01 / MACHINE LEARNING',detail:'CSV → modèles → rapport'},
-  geoai:{title:['GeoAI','Aquaculture.'],eyebrow:'OBSERVATION DE LA TERRE',detail:'Sentinel-1 / Sentinel-2',image:'/cinema/geoai-aerial.png'},
-  traffic:{title:['Trafic','adaptatif.'],eyebrow:'VISION & SYSTÈMES EMBARQUÉS',detail:'YOLOv8 / Raspberry Pi',image:'/cinema/traffic-night.png'},
-  audio:{title:['Les voix','de WAXAL.'],eyebrow:'RECONNAISSANCE VOCALE',detail:'Lingala / Luganda / Shona'},
-  soliton:{title:['L’onde','se propage.'],eyebrow:'PHYSIQUE EXPÉRIMENTALE',detail:'Ligne non linéaire / 20 cellules'},
-  risk:{title:['Risk','Sim.'],eyebrow:'SIMULATION PROBABILISTE',detail:'Monte Carlo / Python / React'},
-  forex:{title:['Explorer','les marchés.'],eyebrow:'ANALYSE QUANTITATIVE',detail:'Données / signaux / backtesting'},
-  financial:{title:['Stress','financier.'],eyebrow:'DONNÉES TRANSACTIONNELLES',detail:'Six mois de transactions / LightGBM'},
-  clinical:{title:['Pedi','Append.'],eyebrow:'MACHINE LEARNING EXPLICABLE',detail:'Classification / SHAP / Flask'},
+  automl:{title:['Autonomous','AutoML.'],eyebrow:'01 / MACHINE LEARNING',detail:'CSV → modèles → rapport',image:'/cinema/automl.webp'},
+  geoai:{title:['GeoAI','Aquaculture.'],eyebrow:'OBSERVATION DE LA TERRE',detail:'Sentinel-1 / Sentinel-2',image:'/cinema/geoai-aerial.webp'},
+  traffic:{title:['Trafic','adaptatif.'],eyebrow:'VISION & SYSTÈMES EMBARQUÉS',detail:'YOLOv8 / Raspberry Pi',image:'/cinema/traffic-night.webp'},
+  audio:{title:['Les voix','de WAXAL.'],eyebrow:'RECONNAISSANCE VOCALE',detail:'Lingala / Luganda / Shona',image:'/cinema/waxal.webp'},
+  soliton:{title:['L’onde','se propage.'],eyebrow:'PHYSIQUE EXPÉRIMENTALE',detail:'Ligne non linéaire / 20 cellules',image:'/cinema/soliton.webp'},
+  risk:{title:['Risk','Sim.'],eyebrow:'SIMULATION PROBABILISTE',detail:'Monte Carlo / Python / React',image:'/cinema/risksim.webp'},
+  forex:{title:['Explorer','les marchés.'],eyebrow:'ANALYSE QUANTITATIVE',detail:'Données / signaux / backtesting',image:'/cinema/forex.webp'},
+  financial:{title:['Stress','financier.'],eyebrow:'DONNÉES TRANSACTIONNELLES',detail:'Six mois de transactions / LightGBM',image:'/cinema/financial.webp'},
+  neurogolf:{title:['NeuroGolf','Championship.'],eyebrow:'KAGGLE · RÉSEAUX COMPACTS',detail:'Transformations de grilles / ARC-AGI',image:'/cinema/neurogolf.webp'},
+  credit:{title:['African','Credit Scoring.'],eyebrow:'ZINDI · RISQUE DE CRÉDIT',detail:'Modélisation du risque de crédit',image:'/cinema/credit.webp'},
+  clinical:{title:['Pedi','Append.'],eyebrow:'MACHINE LEARNING EXPLICABLE',detail:'Classification / SHAP / Flask',image:'/cinema/clinical.webp'},
 }
 export function ProjectVisual({kind}:{kind:CinemaKind}) {
   const scene=scenes[kind]
@@ -43,4 +45,4 @@ export function ProjectVisual({kind}:{kind:CinemaKind}) {
     <div className="cinema-timeline" aria-hidden="true"><i/></div>
   </figure>
 }
-export const projectVisualKind: Record<string,CinemaKind>={automl:'automl',geoai:'geoai',waxal:'audio',risksim:'risk','financial-stress':'financial','01':'clinical','02':'traffic','03':'forex','05':'soliton'}
+export const projectVisualKind: Record<string,CinemaKind>={automl:'automl',geoai:'geoai',waxal:'audio',neurogolf:'neurogolf',credit:'credit',risksim:'risk','financial-stress':'financial','01':'clinical','02':'traffic','03':'forex','05':'soliton'}

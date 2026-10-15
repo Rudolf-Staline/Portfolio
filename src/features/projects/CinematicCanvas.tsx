@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-export type CinemaKind = 'automl' | 'geoai' | 'traffic' | 'audio' | 'forex' | 'soliton' | 'risk' | 'financial' | 'clinical'
+export type CinemaKind = 'automl' | 'geoai' | 'traffic' | 'audio' | 'forex' | 'soliton' | 'risk' | 'financial' | 'clinical' | 'neurogolf' | 'credit'
 type Point = { x:number; y:number; z:number }
 
 /** Procedural 3D compositions, projected onto canvas; no project data is simulated. */
