@@ -4,6 +4,7 @@ import App from './App.tsx'
 import './cinema.css'
 import './horizontal.css'
 import './vertical.css'
+import './expanded.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

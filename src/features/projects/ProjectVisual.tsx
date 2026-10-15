@@ -17,7 +17,6 @@ export function ProjectVisual({kind}:{kind:CinemaKind}) {
   const scene=scenes[kind]
   const [visible,setVisible]=useState(false)
   const [paused,setPaused]=useState(false)
-  const [close,setClose]=useState(false)
   const [reduce,setReduce]=useState(()=>matchMedia('(prefers-reduced-motion: reduce)').matches)
   const figure=useRef<HTMLElement>(null)
   const moveFrame=useRef(0)
@@ -30,16 +29,16 @@ export function ProjectVisual({kind}:{kind:CinemaKind}) {
     return()=>{observer.disconnect();preference.removeEventListener('change',change);cancelAnimationFrame(moveFrame.current)}
   },[])
   const running=visible&&!paused&&!reduce
-  return <figure ref={figure} className={`cinema-scene cinema-${kind}${running?' cinema-running':''}${close?' camera-close':''}`} style={{'--camera-scale':close?1.18:1} as CSSProperties} onPointerMove={event=>{
+  return <figure ref={figure} className={`cinema-scene cinema-${kind}${running?' cinema-running':''}`} style={{'--camera-scale':1} as CSSProperties} onPointerMove={event=>{
     if(reduce||paused||event.pointerType!=='mouse')return
     const node=event.currentTarget,rect=node.getBoundingClientRect(),x=(event.clientX-rect.left)/rect.width-.5,y=(event.clientY-rect.top)/rect.height-.5
     cancelAnimationFrame(moveFrame.current);moveFrame.current=requestAnimationFrame(()=>{node.style.setProperty('--camera-x',`${-x*16}px`);node.style.setProperty('--camera-y',`${-y*12}px`)})
   }} onPointerLeave={event=>{cancelAnimationFrame(moveFrame.current);event.currentTarget.style.setProperty('--camera-x','0px');event.currentTarget.style.setProperty('--camera-y','0px')}} aria-label={`Scène d’illustration : ${scene.title.join(' ')}`}>
-    <div className="cinema-camera">{scene.image?<img className="cinema-landscape" src={scene.image} alt="" loading="lazy" decoding="async" width="1672" height="941"/>:<CinematicCanvas kind={kind} running={running} close={close}/>}</div>
+    <div className="cinema-camera">{scene.image?<img className="cinema-landscape" src={scene.image} alt="" loading="lazy" decoding="async" width="1672" height="941"/>:<CinematicCanvas kind={kind} running={running} close={false}/>}</div>
     <div className="cinema-vignette" aria-hidden="true"/><div className="cinema-grain" aria-hidden="true"/>
     <div className="cinema-topline"><span>{scene.eyebrow}</span><span className="cinema-format">R / H · PORTFOLIO</span></div>
     <div className="cinema-caption"><div className="cinema-title" aria-hidden="true">{scene.title.map(line=><span key={line}>{line}</span>)}</div><p>{scene.detail}</p></div>
-    <div className="cinema-bottomline"><figcaption>{scene.image?'Illustration créée par IA':'Animation d’illustration'}</figcaption><div className="cinema-controls"><button type="button" aria-pressed={close} onClick={()=>setClose(!close)}>{close?'Vue large':'Vue rapprochée'}<span aria-hidden="true"> ↗</span></button>{!reduce&&<button type="button" onClick={()=>setPaused(!paused)} aria-pressed={paused} aria-label={`${paused?'Reprendre':'Mettre en pause'} la scène ${scene.title.join(' ')}`}>{paused?'Lecture':'Pause'} <span aria-hidden="true">{paused?'▶':'Ⅱ'}</span></button>}</div></div>
+    <div className="cinema-bottomline"><figcaption>{scene.image?'Illustration créée par IA':'Animation d’illustration'}</figcaption><div className="cinema-controls">{!reduce&&<button type="button" onClick={()=>setPaused(!paused)} aria-pressed={paused} aria-label={`${paused?'Reprendre':'Mettre en pause'} la scène ${scene.title.join(' ')}`}>{paused?'Lecture':'Pause'} <span aria-hidden="true">{paused?'▶':'Ⅱ'}</span></button>}</div></div>
     <div className="cinema-timeline" aria-hidden="true"><i/></div>
   </figure>
 }

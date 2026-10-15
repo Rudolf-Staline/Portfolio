@@ -1,4 +1,3 @@
-import { useState } from 'react'
 const galleries = {
   risksim: [
     {src:'/projects/risksim-dashboard.png', label:'Tableau de bord', alt:'Capture du tableau de bord RiskSim S5 : indicateurs, portefeuille de risques et historique du scénario de démonstration.', caption:'Capture réelle de RiskSim · version S5. Scénario de démonstration, montants illustratifs.'},
@@ -10,11 +9,7 @@ const galleries = {
   ],
 }
 export function ProjectGallery({kind}:{kind:keyof typeof galleries}) {
-  const [index,setIndex]=useState(0)
-  const images=galleries[kind]; const current=images[index]
-  return <figure className={`project-gallery gallery-${kind}`}>
-    <div className="gallery-tabs" role="group" aria-label={kind==='risksim'?'Captures de RiskSim':'Graphiques de PediAppend'}>{images.map((img,i)=><button type="button" key={img.src} aria-pressed={index===i} onClick={()=>setIndex(i)}>{img.label}</button>)}<span>VISUEL DU PROJET</span></div>
-    <a href={current.src} target="_blank" rel="noreferrer" aria-label={`Agrandir : ${current.label} (nouvel onglet)`}><img src={current.src} alt={current.alt} loading="lazy" decoding="async" width={kind==='risksim'?1440:1200} height={kind==='risksim'?1100:1100}/><span className="gallery-expand">Agrandir ↗</span></a>
-    <figcaption aria-live="polite">{current.caption}</figcaption>
-  </figure>
+  return <div className={`project-gallery expanded-gallery gallery-${kind}`} role="group" aria-label={kind==='risksim'?'Captures de RiskSim':'Graphiques de PediAppend'}>
+    {galleries[kind].map(image => <figure key={image.src}><h4>{image.label}</h4><img src={image.src} alt={image.alt} loading="lazy" decoding="async" width={kind==='risksim'?1440:1200} height={1100}/><figcaption>{image.caption}</figcaption></figure>)}
+  </div>
 }
