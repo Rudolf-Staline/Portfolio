@@ -13,7 +13,7 @@ export function useSlideMotion(deck: RefObject<HTMLElement>) {
       '.awards-heading h2', '.awards-heading .eyebrow', '.award-total', '.medal-card', '.ranking-card',
       '.internship-story > *', '.internship-blueprint', '.delivery-steps > li', '.delivery-release', '.blueprint-stack',
       '.projects-section .section-heading h2', '.projects-section .eyebrow', '.projects-section .section-note', '.work-card', '.other-projects',
-      '.journey-section h2', '.journey-section .eyebrow', '.education-list article',
+      '.project-exhibit .exhibit-copy > h3', '.subsection-heading', '.experience-heading', '.experience-copy > p', '.student-notebook', '.journey-section h2', '.journey-section .eyebrow', '.education-list article',
       '.contact-section h2', '.contact-section .eyebrow', '.contact-section p:not(.eyebrow)', '.contact-section .button', '.contact-links',
     ].join(', ')
     const elements = Array.from(root.querySelectorAll<HTMLElement>(selectors))

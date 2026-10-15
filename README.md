@@ -58,3 +58,17 @@ Les titres et les blocs apparaissent en cascade lorsqu’ils deviennent visibles
 Le défilement pilote également la profondeur des panneaux (échelle, déplacement, fondu et arrondis), avec une position stable pendant la lecture des sections longues. Les positions de navigation utilisent les dimensions de mise en page pour rester indépendantes des transformations. Une parallaxe à la souris anime les éléments autour du portrait ; une fine barre indique la progression.
 
 Sur ordinateur, les compositions utilisent la largeur disponible avec une marge de 4 % de chaque côté, sans plafond central de 1 120 ou 1 360 px. Les titres, le portrait, les grilles et les textes se mettent à l’échelle sur grand écran ; la longueur des paragraphes reste limitée pour la lecture.
+
+## Portfolio étudiant — contenu et illustrations
+
+Le contenu présente le parcours étudiant, sans appel à candidatures pour un stage. Les descriptions longues sont dans `src/data/projectStories.ts` ; l’accueil et le portrait restent dans `src/data/profile.ts` et `public/portrait-rudolf.png`. Les huit sections sont conservées, avec un défilement interne continu pour les panneaux longs.
+
+`src/features/projects/` contient les dossiers, les galeries et les illustrations SVG/CSS. Les interactions montrent le parcours AutoML, les mois observés de GeoAI et les phases du carrefour. Les animations se mettent en pause hors écran, disposent d’un bouton de pause et respectent `prefers-reduced-motion`. Elles sont des schémas pédagogiques et ne calculent pas les modèles des projets.
+
+### Origine des visuels
+
+- `public/projects/risksim-dashboard.png` et `risksim-results.png` : captures S5 du projet RiskSim, issues de `reports/s5/images/`. Les écrans présentent un scénario de démonstration ; les montants ne sont pas des résultats client.
+- `public/projects/shap_summary_bar.png` et `roc_curve.png` : exports originaux de `reports/images/` du dépôt [Coding-week-project](https://github.com/Rudolf-Staline/Coding-week-project). Les légendes précisent leur contexte académique.
+- Les autres illustrations sont construites dans le portfolio en SVG et CSS ; aucune image satellite, donnée financière, sortie de transcription ou trace d’oscilloscope n’est présentée comme réelle à partir de ces schémas.
+
+Les textes distinguent les classements de compétition et les scores locaux. Le périmètre public des expériences GeoAI est précisé, ainsi que la nature interne des vérifications AutoML et l’absence de validation clinique de PediAppend.
