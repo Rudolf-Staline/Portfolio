@@ -5,239 +5,229 @@ import { education } from './data/education'
 import { skills } from './data/skills'
 import { contact, profile } from './data/profile'
 import { editorial } from './data/editorial'
-import type { Project } from './data/types'
-import { useSlideMotion } from './hooks/useSlideMotion'
 import { projectStories } from './data/projectStories'
-import { ProjectExhibit } from './features/projects/ProjectExhibit'
+import type { Project } from './data/types'
 import { ProjectGallery } from './features/projects/ProjectGallery'
 import { ProjectVisual, projectVisualKind } from './features/projects/ProjectVisual'
 
-const slides = [
-  { id: 'accueil', label: 'Présentation' },
-  { id: 'apropos', label: 'À propos' },
-  { id: 'competences', label: 'Compétences' },
-  { id: 'competitions', label: 'Compétitions' },
-  { id: 'experience', label: 'Expérience' },
-  { id: 'projets', label: 'Projets' },
-  { id: 'parcours', label: 'Formation' },
-  { id: 'contact', label: 'Contact' },
+const panels = [
+  { id: 'accueil', label: 'Présentation' }, { id: 'liens', label: 'Liens & distinctions' },
+  { id: 'experience', label: 'RiskSim' }, { id: 'competitions', label: 'Compétitions' },
+  { id: 'projets', label: 'Projets' }, { id: 'apropos', label: 'À propos' },
+  { id: 'parcours', label: 'Formation' }, { id: 'contact', label: 'Contact' },
 ] as const
-
-function slideFromHash() {
-  const index = slides.findIndex(slide => `#${slide.id}` === window.location.hash)
-  return index < 0 ? 0 : index
+type Detail = Project | 'about' | 'skills' | null
+const imageSources: Record<string, string> = {
+  neurogolf: '/cinema/neurogolf-photo.webp', credit: '/cinema/credit-photo.webp',
+  'financial-stress': '/cinema/financial-photo.webp', geoai: '/cinema/geoai-aerial-photo.webp',
+  automl: '/cinema/automl-photo.webp', risksim: '/projects/risksim-dashboard.png',
+  waxal: '/cinema/waxal-photo.webp', '01': '/projects/shap_summary_bar.png',
+  '02': '/cinema/traffic-night-photo.webp', '03': '/cinema/forex-photo.webp', '05': '/cinema/soliton-photo.webp',
 }
-
-function Arrow({ diagonal = false }: { diagonal?: boolean }) {
-  return <span className="arrow-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d={diagonal ? 'M4 12 12 4M4 4h8v8' : 'M3 8h10M8 3l5 5-5 5'} /></svg></span>
+const shortNames: Record<string, string> = {
+  neurogolf: 'NeuroGolf', credit: 'African Credit Scoring', 'financial-stress': 'Stress financier',
+  geoai: 'GeoAI Aquaculture', automl: 'Autonomous AutoML', risksim: 'RiskSim',
+  waxal: 'WAXAL ASR', '01': 'PediAppend', '02': 'Feux intelligents', '03': 'Analyse Forex', '05': 'Solitons',
 }
+const visibleProjects = projects.filter(project => !project.placeholder)
+const competitionProjects = competitions.map(entry => visibleProjects.find(project => project.index === entry.projectId)!)
+const softwareProjects = ['automl', '01', '02', '03', '05'].map(id => visibleProjects.find(project => project.index === id)!)
+const risksim = visibleProjects.find(project => project.index === 'risksim')!
 
-function BronzeMedal() {
-  return <svg className="medal-emblem" viewBox="0 0 80 92" fill="none" role="img" aria-label="Médaille de bronze"><path d="M16 3h18l12 31-18 9L16 3Z" fill="#9f805b"/><path d="M46 3h18L52 43l-18-9L46 3Z" fill="#d3b68b"/><circle cx="40" cy="59" r="28" fill="#b67c43"/><circle cx="40" cy="59" r="22" stroke="#efd1a6" strokeWidth="2"/><path d="m40 45 4 8 9 2-7 6 2 9-8-5-8 5 2-9-7-6 9-2 4-8Z" fill="#f6e3c9"/></svg>
+function Icon({ name, size = 23 }: { name: 'arrow' | 'mail' | 'github' | 'code' | 'sun' | 'moon' | 'download'; size?: number }) {
+  const paths = {
+    arrow: <path d="M6 18 18 6M6 6h12v12" />,
+    mail: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 6 9 7 9-7" /></>,
+    github: <path d="M9 19c-4 1.3-4-2-6-2m12 5v-3.4c0-1 .1-1.5-.5-2.1 3.3-.4 6.5-1.6 6.5-7A5.3 5.3 0 0 0 19.5 6a5 5 0 0 0-.1-3s-1.2-.4-3.6 1.3a12.2 12.2 0 0 0-6.6 0C6.8 2.6 5.6 3 5.6 3a5 5 0 0 0-.1 3A5.3 5.3 0 0 0 4 9.5c0 5.4 3.2 6.6 6.5 7-.6.6-.5 1.4-.5 2.1V22" />,
+    code: <path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18" />,
+    sun: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" /></>,
+    moon: <path d="M21 13A9 9 0 0 1 11 3 9 9 0 1 0 21 13Z" />,
+    download: <path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4" />,
+  }
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>
+}
+function Medal({ small = false }: { small?: boolean }) {
+  return <svg className={small ? 'bronze-icon small' : 'bronze-icon'} viewBox="0 0 64 76" fill="none" aria-hidden="true"><path d="M11 2h15l10 26-15 8L11 2Z" fill="#b4ac9a"/><path d="M38 2h15L43 36l-15-8L38 2Z" fill="#ddd7c8"/><circle cx="32" cy="48" r="24" fill="#bd8859"/><circle cx="32" cy="48" r="18.5" stroke="#f0d6b6" strokeWidth="1.5"/><path d="m32 36 3.5 7 8 1-6 6 1.5 8-7-4-7 4 1.5-8-6-6 8-1 3.5-7Z" fill="#f8e5ce"/></svg>
+}
+// Original decorative sphere; not a geographic map.
+const globeDots = Array.from({ length: 29 }, (_, row) => {
+  const lat = -Math.PI / 2 + (row + 1) * Math.PI / 30
+  return Array.from({ length: 54 }, (_, col) => {
+    const lon = -Math.PI / 2 + col * Math.PI / 53
+    const patch = Math.sin(lon * 3.7 + lat * 2) + Math.cos(lat * 6.1 - lon * 2.8)
+    return <circle key={`${row}-${col}`} cx={120 + Math.cos(lat) * Math.sin(lon) * 112} cy={120 + Math.sin(lat) * 112} r={patch > .1 ? 1.2 : .55} opacity={Math.cos(lat) * Math.cos(lon) * (patch > .1 ? .58 : .15)}/>
+  })
+})
+function Globe() { return <div className="dot-globe" aria-hidden="true"><svg viewBox="0 0 240 240" fill="currentColor">{globeDots}</svg></div> }
+
+function ProjectTile({ project, onOpen }: { project: Project; onOpen: (project: Project) => void }) {
+  const competition = competitions.find(entry => entry.projectId === project.index)
+  const isExport = project.index === '01'
+  return <article className={`project-tile tile-${project.index}`} data-project-id={project.index}>
+    <button type="button" className="tile-open" onClick={() => onOpen(project)} aria-label={`Découvrir ${project.title}`}>
+      <div className={`tile-image${isExport ? ' plot-image' : ''}`}><img src={imageSources[project.index]} alt="" width="1672" height="941" loading="lazy" decoding="async"/>{competition?.medal && <span className="tile-award"><Medal small/> Bronze · {competition.platform}</span>}<span className="image-origin">{isExport ? 'Graphique du projet' : 'Illustration créée par IA'}</span></div>
+      <div className="tile-copy"><div className="tile-title"><h3>{shortNames[project.index]}</h3><Icon name="arrow" size={17}/></div><p>{projectStories[project.index].subtitle}</p><span className="tile-meta">{competition ? competition.medal ? competition.platform : `${competition.result} · ${competition.platform}` : project.stack.slice(0, 2).join(' · ')}</span></div>
+    </button>
+  </article>
 }
 
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [selected, setSelected] = useState<Project | null>(null)
-  const [projectOpen, setProjectOpen] = useState(false)
-  const [slideIndex, setSlideIndex] = useState(slideFromHash)
-  const activeSlide = slides[slideIndex]
-  const chromeTheme = ['apropos', 'contact'].includes(activeSlide.id) ? ' on-dark' : ''
-  const deck = useRef<HTMLElement>(null)
-  useSlideMotion(deck)
-  const navigateTo = (index: number, behavior: ScrollBehavior = 'smooth') => {
-    const next = Math.max(0, Math.min(slides.length - 1, index))
-    const container = deck.current
-    const section = container?.querySelector<HTMLElement>(`#${slides[next].id}`)
-    if (!container || !section) return
-    const top = section.offsetTop
-    container.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior })
-    setMenuOpen(false)
-    const hash = `#${slides[next].id}`
-    if (window.location.hash !== hash) window.history.pushState(null, '', hash)
-  }
-
-  useEffect(() => {
-    const syncHash = () => navigateTo(slideFromHash())
-    const followAnchor = (event: MouseEvent) => {
-      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
-      const target = event.target instanceof Element ? event.target.closest('a') : null
-      const hash = target?.getAttribute('href')
-      const index = slides.findIndex(slide => `#${slide.id}` === hash)
-      if (index < 0) return
-      event.preventDefault()
-      navigateTo(index)
-    }
-    window.addEventListener('hashchange', syncHash)
-    window.addEventListener('popstate', syncHash)
-    document.addEventListener('click', followAnchor)
-    return () => {
-      window.removeEventListener('hashchange', syncHash)
-      window.removeEventListener('popstate', syncHash)
-      document.removeEventListener('click', followAnchor)
-    }
-  }, [])
-
-  useEffect(() => {
-    navigateTo(slideFromHash(), 'instant')
-    const container = deck.current
-    if (!container) return
-    let frame = 0
-    const syncPosition = () => {
-      cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() => {
-        const midpoint = container.scrollTop + container.clientHeight / 2
-        const sections = Array.from(container.querySelectorAll<HTMLElement>(':scope > section'))
-        // The panel crossing the middle of the viewport is the current section.
-        const index = sections.findIndex(section => {
-          return section.offsetTop <= midpoint && section.offsetTop + section.offsetHeight > midpoint
-        })
-        if (index < 0) return
-        setSlideIndex(index)
-        const hash = `#${slides[index].id}`
-        if (window.location.hash !== hash) window.history.replaceState(null, '', hash)
-      })
-    }
-    container.addEventListener('scroll', syncPosition, { passive: true })
-    return () => { container.removeEventListener('scroll', syncPosition); cancelAnimationFrame(frame) }
-  }, [])
-
-  useEffect(() => {
-    const key = (event: KeyboardEvent) => {
-      if (projectOpen || menuOpen || event.altKey || event.ctrlKey || event.metaKey) return
-      if (event.target instanceof Element && event.target.closest('input, textarea, select, [contenteditable="true"]')) return
-      if (event.key === 'PageDown' || event.key === 'PageUp') {
-        const container = deck.current
-        if (!container) return
-        event.preventDefault()
-        const styles = window.getComputedStyle(container)
-        const distance = Math.max(1, container.clientHeight - (parseFloat(styles.scrollPaddingTop) || 0) - (parseFloat(styles.scrollPaddingBottom) || 0))
-        const sections = Array.from(container.querySelectorAll<HTMLElement>(':scope > section'))
-        const current = sections.findIndex(section => container.scrollTop < section.offsetTop + section.offsetHeight - 1)
-        const section = sections[current]
-        if (!section) return
-        const start = section.offsetTop
-        const end = Math.max(start, start + section.offsetHeight - container.clientHeight)
-        let top: number
-        if (event.key === 'PageDown') {
-          // Read the rest of a long panel before snapping to the next one.
-          top = container.scrollTop < end - 1 ? Math.min(end, container.scrollTop + distance)
-            : sections[current + 1]?.offsetTop ?? end
-        } else if (container.scrollTop > start + 1) {
-          top = Math.max(start, container.scrollTop - distance)
-        } else {
-          const previous = sections[current - 1]
-          top = previous ? Math.max(previous.offsetTop, previous.offsetTop + previous.offsetHeight - container.clientHeight) : 0
-        }
-        container.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
-        return
-      }
-      const next = event.key === 'ArrowRight' ? slideIndex + 1
-        : event.key === 'ArrowLeft' ? slideIndex - 1
-        : event.key === 'Home' ? 0 : event.key === 'End' ? slides.length - 1 : null
-      if (next !== null) { event.preventDefault(); navigateTo(next) }
-    }
-    window.addEventListener('keydown', key)
-    return () => window.removeEventListener('keydown', key)
-  }, [slideIndex, projectOpen, menuOpen])
-
+  const track = useRef<HTMLElement>(null)
   const dialog = useRef<HTMLDialogElement>(null)
-  const visibleProjects = projects.filter(project => !project.placeholder)
-  const featuredProjects = visibleProjects.filter(project => ['automl', '01', '02', '03'].includes(project.index))
-  const otherProjects = visibleProjects.filter(project => project.index === '05')
-  const competitionProjects = competitions.map(entry => visibleProjects.find(project => project.index === entry.projectId)).filter((project): project is Project => Boolean(project))
-  const internship = projects.find(project => project.index === 'risksim')!
+  const stopWheel = useRef<() => void>(() => {})
+  const returnHash = useRef('#accueil')
+  const [active, setActive] = useState(0)
+  const [detail, setDetail] = useState<Detail>(null)
+  const [dark, setDark] = useState(() => {
+    try { return localStorage.getItem('portfolio-horizontal-theme') === 'dark' } catch { return false }
+  })
+  const navigate = (id: string, behavior: ScrollBehavior = 'smooth', push = true) => {
+    const container = track.current, element = document.getElementById(id)
+    if (!container || !element) return
+    stopWheel.current()
+    const motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior
+    if (matchMedia('(max-width: 760px)').matches) element.scrollIntoView({ behavior: motion, block: 'start' })
+    else container.scrollTo({ left: element.offsetLeft - parseFloat(getComputedStyle(container).paddingLeft), behavior: motion })
+    const index = panels.findIndex(panel => panel.id === id)
+    if (index >= 0) setActive(index)
+    if (push && window.location.hash !== `#${id}`) history.pushState(null, '', `#${id}`)
+  }
+  const openDetail = (next: Exclude<Detail, null>) => {
+    returnHash.current = window.location.hash.startsWith('#projet/') ? '#projets' : window.location.hash || '#accueil'
+    setDetail(next)
+    history.pushState(null, '', typeof next === 'string' ? `#fiche/${next}` : `#projet/${next.index}`)
+  }
+  const closeDetail = () => { dialog.current?.close(); setDetail(null); history.replaceState(null, '', returnHash.current) }
 
+  useEffect(() => {
+    const followLocation = () => {
+      const hash = decodeURIComponent(location.hash.slice(1))
+      if (hash.startsWith('projet/')) {
+        const project = visibleProjects.find(item => item.index === hash.slice(7))
+        if (project) { returnHash.current = '#projets'; setDetail(project); return }
+      }
+      if (hash === 'fiche/about' || hash === 'fiche/skills' || hash === 'competences') {
+        returnHash.current = '#apropos'; setDetail(hash === 'fiche/about' ? 'about' : 'skills'); return
+      }
+      setDetail(null)
+      if (panels.some(panel => panel.id === hash)) navigate(hash, 'instant', false)
+    }
+    const initial = requestAnimationFrame(followLocation)
+    const anchors = (event: MouseEvent) => {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
+      const anchor = event.target instanceof Element ? event.target.closest('a') : null
+      const panel = panels.find(item => `#${item.id}` === anchor?.getAttribute('href'))
+      if (!panel) return
+      event.preventDefault(); navigate(panel.id)
+    }
+    const responsive = matchMedia('(max-width: 760px)')
+    const realign = () => { if (!location.hash.includes('/')) navigate(location.hash.slice(1) || 'accueil', 'instant', false) }
+    window.addEventListener('popstate', followLocation); window.addEventListener('hashchange', followLocation)
+    document.addEventListener('click', anchors); responsive.addEventListener('change', realign)
+    return () => {
+      cancelAnimationFrame(initial); window.removeEventListener('popstate', followLocation); window.removeEventListener('hashchange', followLocation)
+      document.removeEventListener('click', anchors); responsive.removeEventListener('change', realign)
+    }
+  }, [])
   useEffect(() => {
     const element = dialog.current
-    if (!projectOpen || !selected || !element) return
-    element.showModal()
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = previous }
-  }, [selected, projectOpen])
-
+    if (!element) return
+    if (detail && !element.open) element.showModal()
+    if (!detail && element.open) element.close()
+  }, [detail])
   useEffect(() => {
-    if (!menuOpen) return
-    const close = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenuOpen(false) }
-    window.addEventListener('keydown', close)
-    return () => window.removeEventListener('keydown', close)
-  }, [menuOpen])
+    const container = track.current
+    if (!container) return
+    let frame = 0, scrollFrame = 0, target = container.scrollLeft
+    const stop = () => { cancelAnimationFrame(frame); frame = 0; target = container.scrollLeft }
+    stopWheel.current = stop
+    const animate = () => {
+      const remaining = target - container.scrollLeft
+      if (Math.abs(remaining) < 2) { container.scrollLeft = target; frame = 0; return }
+      container.scrollLeft += remaining * .18; frame = requestAnimationFrame(animate)
+    }
+    const wheel = (event: WheelEvent) => {
+      if (matchMedia('(max-width: 760px)').matches || event.ctrlKey || event.metaKey || event.shiftKey || Math.abs(event.deltaX) >= Math.abs(event.deltaY)) return
+      if (container.scrollWidth <= container.clientWidth) return
+      event.preventDefault()
+      const scale = event.deltaMode === 1 ? 20 : event.deltaMode === 2 ? container.clientWidth : 1
+      target = Math.max(0, Math.min(container.scrollWidth - container.clientWidth, (frame ? target : container.scrollLeft) + event.deltaY * scale * 1.15))
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { container.scrollLeft = target; return }
+      if (!frame) frame = requestAnimationFrame(animate)
+    }
+    const position = () => {
+      cancelAnimationFrame(scrollFrame)
+      scrollFrame = requestAnimationFrame(() => {
+        if (matchMedia('(max-width: 760px)').matches) return
+        const left = container.scrollLeft + container.clientWidth * .16
+        let current = 0
+        Array.from(container.querySelectorAll<HTMLElement>(':scope > section')).forEach((child, index) => { if (child.offsetLeft <= left) current = index })
+        setActive(current)
+        if (!detail && location.hash !== `#${panels[current].id}`) history.replaceState(null, '', `#${panels[current].id}`)
+      })
+    }
+    container.addEventListener('wheel', wheel, { passive: false }); container.addEventListener('pointerdown', stop); container.addEventListener('scroll', position, { passive: true })
+    return () => { stop(); cancelAnimationFrame(scrollFrame); container.removeEventListener('wheel', wheel); container.removeEventListener('pointerdown', stop); container.removeEventListener('scroll', position) }
+  }, [detail])
+  useEffect(() => {
+    const keyboard = (event: KeyboardEvent) => {
+      if (detail || event.altKey || event.ctrlKey || event.metaKey || matchMedia('(max-width: 760px)').matches) return
+      if (event.target instanceof Element && event.target.closest('button,input,textarea,select,[contenteditable="true"]')) return
+      const container = track.current
+      if (!container) return
+      const forward = ['ArrowRight', 'ArrowDown', 'PageDown'].includes(event.key), backward = ['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key)
+      if (!forward && !backward && event.key !== 'Home' && event.key !== 'End') return
+      event.preventDefault(); stopWheel.current()
+      const left = event.key === 'Home' ? 0 : event.key === 'End' ? container.scrollWidth : container.scrollLeft + container.clientWidth * .78 * (forward ? 1 : -1)
+      container.scrollTo({ left, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
+    }
+    window.addEventListener('keydown', keyboard); return () => window.removeEventListener('keydown', keyboard)
+  }, [detail])
+  const changeTheme = () => setDark(current => {
+    try { localStorage.setItem('portfolio-horizontal-theme', current ? 'light' : 'dark') } catch { /* Theme works without storage. */ }
+    return !current
+  })
+  const project = detail && typeof detail !== 'string' ? detail : null
+  const pageScroll = (direction: number) => {
+    const container = track.current
+    if (!container) return
+    stopWheel.current(); container.scrollTo({ left: container.scrollLeft + container.clientWidth * .78 * direction, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
+  }
 
-  const openProject = (project: Project) => { setSelected(project); setProjectOpen(true) }
-  // Retain the content while the native dialog finishes its exit transition.
-  const closeProject = () => { dialog.current?.close(); setProjectOpen(false) }
-
-  return (
-    <>
-      <a className="skip-link" href="#main">Aller au contenu</a>
-      <header className={`header wrap${chromeTheme}`}>
-        <a className="wordmark" href="#accueil" aria-label="Rudolf Hounlete — accueil">Rudolf<br />Hounlete<span>.</span></a>
-        <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? 'Fermer' : 'Menu'} <span aria-hidden="true">{menuOpen ? '−' : '+'}</span></button>
-        <nav id="navigation" className={menuOpen ? 'navigation is-open' : 'navigation'} aria-label="Navigation principale">
-          <a href="#competitions" aria-current={activeSlide.id === 'competitions' ? 'location' : undefined} onClick={() => setMenuOpen(false)}>Compétitions</a>
-          <a href="#projets" aria-current={activeSlide.id === 'projets' ? 'location' : undefined} onClick={() => setMenuOpen(false)}>Projets</a>
-          <a href="#experience" aria-current={activeSlide.id === 'experience' ? 'location' : undefined} onClick={() => setMenuOpen(false)}>Expérience</a>
-          <a href="#contact" aria-current={activeSlide.id === 'contact' ? 'location' : undefined} className="nav-contact" onClick={() => setMenuOpen(false)}>Contact <Arrow diagonal /></a>
-        </nav>
-      </header>
-
-      <main id="main" className="wrap slide-deck" ref={deck} tabIndex={-1} aria-label="Portfolio de Rudolf Hounlete">
-        <section className="hero" id="accueil"><div className="scene-stage hero editorial-hero">
-          <div className="hero-topline"><p>Bonjour, moi c’est Rudolf.</p><p>Portfolio étudiant / 2026</p></div>
-          <div className="hero-title-block"><h1>Rudolf<span>Hounlete<i className="hero-dot">.</i></span></h1></div>
-          <div className="hero-introduction"><p className="hero-specialty">{profile.heroFocus}</p><p className="hero-description">{profile.heroDescription}</p><div className="hero-actions"><a className="button button-primary" href="#projets">Voir mes projets <Arrow diagonal /></a><a className="button button-outline" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Mon CV <Arrow diagonal /></a></div></div>
-          <div className="hero-art-frame"><div className="hero-art has-portrait"><img className="hero-portrait" src="/portrait-rudolf.png" alt="Portrait de Rudolf Hounlete" width="1254" height="1254" fetchPriority="high" decoding="async" /></div><div className="portrait-caption"><span>Ingénieur en formation</span><span>Casablanca<br />Maroc</span></div></div>
-          <nav className="hero-cover-index" aria-label="Sommaire du portfolio"><span>Au sommaire</span><a href="#competitions">01 / Compétitions</a><a href="#projets">02 / Projets</a><a href="#experience">03 / RiskSim</a></nav>
-          <a className="hero-achievement" href="#competitions"><span className="achievement-number">3</span><strong>Médailles de bronze</strong><span>Kaggle & Zindi</span><span className="achievement-link">Voir les compétitions <Arrow diagonal /></span></a>
-        </div></section>
-
-        <section className="section about-section" id="apropos"><div className="scene-stage section about-section">
-          <div><p className="eyebrow"><span /> À propos</p><h2>Étudier, expérimenter,<br />développer<span>.</span></h2>{profile.about.map(paragraph => <p className="about-text" key={paragraph}>{paragraph}</p>)}<a className="text-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <Arrow diagonal /><span className="sr-only"> (nouvel onglet)</span></a></div>
-          <aside className="student-notebook"><p className="notebook-label">Quelques repères</p><dl>{profile.facts.map(fact=><div key={fact.k}><dt>{fact.k}</dt><dd>{fact.v}</dd></div>)}</dl><div className="notebook-interests"><span>Ce que j’explore</span>{profile.interests.map(interest=><p key={interest}>{interest}</p>)}</div><p className="notebook-footnote">{editorial.notebook}</p></aside>
-        </div></section>
-
-        <section className="section expertise-section" id="competences"><div className="scene-stage section expertise-section">
-          <div className="expertise-layout">
-            <div className="expertise-lead"><p className="eyebrow"><span /> Compétences</p><h2>Les outils<br />dans mes projets<span>.</span></h2><p className="section-intro">{editorial.skillsIntro}</p><a className="text-link" href="#projets">Les voir dans mes projets <Arrow diagonal /></a><span className="expertise-decoration" aria-hidden="true">&#123; &#125;</span></div>
-            <div className="expertise-grid">{skills.map((group, index) => <article className="expertise-group" key={group.label}><div className="expertise-group-heading"><span className="group-number">0{index + 1}</span><h3>{group.label}</h3></div><p className="skill-context">{editorial.skillContexts[index]}</p><div className="tool-tags">{group.items.map((item, i) => <span className={i < 2 ? 'primary-tool' : ''} key={item}>{item}</span>)}</div></article>)}</div>
-          </div>
-        </div></section>
-
-        <section className="section competition-section" id="competitions"><div className="scene-stage section competition-section">
-          <div className="awards-heading"><div><p className="eyebrow"><span /> Kaggle & Zindi · 2026</p><h2>En compétition<span>.</span></h2></div><div className="award-total"><strong>3</strong><span>médailles<br />de bronze</span></div></div>
-          <div className="competition-intro">{editorial.competitionIntro.map(text=><p key={text}>{text}</p>)}</div><div className="medal-grid">{competitions.filter(entry => entry.medal).map(entry => <article className="medal-card" key={entry.name}><div className="medal-card-top"><span className="platform-label">{entry.platform}</span><BronzeMedal /></div><p className="medal-label">Médaille de bronze</p><h3>{entry.name}</h3><p className="award-description">{entry.detail}</p><p className="award-story">{entry.pitch}</p>{entry.result !== 'Médaille de bronze' && <p className="award-placement">{entry.result}</p>}<div className="award-links">{entry.projectId && <button className="text-link" type="button" onClick={() => openProject(projects.find(project => project.index === entry.projectId)!)}>Ma solution <Arrow diagonal /></button>}{entry.href && <a className="text-link" href={entry.href} target="_blank" rel="noreferrer">{entry.linkLabel} <Arrow diagonal /> <span className="sr-only">(s’ouvre dans un nouvel onglet)</span></a>}</div></article>)}</div>
-          <div className="ranking-grid">{competitions.filter(entry => !entry.medal).map(entry => <article className="ranking-card" key={entry.name}><div className="ranking-position"><strong>{entry.result.split(' / ')[0]}</strong><span>sur {entry.result.split(' / ')[1]}</span></div><div><p className="platform-label">{entry.platform} · {entry.year}</p><h3>{entry.name}</h3><p className="award-description">{entry.detail}</p></div><div className="award-links">{entry.projectId && <button className="text-link" type="button" onClick={() => openProject(projects.find(project => project.index === entry.projectId)!)}>Ma solution <Arrow diagonal /></button>}{entry.href && <a className="text-link" href={entry.href} target="_blank" rel="noreferrer">Code <Arrow diagonal /> <span className="sr-only">(s’ouvre dans un nouvel onglet)</span></a>}</div></article>)}</div>
-          <div className="competition-studies"><div className="subsection-heading"><p className="eyebrow"><span /> Dans les expériences</p><h3>{editorial.competitionHeading}</h3><p>{editorial.competitionStudiesIntro}</p></div>{competitionProjects.map((project,i)=><ProjectExhibit key={project.index} project={project} order={String(i+1).padStart(2,'0')} onOpen={openProject} compact/>)}</div>
-        </div></section>
-
-        <section className="section internship-section" id="experience"><div className="scene-stage section internship-section">
-          <div className="experience-heading"><p className="eyebrow"><span /> Expérience · CHOUBEL · 2026</p><h2>RiskSim<span>.</span></h2><p>{projectStories.risksim.subtitle}</p></div>
-          <div className="experience-editorial"><div className="experience-media"><div className="experience-cinema"><ProjectVisual kind="risk"/></div><ProjectGallery kind="risksim"/></div><div className="experience-copy"><p className="internship-date">Stage d’observation<br />15 juillet — 28 août 2026</p>{projectStories.risksim.paragraphs.map(text=><p key={text}>{text}</p>)}<div className="experience-delivered"><span>Du moteur à l’application</span><p>{projectStories.risksim.result}</p></div><button className="button button-primary" type="button" onClick={()=>openProject(internship)}>Lire la fiche technique <Arrow diagonal /></button></div></div>
-        </div></section>
-
-        <section className="section projects-section" id="projets"><div className="scene-stage section projects-section">
-          <div className="section-heading"><div><p className="eyebrow"><span /> Logiciel & ingénierie</p><h2>Les projets,<br />de plus près<span>.</span></h2></div><p className="section-note">{editorial.projectsIntro}</p></div>
-          <div className="project-collection">{featuredProjects.map((project,i)=><ProjectExhibit key={project.index} project={project} order={String(i+1).padStart(2,'0')} onOpen={openProject}/>)}</div>
-          <div className="experimental-project"><div className="subsection-heading"><p className="eyebrow"><span /> Physique expérimentale</p><h3>Du côté du laboratoire.</h3></div>{otherProjects.map(project=><ProjectExhibit key={project.index} project={project} order="05" onOpen={openProject}/>)}</div>
-        </div></section>
-
-        <section className="section journey-section" id="parcours"><div className="scene-stage section journey-section"><div className="section-heading"><div><p className="eyebrow"><span /> Formation</p><h2>Du Bénin<br />à Casablanca<span>.</span></h2></div><p className="section-note">{editorial.journeyIntro}</p></div><div className="education-list">{education.map((item,i)=><article key={item.school+item.detail}><span className="education-period">{item.period || 'Formation scientifique'}</span><div><h3>{item.school}</h3><p>{item.detail}</p><p className="education-description">{editorial.educationDescriptions[i]}</p></div><span className="education-place">{item.location}</span></article>)}</div></div></section>
-
-        <section className="contact-section" id="contact"><div className="scene-stage contact-section"><div><p className="eyebrow"><span /> Contact</p><h2>Un projet,<br />une question<span> ?</span></h2>{editorial.contact.map(text=><p key={text}>{text}</p>)}</div><div className="contact-actions"><a className="button button-dark" href={`mailto:${contact.email}?subject=Échange%20autour%20du%20portfolio`}>M’écrire <Arrow diagonal /></a><a className="text-link" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Télécharger mon CV <Arrow diagonal /></a></div><div className="contact-links"><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><a className="text-link" href={contact.github} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /><span className="sr-only"> (nouvel onglet)</span></a>{contact.linkedin&&<a className="text-link" href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /><span className="sr-only"> (nouvel onglet)</span></a>}</div></div></section>
-      </main>
-      <footer className={`wrap deck-controls${chromeTheme}`} aria-label="Navigation des slides">
-        <div className="deck-label" aria-live="polite"><strong>{String(slideIndex + 1).padStart(2, '0')}<span> / {String(slides.length).padStart(2, '0')}</span></strong><span key={activeSlide.id}>{activeSlide.label}</span><span className="deck-scroll-hint">Défilez pour naviguer</span></div>
-        <nav className="deck-dots" aria-label="Choisir une slide">{slides.map((slide, index) => <button key={slide.id} type="button" onClick={() => navigateTo(index)} aria-label={`Slide ${index + 1} : ${slide.label}`} aria-current={slideIndex === index ? 'step' : undefined} title={slide.label}><span /></button>)}</nav>
-        <div className="deck-arrows"><button type="button" onClick={() => navigateTo(slideIndex - 1)} disabled={slideIndex === 0} aria-label="Slide précédente">←</button><button type="button" onClick={() => navigateTo(slideIndex + 1)} disabled={slideIndex === slides.length - 1} aria-label="Slide suivante">→</button></div>
-      </footer>
-
-      <dialog ref={dialog} className="project-dialog" aria-labelledby="project-dialog-title" onCancel={closeProject} onClose={event => { if (!event.currentTarget.open) setProjectOpen(false) }} onClick={event => { if (event.target === event.currentTarget) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeProject() } }}>
-        {selected && <><div className="dialog-heading"><p className="eyebrow">{selected.category ?? selected.context}</p><button className="dialog-close" type="button" onClick={closeProject} aria-label="Fermer la fiche projet" autoFocus>×</button></div><h2 id="project-dialog-title">{selected.title}</h2><p className="dialog-context">{selected.context} · {selected.period}{selected.status && ` · ${selected.status}`}</p><p className="dialog-summary">{projectStories[selected.index].subtitle}</p><div className="dossier-prose">{projectStories[selected.index].paragraphs.map(text=><p key={text}>{text}</p>)}</div>{selected.index==='01'?<ProjectGallery key={selected.index} kind="clinical"/>:selected.index==='risksim'?<ProjectGallery key={selected.index} kind="risksim"/>:<ProjectVisual key={selected.index} kind={projectVisualKind[selected.index]??'automl'}/>}<h3>Approche technique</h3><p className="case-text">{projectStories[selected.index].method}</p><h3>Ce qui a été réalisé</h3><p className="case-text">{projectStories[selected.index].result}</p>{projectStories[selected.index].note&&<p className="project-note">{projectStories[selected.index].note}</p>}{selected.evidence&&<a className="text-link" href={selected.evidence.href} target="_blank" rel="noreferrer">{selected.evidence.label} <Arrow diagonal /><span className="sr-only"> (nouvel onglet)</span></a>}<div className="stack">{selected.stack.map(item=><span key={item}>{item}</span>)}</div><div className="dialog-links">{selected.links.code&&<a className="button button-primary" href={selected.links.code} target="_blank" rel="noreferrer">Explorer le dépôt <Arrow diagonal /><span className="sr-only"> (nouvel onglet)</span></a>}</div></>}
-
-      </dialog>
-    </>
-  )
+  return <div className="horizontal-site" data-theme={dark ? 'dark' : 'light'}>
+    <a className="skip-link" href="#main">Aller au contenu</a>
+    <header className="topbar"><nav className="top-links" aria-label="Navigation principale"><a href="#accueil" aria-current={active < 2 ? 'location' : undefined}>Rudolf Hounlete</a><span aria-hidden="true">/</span><a href="#competitions" aria-current={active === 3 ? 'location' : undefined}>Compétitions</a><a href="#projets" aria-current={active === 4 ? 'location' : undefined}>Projets</a><a href="#contact" aria-current={active === 7 ? 'location' : undefined}>Contact</a></nav><button type="button" className="theme-switch" onClick={changeTheme} aria-label={dark ? 'Activer le thème clair' : 'Activer le thème sombre'} title={dark ? 'Thème clair' : 'Thème sombre'}><span className={!dark ? 'chosen' : ''}><Icon name="sun" size={16}/></span><span className={dark ? 'chosen' : ''}><Icon name="moon" size={16}/></span></button></header>
+    <main ref={track} className="horizontal-track" id="main" tabIndex={-1} aria-label="Portfolio de Rudolf Hounlete. Faites défiler pour explorer les cartes.">
+      <section className="rail-panel profile-panel" id="accueil" aria-labelledby="profile-name"><article className="card intro-card"><div className="person-line"><img src="/portrait-rudolf.png" alt="Portrait de Rudolf Hounlete" width="48" height="48" fetchPriority="high"/><div><h1 id="profile-name">Rudolf Hounlete</h1><p><span className="status-dot"/>Étudiant ingénieur</p></div></div><p className="intro-text">Je développe des applications et des modèles de <span>machine learning.</span> Élève ingénieur à <span>Centrale Casablanca,</span> je travaille sur des problèmes de simulation, de données et de systèmes embarqués.</p><button className="inline-link intro-more" type="button" onClick={() => openDetail('about')}>Un peu plus sur moi <Icon name="arrow" size={15}/></button><div className="location"><p>Basé à Casablanca, Maroc.</p><span>Originaire du Bénin</span></div><Globe/></article></section>
+      <section className="rail-panel links-panel" id="liens" aria-label="Liens et distinctions"><div className="social-grid">
+        <a className="card social-card github-card" href={contact.github} target="_blank" rel="noreferrer"><Icon name="github" size={28}/><div><strong>@Rudolf-Staline</strong><span>Mes dépôts GitHub</span></div><span className="card-corner"><Icon name="arrow" size={16}/></span><span className="sr-only"> (nouvel onglet)</span></a>
+        <a className="card social-card medal-card" href="#competitions"><Medal/><div><strong>3 médailles</strong><span>de bronze</span></div></a>
+        <a className="card social-card cv-card" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download><Icon name="download"/><strong>Mon CV</strong></a>
+        <a className="card email-card" href={`mailto:${contact.email}`}><Icon name="mail"/><span>{contact.email}</span></a>
+        <a className="card social-card kaggle-card" href="#competitions"><span className="brand-letter">k</span><div><strong>Kaggle</strong><span>1 médaille de bronze</span></div></a>
+        <a className="card social-card zindi-card" href="#competitions"><span className="brand-letter">z.</span><div><strong>Zindi</strong><span>2 médailles de bronze</span></div></a>
+        <button className="card social-card skills-link" type="button" onClick={() => openDetail('skills')}><Icon name="code"/><strong>Mes outils</strong></button>
+      </div></section>
+      <section className="rail-panel feature-panel" id="experience" aria-labelledby="risk-heading"><article className="card risk-card" data-project-id="risksim"><button className="risk-open" type="button" onClick={() => openDetail(risksim)} aria-label="Découvrir RiskSim — Simulation de risques projet"><div className="risk-image"><div className="risk-window"><div className="risk-window-bar"><span/><span/><span/><small>RiskSim</small></div><img src="/projects/risksim-dashboard.png" alt="Capture de l’interface RiskSim sur un scénario de démonstration" width="1440" height="1100" decoding="async"/></div><span className="risk-chip">Python + React</span></div><div className="risk-copy"><span className="overline">Logiciel · CHOUBEL · 2026</span><h2 id="risk-heading">RiskSim <Icon name="arrow" size={22}/></h2><p>{projectStories.risksim.subtitle}</p><span className="tile-meta">Simulation Monte Carlo · Application Windows</span></div></button></article></section>
+      <section className="rail-panel collection-panel" id="competitions" aria-labelledby="competitions-heading"><div className="project-grid"><article className="card collection-intro"><div><span className="overline">Kaggle & Zindi</span><h2 id="competitions-heading">En compétition.</h2><p>Des grilles à transformer, des voix à transcrire, des données satellitaires incomplètes. À chaque participation, une autre façon d’aborder le machine learning.</p></div><div className="three-medals"><Medal/><Medal/><Medal/><span>3 médailles<br/>de bronze</span></div></article>{competitionProjects.map(item => <ProjectTile key={item.index} project={item} onOpen={openDetail}/>)}</div></section>
+      <section className="rail-panel collection-panel" id="projets" aria-labelledby="projects-heading"><div className="project-grid"><article className="card collection-intro software-intro"><div><span className="overline">Logiciel & expérimentation</span><h2 id="projects-heading">Mes projets.</h2><p>Du notebook à l’interface, de la caméra à la maquette. Voici ce que j’ai construit et les questions que j’ai voulu explorer.</p></div><button type="button" className="inline-link" onClick={() => openDetail('skills')}>Voir les outils utilisés <Icon name="arrow" size={16}/></button></article>{softwareProjects.map(item => <ProjectTile key={item.index} project={item} onOpen={openDetail}/>)}</div></section>
+      <section className="rail-panel about-panel" id="apropos" aria-labelledby="about-heading"><article className="card about-card"><span className="overline">À propos</span><h2 id="about-heading">Derrière les projets.</h2>{profile.about.slice(0, 2).map(text => <p key={text}>{text}</p>)}<div className="about-facts">{profile.facts.slice(0, 3).map(fact => <div key={fact.k}><span>{fact.k}</span><strong>{fact.v}</strong></div>)}</div><button type="button" className="inline-link" onClick={() => openDetail('about')}>Lire la suite <Icon name="arrow" size={16}/></button></article></section>
+      <section className="rail-panel education-panel" id="parcours" aria-labelledby="education-heading"><article className="card education-card"><span className="overline">Formation</span><h2 id="education-heading">Bénin → Maroc.</h2><div className="education-entries">{education.map(item => <div key={item.school + item.detail}><span className="education-date">{item.period || 'Formation scientifique'}</span><h3>{item.school}</h3><p>{item.detail}</p><span className="education-country">{item.location}</span></div>)}</div></article></section>
+      <section className="rail-panel contact-panel" id="contact" aria-labelledby="contact-heading"><article className="card contact-card"><div className="contact-mark"><Icon name="mail" size={34}/></div><div><span className="overline">Contact</span><h2 id="contact-heading">On en parle ?</h2><p>Une question sur un projet, une expérience à comparer ou une idée à développer ensemble ?</p><a className="contact-address" href={`mailto:${contact.email}`}>{contact.email} <Icon name="arrow" size={18}/></a></div><div className="contact-bottom"><a href={contact.github} target="_blank" rel="noreferrer">GitHub <Icon name="arrow" size={15}/><span className="sr-only"> (nouvel onglet)</span></a><a href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Télécharger mon CV <Icon name="download" size={15}/></a></div></article></section>
+    </main>
+    <footer className="rail-footer"><div className="rail-position"><span>{String(active + 1).padStart(2, '0')}</span><span className="position-rule"/><span>{panels[active].label}</span></div><p>© 2026 Rudolf Hounlete</p><div className="rail-controls"><span>Défiler pour explorer</span><button type="button" onClick={() => pageScroll(-1)} aria-label="Défiler vers la gauche">←</button><button type="button" onClick={() => pageScroll(1)} aria-label="Défiler vers la droite">→</button></div></footer>
+    <dialog ref={dialog} className="project-dialog" aria-labelledby="detail-title" onCancel={event => { event.preventDefault(); closeDetail() }} onClose={() => setDetail(null)} onClick={event => {
+      if (event.target !== event.currentTarget) return
+      const rect = event.currentTarget.getBoundingClientRect()
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeDetail()
+    }}>
+      <div className="dialog-top"><span>{project ? project.category ?? project.context : detail === 'about' ? 'Rudolf Hounlete' : 'Compétences'}</span><button type="button" onClick={closeDetail} aria-label="Fermer la fiche" autoFocus>Fermer <span aria-hidden="true">×</span></button></div>
+      <div className="dialog-body">
+        {project && <><div className="detail-heading"><p className="overline">{project.context} · {project.period}</p><h2 id="detail-title">{shortNames[project.index]}</h2><p className="detail-subtitle">{projectStories[project.index].subtitle}</p></div><div className="detail-visual">{project.index === 'risksim' ? <ProjectGallery key={project.index} kind="risksim"/> : project.index === '01' ? <ProjectGallery key={project.index} kind="clinical"/> : <ProjectVisual key={project.index} kind={projectVisualKind[project.index] ?? 'automl'}/>}</div><div className="detail-prose">{projectStories[project.index].paragraphs.map(text => <p key={text}>{text}</p>)}</div><div className="detail-summary"><div><h3>Approche technique</h3><p>{projectStories[project.index].method}</p></div><div><h3>Ce qui a été réalisé</h3><p>{projectStories[project.index].result}</p></div></div>{projectStories[project.index].note && <p className="project-note">{projectStories[project.index].note}</p>}<div className="detail-stack">{project.stack.map(item => <span key={item}>{item}</span>)}</div><div className="detail-links">{project.links.code && <a className="solid-link" href={project.links.code} target="_blank" rel="noreferrer">Explorer le dépôt <Icon name="github" size={18}/><span className="sr-only"> (nouvel onglet)</span></a>}{project.evidence && <a className="inline-link" href={project.evidence.href} target="_blank" rel="noreferrer">{project.evidence.label} <Icon name="arrow" size={17}/><span className="sr-only"> (nouvel onglet)</span></a>}</div></>}
+        {detail === 'about' && <><div className="detail-heading"><p className="overline">Étudiant ingénieur · Centrale Casablanca</p><h2 id="detail-title">Rudolf Hounlete.</h2><p className="detail-subtitle">Le code, les modèles et l’expérimentation.</p></div><div className="detail-prose">{profile.about.map(text => <p key={text}>{text}</p>)}</div><div className="detail-stack">{profile.interests.map(item => <span key={item}>{item}</span>)}</div><a className="solid-link" href={contact.github} target="_blank" rel="noreferrer">Explorer mon GitHub <Icon name="arrow" size={17}/><span className="sr-only"> (nouvel onglet)</span></a></>}
+        {detail === 'skills' && <><div className="detail-heading"><p className="overline">Compétences</p><h2 id="detail-title">Mes outils.</h2><p className="detail-subtitle">{editorial.skillsIntro}</p></div><div className="skills-detail">{skills.map((group, i) => <article key={group.label}><h3>{group.label}</h3><p>{editorial.skillContexts[i]}</p><div className="detail-stack">{group.items.map(item => <span key={item}>{item}</span>)}</div></article>)}</div></>}
+      </div>
+    </dialog>
+  </div>
 }
-
 export default App
