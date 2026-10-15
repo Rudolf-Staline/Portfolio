@@ -1,0 +1,74 @@
+{
+  "mode": "built-in image_gen",
+  "commonPrompt": "Use case: photorealistic-natural. Asset: wide landscape cinematic photograph for an engineering student's portfolio background, 16:9. Create ONE convincing photographic movie still, not an illustration, not 3D rendering, not a composite collage. Camera: full-frame natural 35mm lens, stopped down f/5.6 with moderate real depth of field, realistic perspective, optical softness only in distant background. Natural exposure with readable midtones, neutral white balance, subtle film response, fine plausible texture. Environmental objects must look physically manufactured, imperfect and used. Put important subject mostly on right 60%; left third quiet and darker naturally for later white HTML title. Frame subject fully, not clipped by edges. No text overlaid in image, no labels, logos, watermarks, cinematic black bars, UI overlays, neon, teal-orange filter, smoke, floating objects, glossy CGI, artificial bokeh balls, heroic glowing abstract symbols. ",
+  "assets": [
+    {
+      "key": "waxal",
+      "scene": "A modest university speech-recording workspace in central Africa during daytime. On the RIGHT half, a real lightly worn handheld field recorder beside an ordinary wired dynamic microphone on a desk stand, over-ear headphones and a laptop seen obliquely, screen turned away and unreadable. The microphone is small in context, not a giant studio glamour closeup. Faint curtain and books in the room, a window with soft green foliage. Scuffed grey desk extends into calm darker LEFT half. A credible student recording setup, no people.",
+      "target": "public/cinema/waxal-photo.webp",
+      "source": "exec-c6d91a1f-1fb2-4581-834b-58307749b001.png"
+    },
+    {
+      "key": "geoai-aerial",
+      "scene": "Real low-altitude drone documentary photograph of an aquaculture farm in a rural tropical landscape. On the RIGHT two thirds, irregular rectangular earthen fish ponds with muddy green water, thin uneven dikes, a small corrugated roof shed, dirt footpaths and dense vegetation. One pond drained to brown mud. Agricultural scale, organic irregularity, no infinite perfect repeating grid. LEFT third falls into natural tree shade while keeping location visible. Midday overcast sky light, atmosphere and muted real greens.",
+      "target": "public/cinema/geoai-aerial-photo.webp",
+      "source": "exec-08b117fe-a412-4cea-ae9b-fcbad56edfc5.png"
+    },
+    {
+      "key": "traffic-night",
+      "scene": "Street-level documentary movie still of an ordinary four-way urban intersection in Casablanca at early evening. On the RIGHT half, conventional three-lamp traffic lights correctly hung, a few ordinary compact cars waiting behind a stop line, one crossing with slightly worn painted stripes, concrete sidewalks, modest buildings and traffic camera mounted naturally on pole. An unbranded parked delivery van at edge. Soft blue-hour light, dry asphalt, natural color, traffic light tiny realistic red light not neon glow. LEFT foreground darker asphalt and shaded wall gives quiet space. No readable license plates or shop text.",
+      "target": "public/cinema/traffic-night-photo.webp",
+      "source": "exec-ff650a81-3ffa-48ac-9583-17fda271d43b.png"
+    },
+    {
+      "key": "automl",
+      "scene": "Documentary photograph in an ordinary university computer lab. On the RIGHT a real slightly dusty desktop workstation with two standard monitors and keyboard, one monitor shows small out-of-focus code editor and the other an out-of-focus tabular data notebook, no legible text or metrics. Paper notes, USB drive, loose cable. The LEFT foreground is quiet shadowed desk surface. Empty desk chair tucked in. Daylight through blinds mixed with normal white monitor light. Convincing physical monitor bezels and cable connections. No glowing microchips or abstract AI props.",
+      "target": "public/cinema/automl-photo.webp",
+      "source": "exec-bd32d1f5-64fb-4b3a-9345-074d19849bc1.png"
+    },
+    {
+      "key": "risksim",
+      "scene": "Editorial photograph of a real small engineering consultancy project review desk, no people. On the RIGHT half a work laptop seen three-quarter angle with ordinary unbranded application window out of focus, a few printed spreadsheet pages with fine indistinct grid lines, mechanical pencil, calculator, a closed plain kraft project folder. A softly blurred ordinary office wall and window. LEFT is darker clean section of same desk with natural shadow. Mildly used office equipment, credible working setting, soft late afternoon window daylight. No glass sculpture, no stacks of money.",
+      "target": "public/cinema/risksim-photo.webp",
+      "source": "exec-50ec24c3-40b8-43e6-8c85-87564c693652.png",
+      "revision": "Keep photo unchanged, replace CAD screen with a dim defocused spreadsheet; no readable values."
+    },
+    {
+      "key": "clinical",
+      "scene": "Quiet documentary photograph of an empty ordinary pediatric examination room in a teaching clinic. On the RIGHT half a real portable ultrasound machine on a compact medical cart, correct probe resting in its holder with a continuous physical cable, folded clean exam paper on a bed, a wall sanitizer dispenser and neutral cabinet. Ultrasound screen dark or indistinct without any invented medical image. LEFT foreground is a shadowed plain wall. Natural daylight, restrained practical clinical lighting, no dramatic sci-fi blue light, no patients or human specimens.",
+      "target": "public/cinema/clinical-photo.webp",
+      "source": "exec-013400cb-45cc-4b06-b660-14cedde26c38.png"
+    },
+    {
+      "key": "soliton",
+      "scene": "Close but contextual documentary photograph of a student electronics workbench. On the RIGHT two thirds, a physically plausible long experimental circuit board carrying a repeated chain of discrete copper coils and small capacitors, connected with ordinary leads to a standard bench oscilloscope and a function generator. Equipment screens dim and out of focus, no invented precise graph or readable values. A handwritten notebook with unreadable notes, components tray and solder spool. The LEFT third is shadowed scratched wooden bench. Natural side window light, realistic cable paths, modest university lab rather than futuristic product design.",
+      "target": "public/cinema/soliton-photo.webp",
+      "source": "exec-2dd11dd6-4cc7-4a70-8571-e1bda9c55b2c.png",
+      "revision": "Remove person, arms and hands, continue empty lab. Preserve circuit and instruments. Dark indistinct screens, no precise scientific results."
+    },
+    {
+      "key": "forex",
+      "scene": "Documentary photograph of a modest quantitative analysis work desk in a home study. On the RIGHT half a single normal 27-inch monitor viewed obliquely, dark plotting application with a distant defocused price-chart impression and no readable numbers, paired with a real laptop, standard keyboard, plain notebook and pencil. Neutral room, plants visible softly through window, everyday student workspace, not a bank trading floor. LEFT is a quiet shadowed desk and wall. Early morning natural window light, true-to-life neutral color.",
+      "target": "public/cinema/forex-photo.webp",
+      "source": "exec-dc76aba4-b5aa-4d6a-91ac-aaeb41fdcb3f.png"
+    },
+    {
+      "key": "financial",
+      "scene": "Candid editorial still life of household financial planning, photographed naturally on a worn apartment kitchen table. On the RIGHT half a few real crumpled grocery receipts with illegible fine print, an ordinary calculator, open unbranded notebook with indistinct handwritten entries, a pen, and a smartphone face down. No bank cards, currency, identity documents, readable totals or staged symbolic sculptures. LEFT third quiet shaded wood table. Soft overcast daylight from side window, uneven paper edges, realistic textures, understated lived-in scene.",
+      "target": "public/cinema/financial-photo.webp",
+      "source": "exec-8330ae05-468d-4363-bd70-4cba2f60f99f.png"
+    },
+    {
+      "key": "neurogolf",
+      "scene": "Documentary photograph of a student's real compact neural-network programming workspace. On the RIGHT half an open ordinary laptop angled toward camera shows a distant small flat 2D colored square grid puzzle next to an unreadable code editor, with a squared-paper notebook containing rough colored pencil square studies beside it. Grid is only a thematic illustrative puzzle, not a precise research result, no floating cells or 3D toys. A few ordinary colored pencils, slight desk wear and cable. LEFT third subdued shadowed desk. Soft neutral daylight, restrained realistic colors.",
+      "target": "public/cinema/neurogolf-photo.webp",
+      "source": "exec-d4d1346c-4e7e-4db3-a134-56fdadab31d3.png"
+    },
+    {
+      "key": "credit",
+      "scene": "Documentary editorial photograph inside a modest small-business bookkeeping workspace in an African city. On the RIGHT an open paper account ledger with fine illegible writing, ordinary calculator and laptop, a few well-used plain business folders and a cardboard box corner. The softly blurred background suggests a small shop stock shelf, no person, no corporate logos, no currency and no identity documents. LEFT foreground quiet darker desk. Soft daylight through storefront, real dust and paper fibers, business lending context grounded in everyday accounting rather than glamour bank card.",
+      "target": "public/cinema/credit-photo.webp",
+      "source": "exec-2caebf93-fbd9-4a9b-b9b4-ed6d8f99b4c6.png"
+    }
+  ]
+}

@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { CinematicCanvas, type CinemaKind } from './CinematicCanvas'
 const scenes: Record<CinemaKind,{title:string[];eyebrow:string;detail:string;image?:string}> = {
-  automl:{title:['Autonomous','AutoML.'],eyebrow:'01 / MACHINE LEARNING',detail:'CSV → modèles → rapport',image:'/cinema/automl.webp'},
-  geoai:{title:['GeoAI','Aquaculture.'],eyebrow:'OBSERVATION DE LA TERRE',detail:'Sentinel-1 / Sentinel-2',image:'/cinema/geoai-aerial.webp'},
-  traffic:{title:['Trafic','adaptatif.'],eyebrow:'VISION & SYSTÈMES EMBARQUÉS',detail:'YOLOv8 / Raspberry Pi',image:'/cinema/traffic-night.webp'},
-  audio:{title:['Les voix','de WAXAL.'],eyebrow:'RECONNAISSANCE VOCALE',detail:'Lingala / Luganda / Shona',image:'/cinema/waxal.webp'},
-  soliton:{title:['L’onde','se propage.'],eyebrow:'PHYSIQUE EXPÉRIMENTALE',detail:'Ligne non linéaire / 20 cellules',image:'/cinema/soliton.webp'},
-  risk:{title:['Risk','Sim.'],eyebrow:'SIMULATION PROBABILISTE',detail:'Monte Carlo / Python / React',image:'/cinema/risksim.webp'},
-  forex:{title:['Explorer','les marchés.'],eyebrow:'ANALYSE QUANTITATIVE',detail:'Données / signaux / backtesting',image:'/cinema/forex.webp'},
-  financial:{title:['Stress','financier.'],eyebrow:'DONNÉES TRANSACTIONNELLES',detail:'Six mois de transactions / LightGBM',image:'/cinema/financial.webp'},
-  neurogolf:{title:['NeuroGolf','Championship.'],eyebrow:'KAGGLE · RÉSEAUX COMPACTS',detail:'Transformations de grilles / ARC-AGI',image:'/cinema/neurogolf.webp'},
-  credit:{title:['African','Credit Scoring.'],eyebrow:'ZINDI · RISQUE DE CRÉDIT',detail:'Modélisation du risque de crédit',image:'/cinema/credit.webp'},
-  clinical:{title:['Pedi','Append.'],eyebrow:'MACHINE LEARNING EXPLICABLE',detail:'Classification / SHAP / Flask',image:'/cinema/clinical.webp'},
+  automl:{title:['Autonomous','AutoML.'],eyebrow:'01 / MACHINE LEARNING',detail:'CSV → modèles → rapport',image:'/cinema/automl-photo.webp'},
+  geoai:{title:['GeoAI','Aquaculture.'],eyebrow:'OBSERVATION DE LA TERRE',detail:'Sentinel-1 / Sentinel-2',image:'/cinema/geoai-aerial-photo.webp'},
+  traffic:{title:['Trafic','adaptatif.'],eyebrow:'VISION & SYSTÈMES EMBARQUÉS',detail:'YOLOv8 / Raspberry Pi',image:'/cinema/traffic-night-photo.webp'},
+  audio:{title:['Les voix','de WAXAL.'],eyebrow:'RECONNAISSANCE VOCALE',detail:'Lingala / Luganda / Shona',image:'/cinema/waxal-photo.webp'},
+  soliton:{title:['L’onde','se propage.'],eyebrow:'PHYSIQUE EXPÉRIMENTALE',detail:'Ligne non linéaire / 20 cellules',image:'/cinema/soliton-photo.webp'},
+  risk:{title:['Risk','Sim.'],eyebrow:'SIMULATION PROBABILISTE',detail:'Monte Carlo / Python / React',image:'/cinema/risksim-photo.webp'},
+  forex:{title:['Explorer','les marchés.'],eyebrow:'ANALYSE QUANTITATIVE',detail:'Données / signaux / backtesting',image:'/cinema/forex-photo.webp'},
+  financial:{title:['Stress','financier.'],eyebrow:'DONNÉES TRANSACTIONNELLES',detail:'Six mois de transactions / LightGBM',image:'/cinema/financial-photo.webp'},
+  neurogolf:{title:['NeuroGolf','Championship.'],eyebrow:'KAGGLE · RÉSEAUX COMPACTS',detail:'Transformations de grilles / ARC-AGI',image:'/cinema/neurogolf-photo.webp'},
+  credit:{title:['African','Credit Scoring.'],eyebrow:'ZINDI · RISQUE DE CRÉDIT',detail:'Modélisation du risque de crédit',image:'/cinema/credit-photo.webp'},
+  clinical:{title:['Pedi','Append.'],eyebrow:'MACHINE LEARNING EXPLICABLE',detail:'Classification / SHAP / Flask',image:'/cinema/clinical-photo.webp'},
 }
 export function ProjectVisual({kind}:{kind:CinemaKind}) {
   const scene=scenes[kind]
@@ -36,8 +36,6 @@ export function ProjectVisual({kind}:{kind:CinemaKind}) {
     cancelAnimationFrame(moveFrame.current);moveFrame.current=requestAnimationFrame(()=>{node.style.setProperty('--camera-x',`${-x*16}px`);node.style.setProperty('--camera-y',`${-y*12}px`)})
   }} onPointerLeave={event=>{cancelAnimationFrame(moveFrame.current);event.currentTarget.style.setProperty('--camera-x','0px');event.currentTarget.style.setProperty('--camera-y','0px')}} aria-label={`Scène d’illustration : ${scene.title.join(' ')}`}>
     <div className="cinema-camera">{scene.image?<img className="cinema-landscape" src={scene.image} alt="" loading="lazy" decoding="async" width="1672" height="941"/>:<CinematicCanvas kind={kind} running={running} close={close}/>}</div>
-    {kind==='geoai'&&<div className="orbital-scan" aria-hidden="true"><i/><b/><span/></div>}
-    {kind==='traffic'&&<div className="city-light-sweep" aria-hidden="true"/>}
     <div className="cinema-vignette" aria-hidden="true"/><div className="cinema-grain" aria-hidden="true"/>
     <div className="cinema-topline"><span>{scene.eyebrow}</span><span className="cinema-format">R / H · PORTFOLIO</span></div>
     <div className="cinema-caption"><div className="cinema-title" aria-hidden="true">{scene.title.map(line=><span key={line}>{line}</span>)}</div><p>{scene.detail}</p></div>
