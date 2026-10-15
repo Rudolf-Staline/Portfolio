@@ -72,3 +72,7 @@ Le contenu présente le parcours étudiant, sans appel à candidatures pour un s
 - Les autres illustrations sont construites dans le portfolio en SVG et CSS ; aucune image satellite, donnée financière, sortie de transcription ou trace d’oscilloscope n’est présentée comme réelle à partir de ces schémas.
 
 Les textes distinguent les classements de compétition et les scores locaux. Le périmètre public des expériences GeoAI est précisé, ainsi que la nature interne des vérifications AutoML et l’absence de validation clinique de PediAppend.
+
+## Scènes cinématographiques
+
+Les illustrations d’ouverture des projets utilisent désormais toute la largeur, avec une mise en scène photographique pour GeoAI et le carrefour, et des compositions 3D procédurales pour les autres sujets. Les descriptions restent sous les scènes et les captures réelles dans les fiches. La provenance, les briefs et les fichiers sont décrits dans [la direction visuelle](docs/cinema-art-direction.md). Les anciens schémas interactifs sont remplacés par des commandes de cadrage et de pause.

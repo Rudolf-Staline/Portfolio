@@ -68,7 +68,7 @@ export const projectStories: Record<string, ProjectStory> = {
     paragraphs: [
       'PediAppend est un projet académique consacré à la classification de l’appendicite pédiatrique. Le jeu Regensburg réunit 782 patients et 53 variables brutes : observations cliniques, résultats biologiques et informations échographiques.',
       'Le projet réunit préparation des données, comparaison de SVM, Random Forest, LightGBM et CatBoost, puis analyse des prédictions avec SHAP. La comparaison accorde une attention particulière au rappel, parce qu’un faux négatif et un faux positif n’ont pas la même signification dans ce problème.',
-      'Une application Flask permet de saisir les observations et d’examiner la prédiction accompagnée de ses explications. Les graphiques ci-contre sont de véritables exports conservés dans le dépôt : ils montrent l’importance des variables et les courbes d’évaluation du projet.',
+      'Une application Flask permet de saisir les observations et d’examiner la prédiction accompagnée de ses explications. Les graphiques accessibles dans la fiche sont de véritables exports conservés dans le dépôt : ils montrent l’importance des variables et les courbes d’évaluation du projet.',
     ],
     method: 'Nettoyage et encodage des données, comparaison de quatre familles de classifieurs, analyses SHAP et intégration Flask.',
     result: 'Un prototype académique avec interface web, graphiques d’évaluation et tests automatisés. Le code et les figures sont consultables sur GitHub.',
@@ -79,7 +79,7 @@ export const projectStories: Record<string, ProjectStory> = {
     paragraphs: [
       'L’objectif de ce projet académique est d’adapter les feux d’une maquette de carrefour au trafic observé. La vision estime les flux ; la logique de commande détermine ensuite quelles voies peuvent être ouvertes ensemble.',
       'YOLOv8 et K-Means interviennent dans l’estimation des flux. La commande prend en compte les combinaisons compatibles avant de piloter les feux sur Raspberry Pi. Le projet relie ainsi traitement d’image, décision et action sur un montage physique.',
-      'L’animation représente cette chaîne de façon simplifiée : observation du trafic, choix d’une phase puis ouverture des voies correspondantes. Elle explique le principe de commande ; ce n’est pas un enregistrement de la maquette.',
+      'La scène animée illustre le contexte du projet. La réalisation présentée est une maquette académique, avec une estimation des flux par vision et une commande sur Raspberry Pi.',
     ],
     method: 'Vision par ordinateur avec YOLOv8, estimation des flux avec K-Means et pilotage de la maquette par Raspberry Pi.',
     result: 'Une maquette de carrefour associant estimation visuelle des flux et commande adaptative des feux.',

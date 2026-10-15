@@ -211,7 +211,7 @@ function App() {
 
         <section className="section internship-section" id="experience"><div className="scene-stage section internship-section">
           <div className="experience-heading"><p className="eyebrow"><span /> Expérience · CHOUBEL · 2026</p><h2>RiskSim<span>.</span></h2><p>{projectStories.risksim.subtitle}</p></div>
-          <div className="experience-editorial"><div className="experience-copy"><p className="internship-date">Stage d’observation<br />15 juillet — 28 août 2026</p>{projectStories.risksim.paragraphs.map(text=><p key={text}>{text}</p>)}<div className="experience-delivered"><span>Du moteur à l’application</span><p>{projectStories.risksim.result}</p></div><button className="button button-primary" type="button" onClick={()=>openProject(internship)}>Lire la fiche technique <Arrow diagonal /></button></div><div className="experience-media"><ProjectGallery kind="risksim"/><ProjectVisual kind="risk"/></div></div>
+          <div className="experience-cinema"><ProjectVisual kind="risk"/></div><div className="experience-editorial"><div className="experience-copy"><p className="internship-date">Stage d’observation<br />15 juillet — 28 août 2026</p>{projectStories.risksim.paragraphs.map(text=><p key={text}>{text}</p>)}<div className="experience-delivered"><span>Du moteur à l’application</span><p>{projectStories.risksim.result}</p></div><button className="button button-primary" type="button" onClick={()=>openProject(internship)}>Lire la fiche technique <Arrow diagonal /></button></div><div className="experience-media"><ProjectGallery kind="risksim"/></div></div>
         </div></section>
 
         <section className="section projects-section" id="projets"><div className="scene-stage section projects-section">

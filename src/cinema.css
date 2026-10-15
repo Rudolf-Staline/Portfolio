@@ -1,0 +1,50 @@
+/* Cinematic project chapters. Scenes are artwork; evidence stays in the project dossiers. */
+.cinema-scene{position:relative;isolation:isolate;overflow:hidden;width:100%;height:clamp(420px,55vw,740px);background:#081012;color:#f4eee0;margin:0;contain:paint}
+.cinema-camera{position:absolute;inset:0;transform:translate3d(var(--camera-x,0px),var(--camera-y,0px),0) scale(var(--camera-scale,1));transition:transform 1.8s cubic-bezier(.16,1,.3,1);will-change:transform}
+.cinema-landscape{width:100%;height:100%;object-fit:cover;display:block;animation:cinema-drift 26s ease-in-out infinite alternate;transform:scale(1.06);filter:saturate(.8)}
+.cinematic-canvas{display:block;width:100%;height:100%}
+.cinema-vignette{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0410139c 0%,#05101338 43%,transparent 75%),linear-gradient(0deg,#050d13e8,transparent 47%,#050d1366)}
+.cinema-grain{position:absolute;inset:0;opacity:.055;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.91' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' d='M0 0h180v180H0z'/%3E%3C/svg%3E")}
+.cinema-topline{position:absolute;top:32px;left:4vw;right:4vw;display:flex;justify-content:space-between;gap:16px;font:10px/1.6 monospace;letter-spacing:.14em;color:#e5dfcfc9}
+.cinema-topline::before{content:'';position:absolute;top:-12px;left:0;width:26px;height:1px;background:#d5ab7c}
+.cinema-format{color:#d1d5ca8c}
+.cinema-caption{position:absolute;left:4vw;right:4vw;bottom:102px;pointer-events:none}
+.cinema-title{font-family:'Sora',sans-serif;font-size:clamp(48px,6.3vw,106px);font-weight:500;line-height:.99;letter-spacing:-.075em;text-shadow:0 4px 40px #0004}
+.cinema-title span{display:block}.cinema-title span+span{color:#d4b18c}
+.cinema-caption>p{font-size:12px;letter-spacing:.03em;color:#d9d7cbd9;line-height:1.7;margin-top:25px}
+.cinema-bottomline{position:absolute;bottom:35px;left:4vw;right:4vw;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.cinema-bottomline figcaption{font:9px/1.6 monospace;letter-spacing:.03em;color:#d2d7cc94}
+.cinema-controls{display:flex;gap:10px;flex-wrap:wrap}.cinema-controls button{border:1px solid #e7dfca40;background:#09131b42;backdrop-filter:blur(12px);padding:11px 15px;border-radius:2px;color:#eee7d5;font:11px/1.2 'Manrope',sans-serif;min-height:38px;transition:background .25s,border-color .25s}
+.cinema-controls button:hover{background:#e1bc8524;border-color:#d6ba8e9e}.cinema-controls button[aria-pressed="true"]{border-color:#d6ba8e9e;background:#d5ac7820}
+.cinema-controls button span{margin-left:12px;color:#d5b287}
+.cinema-timeline{position:absolute;bottom:0;left:4vw;right:4vw;height:1px;background:#ffffff20}.cinema-timeline i{display:block;position:absolute;height:100%;width:25%;background:#d8b382;animation:cinema-progress 26s linear infinite;transform-origin:left}
+.cinema-scene .cinema-landscape,.cinema-scene .cinema-timeline i,.cinema-scene .orbital-scan,.cinema-scene .orbital-scan i,.cinema-scene .city-light-sweep{animation-play-state:paused}
+.cinema-running .cinema-landscape,.cinema-running .cinema-timeline i,.cinema-running .orbital-scan,.cinema-running .orbital-scan i,.cinema-running .city-light-sweep{animation-play-state:running}
+.cinema-geoai .cinema-caption,.cinema-traffic .cinema-caption{bottom:105px}
+.cinema-geoai .cinema-title span+span{color:#f2d1a3}.cinema-traffic .cinema-title span+span{color:#e9b08c}
+.orbital-scan{position:absolute;inset:-15%;background:linear-gradient(108deg,transparent 46%,#b9e5ca00 48%,#c5e6c213 49.9%,#f7e3ba57 50%,transparent 50.15%);animation:orbital-sweep 14s ease-in-out infinite;pointer-events:none}
+.orbital-scan i{position:absolute;left:61%;top:41%;width:15%;aspect-ratio:1.7;border:1px solid #d1dfbb38;transform:rotate(-12deg);animation:cinema-bracket 8s ease-in-out infinite}
+.orbital-scan i::before,.orbital-scan i::after{content:'';position:absolute;width:12px;height:12px;border-color:#e3c496;border-style:solid}.orbital-scan i::before{top:-1px;left:-1px;border-width:1px 0 0 1px}.orbital-scan i::after{right:-1px;bottom:-1px;border-width:0 1px 1px 0}
+.city-light-sweep{position:absolute;inset:-50%;pointer-events:none;background:linear-gradient(160deg,transparent 48%,#dba16312 49%,#eab08c24 49.7%,transparent 50.2%);mix-blend-mode:screen;animation:city-sweep 12s ease-in-out infinite}
+@keyframes cinema-drift{from{transform:scale(1.06) translate3d(-.5%,.4%,0)}to{transform:scale(1.17) translate3d(1.6%,-1.2%,0)}}
+@keyframes cinema-progress{from{transform:translateX(-100%)}to{transform:translateX(400%)}}
+@keyframes orbital-sweep{0%,10%{translate:-40% 0;opacity:0}20%{opacity:1}80%{opacity:1}90%,100%{translate:40% 0;opacity:0}}
+@keyframes cinema-bracket{0%,100%{opacity:.25}50%{opacity:.9}}
+@keyframes city-sweep{0%,10%{translate:0 -35%;opacity:0}35%,65%{opacity:1}90%,100%{translate:0 35%;opacity:0}}
+/* Full-width artwork, then two columns for the case study. */
+.project-exhibit,.project-collection .project-exhibit:nth-child(even){display:block;padding:48px 0 72px;border-top:1px solid #c8c0b2}
+.project-exhibit:first-child{padding-top:36px}.project-exhibit .exhibit-visual{position:static;width:calc(100% + 8vw);margin:0 -4vw 48px}
+.project-exhibit .exhibit-copy{display:grid;grid-template-columns:1fr 1.18fr;column-gap:8vw;align-items:start}
+.exhibit-copy>.exhibit-meta{grid-column:1/-1;grid-row:1}.exhibit-copy>h3{grid-column:1;grid-row:2}.exhibit-copy>.exhibit-subtitle{grid-column:1;grid-row:3}.exhibit-copy>.exhibit-prose{grid-column:2;grid-row:2/7;margin-top:0}.exhibit-copy>.exhibit-details{grid-column:1;grid-row:4}.exhibit-copy>.exhibit-stack{grid-column:1;grid-row:5}.exhibit-copy>.exhibit-links{grid-column:1;grid-row:6}.exhibit-copy>.exhibit-prose p{font-size:17px;line-height:1.95}
+.experience-cinema{width:calc(100% + 8vw);margin:0 -4vw 55px}.experience-cinema .cinema-scene{height:clamp(440px,50vw,700px)}
+.project-dialog .cinema-scene{height:450px;margin-block:28px}.project-dialog .cinema-title{font-size:58px}.project-dialog .cinema-topline,.project-dialog .cinema-caption,.project-dialog .cinema-bottomline{left:25px;right:25px}.project-dialog .cinema-caption{bottom:100px}.project-dialog .cinema-format{display:none}.project-dialog .cinema-controls button{font-size:10px;padding:9px 11px}
+@media(min-width:1700px){.exhibit-copy>.exhibit-prose p{font-size:20px}.cinema-scene{height:800px}.cinema-caption>p{font-size:16px}.cinema-topline{font-size:12px}.cinema-controls button{font-size:13px}}
+@media(max-width:1000px){.project-exhibit .exhibit-copy{column-gap:5vw}.cinema-title{font-size:clamp(46px,7.8vw,78px)}.cinema-scene{height:560px}}
+@media(max-width:700px){
+ .project-exhibit,.project-collection .project-exhibit:nth-child(even){display:block;padding:32px 0 50px}.project-exhibit .exhibit-copy{display:block}.project-exhibit .exhibit-visual{width:calc(100% + 50px);margin-inline:-25px;margin-bottom:30px}.exhibit-copy>.exhibit-prose{margin-top:25px}.exhibit-copy>.exhibit-prose p{font-size:16px}
+ .cinema-scene{height:540px}.cinema-topline{top:24px;left:25px;right:25px;font-size:8px}.cinema-format{display:none}.cinema-caption{left:25px;right:25px;bottom:130px}.cinema-title{font-size:clamp(43px,11vw,72px);letter-spacing:-.07em}.cinema-caption>p{font-size:11px;max-width:30ch;margin-top:20px}.cinema-bottomline{left:25px;right:25px;bottom:24px;display:block}.cinema-controls{margin-top:13px;gap:8px}.cinema-controls button{font-size:10px;padding:10px 12px}.cinema-bottomline figcaption{font-size:8px}.cinema-geoai .cinema-caption,.cinema-traffic .cinema-caption{bottom:130px}.cinema-vignette{background:linear-gradient(0deg,#030e13eb,transparent 75%),linear-gradient(90deg,#0610157a,transparent)}
+ .cinema-camera{inset:0 -35%;width:170%}.cinema-landscape{object-position:60% center}.experience-cinema{width:calc(100% + 50px);margin:0 -25px 35px}.experience-cinema .cinema-scene{height:540px}
+ .project-dialog .cinema-scene{height:440px}.project-dialog .cinema-title{font-size:44px}.project-dialog .cinema-caption{bottom:130px}.project-dialog .cinema-topline,.project-dialog .cinema-caption,.project-dialog .cinema-bottomline{left:18px;right:18px}.project-dialog .cinema-controls button span{margin-left:7px}
+}
+@media(prefers-reduced-motion:reduce){.cinema-camera{transition:none!important;transform:none!important}.cinema-scene .cinema-landscape,.cinema-scene .cinema-timeline i,.cinema-scene .orbital-scan,.cinema-scene .orbital-scan i,.cinema-scene .city-light-sweep{animation:none!important}.orbital-scan,.city-light-sweep,.cinema-timeline{display:none}.cinema-landscape{transform:none}}
+@media print{.cinema-scene{height:330px;break-inside:avoid}.cinema-controls,.cinema-timeline{display:none}.project-exhibit .exhibit-visual,.experience-cinema{width:100%;margin-inline:0}.project-exhibit .exhibit-copy{display:block}}
