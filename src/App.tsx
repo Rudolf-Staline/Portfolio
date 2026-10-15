@@ -25,6 +25,7 @@ const visibleProjects = projects.filter(project => !project.placeholder)
 const competitionProjects = competitions.map(entry => visibleProjects.find(project => project.index === entry.projectId)!)
 const softwareProjects = ['automl', '01', '02', '03', '05'].map(id => visibleProjects.find(project => project.index === id)!)
 const risksim = visibleProjects.find(project => project.index === 'risksim')!
+const readingOrder = [risksim, ...competitionProjects, ...softwareProjects]
 
 function Icon({ name, size = 23 }: { name: 'arrow' | 'mail' | 'github' | 'code' | 'sun' | 'moon' | 'download'; size?: number }) {
   const paths = {
@@ -56,17 +57,19 @@ function ProjectArticle({ project }: { project: Project }) {
   const competition = competitions.find(entry => entry.projectId === project.index)
   const story = projectStories[project.index]
   const Heading = project.index === 'risksim' ? 'h2' : 'h3'
+  const pageNumber = String(readingOrder.findIndex(item => item.index === project.index) + 1).padStart(2, '0')
   return <article className={`card project-expanded project-${project.index}`} id={`projet/${project.index}`} data-project-id={project.index} aria-labelledby={`title-${project.index}`}>
+    <div className="sheet-label"><span><span className="sheet-number">{pageNumber}</span> / {readingOrder.length} · {competition ? 'Compétition' : 'Projet'}</span><span>{shortNames[project.index]}</span><span className="sheet-progress" aria-hidden="true"><i/></span></div>
+    <header className="expanded-heading"><span className="overline">{project.context} · {project.period}</span><Heading id={`title-${project.index}`}>{shortNames[project.index]}</Heading>{competition && <p className="expanded-ranking">{competition.medal && <Medal small/>}{competition.medal ? `Bronze · ${competition.platform}` : competition.result + ' · ' + competition.platform}{competition.projectId === 'neurogolf' && <span>220e / 2 963 équipes · top 7,4 %</span>}</p>}<p className="expanded-subtitle">{story.subtitle}</p></header>
     <div className="expanded-media"><div className="expanded-media-inner">
       {project.index === 'risksim' ? <ProjectGallery kind="risksim"/> : project.index === '01' ? <ProjectGallery kind="clinical"/> : <ProjectVisual kind={projectVisualKind[project.index] ?? 'automl'}/>}
-      <div className="expanded-stack">{project.stack.map(item => <span key={item}>{item}</span>)}</div>
-      <div className="expanded-links">{project.links.code && <a className="solid-link" href={project.links.code} target="_blank" rel="noreferrer">Explorer le dépôt <Icon name="github" size={18}/><span className="sr-only"> (nouvel onglet)</span></a>}{project.evidence && <a className="inline-link" href={project.evidence.href} target="_blank" rel="noreferrer">{project.evidence.label} <Icon name="arrow" size={17}/><span className="sr-only"> (nouvel onglet)</span></a>}</div>
     </div></div>
-    <div className="expanded-copy"><header><span className="overline">{project.context} · {project.period}</span><Heading id={`title-${project.index}`}>{shortNames[project.index]}</Heading>{competition && <p className="expanded-ranking">{competition.medal && <Medal small/>}{competition.medal ? `Bronze · ${competition.platform}` : competition.result + ' · ' + competition.platform}{competition.projectId === 'neurogolf' && <span>220e / 2 963 équipes · top 7,4 %</span>}</p>}<p className="expanded-subtitle">{story.subtitle}</p></header>
+    <div className="expanded-copy">
       <div className="expanded-prose">{story.paragraphs.map(text => <p key={text}>{text}</p>)}</div>
       <div className="expanded-summary"><div><h4>Approche technique</h4><p>{story.method}</p></div><div><h4>Ce qui a été réalisé</h4><p>{story.result}</p></div></div>
       {story.note && <p className="project-note">{story.note}</p>}
     </div>
+    <footer className="expanded-project-footer"><div className="expanded-stack">{project.stack.map(item => <span key={item}>{item}</span>)}</div><div className="expanded-links">{project.links.code && <a className="solid-link" href={project.links.code} target="_blank" rel="noreferrer">Explorer le dépôt <Icon name="github" size={18}/><span className="sr-only"> (nouvel onglet)</span></a>}{project.evidence && <a className="inline-link" href={project.evidence.href} target="_blank" rel="noreferrer">{project.evidence.label} <Icon name="arrow" size={17}/><span className="sr-only"> (nouvel onglet)</span></a>}</div></footer>
   </article>
 }
 
@@ -124,12 +127,24 @@ function App() {
     window.addEventListener('resize', position)
     return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', position); window.removeEventListener('resize', position) }
   }, [])
+  useEffect(() => {
+    const preference = matchMedia('(prefers-reduced-motion: reduce)')
+    if (preference.matches) return
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('page-arrived'); observer.unobserve(entry.target) }
+      })
+    }, { threshold: 0, rootMargin: '0px 0px -8% 0px' })
+    document.querySelectorAll('.project-expanded,.collection-intro,.about-card,.education-card,.expanded-skills-card,.contact-card').forEach(element => observer.observe(element))
+    return () => observer.disconnect()
+  }, [])
   const changeTheme = () => setDark(current => {
     try { localStorage.setItem('portfolio-horizontal-theme', current ? 'light' : 'dark') } catch { /* Theme works without storage. */ }
     return !current
   })
 
   return <div className="horizontal-site" data-theme={dark ? 'dark' : 'light'}>
+    <div className="reading-progress" aria-hidden="true"><i/></div>
     <a className="skip-link" href="#main">Aller au contenu</a>
     <header className="topbar"><nav className="top-links" aria-label="Navigation principale"><a href="#accueil" aria-current={active < 3 ? 'location' : undefined}>Rudolf Hounlete</a><span aria-hidden="true">/</span><a href="#competitions" aria-current={active === 3 ? 'location' : undefined}>Compétitions</a><a href="#projets" aria-current={active === 4 ? 'location' : undefined}>Projets</a><a href="#contact" aria-current={active === 8 ? 'location' : undefined}>Contact</a></nav><button type="button" className="theme-switch" onClick={changeTheme} aria-label={dark ? 'Activer le thème clair' : 'Activer le thème sombre'} title={dark ? 'Thème clair' : 'Thème sombre'}><span className={!dark ? 'chosen' : ''}><Icon name="sun" size={16}/></span><span className={dark ? 'chosen' : ''}><Icon name="moon" size={16}/></span></button></header>
     <main className="horizontal-track" id="main" tabIndex={-1} aria-label="Portfolio de Rudolf Hounlete">

@@ -16,3 +16,11 @@ Les onze projets affichent tous les paragraphes de `src/data/projectStories.ts`,
 Les anciens liens vers les sections sont conservés. Les projets peuvent aussi être atteints directement avec `#projet/<identifiant>`. Les anciens liens `#fiche/about` et `#fiche/skills` conduisent aux sections correspondantes, maintenant affichées dans la page. Le thème clair est le choix initial ; un bouton permet le thème sombre, mémorisé localement si disponible. Les préférences de réduction des animations sont respectées.
 
 La mise en page des présentations complètes se trouve dans `src/expanded.css`, importé après les styles des cartes et du défilement vertical. Sur mobile, visuels et textes suivent une seule colonne ; les galeries restent entièrement déployées.
+
+## Pages illustrées et transitions
+
+Les projets sont présentés comme de grandes pages numérotées. Le titre précède les visuels, désormais sur toute la largeur, puis les paragraphes complets et les résultats. Les captures RiskSim et les graphiques PediAppend gardent leur ratio et restent tous visibles. Sur ordinateur, les scènes passent de 420 px à environ 66 % de la hauteur de fenêtre ; elles occupent la largeur intérieure de la page.
+
+`src/pages.css` ajoute une arrivée en perspective liée à la progression du défilement, une ombre de feuille, une barre de lecture et un en-tête de projet collant. Les animations CSS liées au défilement sont activées via `@supports` ; les autres navigateurs reçoivent une animation d’entrée à l’intersection. Aucun gestionnaire ne capture la molette, aucune hauteur de page n’est verrouillée, et aucun paragraphe n’est masqué. Le mode mouvement réduit désactive ces effets.
+
+Les animations de signal et les balayages sont décoratifs, ne représentent pas de mesures et suivent la même commande de pause que l’image. Les animations hors champ sont suspendues. Tous les liens vers les projets, le thème et les 41 paragraphes restent disponibles.

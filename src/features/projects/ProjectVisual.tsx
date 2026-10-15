@@ -35,6 +35,8 @@ export function ProjectVisual({kind}:{kind:CinemaKind}) {
     cancelAnimationFrame(moveFrame.current);moveFrame.current=requestAnimationFrame(()=>{node.style.setProperty('--camera-x',`${-x*16}px`);node.style.setProperty('--camera-y',`${-y*12}px`)})
   }} onPointerLeave={event=>{cancelAnimationFrame(moveFrame.current);event.currentTarget.style.setProperty('--camera-x','0px');event.currentTarget.style.setProperty('--camera-y','0px')}} aria-label={`Scène d’illustration : ${scene.title.join(' ')}`}>
     <div className="cinema-camera">{scene.image?<img className="cinema-landscape" src={scene.image} alt="" loading="lazy" decoding="async" width="1672" height="941"/>:<CinematicCanvas kind={kind} running={running} close={false}/>}</div>
+    {(kind === 'geoai' || kind === 'traffic') && <div className={kind === 'geoai' ? 'orbital-scan' : 'city-light-sweep'} aria-hidden="true">{kind === 'geoai' && <i/>}</div>}
+    {(kind === 'audio' || kind === 'soliton') && <div className={`signal-motion signal-${kind}`} aria-hidden="true">{Array.from({length:32},(_,i)=><i key={i} style={{'--signal-delay':`${-i * .09}s`,'--signal-height':`${20 + ((i * 13) % 55)}%`} as CSSProperties}/>)}</div>}
     <div className="cinema-vignette" aria-hidden="true"/><div className="cinema-grain" aria-hidden="true"/>
     <div className="cinema-topline"><span>{scene.eyebrow}</span><span className="cinema-format">R / H · PORTFOLIO</span></div>
     <div className="cinema-caption"><div className="cinema-title" aria-hidden="true">{scene.title.map(line=><span key={line}>{line}</span>)}</div><p>{scene.detail}</p></div>
