@@ -2,8 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './cinema.css'
-import './folio-dialog.css'
-import './folio.css'
+import './horizontal.css'
+import './vertical.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
