@@ -45,7 +45,7 @@ Pour un projet, `visual` sélectionne une illustration (`simulation`, `calendar`
 - Défilement et animations désactivés avec `prefers-reduced-motion`.
 - Contact par email et téléchargement du CV sans service tiers.
 
-Les anciens composants et `legacy/index.html` sont conservés pour référence ; la page active est composée dans `src/App.tsx`.
+`legacy/index.html` est conservé pour référence ; la page active est composée dans `src/App.tsx`. Les anciens composants inutilisés ont été supprimés.
 
 Les médailles et classements sont repris du CV de Rudolf de septembre 2026. Les liens externes ouvrent la compétition ou les expérimentations disponibles, sans prétendre être des liens directs vers son profil.
 
