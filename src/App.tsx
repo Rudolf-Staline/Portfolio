@@ -61,14 +61,13 @@ function ProjectArticle({ project }: { project: Project }) {
   return <article className={`card project-expanded project-${project.index}`} id={`projet/${project.index}`} data-project-id={project.index} aria-labelledby={`title-${project.index}`}>
     <div className="sheet-label"><span><span className="sheet-number">{pageNumber}</span> / {readingOrder.length} · {competition ? 'Compétition' : 'Projet'}</span><span>{shortNames[project.index]}</span><span className="sheet-progress" aria-hidden="true"><i/></span></div>
     <header className="expanded-heading"><span className="overline">{project.context} · {project.period}</span><Heading id={`title-${project.index}`}>{shortNames[project.index]}</Heading>{competition && <p className="expanded-ranking">{competition.medal && <Medal small/>}{competition.medal ? `Bronze · ${competition.platform}` : competition.result + ' · ' + competition.platform}{competition.projectId === 'neurogolf' && <span>220e / 2 963 équipes · top 7,4 %</span>}</p>}<p className="expanded-subtitle">{story.subtitle}</p></header>
-    <div className="expanded-media"><div className="expanded-media-inner">
-      {project.index === 'risksim' ? <ProjectGallery kind="risksim"/> : project.index === '01' ? <ProjectGallery kind="clinical"/> : <ProjectVisual kind={projectVisualKind[project.index] ?? 'automl'}/>}
-    </div></div>
+    {project.index !== 'risksim' && <div className="expanded-media"><div className="expanded-media-inner">{project.index === '01' ? <ProjectGallery kind="clinical"/> : <ProjectVisual kind={projectVisualKind[project.index] ?? 'automl'}/>}</div></div>}
     <div className="expanded-copy">
       <div className="expanded-prose">{story.paragraphs.map(text => <p key={text}>{text}</p>)}</div>
       <div className="expanded-summary"><div><h4>Approche technique</h4><p>{story.method}</p></div><div><h4>Ce qui a été réalisé</h4><p>{story.result}</p></div></div>
       {story.note && <p className="project-note">{story.note}</p>}
     </div>
+    {project.index === 'risksim' && <section className="risk-interface-section" aria-labelledby="risk-interface-heading"><header><span className="overline">Du calcul à l’application</span><h3 id="risk-interface-heading">L’interface de RiskSim</h3><p>Le tableau de bord rassemble les hypothèses et les scénarios. L’écran de résultats permet d’examiner les distributions de coûts et les niveaux de réserve.</p></header><div className="expanded-media"><ProjectGallery kind="risksim"/></div></section>}
     <footer className="expanded-project-footer"><div className="expanded-stack">{project.stack.map(item => <span key={item}>{item}</span>)}</div><div className="expanded-links">{project.links.code && <a className="solid-link" href={project.links.code} target="_blank" rel="noreferrer">Explorer le dépôt <Icon name="github" size={18}/><span className="sr-only"> (nouvel onglet)</span></a>}{project.evidence && <a className="inline-link" href={project.evidence.href} target="_blank" rel="noreferrer">{project.evidence.label} <Icon name="arrow" size={17}/><span className="sr-only"> (nouvel onglet)</span></a>}</div></footer>
   </article>
 }
