@@ -104,7 +104,13 @@ function App() {
       const hash = decodeURIComponent(location.hash.slice(1))
       if (hash.startsWith('projet/')) {
         const project = visibleProjects.find(item => item.index === hash.slice(7))
-        if (project) { returnHash.current = '#projets'; setDetail(project); return }
+        if (project) {
+          const parent = project.index === 'risksim' ? 'experience' : competitions.some(entry => entry.projectId === project.index) ? 'competitions' : 'projets'
+          returnHash.current = `#${parent}`
+          navigate(parent, 'instant', false)
+          setDetail(project)
+          return
+        }
       }
       if (hash === 'fiche/about' || hash === 'fiche/skills' || hash === 'competences') {
         returnHash.current = '#apropos'; setDetail(hash === 'fiche/about' ? 'about' : 'skills'); return
@@ -216,7 +222,7 @@ function App() {
       <section className="rail-panel contact-panel" id="contact" aria-labelledby="contact-heading"><article className="card contact-card"><div className="contact-mark"><Icon name="mail" size={34}/></div><div><span className="overline">Contact</span><h2 id="contact-heading">On en parle ?</h2><p>Une question sur un projet, une expérience à comparer ou une idée à développer ensemble ?</p><a className="contact-address" href={`mailto:${contact.email}`}>{contact.email} <Icon name="arrow" size={18}/></a></div><div className="contact-bottom"><a href={contact.github} target="_blank" rel="noreferrer">GitHub <Icon name="arrow" size={15}/><span className="sr-only"> (nouvel onglet)</span></a><a href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Télécharger mon CV <Icon name="download" size={15}/></a></div></article></section>
     </main>
     <footer className="rail-footer"><div className="rail-position"><span>{String(active + 1).padStart(2, '0')}</span><span className="position-rule"/><span>{panels[active].label}</span></div><p>© 2026 Rudolf Hounlete</p><div className="rail-controls"><span>Défiler pour explorer</span><button type="button" onClick={() => pageScroll(-1)} aria-label="Défiler vers la gauche">←</button><button type="button" onClick={() => pageScroll(1)} aria-label="Défiler vers la droite">→</button></div></footer>
-    <dialog ref={dialog} className="project-dialog" aria-labelledby="detail-title" onCancel={event => { event.preventDefault(); closeDetail() }} onClose={() => setDetail(null)} onClick={event => {
+    <dialog ref={dialog} className="project-dialog" aria-labelledby="detail-title" onCancel={event => { event.preventDefault(); closeDetail() }} onClick={event => {
       if (event.target !== event.currentTarget) return
       const rect = event.currentTarget.getBoundingClientRect()
       if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeDetail()
