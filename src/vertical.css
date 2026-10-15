@@ -1,0 +1,31 @@
+/* Keep the selected card design; use the document's native vertical flow. */
+html{scrollbar-gutter:stable}body{overflow-x:clip}
+.horizontal-site{height:auto;min-height:100dvh;overflow:visible}
+.topbar{position:sticky;height:88px}
+.horizontal-track{display:grid;grid-template-columns:1.05fr 1fr .95fr;align-items:stretch;gap:52px 20px;width:min(1440px,calc(100% - 96px));height:auto;margin:48px auto 60px;padding:0;overflow:visible;overscroll-behavior:auto;touch-action:auto}
+.rail-panel{width:100%;min-width:0;height:auto;scroll-margin-top:112px;animation:none}
+.profile-panel,.links-panel,.feature-panel{height:clamp(560px,66dvh,650px)}
+.intro-card{min-height:0}.intro-text{font-size:25px}.location{padding-top:24px}
+.collection-panel{grid-column:1/-1}
+.project-grid{height:auto;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:none;grid-auto-flow:row;gap:20px}
+.collection-intro,.project-tile{height:320px}
+.tile-image{height:52%}.tile-copy{padding:17px 20px}.tile-title h3{font-size:18px}.tile-copy>p{font-size:13px}.tile-meta{font-size:11px}
+.about-card,.education-card,.contact-card{height:100%;min-height:590px}
+.about-card>p{font-size:14px;line-height:1.75}.about-card .inline-link{margin-top:22px}
+.education-entries{gap:19px;margin-top:25px}.education-entries h3{font-size:15px}.education-entries p{font-size:12px}
+.rail-footer{position:static;min-height:75px;height:auto;width:min(1440px,calc(100% - 96px));margin:0 auto;padding:20px 0 28px;border-top:1px solid var(--edge);display:flex;align-items:center;justify-content:space-between}
+.rail-footer>p{position:static;transform:none;font-size:12px}.rail-footer>.inline-link{font-size:12px;color:var(--muted)}
+@media(min-width:1800px){.intro-text{font-size:28px}.collection-intro,.project-tile{height:350px}.tile-title h3{font-size:20px}.tile-copy>p{font-size:15px}.about-card>p{font-size:15px}}
+@media(max-width:1100px) and (min-width:761px){
+ .horizontal-track{width:calc(100% - 56px);grid-template-columns:1fr 1fr;gap:36px 20px;margin-top:35px}
+ .profile-panel,.links-panel{height:580px}.feature-panel{grid-column:1/-1;height:350px}.risk-open{display:grid;grid-template-columns:1.1fr 1fr}.risk-image{height:100%}.risk-window{width:380px}.risk-copy{margin:0;display:flex;flex-direction:column;justify-content:center;padding:30px}.risk-copy h2{font-size:31px}.risk-copy p{font-size:18px}.risk-copy .tile-meta{margin-top:12px}
+ .project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-intro,.project-tile{height:320px}.contact-panel{grid-column:1/-1}.contact-card{min-height:340px;display:grid;grid-template-columns:1fr 1fr;gap:25px 50px}.contact-mark{grid-column:1;grid-row:1}.contact-card>div:nth-child(2){grid-column:1;grid-row:2}.contact-bottom{grid-column:2;grid-row:2;align-self:end}.rail-footer{width:calc(100% - 56px)}
+}
+@media(max-width:760px){
+ .topbar{height:72px}.horizontal-track{display:flex;flex-direction:column;gap:24px;width:calc(100% - 40px);margin:24px auto 40px;padding:0;height:auto;overflow:visible}
+ .rail-panel{width:100%;height:auto;scroll-margin-top:92px}.profile-panel{min-height:470px}.intro-card{min-height:470px}.intro-text{font-size:25px}.links-panel{height:450px}.social-grid{height:100%}.feature-panel{height:550px}.risk-open{display:flex;flex-direction:column}.risk-image{height:65%}.risk-copy{margin-top:auto;display:block;padding:23px}.risk-copy h2{font-size:28px}.risk-copy p{font-size:16px}.risk-copy .tile-meta{margin-top:0}
+ .project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-flow:row;gap:14px}.collection-intro{grid-column:1/-1;height:auto;min-height:220px}.project-tile{height:310px}.tile-image{height:48%}.tile-copy{padding:15px 14px}.tile-title h3{font-size:16px}.tile-copy>p{font-size:12px}.tile-meta{font-size:10px}
+ .about-card,.education-card,.contact-card{height:auto;min-height:0}.about-card{margin-top:0}.about-card>p{font-size:15px}.about-facts{margin-top:20px}.education-entries{gap:23px}.education-entries h3{font-size:17px}.education-entries p{font-size:14px}.contact-card{display:flex;min-height:490px;gap:28px}.contact-mark,.contact-bottom,.contact-card>div:nth-child(2){grid-column:auto;grid-row:auto}.rail-footer{display:flex;width:calc(100% - 40px);padding:20px 0 28px;text-align:left;gap:20px}.rail-footer>.inline-link{font-size:11px}
+}
+@media(max-width:430px){.horizontal-track{width:calc(100% - 32px)}.intro-text{font-size:24px}.links-panel{height:430px}.project-grid{grid-template-columns:1fr}.project-tile{height:350px}.tile-image{height:56%}.tile-copy{padding:18px 20px}.tile-title h3{font-size:19px}.tile-copy>p{font-size:14px}.tile-meta{font-size:10px}.about-card>p{font-size:14px}.rail-footer{width:calc(100% - 32px)}}
+@media print{.topbar,.rail-footer{display:none}.horizontal-track{display:block;width:100%;margin:0}.rail-panel{height:auto;margin-bottom:25px}.project-grid{grid-template-columns:1fr 1fr}.feature-panel{height:550px}}

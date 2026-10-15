@@ -72,9 +72,7 @@ function ProjectTile({ project, onOpen }: { project: Project; onOpen: (project: 
 }
 
 function App() {
-  const track = useRef<HTMLElement>(null)
   const dialog = useRef<HTMLDialogElement>(null)
-  const stopWheel = useRef<() => void>(() => {})
   const returnHash = useRef('#accueil')
   const [active, setActive] = useState(0)
   const [detail, setDetail] = useState<Detail>(null)
@@ -82,12 +80,10 @@ function App() {
     try { return localStorage.getItem('portfolio-horizontal-theme') === 'dark' } catch { return false }
   })
   const navigate = (id: string, behavior: ScrollBehavior = 'smooth', push = true) => {
-    const container = track.current, element = document.getElementById(id)
-    if (!container || !element) return
-    stopWheel.current()
+    const element = document.getElementById(id)
+    if (!element) return
     const motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior
-    if (matchMedia('(max-width: 760px)').matches) element.scrollIntoView({ behavior: motion, block: 'start' })
-    else container.scrollTo({ left: element.offsetLeft - parseFloat(getComputedStyle(container).paddingLeft), behavior: motion })
+    element.scrollIntoView({ behavior: motion, block: 'start' })
     const index = panels.findIndex(panel => panel.id === id)
     if (index >= 0) setActive(index)
     if (push && window.location.hash !== `#${id}`) history.pushState(null, '', `#${id}`)
@@ -140,70 +136,38 @@ function App() {
     if (!element) return
     if (detail && !element.open) element.showModal()
     if (!detail && element.open) element.close()
+    if (!detail) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previousOverflow }
   }, [detail])
   useEffect(() => {
-    const container = track.current
-    if (!container) return
-    let frame = 0, scrollFrame = 0, target = container.scrollLeft
-    const stop = () => { cancelAnimationFrame(frame); frame = 0; target = container.scrollLeft }
-    stopWheel.current = stop
-    const animate = () => {
-      const remaining = target - container.scrollLeft
-      if (Math.abs(remaining) < 2) { container.scrollLeft = target; frame = 0; return }
-      container.scrollLeft += remaining * .18; frame = requestAnimationFrame(animate)
-    }
-    const wheel = (event: WheelEvent) => {
-      if (matchMedia('(max-width: 760px)').matches || event.ctrlKey || event.metaKey || event.shiftKey || Math.abs(event.deltaX) >= Math.abs(event.deltaY)) return
-      if (container.scrollWidth <= container.clientWidth) return
-      event.preventDefault()
-      const scale = event.deltaMode === 1 ? 20 : event.deltaMode === 2 ? container.clientWidth : 1
-      target = Math.max(0, Math.min(container.scrollWidth - container.clientWidth, (frame ? target : container.scrollLeft) + event.deltaY * scale * 1.15))
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { container.scrollLeft = target; return }
-      if (!frame) frame = requestAnimationFrame(animate)
-    }
+    let frame = 0
+    const anchors = ['accueil', 'competitions', 'projets', 'apropos']
     const position = () => {
-      cancelAnimationFrame(scrollFrame)
-      scrollFrame = requestAnimationFrame(() => {
-        if (matchMedia('(max-width: 760px)').matches) return
-        const left = container.scrollLeft + container.clientWidth * .16
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
         let current = 0
-        Array.from(container.querySelectorAll<HTMLElement>(':scope > section')).forEach((child, index) => { if (child.offsetLeft <= left) current = index })
+        anchors.forEach(id => {
+          if ((document.getElementById(id)?.getBoundingClientRect().top ?? Infinity) <= 130) current = panels.findIndex(panel => panel.id === id)
+        })
         setActive(current)
-        if (!detail && location.hash !== `#${panels[current].id}`) history.replaceState(null, '', `#${panels[current].id}`)
       })
     }
-    container.addEventListener('wheel', wheel, { passive: false }); container.addEventListener('pointerdown', stop); container.addEventListener('scroll', position, { passive: true })
-    return () => { stop(); cancelAnimationFrame(scrollFrame); container.removeEventListener('wheel', wheel); container.removeEventListener('pointerdown', stop); container.removeEventListener('scroll', position) }
-  }, [detail])
-  useEffect(() => {
-    const keyboard = (event: KeyboardEvent) => {
-      if (detail || event.altKey || event.ctrlKey || event.metaKey || matchMedia('(max-width: 760px)').matches) return
-      if (event.target instanceof Element && event.target.closest('button,input,textarea,select,[contenteditable="true"]')) return
-      const container = track.current
-      if (!container) return
-      const forward = ['ArrowRight', 'ArrowDown', 'PageDown'].includes(event.key), backward = ['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key)
-      if (!forward && !backward && event.key !== 'Home' && event.key !== 'End') return
-      event.preventDefault(); stopWheel.current()
-      const left = event.key === 'Home' ? 0 : event.key === 'End' ? container.scrollWidth : container.scrollLeft + container.clientWidth * .78 * (forward ? 1 : -1)
-      container.scrollTo({ left, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
-    }
-    window.addEventListener('keydown', keyboard); return () => window.removeEventListener('keydown', keyboard)
-  }, [detail])
+    window.addEventListener('scroll', position, { passive: true })
+    window.addEventListener('resize', position)
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', position); window.removeEventListener('resize', position) }
+  }, [])
   const changeTheme = () => setDark(current => {
     try { localStorage.setItem('portfolio-horizontal-theme', current ? 'light' : 'dark') } catch { /* Theme works without storage. */ }
     return !current
   })
   const project = detail && typeof detail !== 'string' ? detail : null
-  const pageScroll = (direction: number) => {
-    const container = track.current
-    if (!container) return
-    stopWheel.current(); container.scrollTo({ left: container.scrollLeft + container.clientWidth * .78 * direction, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
-  }
 
   return <div className="horizontal-site" data-theme={dark ? 'dark' : 'light'}>
     <a className="skip-link" href="#main">Aller au contenu</a>
-    <header className="topbar"><nav className="top-links" aria-label="Navigation principale"><a href="#accueil" aria-current={active < 2 ? 'location' : undefined}>Rudolf Hounlete</a><span aria-hidden="true">/</span><a href="#competitions" aria-current={active === 3 ? 'location' : undefined}>Compétitions</a><a href="#projets" aria-current={active === 4 ? 'location' : undefined}>Projets</a><a href="#contact" aria-current={active === 7 ? 'location' : undefined}>Contact</a></nav><button type="button" className="theme-switch" onClick={changeTheme} aria-label={dark ? 'Activer le thème clair' : 'Activer le thème sombre'} title={dark ? 'Thème clair' : 'Thème sombre'}><span className={!dark ? 'chosen' : ''}><Icon name="sun" size={16}/></span><span className={dark ? 'chosen' : ''}><Icon name="moon" size={16}/></span></button></header>
-    <main ref={track} className="horizontal-track" id="main" tabIndex={-1} aria-label="Portfolio de Rudolf Hounlete. Faites défiler pour explorer les cartes.">
+    <header className="topbar"><nav className="top-links" aria-label="Navigation principale"><a href="#accueil" aria-current={active < 3 ? 'location' : undefined}>Rudolf Hounlete</a><span aria-hidden="true">/</span><a href="#competitions" aria-current={active === 3 ? 'location' : undefined}>Compétitions</a><a href="#projets" aria-current={active === 4 ? 'location' : undefined}>Projets</a><a href="#contact" aria-current={active >= 5 ? 'location' : undefined}>Contact</a></nav><button type="button" className="theme-switch" onClick={changeTheme} aria-label={dark ? 'Activer le thème clair' : 'Activer le thème sombre'} title={dark ? 'Thème clair' : 'Thème sombre'}><span className={!dark ? 'chosen' : ''}><Icon name="sun" size={16}/></span><span className={dark ? 'chosen' : ''}><Icon name="moon" size={16}/></span></button></header>
+    <main className="horizontal-track" id="main" tabIndex={-1} aria-label="Portfolio de Rudolf Hounlete">
       <section className="rail-panel profile-panel" id="accueil" aria-labelledby="profile-name"><article className="card intro-card"><div className="person-line"><img src="/portrait-rudolf.png" alt="Portrait de Rudolf Hounlete" width="48" height="48" fetchPriority="high"/><div><h1 id="profile-name">Rudolf Hounlete</h1><p><span className="status-dot"/>Étudiant ingénieur</p></div></div><p className="intro-text">Je développe des applications et des modèles de <span>machine learning.</span> Élève ingénieur à <span>Centrale Casablanca,</span> je travaille sur des problèmes de simulation, de données et de systèmes embarqués.</p><button className="inline-link intro-more" type="button" onClick={() => openDetail('about')}>Un peu plus sur moi <Icon name="arrow" size={15}/></button><div className="location"><p>Basé à Casablanca, Maroc.</p><span>Originaire du Bénin</span></div><Globe/></article></section>
       <section className="rail-panel links-panel" id="liens" aria-label="Liens et distinctions"><div className="social-grid">
         <a className="card social-card github-card" href={contact.github} target="_blank" rel="noreferrer"><Icon name="github" size={28}/><div><strong>@Rudolf-Staline</strong><span>Mes dépôts GitHub</span></div><span className="card-corner"><Icon name="arrow" size={16}/></span><span className="sr-only"> (nouvel onglet)</span></a>
@@ -221,7 +185,7 @@ function App() {
       <section className="rail-panel education-panel" id="parcours" aria-labelledby="education-heading"><article className="card education-card"><span className="overline">Formation</span><h2 id="education-heading">Bénin → Maroc.</h2><div className="education-entries">{education.map(item => <div key={item.school + item.detail}><span className="education-date">{item.period || 'Formation scientifique'}</span><h3>{item.school}</h3><p>{item.detail}</p><span className="education-country">{item.location}</span></div>)}</div></article></section>
       <section className="rail-panel contact-panel" id="contact" aria-labelledby="contact-heading"><article className="card contact-card"><div className="contact-mark"><Icon name="mail" size={34}/></div><div><span className="overline">Contact</span><h2 id="contact-heading">On en parle ?</h2><p>Une question sur un projet, une expérience à comparer ou une idée à développer ensemble ?</p><a className="contact-address" href={`mailto:${contact.email}`}>{contact.email} <Icon name="arrow" size={18}/></a></div><div className="contact-bottom"><a href={contact.github} target="_blank" rel="noreferrer">GitHub <Icon name="arrow" size={15}/><span className="sr-only"> (nouvel onglet)</span></a><a href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Télécharger mon CV <Icon name="download" size={15}/></a></div></article></section>
     </main>
-    <footer className="rail-footer"><div className="rail-position"><span>{String(active + 1).padStart(2, '0')}</span><span className="position-rule"/><span>{panels[active].label}</span></div><p>© 2026 Rudolf Hounlete</p><div className="rail-controls"><span>Défiler pour explorer</span><button type="button" onClick={() => pageScroll(-1)} aria-label="Défiler vers la gauche">←</button><button type="button" onClick={() => pageScroll(1)} aria-label="Défiler vers la droite">→</button></div></footer>
+    <footer className="rail-footer"><p>© 2026 Rudolf Hounlete</p><a className="inline-link" href="#accueil">Retour en haut ↑</a></footer>
     <dialog ref={dialog} className="project-dialog" aria-labelledby="detail-title" onCancel={event => { event.preventDefault(); closeDetail() }} onClick={event => {
       if (event.target !== event.currentTarget) return
       const rect = event.currentTarget.getBoundingClientRect()
