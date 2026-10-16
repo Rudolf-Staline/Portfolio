@@ -1,10 +1,10 @@
 /** Section copy, kept separate from layout and navigation. */
 export const editorial = {
   notebook: 'Chaque projet renvoie vers son code, ses captures et ses résultats lorsqu’ils sont publics.',
-  skillsIntro: 'Python et TypeScript forment la base de mon travail. Le reste de la pile dépend du projet : LightGBM ou PyTorch pour les modèles, React ou Flask pour les interfaces, Raspberry Pi et LTspice pour le matériel.',
+  skillsIntro: 'Python et TypeScript sont les principaux langages utilisés. Le reste de la pile dépend du projet : LightGBM ou PyTorch pour les modèles, React ou Flask pour les interfaces, Raspberry Pi et LTspice pour le matériel.',
   skillContexts: [
     'Python pour les moteurs de calcul et les expériences, TypeScript pour les interfaces. SQL, Kotlin et C/C++ complètent selon les projets.',
-    'React et Vite pour l’interface de RiskSim, où l’on modifie les hypothèses et compare des scénarios. Flask pour PediAppend, qui affiche une prédiction avec ses explications. J’ai aussi publié sur npm BaseKit, une bibliothèque de composants d’interface.',
+    'React et Vite pour l’interface de RiskSim, où l’on modifie les hypothèses et compare des scénarios. Flask pour PediAppend, qui affiche une prédiction avec ses explications. BaseKit est une bibliothèque de composants d’interface publiée sur npm.',
     'scikit-learn et LightGBM pour les modèles tabulaires, PyTorch pour les réseaux de neurones et l’audio, YOLOv8 pour la vision. Optuna règle les modèles, SHAP explique leurs prédictions.',
     'Git pour l’historique du code, des tests automatisés pour les traitements (393 tests sur AutoML), LaTeX pour la rédaction. Un Raspberry Pi pilote la maquette de carrefour ; LTspice simule les montages de physique.',
   ],
