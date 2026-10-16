@@ -14,7 +14,7 @@ import { ProjectVisual, projectVisualKind } from './features/projects/ProjectVis
 
 const panels = [
   { id: 'accueil', label: 'Présentation' }, { id: 'liens', label: 'Liens & distinctions' },
-  { id: 'experience', label: 'RiskSim' }, { id: 'competitions', label: 'Compétitions' },
+  { id: 'competitions', label: 'Compétitions' },
   { id: 'projets', label: 'Projets' }, { id: 'apropos', label: 'À propos' },
   { id: 'parcours', label: 'Formation' }, { id: 'competences', label: 'Compétences' }, { id: 'contact', label: 'Contact' },
 ] as const
@@ -174,7 +174,6 @@ function App() {
         <a className="card social-card zindi-card" href="#competitions"><span className="brand-letter">z.</span><div><strong>Zindi</strong><span>2 médailles de bronze</span></div></a>
         <a className="card social-card skills-link" href="#competences"><Icon name="code"/><strong>Mes outils</strong></a>
       </div></section>
-      <section className="rail-panel feature-panel" id="experience" aria-labelledby="risk-heading"><article className="card risk-card"><div className="risk-open"><div className="risk-image"><div className="risk-window"><div className="risk-window-bar"><span/><span/><span/><small>RiskSim</small></div><img src="/projects/risksim-dashboard.png" alt="Capture de l’interface RiskSim sur un scénario de démonstration" width="1440" height="1100" decoding="async"/></div><span className="risk-chip">Python + React</span></div><div className="risk-copy"><span className="overline">Logiciel · CHOUBEL · 2026</span><h2 id="risk-heading">RiskSim</h2><p>{projectStories.risksim.subtitle}</p><span className="tile-meta">Simulation Monte Carlo · Application Windows</span></div></div></article></section>
       <section className="rail-panel expanded-risk-panel" aria-labelledby="title-risksim"><ProjectArticle project={risksim}/></section>
       <section className="rail-panel collection-panel" id="competitions" aria-labelledby="competitions-heading"><div className="project-grid"><article className="card collection-intro"><div><span className="overline">Kaggle & Zindi</span><h2 id="competitions-heading">En compétition.</h2><p>Des grilles à transformer, des voix à transcrire, des données satellitaires incomplètes. À chaque participation, une autre façon d’aborder le machine learning.</p></div><div className="three-medals"><Medal/><Medal/><Medal/><span>3 médailles<br/>de bronze</span></div></article>{competitionProjects.map(item => <ProjectArticle key={item.index} project={item}/>)}</div></section>
       <section className="rail-panel collection-panel" id="projets" aria-labelledby="projects-heading"><div className="project-grid"><article className="card collection-intro software-intro"><div><span className="overline">Logiciel & expérimentation</span><h2 id="projects-heading">Mes projets.</h2><p>Du notebook à l’interface, de la caméra à la maquette. Voici ce que j’ai construit et les questions que j’ai voulu explorer.</p></div><a className="inline-link" href="#competences">Les outils utilisés <Icon name="arrow" size={16}/></a></article>{softwareProjects.map(item => <ProjectArticle key={item.index} project={item}/>)}</div></section>
