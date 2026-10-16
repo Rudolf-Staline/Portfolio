@@ -39,6 +39,7 @@ figure {
   --wash: #e7ebe3;
   --signal: #d7f865;
   --signal-ink: #19261a;
+  --hover: #547913;
   background: var(--paper);
   color: var(--ink);
   overflow: clip;
@@ -51,6 +52,7 @@ figure {
   --wash: #26342d;
   --signal: #c9ea60;
   --signal-ink: #172119;
+  --hover: #c9ea60;
   color-scheme: dark;
 }
 .frame {
@@ -131,7 +133,7 @@ figure {
   outline-offset: 4px;
 }
 a:hover {
-  color: #547913;
+  color: var(--hover);
 }
 .button:hover {
   color: var(--signal-ink);
