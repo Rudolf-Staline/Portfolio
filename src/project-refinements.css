@@ -4,3 +4,21 @@
 .project-01 .gallery-clinical{gap:25px}.project-01 .gallery-clinical figure{background:#f1f5f7;padding:20px 20px 16px}.project-01 .gallery-clinical img{max-height:none;background:white}.project-01 .gallery-clinical figcaption{font-size:11px}
 @media(max-width:1100px) and (min-width:761px){.feature-panel .risk-open{display:grid;grid-template-columns:1fr 1.1fr;align-items:stretch}.feature-panel .risk-copy{display:flex;flex-direction:column;justify-content:center;padding:30px}.feature-panel .risk-image{height:100%}.feature-panel .risk-window{width:95%}.risk-interface-section>header{padding-inline:32px}.project-risksim .gallery-risksim{gap:15px}.project-risksim .gallery-risksim figure{padding:12px}}
 @media(max-width:760px){.feature-panel .risk-copy{padding:25px}.feature-panel .risk-image{height:auto;min-height:260px;flex:1}.feature-panel .risk-copy p{font-size:17px}.risk-interface-section{padding-top:28px;padding-bottom:20px}.risk-interface-section>header{padding:0 23px 23px}.risk-interface-section h3{font-size:24px}.risk-interface-section>header>p{font-size:14px}.project-risksim .expanded-copy{padding-top:18px}.project-risksim .gallery-risksim{grid-template-columns:1fr;gap:19px}.project-risksim .gallery-risksim figure{padding:14px}.project-01 .gallery-clinical figure{padding:12px}.project-01 .gallery-clinical figcaption{font-size:10px}}
+
+/* A recognisable portrait and legible bronze awards, including compact rankings. */
+.person-line{width:100%;gap:18px;flex-wrap:wrap}
+.person-line img{display:block;width:136px;height:136px;flex:0 0 136px;object-fit:cover;object-position:center 25%;background:#e9eef5;border:4px solid var(--card);box-shadow:0 0 0 1px var(--edge),0 8px 24px #142c4714}
+.person-line h1{font-size:clamp(19px,1.6vw,27px);letter-spacing:-.6px;line-height:1.15}
+.person-line p{font-size:13px;margin-top:9px}
+.bronze-icon{width:54px;height:65px}
+.medal-card{gap:14px}
+.medal-card .bronze-icon{width:54px;height:65px}
+.medal-card strong{font-size:16px;line-height:1.25}
+.medal-card div>span{font-size:12px;margin-top:4px}
+.three-medals{gap:9px}
+.three-medals .bronze-icon{width:45px;height:54px}
+.three-medals>span{font-size:13px;line-height:1.5}
+.bronze-icon.small{width:24px;height:29px}
+@media(max-width:1100px){.person-line img{width:120px;height:120px;flex-basis:120px}}
+@media(max-width:760px){.person-line{gap:16px}.person-line img{width:112px;height:112px;flex-basis:112px}.person-line h1{font-size:23px}.person-line p{font-size:12px}.medal-card{gap:9px;padding:14px}.medal-card .bronze-icon{width:44px;height:53px}.medal-card strong{font-size:14px}.medal-card div>span{font-size:11px}}
+@media(max-width:380px){.person-line img{width:96px;height:96px;flex-basis:96px}.person-line h1{font-size:21px}.medal-card strong{font-size:12px}.medal-card .bronze-icon{width:36px;height:44px}}
