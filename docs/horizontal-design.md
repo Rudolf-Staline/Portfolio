@@ -30,3 +30,7 @@ Les animations de signal et les balayages sont décoratifs, ne représentent pas
 RiskSim commence par la problématique et les quatre paragraphes de présentation. Les deux captures sont ensuite regroupées dans une section dédiée, côte à côte sur ordinateur et l’une après l’autre sur mobile. La carte compacte de l’accueil présente également le texte avant sa capture.
 
 PediAppend montre désormais deux vues de son interface Flask, rendues à partir des templates du dépôt source : le formulaire de démographie et l’étape des symptômes. Aucune donnée patient ou prédiction n’est affichée. Les visuels SHAP/ROC sont conservés dans les assets ; la galerie privilégie l’interface. Voir `docs/pediappend-captures.md` pour la provenance.
+
+## Occupation de l’écran
+
+Le conteneur utilise la largeur disponible avec 16 px de marge de chaque côté sur ordinateur, sans plafond à 1 540 px. Les cartes de l’accueil occupent la hauteur de la fenêtre sous les 88 px du menu, avec 16 px de marge au-dessus et en dessous. Une hauteur minimale préserve la lisibilité sur les écrans courts. Sur mobile, la présentation remplit la première fenêtre, puis les autres cartes suivent le défilement vertical. Les images bénéficient de la largeur disponible ; les paragraphes gardent leur limite de longueur de ligne. Le patch d’animations de Claude est conservé.
