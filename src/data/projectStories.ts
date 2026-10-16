@@ -16,7 +16,7 @@ export const projectStories: Record<string, ProjectStory> = {
     ],
     method: 'Graphes ONNX de logique pure, sans poids entraînables, pour des transformations de grilles ARC-AGI sous contrainte de taille.',
     result: 'Médaille de bronze Kaggle · 220e sur 2 963 équipes · top 7,4 %.',
-    note: 'Les grilles de la scène sont illustratives ; elles ne montrent pas une solution soumise.',
+    note: 'Le code de la participation n’est pas publié ici ; le classement est accessible depuis la fiche.',
   },
   credit: {
     subtitle: 'Estimer le risque d’un crédit avant de l’accorder.',

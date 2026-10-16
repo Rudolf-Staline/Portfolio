@@ -1,4 +1,6 @@
-# Carnet d’expériences — direction visuelle
+# Carnet d’expériences — direction visuelle archivée
+
+Cette proposition a précédé le retour à la composition blanche à cartes. Elle n’est plus chargée par la page active.
 
 La refonte présente un travail d’ingénierie comme un carnet consultable : identifier l’auteur, lire le problème, voir l’interface réelle, juger le résultat, puis ouvrir la méthode. Fond `#f4f5f0`, texte `#1b2421`, traits gris vert et accent `#d7f865`. Space Grotesk donne la voix principale ; IBM Plex Mono sert aux dates, indices, légendes et mesures. Le thème sombre conserve cette hiérarchie.
 

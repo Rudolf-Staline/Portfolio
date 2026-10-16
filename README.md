@@ -1,14 +1,14 @@
 # Portfolio — Rudolf Hounlete
 
-Portfolio étudiant de Rudolf Hounlete, élève ingénieur à l’École Centrale Casablanca. Machine learning, développement logiciel, simulations et compétitions.
+Portfolio étudiant de Rudolf Hounlete, élève ingénieur à l’École Centrale Casablanca. Machine learning, développement logiciel, simulation et compétitions.
 
 **Site :** https://rudolf-hounlete-portfolio.vercel.app
 
-## Direction visuelle
+## Présentation
 
-Un carnet d’expériences numérique : papier presque blanc, encre vert noir, accent citron, typographies Space Grotesk et IBM Plex Mono. La page se lit verticalement, du portrait et des résultats vers deux études de cas, les autres projets, les compétitions et le parcours. Les captures RiskSim et PediAppend proviennent des projets ; elles s’agrandissent dans une boîte de dialogue native. Les autres travaux sont présentés avec leurs résultats et leurs limites, sans visuel conceptuel.
+La page reprend la version blanche à cartes retenue en octobre 2026 : portrait et présentation, liens et distinctions, RiskSim, puis grilles de compétitions et de projets, parcours et contact. Le défilement est vertical et natif ; les fiches s’ouvrent dans un dialogue. Le thème sombre est facultatif. La typographie Figtree est hébergée avec l’application.
 
-Les descriptions courtes se trouvent dans `src/data/projectBriefs.ts` et les récits techniques dans `src/data/projectStories.ts`. La page active est `src/App.tsx`, son style est `src/fieldnotes.css`. Les anciennes compositions restent dans le dépôt pour référence, sans être chargées par l’application.
+Les images d’illustration générées ne sont pas utilisées. RiskSim et PediAppend montrent des captures réelles ; les autres cartes affichent un résultat ou une information de méthode. Les fiches reprennent les textes et limites actuels, avec les liens vers les dépôts et les preuves disponibles.
 
 ## Développement
 
@@ -19,18 +19,18 @@ npm run build
 npm run preview
 ```
 
-`npm run build` vérifie TypeScript et produit la version de production dans `dist/`. Vercel utilise le preset Vite et `vercel.json`.
+`npm run build` vérifie TypeScript et produit `dist/`. Vercel utilise le preset Vite et `vercel.json`. La page active est `src/App.tsx`, avec `src/horizontal.css`, `src/vertical.css` et `src/white-return.css`. Les anciennes propositions de design demeurent archivées dans le dépôt sans être chargées.
 
-## Sources des contenus et des images
+## Sources
 
-- `src/data/` : projets, classements, études, compétences, contact et liens. Les médailles et rangs sont repris du CV de Rudolf de septembre 2026.
-- `public/portrait-rudolf.webp` : portrait original de Rudolf.
-- `public/projects/risksim-dashboard.png` et `risksim-results.png` : captures S5 de RiskSim issues de `reports/s5/images/`. Le scénario est une démonstration ; les montants sont illustratifs.
-- `public/projects/pediappend-interface-symptomes.jpg` et `shap_summary_bar.png` : interface du prototype académique et export de ses explications. PediAppend n’a pas de validation clinique et n’est pas destiné aux soins.
+- `src/data/` : projets, classements, parcours, compétences, contact, résumés et récits techniques. Les médailles et rangs sont repris du CV de Rudolf de septembre 2026.
+- `public/portrait-rudolf.webp` : portrait original optimisé.
+- `public/projects/risksim-dashboard.png` et `risksim-results.png` : captures S5 de RiskSim sur un scénario de démonstration, avec montants illustratifs.
+- `public/projects/pediappend-interface-symptomes.jpg` et `shap_summary_bar.png` : interface du prototype académique et graphique d’explication. PediAppend n’a pas de validation clinique et n’est pas destiné aux soins.
 - `public/CV_Rudolf_HOUNLETE.pdf` : CV téléchargeable.
 
-Les descriptions précisent aussi les résultats négatifs, les validations locales et les limites de disponibilité du code. RiskSim n’expose pas le dépôt privé de l’entreprise.
+Les liens absents ne produisent pas de bouton vide. Le dépôt de l’entreprise pour RiskSim n’est pas public.
 
-## Navigation et accessibilité
+## Navigation
 
-Navigation par ancres, lien d’évitement, focus visible, détails techniques ouverts au clavier, galerie fermable avec Échap. Le thème clair est utilisé à la première visite ; le choix d’un thème sombre est mémorisé localement. Le mouvement est réduit avec `prefers-reduced-motion` et une feuille d’impression simplifie la mise en page.
+Ancres directes, lien d’évitement, focus visible, dialogue fermé avec Échap, prise en charge de `prefers-reduced-motion`, mise en page mobile et impression. Les captures des fiches s’ouvrent à leur taille complète dans un nouvel onglet.
