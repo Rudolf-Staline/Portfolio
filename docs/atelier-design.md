@@ -19,3 +19,9 @@ Navigation par ancres, lien d'évitement, focus visible, thème système avec pr
 ## Vérification
 
 `npm run build` vérifie les types et produit le bundle Vite. Les contrôles de navigateur portent sur les ancres, les images, l'absence de débordement horizontal, le mode sombre et la boîte de dialogue aux tailles desktop et mobile.
+
+## Seconde passe
+
+L'ouverture utilise désormais la sculpture bleue, avec un accès au portrait et au parcours. Les captures principales sont disposées à des échelles différentes. Les résumés et résultats de chaque projet sont visibles immédiatement ; les récits techniques complets restent accessibles dans des éléments `details` natifs. Les compétitions sont présentées en lignes avec classement, résumé, liens et illustration. Les résumés sont centralisés dans `src/data/projectBriefs.ts`.
+
+Contrôles : quatre largeurs de 320 à 1440 px, aucune ancre ni image cassée, aucune erreur JavaScript, dialogue d'image et ouverture des notes au clavier vérifiés.
