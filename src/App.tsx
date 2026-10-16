@@ -111,7 +111,7 @@ function App() {
   }, [])
   useEffect(() => {
     let frame = 0
-    const anchors = ['accueil', 'competitions', 'projets', 'apropos', 'parcours', 'competences', 'contact']
+    const anchors = panels.map(panel => panel.id)
     const position = () => {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
