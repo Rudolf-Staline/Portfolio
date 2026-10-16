@@ -1,47 +1,39 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { CinematicCanvas, type CinemaKind } from './CinematicCanvas'
-const scenes: Record<CinemaKind,{title:string[];eyebrow:string;detail:string;image?:string}> = {
-  automl:{title:['Autonomous','AutoML.'],eyebrow:'01 / MACHINE LEARNING',detail:'CSV → modèles → rapport',image:'/cinema/automl-photo.webp'},
-  geoai:{title:['GeoAI','Aquaculture.'],eyebrow:'OBSERVATION DE LA TERRE',detail:'Sentinel-1 / Sentinel-2',image:'/cinema/geoai-aerial-photo.webp'},
-  traffic:{title:['Trafic','adaptatif.'],eyebrow:'VISION & SYSTÈMES EMBARQUÉS',detail:'YOLOv8 / Raspberry Pi',image:'/cinema/traffic-night-photo.webp'},
-  audio:{title:['Les voix','de WAXAL.'],eyebrow:'RECONNAISSANCE VOCALE',detail:'Lingala / Luganda / Shona',image:'/cinema/waxal-photo.webp'},
-  soliton:{title:['L’onde','se propage.'],eyebrow:'PHYSIQUE EXPÉRIMENTALE',detail:'Ligne non linéaire / 20 cellules',image:'/cinema/soliton-photo.webp'},
-  risk:{title:['Risk','Sim.'],eyebrow:'SIMULATION PROBABILISTE',detail:'Monte Carlo / Python / React',image:'/cinema/risksim-photo.webp'},
-  forex:{title:['Explorer','les marchés.'],eyebrow:'ANALYSE QUANTITATIVE',detail:'Données / signaux / backtesting',image:'/cinema/forex-photo.webp'},
-  financial:{title:['Stress','financier.'],eyebrow:'DONNÉES TRANSACTIONNELLES',detail:'Six mois de transactions / LightGBM',image:'/cinema/financial-photo.webp'},
-  neurogolf:{title:['NeuroGolf','Championship.'],eyebrow:'KAGGLE · RÉSEAUX COMPACTS',detail:'Transformations de grilles / ARC-AGI',image:'/cinema/neurogolf-photo.webp'},
-  credit:{title:['African','Credit Scoring.'],eyebrow:'ZINDI · RISQUE DE CRÉDIT',detail:'Modélisation du risque de crédit',image:'/cinema/credit-photo.webp'},
-  clinical:{title:['Pedi','Append.'],eyebrow:'MACHINE LEARNING EXPLICABLE',detail:'Classification / SHAP / Flask',image:'/cinema/clinical-photo.webp'},
+import type { CinemaKind } from './CinematicCanvas'
+
+/**
+ * Editorial project artwork. These images illustrate a subject, not a product
+ * screenshot. Technical evidence and real captures live in ProjectGallery.
+ * Keep the image unobstructed: no headings, status badges, or faux player UI.
+ */
+const imagery: Record<CinemaKind, { src: string; alt: string }> = {
+  automl: { src: '/cinema/automl-photo.webp', alt: 'Illustration du travail sur les pipelines de machine learning.' },
+  geoai: { src: '/cinema/geoai-aerial-photo.webp', alt: 'Vue aérienne illustrant la détection de bassins aquacoles.' },
+  traffic: { src: '/cinema/traffic-night-photo.webp', alt: 'Vue nocturne illustrant la circulation et les feux intelligents.' },
+  audio: { src: '/cinema/waxal-photo.webp', alt: 'Illustration de la reconnaissance vocale multilingue.' },
+  soliton: { src: '/cinema/soliton-photo.webp', alt: 'Illustration de l’étude expérimentale des signaux et des ondes.' },
+  risk: { src: '/cinema/risksim-photo.webp', alt: 'Illustration de la simulation des risques de projet.' },
+  forex: { src: '/cinema/forex-photo.webp', alt: 'Illustration de l’analyse des données de marché.' },
+  financial: { src: '/cinema/financial-photo.webp', alt: 'Illustration de l’analyse des transactions et du risque financier.' },
+  neurogolf: { src: '/cinema/neurogolf-photo.webp', alt: 'Illustration du raisonnement sur des grilles de couleur.' },
+  credit: { src: '/cinema/credit-photo.webp', alt: 'Illustration du traitement de données pour le scoring de crédit.' },
+  clinical: { src: '/cinema/clinical-photo.webp', alt: 'Illustration de l’intelligence artificielle appliquée à la santé.' },
 }
-export function ProjectVisual({kind}:{kind:CinemaKind}) {
-  const scene=scenes[kind]
-  const [visible,setVisible]=useState(false)
-  const [paused,setPaused]=useState(false)
-  const [reduce,setReduce]=useState(()=>matchMedia('(prefers-reduced-motion: reduce)').matches)
-  const figure=useRef<HTMLElement>(null)
-  const moveFrame=useRef(0)
-  useEffect(()=>{
-    const node=figure.current;if(!node)return
-    const preference=matchMedia('(prefers-reduced-motion: reduce)')
-    const change=()=>setReduce(preference.matches)
-    const observer=new IntersectionObserver(([entry])=>setVisible(entry.isIntersecting),{threshold:.08})
-    observer.observe(node);preference.addEventListener('change',change)
-    return()=>{observer.disconnect();preference.removeEventListener('change',change);cancelAnimationFrame(moveFrame.current)}
-  },[])
-  const running=visible&&!paused&&!reduce
-  return <figure ref={figure} className={`cinema-scene cinema-${kind}${running?' cinema-running':''}`} style={{'--camera-scale':1} as CSSProperties} onPointerMove={event=>{
-    if(reduce||paused||event.pointerType!=='mouse')return
-    const node=event.currentTarget,rect=node.getBoundingClientRect(),x=(event.clientX-rect.left)/rect.width-.5,y=(event.clientY-rect.top)/rect.height-.5
-    cancelAnimationFrame(moveFrame.current);moveFrame.current=requestAnimationFrame(()=>{node.style.setProperty('--camera-x',`${-x*16}px`);node.style.setProperty('--camera-y',`${-y*12}px`)})
-  }} onPointerLeave={event=>{cancelAnimationFrame(moveFrame.current);event.currentTarget.style.setProperty('--camera-x','0px');event.currentTarget.style.setProperty('--camera-y','0px')}} aria-label={`Scène d’illustration : ${scene.title.join(' ')}`}>
-    <div className="cinema-camera">{scene.image?<img className="cinema-landscape" src={scene.image} alt="" loading="lazy" decoding="async" width="1672" height="941"/>:<CinematicCanvas kind={kind} running={running} close={false}/>}</div>
-    {(kind === 'geoai' || kind === 'traffic') && <div className={kind === 'geoai' ? 'orbital-scan' : 'city-light-sweep'} aria-hidden="true">{kind === 'geoai' && <i/>}</div>}
-    {(kind === 'audio' || kind === 'soliton') && <div className={`signal-motion signal-${kind}`} aria-hidden="true">{Array.from({length:32},(_,i)=><i key={i} style={{'--signal-delay':`${-i * .09}s`,'--signal-height':`${20 + ((i * 13) % 55)}%`} as CSSProperties}/>)}</div>}
-    <div className="cinema-vignette" aria-hidden="true"/><div className="cinema-grain" aria-hidden="true"/>
-    <div className="cinema-topline"><span>{scene.eyebrow}</span><span className="cinema-format">R / H · PORTFOLIO</span></div>
-    <div className="cinema-caption"><div className="cinema-title" aria-hidden="true">{scene.title.map(line=><span key={line}>{line}</span>)}</div><p>{scene.detail}</p></div>
-    <div className="cinema-bottomline"><figcaption>{scene.image?'Illustration créée par IA':'Animation d’illustration'}</figcaption><div className="cinema-controls">{!reduce&&<button type="button" onClick={()=>setPaused(!paused)} aria-pressed={paused} aria-label={`${paused?'Reprendre':'Mettre en pause'} la scène ${scene.title.join(' ')}`}>{paused?'Lecture':'Pause'} <span aria-hidden="true">{paused?'▶':'Ⅱ'}</span></button>}</div></div>
-    <div className="cinema-timeline" aria-hidden="true"><i/></div>
-  </figure>
+
+export function ProjectVisual({ kind }: { kind: CinemaKind }) {
+  const scene = imagery[kind]
+  return (
+    <figure className={`folio-visual folio-${kind}`}>
+      <div className="folio-visual-image">
+        <img src={scene.src} alt={scene.alt} width={1672} height={941} loading="lazy" decoding="async" />
+      </div>
+      <figcaption>Illustration du sujet · visuel généré, distinct des captures réelles du projet</figcaption>
+    </figure>
+  )
 }
-export const projectVisualKind: Record<string,CinemaKind>={automl:'automl',geoai:'geoai',waxal:'audio',neurogolf:'neurogolf',credit:'credit',risksim:'risk','financial-stress':'financial','01':'clinical','02':'traffic','03':'forex','05':'soliton'}
+
+export const projectVisualKind: Record<string, CinemaKind> = {
+  automl: 'automl', geoai: 'geoai', waxal: 'audio',
+  neurogolf: 'neurogolf', credit: 'credit', risksim: 'risk',
+  'financial-stress': 'financial', '01': 'clinical',
+  '02': 'traffic', '03': 'forex', '05': 'soliton',
+}

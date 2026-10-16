@@ -8,6 +8,7 @@ import './vertical.css'
 import './expanded.css'
 import './white-return.css'
 import './pedi-inline.css'
+import './folio-refresh.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
