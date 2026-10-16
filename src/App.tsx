@@ -12,6 +12,7 @@ import {
 } from "@phosphor-icons/react";
 import { projects } from "./data/projects";
 import { competitions } from "./data/competitions";
+import { projectBriefs } from "./data/projectBriefs";
 import { projectStories } from "./data/projectStories";
 import { education } from "./data/education";
 import { skills } from "./data/skills";
@@ -72,6 +73,23 @@ function Links({ project }: { project: Project }) {
 }
 function Stack({ project }: { project: Project }) {
   return <p className="stack">{project.stack.join(" · ")}</p>;
+}
+
+function StoryDetails({ id }: { id: string }) {
+  const story = projectStories[id];
+  return (
+    <details className="story-details">
+      <summary>
+        Notes de projet <Plus size={17} />
+      </summary>
+      <div className="story-expanded">
+        {story.paragraphs.map((text) => (
+          <p key={text}>{text}</p>
+        ))}
+        {story.note && <p className="note">{story.note}</p>}
+      </div>
+    </details>
+  );
 }
 
 function App() {
@@ -222,27 +240,34 @@ function App() {
               <p>
                 Machine learning, simulation et logiciels.
                 <br />
-                Du problème de départ au résultat mesuré.
+                Construire pour comprendre.
               </p>
               <a className="button" href="#projets">
                 Explorer les projets <ArrowDown size={20} />
               </a>
             </div>
-            <a className="hero-note" href="#apropos">
-              Du Bénin à Centrale Casablanca.
-              <br />
-              Le parcours <ArrowUpRight size={18} />
-            </a>
           </div>
-          <div className="hero-image">
+          <figure className="hero-image">
             <img
-              src="/portrait-rudolf.webp"
-              alt="Rudolf Hounlete"
-              width="1254"
-              height="1254"
+              src="/atelier-wave.webp"
+              alt="Sculpture conceptuelle d’une onde en aluminium bleu"
+              width="1536"
+              height="1024"
               fetchPriority="high"
             />
-          </div>
+          </figure>
+          <a className="portrait-link" href="#apropos">
+            <img
+              src="/portrait-rudolf.webp"
+              alt="Portrait de Rudolf Hounlete"
+              width="840"
+              height="840"
+            />
+            <span>
+              Faire connaissance
+              <ArrowUpRight size={17} />
+            </span>
+          </a>
         </section>
         <section className="credentials wrap reveal" aria-label="Distinctions">
           <div>
@@ -338,15 +363,15 @@ function App() {
                 </div>
                 <div className="project-detail reveal">
                   <div className="result-block">
-                    <span>Ce qui a été réalisé</span>
-                    <p>{story.result}</p>
+                    <strong className="metric">
+                      {projectBriefs[id].metric}
+                    </strong>
+                    <span>{projectBriefs[id].label}</span>
                     <Stack project={project} />
                   </div>
                   <div className="project-prose">
-                    {story.paragraphs.map((p) => (
-                      <p key={p}>{p}</p>
-                    ))}
-                    {story.note && <p className="note">{story.note}</p>}
+                    <p className="brief">{projectBriefs[id].body}</p>
+                    <StoryDetails id={id} />
                   </div>
                 </div>
               </article>
@@ -371,12 +396,12 @@ function App() {
                   </p>
                   <h3>{names[id]}</h3>
                   <p className="study-intro">{story.subtitle}</p>
-                  <div className="small-prose">
-                    {story.paragraphs.map((text) => (
-                      <p key={text}>{text}</p>
-                    ))}
+                  <div className="study-outcome">
+                    <strong>{projectBriefs[id].metric}</strong>
+                    <span>{projectBriefs[id].label}</span>
                   </div>
-                  <p className="study-result">{story.result}</p>
+                  <p className="small-prose">{projectBriefs[id].body}</p>
+                  <StoryDetails id={id} />
                   <Stack project={p} />
                   <Links project={p} />
                 </article>
@@ -400,35 +425,33 @@ function App() {
           <div className="competition-grid">
             {competitions.map((c) => {
               const p = getProject(c.projectId);
-              const story = projectStories[c.projectId];
+              const brief = projectBriefs[c.projectId];
               return (
                 <article
                   id={`projet/${c.projectId}`}
                   key={c.projectId}
                   className="competition reveal"
                 >
-                  <div className="competition-top">
-                    <span>
+                  <div className="competition-rank">
+                    <strong>{brief.metric}</strong>
+                    <span>{brief.label}</span>
+                  </div>
+                  <div className="competition-content">
+                    <p className="project-context">
                       {c.platform} · {c.year}
-                    </span>
-                    {c.medal ? (
-                      <span>
-                        <Medal size={23} /> Bronze
-                      </span>
-                    ) : (
-                      <strong>{c.result}</strong>
-                    )}
+                    </p>
+                    <h3>{c.name}</h3>
+                    <p className="small-prose">{brief.body}</p>
+                    <StoryDetails id={c.projectId} />
+                    <Links project={p} />
                   </div>
-                  <h3>{c.name}</h3>
-                  <p className="study-intro">{c.detail}</p>
-                  <div className="small-prose">
-                    {story.paragraphs.map((text) => (
-                      <p key={text}>{text}</p>
-                    ))}
-                  </div>
-                  <p className="note">{story.note}</p>
-                  <Stack project={p} />
-                  <Links project={p} />
+                  <img
+                    className="competition-art"
+                    src={`/cinema/${photos[c.projectId]}`}
+                    alt={`Illustration conceptuelle : ${c.name}`}
+                    loading="lazy"
+                  />
+
                   {c.href && !p.links.code && !p.evidence && (
                     <a
                       className="inline-link"
@@ -449,18 +472,18 @@ function App() {
         <section id="apropos" data-section className="about wrap reveal">
           <div className="about-art">
             <img
-              src="/atelier-wave.webp"
-              alt="Sculpture conceptuelle en aluminium bleu évoquant une onde"
+              src="/portrait-rudolf.webp"
+              alt="Portrait de Rudolf Hounlete"
               loading="lazy"
-              width="1536"
-              height="1024"
+              width="840"
+              height="840"
             />
           </div>
           <div className="about-text">
             <h2>
-              Curieux par nature.
+              Derrière les projets.
               <br />
-              <span>Ingénieur en formation.</span>
+              <span>Un parcours en construction.</span>
             </h2>
             <p>
               Du Bénin au Maroc, un parcours qui relie l’informatique, les
@@ -509,9 +532,9 @@ function App() {
         <section id="contact" data-section className="contact wrap reveal">
           <p className="eyebrow">Contact</p>
           <h2>
-            La suite commence
+            Un projet en tête ?
             <br />
-            <span>par une conversation.</span>
+            <span>Parlons-en.</span>
           </h2>
           <a className="email" href={`mailto:${contact.email}`}>
             {contact.email}

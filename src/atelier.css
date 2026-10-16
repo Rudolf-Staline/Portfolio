@@ -1058,3 +1058,586 @@ a:hover {
     break-inside: avoid;
   }
 }
+
+/* Atelier II: image-led opening, concise project stories, open competition ledger. */
+.portfolio {
+  --bg: #fafbf9;
+  --surface: #eef1ee;
+  --ink: #17231e;
+  --muted: #53645c;
+  --accent: #164dce;
+}
+.topbar {
+  border-bottom: 0;
+}
+.hero {
+  padding-top: 55px;
+  min-height: 690px;
+}
+.hero h1 {
+  font-size: clamp(80px, 10.2vw, 148px);
+  letter-spacing: -0.08em;
+  line-height: 0.98;
+  max-width: 63%;
+}
+.hero-kicker {
+  margin-bottom: 38px;
+}
+.hero-image {
+  right: -56px;
+  top: 0;
+  width: 56%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: none;
+  z-index: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 14%);
+}
+.hero-image img {
+  object-fit: cover;
+  object-position: 53% 50%;
+  height: 100%;
+}
+.hero-bottom {
+  margin-top: 32px;
+  max-width: 45%;
+}
+.hero-bottom p {
+  font-size: 15px;
+}
+.portrait-link {
+  position: absolute;
+  z-index: 3;
+  right: 20px;
+  bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 18px 10px 10px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 11px;
+}
+.portrait-link img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.portrait-link span {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+.credentials {
+  padding-block: 28px;
+}
+.section-head {
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
+.section-head h2 {
+  font-size: clamp(44px, 6vw, 85px);
+}
+.project-header {
+  grid-template-columns: 50px 1fr auto;
+}
+.project-header h3 {
+  font-size: clamp(44px, 5.4vw, 78px);
+  letter-spacing: -0.065em;
+}
+.project-number {
+  font-size: 12px;
+}
+.project-subtitle {
+  max-width: 590px;
+  font-size: 17px;
+}
+.showcase {
+  padding: 48px 44px;
+  gap: 32px;
+  grid-template-columns: 1.45fr 1fr;
+  align-items: center;
+  background: #e4eafa;
+  border-radius: 4px;
+  min-height: 460px;
+}
+.portfolio[data-theme="dark"] .showcase {
+  background: #25324a;
+}
+.showcase .capture:first-child {
+  transform: rotate(-2deg);
+}
+.showcase .capture:nth-child(2) {
+  transform: rotate(2deg);
+}
+.capture button {
+  box-shadow: 0 24px 55px #1433791a;
+  border: 1px solid #ffffff70;
+}
+.capture figcaption {
+  color: var(--ink);
+  font-size: 10px;
+}
+.flagship-01 .showcase {
+  grid-template-columns: 1.4fr 1fr;
+  background: var(--surface);
+}
+.project-detail {
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 7%;
+  padding: 36px 0 85px;
+}
+.metric {
+  font-size: clamp(30px, 3.2vw, 46px);
+  letter-spacing: -0.06em;
+  line-height: 1.2;
+  font-weight: 550;
+  display: block;
+  margin-bottom: 12px;
+  color: var(--accent);
+}
+.result-block > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.brief {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--ink);
+}
+.story-details {
+  margin-top: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.story-details summary {
+  font-size: 12px;
+  font-weight: 650;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  cursor: pointer;
+  padding: 13px 0;
+  color: var(--ink);
+  list-style: none;
+}
+.story-details summary::-webkit-details-marker {
+  display: none;
+}
+.story-details summary svg {
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.story-details[open] summary svg {
+  transform: rotate(45deg);
+}
+.story-expanded {
+  padding: 12px 0 24px;
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+.story-expanded p + p {
+  margin-top: 16px;
+}
+.side-projects {
+  gap: 72px 52px;
+  align-items: start;
+}
+.study:nth-child(even) {
+  margin-top: 100px;
+}
+.study-photo img {
+  aspect-ratio: 1.6;
+}
+.study-photo figcaption {
+  font-size: 10px;
+}
+.study h3 {
+  font-size: 36px;
+}
+.study-intro {
+  font-size: 16px;
+  max-width: 520px;
+}
+.study-outcome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+  margin: 26px 0 18px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+.study-outcome strong {
+  font-size: 30px;
+  letter-spacing: -0.05em;
+  color: var(--accent);
+  font-weight: 600;
+}
+.study-outcome span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.study .small-prose {
+  font-size: 14px;
+}
+.competition-grid {
+  display: block;
+  border-top: 1px solid var(--line);
+}
+.competition {
+  position: relative;
+  display: grid;
+  grid-template-columns: 220px 1fr 160px;
+  gap: 38px;
+  background: none;
+  border-radius: 0;
+  padding: 36px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+.competition-rank strong {
+  font-size: 42px;
+  letter-spacing: -0.06em;
+  line-height: 1.2;
+  font-weight: 550;
+  display: block;
+  color: var(--accent);
+}
+.competition-rank span {
+  display: block;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-top: 10px;
+  max-width: 160px;
+}
+.competition h3 {
+  font-size: 29px;
+  margin-bottom: 18px;
+}
+.competition .small-prose {
+  font-size: 14px;
+}
+.competition .project-links {
+  margin-top: 18px;
+}
+.competition .project-context {
+  font-size: 10px;
+}
+.competition-art {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.competition > .inline-link {
+  grid-column: 2;
+  justify-self: start;
+}
+.about {
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 12%;
+}
+.about-art {
+  max-width: 430px;
+  position: relative;
+  background: var(--tint);
+  border-radius: 50% 50% 4px 4px;
+  overflow: hidden;
+}
+.about-art img {
+  aspect-ratio: 1;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+.portfolio[data-theme="dark"] .about-art img {
+  mix-blend-mode: normal;
+}
+.about h2 {
+  font-size: clamp(34px, 4vw, 55px);
+}
+.contact {
+  position: relative;
+  padding-block: 95px 70px;
+}
+.contact h2 {
+  font-size: clamp(50px, 7.2vw, 104px);
+}
+.contact h2 span {
+  color: var(--accent);
+}
+@media (min-width: 1600px) {
+  .hero-image {
+    right: -56px;
+  }
+  .hero {
+    min-height: 710px;
+  }
+}
+@media (max-width: 1100px) {
+  .hero-image {
+    right: -32px;
+    width: 55%;
+  }
+  .hero {
+    min-height: 650px;
+  }
+  .hero h1 {
+    font-size: 10.8vw;
+  }
+  .project-header {
+    grid-template-columns: 36px 1fr;
+  }
+  .project-header > .project-links {
+    grid-column: 2;
+  }
+  .competition {
+    grid-template-columns: 170px 1fr 100px;
+    gap: 24px;
+  }
+  .competition-rank strong {
+    font-size: 34px;
+  }
+  .showcase {
+    padding: 32px;
+    min-height: 0;
+  }
+  .side-projects {
+    gap: 60px 36px;
+  }
+  .study h3 {
+    font-size: 29px;
+  }
+  .about {
+    gap: 7%;
+  }
+}
+@media (max-width: 767px) {
+  .hero {
+    min-height: 0;
+    padding-top: 30px;
+    padding-bottom: 24px;
+  }
+  .hero-kicker {
+    margin-bottom: 28px;
+    font-size: 9px;
+  }
+  .hero h1 {
+    font-size: 18.4vw;
+    max-width: 100%;
+    line-height: 1;
+  }
+  .hero-image {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: calc(100% + 40px);
+    height: 240px;
+    margin: 28px -20px 0;
+    mask-image: none;
+  }
+  .hero-image img {
+    object-position: center 56%;
+  }
+  .hero-bottom {
+    max-width: 100%;
+    margin-top: 28px;
+  }
+  .hero-bottom > div {
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-bottom p {
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 0;
+    max-width: 160px;
+  }
+  .hero-bottom .button {
+    font-size: 10px;
+    padding: 14px 12px;
+    gap: 12px;
+  }
+  .portrait-link {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    margin-top: 0;
+    border: 0;
+    background: var(--surface);
+    padding: 10px 12px;
+    gap: 12px;
+  }
+  .portrait-link span {
+    justify-content: space-between;
+    width: 100%;
+    font-size: 11px;
+  }
+  .portrait-link img {
+    width: 36px;
+    height: 36px;
+  }
+  .credentials {
+    padding-block: 24px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+  .credentials > div,
+  .credentials > a {
+    display: block;
+  }
+  .credentials strong {
+    font-size: 30px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .credentials span {
+    font-size: 9px;
+    line-height: 1.6;
+  }
+  .credentials > a > svg {
+    display: none;
+  }
+  .section-head {
+    padding-top: 68px;
+    padding-bottom: 36px;
+  }
+  .section-head h2 {
+    font-size: 44px;
+  }
+  .project-header {
+    grid-template-columns: 24px 1fr;
+    gap: 10px;
+  }
+  .project-header h3 {
+    font-size: 43px;
+  }
+  .project-subtitle {
+    font-size: 14px;
+  }
+  .project-header > .project-links {
+    grid-column: 2;
+  }
+  .showcase,
+  .flagship-01 .showcase {
+    grid-template-columns: 1fr;
+    padding: 24px;
+    gap: 28px;
+  }
+  .showcase .capture:first-child,
+  .showcase .capture:nth-child(2) {
+    transform: none;
+  }
+  .capture figcaption {
+    font-size: 10px;
+  }
+  .project-detail {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-block: 28px 60px;
+  }
+  .metric {
+    font-size: 32px;
+  }
+  .brief {
+    font-size: 14px;
+  }
+  .side-projects {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .study:nth-child(even) {
+    margin-top: 0;
+  }
+  .study h3 {
+    font-size: 30px;
+  }
+  .study-outcome {
+    margin-top: 20px;
+  }
+  .competition {
+    grid-template-columns: 1fr 70px;
+    gap: 18px;
+    padding: 28px 0;
+    margin: 0;
+  }
+  .competition-rank {
+    grid-column: 1;
+  }
+  .competition-rank strong {
+    font-size: 32px;
+  }
+  .competition-rank span {
+    max-width: none;
+    margin-top: 6px;
+  }
+  .competition-content {
+    grid-column: 1/-1;
+    grid-row: 2;
+  }
+  .competition-art {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .competition h3 {
+    font-size: 26px;
+  }
+  .competition > .inline-link {
+    grid-column: 1/-1;
+  }
+  .about {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .about-art {
+    width: 70%;
+    max-width: 280px;
+    margin-inline: auto;
+  }
+  .about-art img {
+    aspect-ratio: 1;
+  }
+  .about h2 {
+    font-size: 36px;
+  }
+  .contact {
+    padding-block: 65px 48px;
+  }
+  .contact h2 {
+    font-size: 46px;
+  }
+  .contact .email {
+    font-size: 16px;
+  }
+}
+@media (max-width: 370px) {
+  .hero-bottom > div {
+    display: block;
+  }
+  .hero-bottom p {
+    max-width: none;
+    margin-bottom: 18px;
+  }
+  .hero-image {
+    height: 210px;
+  }
+  .credentials {
+    gap: 10px;
+  }
+  .credentials span {
+    font-size: 8px;
+  }
+  .contact h2 {
+    font-size: 39px;
+  }
+}
