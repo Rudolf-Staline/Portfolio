@@ -8,7 +8,7 @@ Portfolio étudiant de Rudolf Hounlete, élève ingénieur à l’École Central
 
 La page reprend la version blanche à cartes retenue en octobre 2026 : portrait et présentation, liens et distinctions, RiskSim, puis compétitions et projets, parcours et contact. Le défilement est vertical et natif. Chaque projet présente directement son image, son récit, son approche technique, son résultat et ses liens. Le thème sombre est facultatif. La typographie Figtree est hébergée avec l’application.
 
-RiskSim et PediAppend montrent des captures réelles ; les autres projets reprennent les illustrations photographiques créées par IA, identifiées comme telles sous chaque image. Les récits conservent les textes et limites actuels, avec les liens vers les dépôts et les preuves disponibles.
+RiskSim et PediAppend montrent des captures réelles agrandies, sans faux habillage d’interface ; les autres projets présentent des illustrations photographiques générées par IA, clairement identifiées sous l’image, sans texte ni boutons superposés. Les récits conservent les textes et limites actuels, avec les liens vers les dépôts et les preuves disponibles.
 
 ## Développement
 
@@ -19,7 +19,7 @@ npm run build
 npm run preview
 ```
 
-`npm run build` vérifie TypeScript et produit `dist/`. Vercel utilise le preset Vite et `vercel.json`. La page active est `src/App.tsx`, avec les styles `src/horizontal.css`, `src/vertical.css`, `src/expanded.css`, `src/cinema.css`, `src/white-return.css` et `src/pedi-inline.css`. Les anciennes propositions de design demeurent archivées dans le dépôt sans être chargées.
+`npm run build` vérifie TypeScript et produit `dist/`. Vercel utilise le preset Vite et `vercel.json`. La page active est `src/App.tsx`, avec les styles `src/horizontal.css`, `src/vertical.css`, `src/expanded.css`, `src/cinema.css`, `src/white-return.css` et `src/pedi-inline.css`. La nouvelle finition éditoriale est appliquée dans `src/folio-refresh.css` : portrait agrandi, capture RiskSim présentée à plat, images pleine largeur et légendes hors des visuels. Les anciennes propositions de design demeurent archivées dans le dépôt sans être chargées.
 
 ## Sources
 
