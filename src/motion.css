@@ -30,10 +30,6 @@
   .inline-link:hover svg, .contact-address:hover svg, .contact-bottom a:hover svg, .social-card:hover .card-corner svg { transform: translate(3px, -3px); }
   .cv-card:hover svg { transform: translateY(3px); }
   .cv-card svg { transition: transform .3s; }
-  .project-expanded { transition: box-shadow .4s, translate .4s cubic-bezier(.2, .7, .2, 1); }
-  .project-expanded:hover { box-shadow: 0 24px 60px #00000012, 0 3px 8px #00000006; }
-  .expanded-stack span { transition: transform .25s, background-color .25s, color .25s; }
-  .expanded-stack span:hover { transform: translateY(-2px); }
 
   /* Lien de navigation : soulignement qui glisse */
   .top-links a { background: linear-gradient(currentColor, currentColor) 0 calc(100% - 4px) / 0 1px no-repeat; transition: color .2s, background-size .35s cubic-bezier(.2, .7, .2, 1); }
