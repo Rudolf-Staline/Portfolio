@@ -180,7 +180,7 @@ function App() {
         <a
           className="wordmark"
           href="#accueil"
-          aria-label="Rudolf Hounlete, accueil"
+          aria-label="RH. Rudolf Hounlete, accueil"
         >
           RH<span>.</span>
         </a>
@@ -236,7 +236,7 @@ function App() {
           </div>
           <div className="hero-image">
             <img
-              src="/portrait-rudolf.png"
+              src="/portrait-rudolf.webp"
               alt="Rudolf Hounlete"
               width="1254"
               height="1254"
@@ -300,7 +300,7 @@ function App() {
                   <div className="project-number">0{index + 1}</div>
                   <div>
                     <p className="project-context">
-                      {clean(project.context)} · {project.period}
+                      {clean(project.context)} · {clean(project.period)}
                     </p>
                     <h3>{names[id]}</h3>
                     <p className="project-subtitle">{story.subtitle}</p>
@@ -367,7 +367,7 @@ function App() {
                     <figcaption>Illustration conceptuelle</figcaption>
                   </figure>
                   <p className="project-context">
-                    {clean(p.context)} · {p.period}
+                    {clean(p.context)} · {clean(p.period)}
                   </p>
                   <h3>{names[id]}</h3>
                   <p className="study-intro">{story.subtitle}</p>

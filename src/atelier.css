@@ -692,7 +692,7 @@ a:hover {
     animation: enter 0.9s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
   .reveal {
-    opacity: 0.01;
+    opacity: 1;
     transform: translateY(24px);
     transition:
       opacity 0.7s,
