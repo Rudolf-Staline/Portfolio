@@ -1,11 +1,11 @@
 const galleries = {
   risksim: [
-    {src:'/projects/risksim-dashboard.png', label:'Tableau de bord', alt:'Capture du tableau de bord RiskSim S5 : indicateurs, portefeuille de risques et historique du scénario de démonstration.', caption:'Capture réelle de RiskSim · version S5. Scénario de démonstration, montants illustratifs.'},
-    {src:'/projects/risksim-results.png', label:'Résultats', alt:'Capture RiskSim S5 : distribution des coûts, percentiles, courbe cumulée et classement de sensibilité du scénario de démonstration.', caption:'Capture réelle de l’écran de résultats S5. Les chiffres de ce scénario illustrent l’interface ; ils ne sont pas des résultats client.'},
+    {src:'/projects/risksim-dashboard.png', label:'Tableau de bord', alt:'Capture du tableau de bord RiskSim S5 : indicateurs, portefeuille de risques et historique du scénario de démonstration.', caption:'Tableau de bord de RiskSim (version S5), sur un scénario de démonstration. Montants illustratifs.'},
+    {src:'/projects/risksim-results.png', label:'Résultats', alt:'Capture RiskSim S5 : distribution des coûts, percentiles, courbe cumulée et classement de sensibilité du scénario de démonstration.', caption:'Écran de résultats de RiskSim (version S5). Les chiffres viennent d’un scénario de démonstration, pas d’un dossier client.'},
   ],
   clinical: [
-    {src:'/projects/pediappend-interface-symptomes.jpg',label:'Du symptôme à la saisie structurée',alt:'Capture de l’interface PediAppend : formulaire des symptômes cliniques et signes associés.',caption:'Interface du prototype Flask, rendue depuis les templates du dépôt. Formulaire vide, sans donnée patient.'},
-    {src:'/projects/shap_summary_bar.png',label:'Comprendre les variables du modèle',alt:'Graphique SHAP du projet : importance moyenne des quinze principales variables, dont les observations échographiques, le diamètre de l’appendice et les marqueurs biologiques.',caption:'Graphique produit par le projet. L’importance moyenne décrit le modèle sur les données analysées ; elle n’explique pas à elle seule une prédiction individuelle.'},
+    {src:'/projects/pediappend-interface-symptomes.jpg',label:'Saisie des symptômes',alt:'Capture de l’interface PediAppend : formulaire des symptômes cliniques et signes associés.',caption:'Formulaire de saisie du prototype Flask, rendu depuis les templates du dépôt. Aucune donnée patient.'},
+    {src:'/projects/shap_summary_bar.png',label:'Les variables qui comptent',alt:'Graphique SHAP du projet : importance moyenne des quinze principales variables, dont les observations échographiques, le diamètre de l’appendice et les marqueurs biologiques.',caption:'Importance moyenne des variables (SHAP) sur les données analysées. Elle décrit le modèle dans son ensemble, pas une prédiction individuelle.'},
   ],
 }
 export function ProjectGallery({kind}:{kind:keyof typeof galleries}) {
