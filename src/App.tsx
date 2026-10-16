@@ -82,7 +82,7 @@ function ProjectArticle({ project }: { project: Project }) {
 }
 
 function App() {
-  const [active, setActive] = useState(0)
+  const [active, setActive] = useState('accueil')
   const [dark, setDark] = useState(() => {
     try { return localStorage.getItem('portfolio-horizontal-theme') === 'dark' } catch { return false }
   })
@@ -92,8 +92,7 @@ function App() {
     if (element.matches('.project-expanded')) element.classList.add('direct-arrival')
     const motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior
     element.scrollIntoView({ behavior: motion, block: 'start' })
-    const index = panels.findIndex(panel => panel.id === id)
-    if (index >= 0) setActive(index)
+    if (panels.some(panel => panel.id === id)) setActive(id)
     if (push && window.location.hash !== `#${id}`) history.pushState(null, '', `#${id}`)
   }
   useEffect(() => {
@@ -125,13 +124,15 @@ function App() {
     const position = () => {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
-        let current = 0
+        let current = 'accueil'
         anchors.forEach(id => {
-          if ((document.getElementById(id)?.getBoundingClientRect().top ?? Infinity) <= 130) current = panels.findIndex(panel => panel.id === id)
+          if ((document.getElementById(id)?.getBoundingClientRect().top ?? Infinity) <= 130) current = id
         })
+        if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) current = 'contact'
         setActive(current)
       })
     }
+    position()
     window.addEventListener('scroll', position, { passive: true })
     window.addEventListener('resize', position)
     return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', position); window.removeEventListener('resize', position) }
@@ -162,7 +163,7 @@ function App() {
   return <div className="horizontal-site" data-theme={dark ? 'dark' : 'light'}>
     <div className="reading-progress" aria-hidden="true"><i/></div>
     <a className="skip-link" href="#main">Aller au contenu</a>
-    <header className="topbar"><nav className="top-links" aria-label="Navigation principale"><a href="#accueil" aria-current={active < 3 ? 'location' : undefined}>Rudolf Hounlete</a><span aria-hidden="true">/</span><a href="#competitions" aria-current={active === 3 ? 'location' : undefined}>Compétitions</a><a href="#projets" aria-current={active === 4 ? 'location' : undefined}>Projets</a><a href="#contact" aria-current={active === 8 ? 'location' : undefined}>Contact</a></nav><button type="button" className="theme-switch" onClick={changeTheme} aria-label={dark ? 'Activer le thème clair' : 'Activer le thème sombre'} title={dark ? 'Thème clair' : 'Thème sombre'}><span className={!dark ? 'chosen' : ''}><Icon name="sun" size={16}/></span><span className={dark ? 'chosen' : ''}><Icon name="moon" size={16}/></span></button></header>
+    <header className="topbar"><nav className="top-links" aria-label="Navigation principale"><a href="#accueil" aria-current={(active === 'accueil' || active === 'liens') ? 'location' : undefined}>Rudolf Hounlete</a><span aria-hidden="true">/</span><a href="#competitions" aria-current={active === 'competitions' ? 'location' : undefined}>Compétitions</a><a href="#projets" aria-current={active === 'projets' ? 'location' : undefined}>Projets</a><a href="#contact" aria-current={active === 'contact' ? 'location' : undefined}>Contact</a></nav><button type="button" className="theme-switch" onClick={changeTheme} aria-label={dark ? 'Activer le thème clair' : 'Activer le thème sombre'} title={dark ? 'Thème clair' : 'Thème sombre'}><span className={!dark ? 'chosen' : ''}><Icon name="sun" size={16}/></span><span className={dark ? 'chosen' : ''}><Icon name="moon" size={16}/></span></button></header>
     <main className="horizontal-track" id="main" tabIndex={-1} aria-label="Portfolio de Rudolf Hounlete">
       <section className="rail-panel profile-panel" id="accueil" aria-labelledby="profile-name"><article className="card intro-card"><div className="person-line"><img src="/portrait-rudolf.png" alt="Portrait de Rudolf Hounlete" width="136" height="136" fetchPriority="high"/><div><h1 id="profile-name">Rudolf Hounlete</h1><p><span className="status-dot"/>Élève ingénieur · promo 2028</p></div></div><p className="intro-text">Je construis des modèles de <span>machine learning</span> et les outils qui les rendent utilisables. Élève ingénieur à <span>Centrale Casablanca,</span> j’ai décroché trois médailles de bronze sur Kaggle et Zindi et développé en stage une application de simulation de risques.</p><a className="inline-link intro-more" href="#apropos">À propos de moi <Icon name="arrow" size={15}/></a><div className="location"><p>Basé à Casablanca, Maroc.</p><span>Originaire du Bénin</span></div><Globe/></article></section>
       <section className="rail-panel links-panel" id="liens" aria-label="Liens et distinctions"><div className="social-grid">
