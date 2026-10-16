@@ -1,0 +1,60 @@
+/* Couche de mouvement : chargée en dernier, entièrement conditionnée à data-motion="on". */
+@media (prefers-reduced-motion: no-preference) {
+  /* Cascade des enfants d'un groupe */
+  [data-motion='on'] [data-stagger]:not(.is-in) > * { opacity: 0; transform: translateY(22px); }
+  [data-motion='on'] [data-stagger].is-in > * {
+    animation: m-rise .8s cubic-bezier(.2, .7, .2, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+  [data-motion='on'] [data-reveal]:not(.is-in) { opacity: 0; transform: translateY(18px); }
+  [data-motion='on'] [data-reveal].is-in { animation: m-rise .75s cubic-bezier(.2, .7, .2, 1) both; }
+  @keyframes m-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+
+  /* Les enfants d'un groupe ne doivent pas être écrasés par l'ancien block-arrival */
+  [data-motion='on'] .profile-panel, [data-motion='on'] .links-panel, [data-motion='on'] .feature-panel { animation: none; }
+
+  /* Parallaxe douce de la sphère (pilotée par --mx / --my) */
+  .intro-card .dot-globe {
+    translate: calc(var(--mx, 0) * -14px) calc(var(--my, 0) * -10px);
+    transition: translate .5s cubic-bezier(.2, .7, .2, 1);
+  }
+
+  /* Médailles : apparition échelonnée + reflet au survol */
+  [data-motion='on'] .three-medals.is-in .bronze-icon { animation: m-pop .6s cubic-bezier(.3, 1.5, .5, 1) both; animation-delay: calc(var(--i, 0) * 110ms); }
+  @keyframes m-pop { from { opacity: 0; transform: scale(.4) rotate(-14deg); } to { opacity: 1; transform: none; } }
+  .bronze-icon { transition: transform .35s cubic-bezier(.3, 1.5, .5, 1), filter .35s; }
+  .medal-card:hover .bronze-icon, .three-medals:hover .bronze-icon { transform: translateY(-3px) rotate(-6deg); filter: drop-shadow(0 6px 6px #5c3c1430); }
+
+  /* Micro-interactions */
+  .inline-link svg, .contact-address svg, .contact-bottom svg, .social-card .card-corner svg { transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
+  .inline-link:hover svg, .contact-address:hover svg, .contact-bottom a:hover svg, .social-card:hover .card-corner svg { transform: translate(3px, -3px); }
+  .cv-card:hover svg { transform: translateY(3px); }
+  .cv-card svg { transition: transform .3s; }
+  .project-expanded { transition: box-shadow .4s, translate .4s cubic-bezier(.2, .7, .2, 1); }
+  .project-expanded:hover { box-shadow: 0 24px 60px #00000012, 0 3px 8px #00000006; }
+  .expanded-stack span { transition: transform .25s, background-color .25s, color .25s; }
+  .expanded-stack span:hover { transform: translateY(-2px); }
+
+  /* Lien de navigation : soulignement qui glisse */
+  .top-links a { background: linear-gradient(currentColor, currentColor) 0 calc(100% - 4px) / 0 1px no-repeat; transition: color .2s, background-size .35s cubic-bezier(.2, .7, .2, 1); }
+  .top-links a:hover, .top-links a[aria-current] { background-size: 100% 1px; }
+
+  /* Médias de projet : dézoom à l'entrée, piloté par le défilement quand c'est supporté */
+  @supports (animation-timeline: view()) {
+    .expanded-media-inner, .expanded-media .cinema-scene {
+      animation: m-media linear both; animation-timeline: view(); animation-range: entry 0% cover 45%;
+    }
+    @keyframes m-media { from { transform: scale(1.06); opacity: .55; } to { transform: none; opacity: 1; } }
+  }
+
+  /* Bascule clair / sombre : cercle qui s'étend depuis le bouton (View Transitions) */
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+  ::view-transition-new(root) { animation: m-theme .75s cubic-bezier(.4, 0, .2, 1) both; }
+  @keyframes m-theme { from { clip-path: circle(0 at var(--vt-x, 95%) var(--vt-y, 4%)); } to { clip-path: circle(150vmax at var(--vt-x, 95%) var(--vt-y, 4%)); } }
+}
+
+/* Mouvement réduit : tout reste visible et statique */
+@media (prefers-reduced-motion: reduce) {
+  [data-stagger] > *, [data-reveal] { opacity: 1 !important; transform: none !important; animation: none !important; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}

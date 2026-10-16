@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type MouseEvent as ReactMouseEvent } from 'react'
+import { flushSync } from 'react-dom'
+import { useMotion } from './hooks/useMotion'
 import { competitions } from './data/competitions'
 import { projects } from './data/projects'
 import { education } from './data/education'
@@ -138,10 +140,17 @@ function App() {
     document.querySelectorAll('.project-expanded,.collection-intro,.about-card,.education-card,.expanded-skills-card,.contact-card').forEach(element => observer.observe(element))
     return () => observer.disconnect()
   }, [])
-  const changeTheme = () => setDark(current => {
-    try { localStorage.setItem('portfolio-horizontal-theme', current ? 'light' : 'dark') } catch { /* Theme works without storage. */ }
-    return !current
-  })
+  useMotion()
+  const changeTheme = (event: ReactMouseEvent<HTMLButtonElement>) => {
+    const next = !dark
+    try { localStorage.setItem('portfolio-horizontal-theme', next ? 'dark' : 'light') } catch { /* Theme works without storage. */ }
+    const doc = document as Document & { startViewTransition?: (update: () => void) => unknown }
+    if (!doc.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) { setDark(next); return }
+    const box = event.currentTarget.getBoundingClientRect()
+    document.documentElement.style.setProperty('--vt-x', `${box.left + box.width / 2}px`)
+    document.documentElement.style.setProperty('--vt-y', `${box.top + box.height / 2}px`)
+    doc.startViewTransition(() => flushSync(() => setDark(next)))
+  }
 
   return <div className="horizontal-site" data-theme={dark ? 'dark' : 'light'}>
     <div className="reading-progress" aria-hidden="true"><i/></div>
