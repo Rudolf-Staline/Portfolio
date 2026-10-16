@@ -9,6 +9,7 @@ import './pages.css'
 import './project-refinements.css'
 import './motion.css'
 import './refine.css'
+import './experiment.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -128,6 +128,6 @@ export const projectStories: Record<string, ProjectStory> = {
     ],
     method: 'Montage d’une ligne électrique non linéaire, acquisitions à l’oscilloscope, simulation LTspice et traitement des signaux en Python.',
     result: 'Une comparaison entre acquisitions expérimentales et simulation d’une chaîne de vingt cellules.',
-    note: 'Le banc d’essai de la scène est une illustration générée ; ce n’est pas une photographie du montage réalisé.',
+    note: 'Le schéma illustre le principe de propagation. Il ne présente ni photographie du montage ni courbe de mesure.',
   },
 }
