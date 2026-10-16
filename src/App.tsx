@@ -6,9 +6,8 @@ import {
   Moon,
   GithubLogo,
   DownloadSimple,
-  Medal,
-  X,
   Plus,
+  X,
 } from "@phosphor-icons/react";
 import { projects } from "./data/projects";
 import { competitions } from "./data/competitions";
@@ -19,104 +18,91 @@ import { skills } from "./data/skills";
 import { contact } from "./data/profile";
 import type { Project } from "./data/types";
 
-const names: Record<string, string> = {
+const title: Record<string, string> = {
   risksim: "RiskSim",
-  neurogolf: "NeuroGolf",
-  credit: "African Credit Scoring",
-  "financial-stress": "Stress financier",
-  geoai: "GeoAI Aquaculture",
-  waxal: "WAXAL ASR",
-  automl: "Autonomous AutoML",
   "01": "PediAppend",
+  automl: "Autonomous AutoML",
   "02": "Feux intelligents",
   "03": "Analyse Forex",
   "05": "Propagation de solitons",
+  neurogolf: "NeuroGolf",
+  waxal: "WAXAL ASR",
+  geoai: "GeoAI Aquaculture",
+  "financial-stress": "Stress financier",
+  credit: "African Credit Scoring",
 };
-const photos: Record<string, string> = {
-  automl: "automl-photo.webp",
-  "02": "traffic-night-photo.webp",
-  "03": "forex-photo.webp",
-  "05": "soliton-photo.webp",
-  neurogolf: "neurogolf-photo.webp",
-  waxal: "waxal-photo.webp",
-  geoai: "geoai-aerial-photo.webp",
-  "financial-stress": "financial-photo.webp",
-  credit: "credit-photo.webp",
-};
-const clean = (text: string) => text.replace(/—/g, "·");
-const getProject = (id: string) => projects.find((p) => p.index === id)!;
+const findProject = (id: string) => projects.find((p) => p.index === id)!;
+const clean = (value: string) => value.replace(/—/g, "·");
 
-function Links({ project }: { project: Project }) {
+function ExternalLinks({ project }: { project: Project }) {
+  const links = [
+    project.links.code && {
+      href: project.links.code,
+      label: "Code source",
+      icon: <GithubLogo size={19} />,
+    },
+    project.links.demo && {
+      href: project.links.demo,
+      label: "Démo",
+      icon: <ArrowUpRight size={19} />,
+    },
+    project.evidence && {
+      href: project.evidence.href,
+      label: project.evidence.label,
+      icon: <ArrowUpRight size={19} />,
+    },
+  ].filter(Boolean) as { href: string; label: string; icon: React.ReactNode }[];
   return (
-    <div className="project-links">
-      {project.links.code && (
-        <a href={project.links.code} target="_blank" rel="noreferrer">
-          Code source <GithubLogo size={19} />
+    <div className="links">
+      {links.map((item) => (
+        <a key={item.href} href={item.href} target="_blank" rel="noreferrer">
+          {item.label}
+          {item.icon}
           <span className="sr-only"> (nouvel onglet)</span>
         </a>
-      )}
-      {project.links.demo && (
-        <a href={project.links.demo} target="_blank" rel="noreferrer">
-          Démo <ArrowUpRight size={19} />
-          <span className="sr-only"> (nouvel onglet)</span>
-        </a>
-      )}
-      {project.evidence && (
-        <a href={project.evidence.href} target="_blank" rel="noreferrer">
-          {project.evidence.label}
-          <ArrowUpRight size={19} />
-          <span className="sr-only"> (nouvel onglet)</span>
-        </a>
-      )}
+      ))}
     </div>
   );
 }
-function Stack({ project }: { project: Project }) {
-  return <p className="stack">{project.stack.join(" · ")}</p>;
-}
-
-function StoryDetails({ id }: { id: string }) {
+function TechnicalNotes({ id }: { id: string }) {
   const story = projectStories[id];
   return (
-    <details className="story-details">
+    <details className="notes">
       <summary>
-        Notes de projet <Plus size={17} />
+        Lire les notes techniques <Plus size={17} />
       </summary>
-      <div className="story-expanded">
-        {story.paragraphs.map((text) => (
-          <p key={text}>{text}</p>
+      <div>
+        {story.paragraphs.map((p) => (
+          <p key={p}>{p}</p>
         ))}
-        {story.note && <p className="note">{story.note}</p>}
+        {story.note && <p className="caveat">{story.note}</p>}
       </div>
     </details>
   );
 }
-
 function App() {
   const [dark, setDark] = useState(() => {
     try {
-      const saved = localStorage.getItem("portfolio-horizontal-theme");
-      return saved
-        ? saved === "dark"
-        : matchMedia("(prefers-color-scheme: dark)").matches;
+      const saved = localStorage.getItem("portfolio-fieldnotes-theme");
+      return saved === "dark";
     } catch {
       return false;
     }
   });
   const [active, setActive] = useState("accueil");
-  const [zoom, setZoom] = useState<{ src: string; alt: string } | null>(null);
+  const [image, setImage] = useState<{ src: string; alt: string } | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
-    const targets = document.querySelectorAll("[data-section]");
     const observer = new IntersectionObserver(
-      (entries) => {
+      (entries) =>
         entries.forEach((entry) => {
           if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: "-15% 0px -55% 0px", threshold: 0 },
+        }),
+      { rootMargin: "-20% 0px -55% 0px" },
     );
-    targets.forEach((el) => observer.observe(el));
+    document
+      .querySelectorAll("[data-section]")
+      .forEach((el) => observer.observe(el));
     const reveals = new IntersectionObserver(
       (entries) =>
         entries.forEach((entry) => {
@@ -125,7 +111,7 @@ function App() {
             reveals.unobserve(entry.target);
           }
         }),
-      { threshold: 0.06 },
+      { threshold: 0.04 },
     );
     document.querySelectorAll(".reveal").forEach((el) => reveals.observe(el));
     const follow = () => {
@@ -135,14 +121,14 @@ function App() {
       } catch {
         return;
       }
-      const aliases: Record<string, string> = {
+      const alias: Record<string, string> = {
         "fiche/about": "apropos",
         "fiche/skills": "competences",
         index: "projets",
       };
       if (hash)
         requestAnimationFrame(() =>
-          document.getElementById(aliases[hash] || hash)?.scrollIntoView(),
+          document.getElementById(alias[hash] || hash)?.scrollIntoView(),
         );
     };
     follow();
@@ -154,58 +140,62 @@ function App() {
     };
   }, []);
   useEffect(() => {
-    if (zoom) {
-      dialog.current?.showModal();
-      const previous = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = previous;
-      };
-    } else dialog.current?.close();
-  }, [zoom]);
-  const theme = () =>
+    if (!image) {
+      dialog.current?.close();
+      return;
+    }
+    dialog.current?.showModal();
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [image]);
+  const toggle = () =>
     setDark((value) => {
       try {
         localStorage.setItem(
-          "portfolio-horizontal-theme",
+          "portfolio-fieldnotes-theme",
           !value ? "dark" : "light",
         );
       } catch {
-        /* Storage is optional. */
+        /* Local preference is optional. */
       }
       return !value;
     });
-  const capture = (src: string, alt: string, caption: string) => (
-    <figure className="capture">
+  const shot = (src: string, alt: string, caption: string, kind: string) => (
+    <figure className={`shot shot-${kind}`}>
       <button
-        onClick={() => setZoom({ src, alt })}
+        type="button"
+        onClick={() => setImage({ src, alt })}
         aria-label={`Agrandir : ${alt}`}
       >
         <img src={src} alt={alt} loading="lazy" decoding="async" />
-        <span className="enlarge">
-          <Plus size={22} />
+        <span>
+          <Plus size={20} />
         </span>
       </button>
       <figcaption>{caption}</figcaption>
     </figure>
   );
   return (
-    <div className="portfolio" data-theme={dark ? "dark" : "light"}>
-      <a href="#main" className="skip-link">
+    <div className="site" data-theme={dark ? "dark" : "light"}>
+      <a className="skip" href="#main">
         Aller au contenu
       </a>
-      <header className="topbar">
+      <header className="nav">
         <a
-          className="wordmark"
+          className="mark"
           href="#accueil"
           aria-label="RH. Rudolf Hounlete, accueil"
         >
-          RH<span>.</span>
+          RH<span>+</span>
         </a>
         <nav aria-label="Navigation principale">
           {[
             ["projets", "Projets"],
             ["competitions", "Compétitions"],
+            ["apropos", "Parcours"],
             ["contact", "Contact"],
           ].map(([id, label]) => (
             <a
@@ -218,340 +208,316 @@ function App() {
           ))}
         </nav>
         <button
-          className="icon-button"
-          onClick={theme}
+          className="theme"
+          onClick={toggle}
           aria-label={
             dark ? "Activer le thème clair" : "Activer le thème sombre"
           }
         >
-          {dark ? <Sun size={21} /> : <Moon size={21} />}
+          {dark ? <Sun size={20} /> : <Moon size={20} />}
         </button>
       </header>
       <main id="main" tabIndex={-1}>
-        <section id="accueil" data-section className="hero wrap">
-          <p className="hero-kicker">Élève ingénieur · Centrale Casablanca</p>
-          <h1>
-            Rudolf
-            <br />
-            <span>Hounlete.</span>
-          </h1>
-          <div className="hero-bottom">
-            <div>
-              <p>
-                Machine learning, simulation et logiciels.
+        <section id="accueil" data-section className="hero frame">
+          <div className="hero-head">
+            <span>PORTFOLIO / 2026</span>
+            <span>ÉLÈVE INGÉNIEUR · CASABLANCA</span>
+          </div>
+          <div className="hero-grid">
+            <div className="hero-copy">
+              <p className="hero-preface">RUDOLF</p>
+              <h1>
+                HOUNLETE<span className="period">.</span>
+              </h1>
+              <p className="hero-lead">
+                Des modèles, des systèmes, des essais.
                 <br />
-                Construire pour comprendre.
+                Et les résultats pour les juger.
               </p>
               <a className="button" href="#projets">
-                Explorer les projets <ArrowDown size={20} />
+                Voir les projets <ArrowDown size={21} />
               </a>
             </div>
+            <figure className="portrait">
+              <img
+                src="/portrait-rudolf.webp"
+                alt="Portrait de Rudolf Hounlete"
+                width="840"
+                height="840"
+                fetchPriority="high"
+              />
+              <figcaption>
+                <span>01 / PORTRAIT</span>
+                <span>BÉNIN → MAROC</span>
+              </figcaption>
+            </figure>
           </div>
-          <figure className="hero-image">
-            <img
-              src="/atelier-wave.webp"
-              alt="Sculpture conceptuelle d’une onde en aluminium bleu"
-              width="1536"
-              height="1024"
-              fetchPriority="high"
-            />
-          </figure>
-          <a className="portrait-link" href="#apropos">
-            <img
-              src="/portrait-rudolf.webp"
-              alt="Portrait de Rudolf Hounlete"
-              width="840"
-              height="840"
-            />
-            <span>
-              Faire connaissance
-              <ArrowUpRight size={17} />
-            </span>
-          </a>
+          <div className="hero-foot">
+            <span>CYCLE INGÉNIEUR · PROMOTION 2028</span>
+            <span>ÉCOLE CENTRALE CASABLANCA</span>
+          </div>
         </section>
-        <section className="credentials wrap reveal" aria-label="Distinctions">
+        <section className="proof frame reveal" aria-label="Résultats">
           <div>
-            <Medal size={28} />
-            <strong>3</strong>
+            <strong>03</strong>
             <span>
               Médailles de bronze
               <br />
-              Kaggle & Zindi
+              Kaggle et Zindi
             </span>
           </div>
           <a href="#projet/credit">
             <strong>
-              2<sup>e</sup>
+              02<sup>e</sup>
             </strong>
             <span>
-              sur 77 participants
+              sur 77
               <br />
               African Credit Scoring
             </span>
-            <ArrowUpRight />
+            <ArrowUpRight size={19} />
           </a>
           <a href="#projet/financial-stress">
             <strong>
-              4<sup>e</sup>
+              04<sup>e</sup>
             </strong>
             <span>
-              sur 262 participants
+              sur 262
               <br />
               Financial Stress Prediction
             </span>
-            <ArrowUpRight />
+            <ArrowUpRight size={19} />
           </a>
         </section>
-        <section id="projets" data-section className="work wrap">
+        <section id="projets" data-section className="projects frame">
           <span id="index" className="anchor" />
-          <header className="section-head reveal">
-            <p className="eyebrow">Logiciel & expérimentation</p>
+          <header className="section-title reveal">
+            <span className="index-no">01 / TRAVAUX</span>
             <h2>
-              Mettre les idées
+              Projets construits.
               <br />
-              <span>à l’épreuve.</span>
+              <em>Résultats vérifiables.</em>
             </h2>
           </header>
-          {["risksim", "01"].map((id, index) => {
-            const project = getProject(id);
-            const story = projectStories[id];
+          {(["risksim", "01"] as const).map((id, i) => {
+            const p = findProject(id);
+            const b = projectBriefs[id];
             return (
               <article
-                id={`projet/${id}`}
                 key={id}
-                className={`flagship flagship-${id}`}
+                id={`projet/${id}`}
+                className={`feature feature-${id} reveal`}
               >
-                <header className="project-header reveal">
-                  <div className="project-number">0{index + 1}</div>
-                  <div>
-                    <p className="project-context">
-                      {clean(project.context)} · {clean(project.period)}
-                    </p>
-                    <h3>{names[id]}</h3>
-                    <p className="project-subtitle">{story.subtitle}</p>
+                <div className="feature-intro">
+                  <div className="feature-meta">
+                    <span>{String(i + 1).padStart(2, "0")} / PROJET</span>
+                    <span>
+                      {clean(p.context)} · {clean(p.period)}
+                    </span>
                   </div>
-                  <Links project={project} />
-                </header>
-                <div className="showcase reveal">
+                  <h3>{title[id]}</h3>
+                  <p className="feature-pitch">{projectStories[id].subtitle}</p>
+                  <div className="feature-fact">
+                    <strong>{b.metric}</strong>
+                    <span>{b.label}</span>
+                  </div>
+                  <p className="feature-body">{b.body}</p>
+                  <p className="stack">{p.stack.join(" / ")}</p>
+                  <ExternalLinks project={p} />
+                  <TechnicalNotes id={id} />
+                </div>
+                <div className="feature-media">
                   {id === "risksim" ? (
                     <>
-                      {capture(
+                      {shot(
                         "/projects/risksim-dashboard.png",
-                        "Tableau de bord de RiskSim",
-                        "Tableau de bord · version S5, scénario de démonstration.",
+                        "Tableau de bord RiskSim, version S5",
+                        "01 / Portefeuille des risques. Scénario de démonstration.",
+                        "primary",
                       )}
-                      {capture(
+                      {shot(
                         "/projects/risksim-results.png",
-                        "Résultats de simulation RiskSim",
-                        "Distribution des coûts, percentiles et sensibilité. Montants illustratifs.",
+                        "Résultats RiskSim, version S5",
+                        "02 / Distribution des coûts et sensibilité. Montants illustratifs.",
+                        "secondary",
                       )}
                     </>
                   ) : (
                     <>
-                      {capture(
+                      {shot(
                         "/projects/pediappend-interface-symptomes.jpg",
-                        "Formulaire des symptômes de PediAppend",
-                        "Prototype Flask · aucune donnée patient affichée.",
+                        "Formulaire des symptômes PediAppend",
+                        "01 / Saisie des observations dans le prototype Flask. Aucune donnée patient.",
+                        "primary",
                       )}
-                      {capture(
+                      {shot(
                         "/projects/shap_summary_bar.png",
-                        "Importance moyenne des variables SHAP",
-                        "Analyse globale du modèle, distincte d’une explication individuelle.",
+                        "Graphique SHAP du modèle PediAppend",
+                        "02 / Importance globale des variables du modèle.",
+                        "secondary",
                       )}
                     </>
                   )}
                 </div>
-                <div className="project-detail reveal">
-                  <div className="result-block">
-                    <strong className="metric">
-                      {projectBriefs[id].metric}
-                    </strong>
-                    <span>{projectBriefs[id].label}</span>
-                    <Stack project={project} />
-                  </div>
-                  <div className="project-prose">
-                    <p className="brief">{projectBriefs[id].body}</p>
-                    <StoryDetails id={id} />
-                  </div>
-                </div>
               </article>
             );
           })}
-          <div className="side-projects">
-            {["automl", "02", "03", "05"].map((id) => {
-              const p = getProject(id);
-              const story = projectStories[id];
+          <div className="project-ledger">
+            {(["automl", "02", "03", "05"] as const).map((id, i) => {
+              const p = findProject(id),
+                b = projectBriefs[id];
               return (
-                <article id={`projet/${id}`} className="study reveal" key={id}>
-                  <figure className="study-photo">
-                    <img
-                      src={`/cinema/${photos[id]}`}
-                      alt={`Illustration conceptuelle : ${names[id]}`}
-                      loading="lazy"
-                    />
-                    <figcaption>Illustration conceptuelle</figcaption>
-                  </figure>
-                  <p className="project-context">
-                    {clean(p.context)} · {clean(p.period)}
-                  </p>
-                  <h3>{names[id]}</h3>
-                  <p className="study-intro">{story.subtitle}</p>
-                  <div className="study-outcome">
-                    <strong>{projectBriefs[id].metric}</strong>
-                    <span>{projectBriefs[id].label}</span>
+                <article
+                  id={`projet/${id}`}
+                  className="ledger-entry reveal"
+                  key={id}
+                >
+                  <span className="ledger-no">
+                    {String(i + 3).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <span className="eyebrow">
+                      {clean(p.context)} · {clean(p.period)}
+                    </span>
+                    <h3>{title[id]}</h3>
+                    <p>{b.body}</p>
+                    <TechnicalNotes id={id} />
                   </div>
-                  <p className="small-prose">{projectBriefs[id].body}</p>
-                  <StoryDetails id={id} />
-                  <Stack project={p} />
-                  <Links project={p} />
+                  <div className="ledger-outcome">
+                    <strong>{b.metric}</strong>
+                    <span>{b.label}</span>
+                    <ExternalLinks project={p} />
+                  </div>
                 </article>
               );
             })}
           </div>
         </section>
-        <section id="competitions" data-section className="competitions wrap">
-          <header className="section-head reveal">
-            <p className="eyebrow">Kaggle & Zindi</p>
+        <section id="competitions" data-section className="competitions frame">
+          <header className="section-title reveal">
+            <span className="index-no">02 / COMPÉTITIONS</span>
             <h2>
-              Des modèles.
+              Classement
               <br />
-              <span>Des résultats.</span>
+              <em>et méthode.</em>
             </h2>
-            <p className="section-intro">
-              Trois médailles de bronze, et des expériences documentées au-delà
-              du classement.
-            </p>
           </header>
-          <div className="competition-grid">
-            {competitions.map((c) => {
-              const p = getProject(c.projectId);
-              const brief = projectBriefs[c.projectId];
+          <div className="competition-ledger">
+            {competitions.map((c, i) => {
+              const p = findProject(c.projectId),
+                b = projectBriefs[c.projectId];
               return (
                 <article
                   id={`projet/${c.projectId}`}
-                  key={c.projectId}
                   className="competition reveal"
+                  key={c.projectId}
                 >
-                  <div className="competition-rank">
-                    <strong>{brief.metric}</strong>
-                    <span>{brief.label}</span>
+                  <div className="competition-left">
+                    <span className="ledger-no">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span>
+                      {c.platform} / {c.year}
+                    </span>
                   </div>
-                  <div className="competition-content">
-                    <p className="project-context">
-                      {c.platform} · {c.year}
-                    </p>
+                  <div className="competition-main">
                     <h3>{c.name}</h3>
-                    <p className="small-prose">{brief.body}</p>
-                    <StoryDetails id={c.projectId} />
-                    <Links project={p} />
+                    <p>{b.body}</p>
+                    <TechnicalNotes id={c.projectId} />
+                    <ExternalLinks project={p} />
+                    {c.href && !p.links.code && !p.evidence && (
+                      <a
+                        className="extra-link"
+                        href={c.href}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {c.linkLabel} <ArrowUpRight size={17} />
+                        <span className="sr-only"> (nouvel onglet)</span>
+                      </a>
+                    )}
                   </div>
-                  <img
-                    className="competition-art"
-                    src={`/cinema/${photos[c.projectId]}`}
-                    alt={`Illustration conceptuelle : ${c.name}`}
-                    loading="lazy"
-                  />
-
-                  {c.href && !p.links.code && !p.evidence && (
-                    <a
-                      className="inline-link"
-                      href={c.href}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {c.linkLabel}
-                      <ArrowUpRight size={18} />
-                      <span className="sr-only"> (nouvel onglet)</span>
-                    </a>
-                  )}
+                  <div className="competition-rank">
+                    <strong>{b.metric}</strong>
+                    <span>{b.label}</span>
+                  </div>
                 </article>
               );
             })}
           </div>
         </section>
-        <section id="apropos" data-section className="about wrap reveal">
-          <div className="about-art">
-            <img
-              src="/portrait-rudolf.webp"
-              alt="Portrait de Rudolf Hounlete"
-              loading="lazy"
-              width="840"
-              height="840"
-            />
-          </div>
-          <div className="about-text">
+        <section id="apropos" data-section className="about frame reveal">
+          <div className="about-heading">
+            <span className="index-no">03 / PARCOURS</span>
             <h2>
-              Derrière les projets.
+              Du Bénin
               <br />
-              <span>Un parcours en construction.</span>
+              <em>à Casablanca.</em>
             </h2>
+          </div>
+          <div className="about-copy">
             <p>
-              Du Bénin au Maroc, un parcours qui relie l’informatique, les
-              mathématiques et l’expérimentation.
+              À l’École Centrale Casablanca depuis 2025, après une licence en
+              technologies de l’information et de la communication et une
+              préparation scientifique à l’IMSP.
             </p>
             <p>
-              Après une licence en technologies de l’information et de la
-              communication et une préparation scientifique à l’IMSP, entrée à
-              l’École Centrale Casablanca en 2025, dans la promotion 2028.
+              Les projets relient modèles de machine learning, développement
+              logiciel et expérimentation. Chaque résultat présenté est
+              accompagné de sa méthode, de ses limites ou de son code lorsqu’il
+              est public.
             </p>
-            <p>
-              Les projets présentés ici passent du code aux données, de la
-              simulation à une maquette physique. Leur point commun :
-              construire, mesurer, puis comprendre ce qui fonctionne et ce qui
-              résiste.
-            </p>
-            <a className="inline-link" href={contact.cv!} download>
+            <a className="extra-link" href={contact.cv!} download>
               Mon CV <DownloadSimple size={20} />
             </a>
           </div>
         </section>
-        <section id="parcours" className="education wrap reveal">
+        <section id="parcours" className="studies frame reveal">
           <h2>Formation</h2>
           <div>
             {education.map((e) => (
               <article key={e.school + e.detail}>
-                <p>{clean(e.period) || "Préparation scientifique"}</p>
+                <span>{clean(e.period) || "Préparation scientifique"}</span>
                 <h3>{e.school}</h3>
                 <p>{e.detail}</p>
-                <span>{e.location}</span>
+                <small>{e.location}</small>
               </article>
             ))}
           </div>
         </section>
-        <section id="competences" className="skills wrap reveal">
-          <h2>Outils de travail</h2>
+        <section id="competences" className="skills frame reveal">
+          <h2>Outils</h2>
           <div>
-            {skills.map((group) => (
-              <article key={group.label}>
-                <h3>{group.label}</h3>
-                <p>{group.items.join(" / ")}</p>
+            {skills.map((g) => (
+              <article key={g.label}>
+                <h3>{g.label}</h3>
+                <p>{g.items.join(" / ")}</p>
               </article>
             ))}
           </div>
         </section>
-        <section id="contact" data-section className="contact wrap reveal">
-          <p className="eyebrow">Contact</p>
+        <section id="contact" data-section className="contact frame reveal">
+          <span className="index-no">04 / CONTACT</span>
           <h2>
-            Un projet en tête ?
-            <br />
-            <span>Parlons-en.</span>
+            Une idée ?<br />
+            <em>Écrivons la suite.</em>
           </h2>
           <a className="email" href={`mailto:${contact.email}`}>
             {contact.email}
-            <ArrowUpRight />
+            <ArrowUpRight size={32} />
           </a>
-          <div className="contact-bottom">
+          <div className="contact-links">
             <a href={contact.github} target="_blank" rel="noreferrer">
-              GitHub <ArrowUpRight size={20} />
+              GitHub <GithubLogo size={21} />
               <span className="sr-only"> (nouvel onglet)</span>
             </a>
             <a href={contact.cv!} download>
-              Mon CV <DownloadSimple size={20} />
+              Mon CV <DownloadSimple size={21} />
             </a>
           </div>
         </section>
       </main>
-      <footer className="footer wrap">
+      <footer className="footer frame">
         <span>© {new Date().getFullYear()} Rudolf Hounlete</span>
         <a href="#accueil">
           Retour en haut <ArrowUpRight size={18} />
@@ -560,19 +526,19 @@ function App() {
       <dialog
         ref={dialog}
         className="lightbox"
-        onClose={() => setZoom(null)}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) setZoom(null);
+        onClose={() => setImage(null)}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) setImage(null);
         }}
       >
         <button
-          className="icon-button close"
-          onClick={() => setZoom(null)}
+          className="close"
+          onClick={() => setImage(null)}
           aria-label="Fermer l’image"
         >
-          <X size={26} />
+          <X size={24} />
         </button>
-        {zoom && <img src={zoom.src} alt={zoom.alt} />}
+        {image && <img src={image.src} alt={image.alt} />}
       </dialog>
     </div>
   );
