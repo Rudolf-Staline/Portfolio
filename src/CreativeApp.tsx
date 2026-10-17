@@ -260,24 +260,29 @@ function ArchiveCard({id,n}:{id:string;n:number}) {
 }
 function App() {
   const [active,setActive]=useState('accueil')
-  const [progress,setProgress]=useState(0)
+  const progressRef=useRef<HTMLDivElement>(null)
   useEntrance()
   useEffect(()=>{
     const sections=[...document.querySelectorAll<HTMLElement>('section[id]')]
-    const onScroll=()=>{
+    let frame=0
+    const update=()=>{
       const max=Math.max(1,document.documentElement.scrollHeight-window.innerHeight)
-      setProgress(Math.min(1,Math.max(0,window.scrollY/max)))
+      const position=Math.min(1,Math.max(0,window.scrollY/max))
+      if(progressRef.current) progressRef.current.style.transform=`scaleX(${position})`
       let next='accueil'
       for(const section of sections) if(section.getBoundingClientRect().top<window.innerHeight*.38)next=section.id
       setActive(current=>current===next?current:next)
+      frame=0
     }
-    onScroll();window.addEventListener('scroll',onScroll,{passive:true})
+    const onScroll=()=>{if(!frame)frame=requestAnimationFrame(update)}
+    onScroll()
+    window.addEventListener('scroll',onScroll,{passive:true})
     window.addEventListener('resize',onScroll)
-    return ()=>{window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll)}
+    return ()=>{cancelAnimationFrame(frame);window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll)}
   },[])
   return <div className="cc-app">
     <a className="cc-skip" href="#travaux">Aller aux projets</a>
-    <div className="cc-progress" aria-hidden="true" style={{transform:`scaleX(${progress})`}}/>
+    <div ref={progressRef} className="cc-progress" aria-hidden="true" style={{transform:'scaleX(0)'}}/>
     <StudioMotion/><SideRail active={active}/>
     <header className="cc-header">
       <a className="cc-brand" href="#accueil" aria-label="Rudolf Hounlete, retour à l’accueil"><span>R<span className="cc-brand-dot">•</span>H</span><small>INDEX / 26</small></a>
