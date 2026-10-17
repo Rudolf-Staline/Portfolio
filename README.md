@@ -1,14 +1,30 @@
-# Rudolf Hounlete — Creative Developer Lab
+# Rudolf Hounlete — Fieldnotes / Creative Engineering
 
-Portfolio personnel, entre logiciel, machine learning, simulation et expérimentation visuelle.
+Portfolio personnel consacré aux logiciels, à la simulation, aux compétitions de machine learning et à l'expérimentation graphique.
 
-## Direction
+## Direction visuelle — Issue 03
 
-Une refonte complète, et non une couche CSS supplémentaire sur l’ancienne page : typographie expressive, composition de type atelier, portrait original, navigation verticale, projets en grands chapitres et laboratoire génératif manipulable.
+Nouvelle direction **Fieldnotes** : papier chaud, anthracite, accent cuivre, typographie Space Grotesk et Instrument Serif, mise en page asymétrique. Accueil avec portrait authentique ; galerie éditoriale des cinq projets principaux donnant un accès direct aux récits détaillés.
 
-Le laboratoire est réalisé en **Canvas 2D natif**. Trois modes (« Champ », « Onde », « Réseau ») réagissent à la position du pointeur et offrent un contrôle pause/lecture. Aucun faux graphique ne remplace les résultats réels des projets.
+### Illustrations
 
-**Les projets restent lisibles sans clic supplémentaire.** Cinq projets sont développés en grands chapitres et six autres gardent leurs méthodes, récits, résultats et notes directement dans la page. Les captures d’écran RiskSim et PediAppend restent authentiques ; les autres photographies illustratives générées sont indiquées comme telles. Aucun texte n’est incrusté dans les photographies.
+Les neuf anciens visuels photographiques génériques ont été **remplacés par des illustrations vectorielles spécifiques aux sujets** dans `public/editorial/*.svg`, créées pour ce portfolio :
+
+- Stress financier — séries temporelles et profils de risque
+- GeoAI — tuiles satellitaires et bassins aquacoles stylisés
+- AutoML — graphe conceptuel de pipeline et de branches
+- NeuroGolf — grilles de couleur et transformation
+- WAXAL — trois tracés de signaux
+- Credit Scoring — données et séparation conceptuelle
+- Feux intelligents — carrefour schématique
+- Forex — chandeliers et courbe stylisés
+- Solitons — champ d'ondes en propagation
+
+**Ces illustrations sont des concepts graphiques et non des résultats d'expériences.** Une légende le précise. Les captures réelles RiskSim et PediAppend et le portrait personnel `public/portrait-rudolf.webp` n'ont pas été remplacés par des personnes inventées ou des interfaces artificielles.
+
+### Interactions
+
+Lab Canvas 2D natif avec trois modes (champ, onde, réseau), suivi de la souris, pause/lecture. Ensemble de 43 icônes SVG et navigation latérale contextuelle sur bureau ; navigation et composition responsives sur mobile. Les apparitions et effets respectent `prefers-reduced-motion`. Les textes, méthodes, résultats, limites et liens restent consultables directement.
 
 ## Développement
 
@@ -19,17 +35,15 @@ npm run build
 npm run preview
 ```
 
-Entrée active : `src/CreativeApp.tsx` via `src/main.tsx`. Styles : `src/creative.css`. L’ancien site et ses feuilles de style restent dans le dépôt pour faciliter une comparaison ou un retour arrière, mais **ne sont plus chargés** par l’entrée active.
+Entrée active : `src/CreativeApp.tsx` → `src/main.tsx`, avec les CSS `creative.css`, `studio-edition.css`, `studio-motion.css` et `edition-03.css` (appliqué en dernier). L'ancienne interface reste dans le dépôt mais n'est pas chargée.
 
-Le portfolio n’ajoute pas de bibliothèque de motion ou de graphiques : Canvas 2D, CSS et React suffisent. Les animations tiennent compte de `prefers-reduced-motion`. Une navigation clavier, des libellés, des liens d’évitement et une version mobile restent disponibles.
+## Sources fiables
 
-## Provenance
+- `src/data/` : textes, classements et récits techniques.
+- `public/portrait-rudolf.webp` : portrait original.
+- `public/projects/risksim-dashboard.png`, `risksim-results.png` : captures de démonstration de RiskSim.
+- `public/projects/pediappend-interface-symptomes.jpg`, `shap_summary_bar.png` : captures du prototype académique et graphique SHAP. Aucun usage clinique revendiqué.
+- `public/editorial/*.svg` : illustrations thématiques originales.
+- `public/CV_Rudolf_HOUNLETE.pdf` : CV téléchargeable.
 
-- `src/data/` : textes, résultats des compétitions, méthodes, limites, parcours.
-- `public/portrait-rudolf.webp` : portrait réel fourni pour le portfolio.
-- `public/projects/risksim-*.png` : captures S5 sur scénarios synthétiques.
-- `public/projects/pediappend-interface-symptomes.jpg`, `shap_summary_bar.png` : prototype académique et analyse SHAP. Aucun usage clinique n’est revendiqué.
-- `public/cinema/*.webp` : illustrations photographiques générées, signalées sous chaque image.
-- `public/CV_Rudolf_HOUNLETE.pdf` : CV.
-
-Le code RiskSim n’est pas public. Aucun lien de dépôt n’est fabriqué pour les projets qui n’en possèdent pas.
+Le code RiskSim n'est pas public et aucun faux lien de dépôt n'est ajouté. Les réalisations techniques sont présentées avec leurs limitations et sans données client privées.
