@@ -206,7 +206,7 @@ export default function WhiteEditorial(){
   return <div className="we-site">
     <a className="we-skip" href="#projets">Aller aux projets</a>
     <div ref={progress} className="we-progress" aria-hidden="true"/>
-    <nav className="we-page-rail" aria-label="Navigation page par page des projets">
+    <nav className={`we-page-rail ${section==='projets'?'is-open':''}`} aria-label="Navigation page par page des projets">
       <span className="we-rail-title">PROJETS</span>
       <div className="we-rail-dots">{projectIds.map((id,i)=><a key={id} href={`#projet-${id}`} aria-label={`Aller à la page ${i+1} : ${labels[id]}`} aria-current={section==='projets' && activeProject===i?'location':undefined} className={section==='projets'&&activeProject===i?'is-current':''}><span className="we-rail-tip">{labels[id]}</span></a>)}</div>
       <span className="we-rail-number">{String(activeProject+1).padStart(2,'0')} / {String(projectIds.length).padStart(2,'0')}</span>
