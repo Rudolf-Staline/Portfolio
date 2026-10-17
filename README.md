@@ -4,19 +4,27 @@ Portfolio personnel de Rudolf Hounlete, élève ingénieur à Centrale Casablanc
 
 ## Design — version blanche panoramique
 
-Cette branche implémente la maquette blanche retenue : navigation discrète, typographie éditoriale, accueil avec un grand paysage, et **cinq études de projets présentées en lignes avec une image panoramique à gauche et leur résumé à droite**.
+Cette branche implémente la maquette blanche retenue : navigation discrète, typographie éditoriale, accueil avec un grand paysage, et **les onze projets présentés en lignes avec une image panoramique à gauche et leurs réalisations, technologies et résultats à droite**.
 
 Les sections déroulantes cachées, carrousels à flèches et animations décoratives excessives ne sont pas utilisés. Chaque projet possède une **étude de cas intégralement visible en descendant la page**, avec méthode, résultats, limites, technologies et, lorsqu'elles existent, preuves et liens.
 
-### Projets à la une
+### Présentation uniforme des onze projets
+
+Tous les projets sont réunis dans une seule section panoramique, sans zone « Et aussi » et sans différenciation entre projets principaux et secondaires :
 
 1. RiskSim — simulation de risques projet
 2. Financial Stress — prédiction financière
 3. GeoAI — détection de bassins aquacoles
-4. PediAppend — machine learning appliqué à l’appendicite pédiatrique (prototype académique, non clinique)
-5. AutoML — expérimentation en automatisation et validation
+4. PediAppend — projet académique de machine learning, non clinique
+5. Autonomous AutoML — automatisation et validation
+6. NeuroGolf — raisonnement sur grilles colorées (Kaggle)
+7. African Credit Scoring — risque de crédit (Zindi)
+8. WAXAL ASR — reconnaissance vocale multilingue (Zindi)
+9. Feux rouges intelligents — vision et maquette embarquée
+10. Analyse Forex — backtesting et validation hors échantillon
+11. Propagation de solitons — physique et simulation
 
-Six autres projets et les distinctions Kaggle/Zindi figurent ensuite, avec parcours, compétences et contact.
+Chaque ligne montre jusqu'à deux réalisations documentées, les outils utilisés et, lorsque disponible, un résultat chiffré. Les **onze études de cas complètes** suivent dans une section unique : problème, méthode, résultats, limites et preuves. Les distinctions Kaggle/Zindi, le parcours, les compétences et le contact restent accessibles ensuite.
 
 ## Images & provenance
 
