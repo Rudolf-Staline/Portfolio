@@ -504,3 +504,19 @@ html { scroll-behavior:smooth; }
   .contact-card {background:white!important;color:black!important;border-color:#aaa;}
   .contact-card h2,.contact-card h2 em,.contact-card .contact-address {color:black;}
 }
+
+/* Final geometry corrections at common laptop heights. */
+@media (min-width:1151px) {
+  .profile-panel,.links-panel {height:clamp(680px,79dvh,790px);}
+}
+.top-links a[aria-current] {text-decoration:none;}
+.status-dot {
+  position:relative;background:var(--electric);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--electric) 12%,transparent);
+}
+.status-dot:after {
+  content:'';position:absolute;inset:-5px;border:1px solid var(--electric);
+  border-radius:50%;opacity:0;animation:status-ping 3.2s ease-out infinite;
+}
+@keyframes status-ping {0%{opacity:.55;transform:scale(.6)}70%,100%{opacity:0;transform:scale(1.7)}}
+@media(prefers-reduced-motion:reduce) {.status-dot:after{animation:none;}}
