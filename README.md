@@ -1,14 +1,50 @@
-# Portfolio — Rudolf Hounlete
+# Rudolf Hounlete — Selected Work
 
-Portfolio étudiant de Rudolf Hounlete, élève ingénieur à l’École Centrale Casablanca. Machine learning, développement logiciel, simulation et compétitions.
+Portfolio personnel de Rudolf Hounlete, élève ingénieur à Centrale Casablanca.
 
-**Site :** https://rudolf-hounlete-portfolio.vercel.app
+## Design — version blanche panoramique
 
-## Présentation
+Cette branche implémente la maquette blanche retenue : navigation discrète, typographie éditoriale, accueil avec un grand paysage, et **les onze projets présentés en lignes avec une image panoramique à gauche et leurs réalisations, technologies et résultats à droite**.
 
-La page reprend la version blanche à cartes retenue en octobre 2026 : portrait et présentation, liens et distinctions, RiskSim, puis compétitions et projets, parcours et contact. Le défilement est vertical et natif. Chaque projet présente directement son image, son récit, son approche technique, son résultat et ses liens. Le thème sombre est facultatif. La typographie Figtree est hébergée avec l’application.
+Les sections déroulantes cachées, carrousels à flèches et animations décoratives excessives ne sont pas utilisés. Chaque projet possède une **étude de cas intégralement visible en descendant la page**, avec méthode, résultats, limites, technologies et, lorsqu'elles existent, preuves et liens.
 
-RiskSim et PediAppend montrent des captures réelles agrandies, sans faux habillage d’interface ; les autres projets présentent des illustrations photographiques générées par IA, clairement identifiées sous l’image, sans texte ni boutons superposés. Les récits conservent les textes et limites actuels, avec les liens vers les dépôts et les preuves disponibles.
+### Présentation uniforme des onze projets
+
+Tous les projets sont réunis dans une seule section panoramique, sans zone « Et aussi » et sans différenciation entre projets principaux et secondaires :
+
+1. RiskSim — simulation de risques projet
+2. Financial Stress — prédiction financière
+3. GeoAI — détection de bassins aquacoles
+4. PediAppend — projet académique de machine learning, non clinique
+5. Autonomous AutoML — automatisation et validation
+6. NeuroGolf — raisonnement sur grilles colorées (Kaggle)
+7. African Credit Scoring — risque de crédit (Zindi)
+8. WAXAL ASR — reconnaissance vocale multilingue (Zindi)
+9. Feux rouges intelligents — vision et maquette embarquée
+10. Analyse Forex — backtesting et validation hors échantillon
+11. Propagation de solitons — physique et simulation
+
+Chaque projet constitue désormais **un chapitre autonome** : grande image panoramique et présentation courte, immédiatement suivies de la démarche technique, des choix, des résultats, des limites et des captures authentiques disponibles. Le visiteur passe ensuite directement au projet suivant — il n'a pas à parcourir les onze projets une première fois avant de retrouver leurs études de cas. Les liens « Lire la démarche » conduisent à la partie détaillée du même chapitre. Les distinctions Kaggle/Zindi, le parcours, les compétences et le contact restent accessibles ensuite.
+
+## Navigation page par page
+
+Les projets ont retrouvé une **ouverture quasi plein écran** et une progression entre chapitres : navigation latérale en 11 repères numérotés sur ordinateur, lien vers le projet suivant en bas de chaque chapitre, défilement doux et `scroll-snap: proximity` sur bureau.
+
+Les descriptions longues ne sont **pas** enfermées dans un écran ni soumises au défilement forcé : le lecteur continue naturellement à parcourir l'étude de cas avant d'atteindre le projet suivant. Le défilement par pages n'est pas imposé aux petits écrans et s'adapte à `prefers-reduced-motion`.
+
+## Images & provenance
+
+- `public/editorial-white/hero-panorama.svg` : paysage panoramique **illustratif** conçu pour cette maquette.
+- `public/cinema/financial-photo.webp` : photographie illustrative de documents financiers.
+- `public/cinema/geoai-aerial-photo.webp` : photographie illustrative de bassins aquacoles, **pas une image satellite tirée du projet**.
+- `public/cinema/automl-photo.webp` : photographie illustrative d'un espace de développement, **pas une capture du modèle**.
+- `public/cinema/risksim-photo.webp` : illustration d'ouverture RiskSim, distincte des vraies captures dans l'étude de cas.
+- `public/projects/risksim-dashboard.png` et `risksim-results.png` : captures authentiques sur scénarios synthétiques.
+- `public/projects/pediappend-interface-symptomes.jpg` et `shap_summary_bar.png` : capture du prototype et graphique SHAP ; aucune validation clinique.
+- `public/portrait-rudolf.webp` : portrait original conservé dans la section À propos.
+- Les photographies des autres projets demeurent des **illustrations**, pas des preuves ou captures réelles. Une légende dans le site indique explicitement la provenance de chaque grande image. Les anciens SVG conceptuels restent dans le dépôt mais ne sont plus affichés comme images des trois projets correspondants.
+
+Aucun résultat, classement ou métrique de maquette n’a été introduit dans les données du portfolio.
 
 ## Développement
 
@@ -19,19 +55,11 @@ npm run build
 npm run preview
 ```
 
-`npm run build` vérifie TypeScript et produit `dist/`. Vercel utilise le preset Vite et `vercel.json`. La page active est `src/App.tsx`, avec les styles `src/horizontal.css`, `src/vertical.css`, `src/expanded.css`, `src/cinema.css`, `src/white-return.css` et `src/pedi-inline.css`. La nouvelle finition éditoriale est appliquée dans `src/folio-refresh.css` : portrait agrandi, capture RiskSim présentée à plat, images pleine largeur et légendes hors des visuels. Les anciennes propositions de design demeurent archivées dans le dépôt sans être chargées.
+Le point d’entrée actif est `src/WhiteEditorial.tsx` depuis `src/main.tsx`, avec **une seule feuille de style active** : `src/white-editorial.css`. Les anciens composants et styles sont conservés pour revenir en arrière, mais ils ne sont plus chargés.
 
-## Sources
+Le suivi du défilement évite les nouveaux rendus à chaque pixel, les révélations progressives utilisent IntersectionObserver et `prefers-reduced-motion` est respecté. Mise en page responsive, contrastes, focus clavier, descriptions textuelles et liens d'évitement prévus.
 
-- `src/data/` : projets, classements, parcours, compétences, contact, résumés et récits techniques. Les médailles et rangs sont repris du CV de Rudolf de septembre 2026.
-- `public/portrait-rudolf.webp` : portrait original optimisé.
-- `public/cinema/*-photo.webp` : illustrations de projet créées par IA, signalées sur la page.
-- `public/projects/risksim-dashboard.png` et `risksim-results.png` : captures S5 de RiskSim sur un scénario de démonstration, avec montants illustratifs.
-- `public/projects/pediappend-interface-symptomes.jpg` et `shap_summary_bar.png` : interface du prototype académique et graphique d’explication. PediAppend n’a pas de validation clinique et n’est pas destiné aux soins.
-- `public/CV_Rudolf_HOUNLETE.pdf` : CV téléchargeable.
+Le code RiskSim n'est pas public. Pas de liens artificiels pour les dépôts indisponibles.
 
-Les liens absents ne produisent pas de bouton vide. Le dépôt de l’entreprise pour RiskSim n’est pas public.
-
-## Navigation
-
-Ancres directes vers les sections et les projets, lien d’évitement, focus visible, prise en charge de `prefers-reduced-motion`, mise en page mobile et impression. La lecture des projets ne nécessite aucune ouverture de fiche.
+**Site public actuel :** https://rudolf-hounlete-portfolio.vercel.app  
+**Cette version :** branche GitHub `design/white-wide-editorial-20261017`, avec prévisualisation Vercel à valider avant fusion dans `main`.

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="760" viewBox="0 0 1660 760">
+<defs>
+<linearGradient id="sky" x2="0" y2="1"><stop stop-color="#e3eaf1"/><stop offset=".58" stop-color="#f9f7f0"/><stop offset="1" stop-color="#d3e0e8"/></linearGradient>
+<linearGradient id="lake" x2="0" y2="1"><stop stop-color="#97adbd"/><stop offset=".34" stop-color="#bdcad3"/><stop offset="1" stop-color="#d6e2eb"/></linearGradient>
+<linearGradient id="mount" x2="0" y2="1"><stop stop-color="#668498"/><stop offset="1" stop-color="#ccd7db"/></linearGradient>
+<linearGradient id="fog" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#f0f5f8" stop-opacity="0"/></linearGradient>
+<linearGradient id="fade" x2="0" y2="0" x1="0" x1="1"><stop stop-color="#f7f8f8" stop-opacity=".9"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="cloud"><feGaussianBlur stdDeviation="22"/></filter>
+</defs>
+<rect width="1660" height="760" fill="url(#sky)"/>
+<g fill="#ffffff" opacity=".62" filter="url(#cloud)">
+<ellipse cx="650" cy="174" rx="280" ry="41"/><ellipse cx="1350" cy="104" rx="260" ry="31"/>
+<ellipse cx="1110" cy="257" rx="390" ry="24"/><ellipse cx="250" cy="95" rx="180" ry="30"/>
+</g>
+<circle cx="1215" cy="184" r="116" fill="#fff" opacity=".24" filter="url(#cloud)"/>
+<path d="M0 440 100 424 188 341 257 392 367 301 450 371 565 217 620 286 732 215 821 349 938 169 998 248 1070 126 1150 244 1234 195 1344 330 1477 213 1564 345 1660 311V610H0Z" fill="#b3c4ce"/>
+<path d="M0 493 107 426 177 455 304 303 409 414 520 260 612 374 735 232 821 316 939 150 1024 275 1112 204 1172 318 1343 222 1420 323 1560 248 1660 374V620H0Z" fill="url(#mount)"/>
+<path d="m228 381 76-78 46 81-34-16-19-28-37 50Zm250-80 42-41 55 89-30-18-17-39-20 32Zm410-82 51-69 65 125-35-32-28-57-24 29Zm144-9 80-6 60 114-42-45-25-48-39 11Zm280 51 31-39 48 70-26-13-19-29-14 16Zm190 30 58-43 47 69-30-17-19-24-26 19Z" fill="#edf3f5" opacity=".92"/>
+<path d="M0 499C330 477 487 520 713 484S1231 465 1660 494V760H0Z" fill="url(#lake)"/>
+<path d="M0 498c287-13 531-20 816-13 279 5 510-6 844 7" fill="none" stroke="#e2eaf0" stroke-width="3"/>
+<g stroke="#f1f6f8" stroke-opacity=".52" fill="none">
+<path d="M-20 541c368 24 778 12 1698-7"/><path d="M-20 594c350 9 678 15 1700-15"/><path d="M-20 681c400-22 920 11 1700-3"/>
+</g>
+<path d="M0 488q180-70 310-4t335 17q280-82 467-20t548 9" fill="none" stroke="#6f8b9d" stroke-opacity=".6" stroke-width="4"/>
+<path d="M0 495q225-8 470-4t580-2q300-11 610 8" fill="none" stroke="#eff7fa" stroke-opacity=".9" stroke-width="2"/>
+<path d="M0 450q280 12 510 20t380-4q300-14 770 2v96H0Z" fill="url(#fog)" opacity=".5"/>
+<path d="M0 490q154 21 265 0 86 45 200 12-50 67-200 86Q120 574 0 586Z" fill="#455f70" opacity=".36"/>
+<path d="M1230 484q118-25 203-7t227 10v45q-133-17-230-6-115 15-200-42Z" fill="#486a76" opacity=".34"/>
+<rect width="1660" height="760" fill="url(#fade)"/>
+</svg>
