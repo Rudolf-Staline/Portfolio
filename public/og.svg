@@ -1,19 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
- <rect width="1200" height="630" fill="#f6f5f0"/>
- <path d="M0 82H1200M0 554H1200" stroke="#181a18" stroke-width="2"/>
- <g fill="#181a18" font-family="Arial,Helvetica,sans-serif">
-  <text x="68" y="54" font-size="18" letter-spacing="4" font-weight="600">R·H / PORTFOLIO</text>
-  <text x="950" y="54" font-size="17" letter-spacing="3">CASABLANCA / 26</text>
-  <text x="68" y="290" font-size="182" letter-spacing="-15" font-weight="700">Rudolf</text>
-  <text x="68" y="464" font-size="182" letter-spacing="-16" font-weight="700">Hounlete</text>
-  <text x="68" y="604" font-size="20" letter-spacing="2">LOGICIEL · MACHINE LEARNING · SIMULATION</text>
- </g>
- <circle cx="980" cy="342" r="148" fill="none" stroke="#181a18" stroke-width="1.5"/>
- <circle cx="980" cy="342" r="100" fill="#deff60"/>
- <path d="M823 342H1137M980 185V499" stroke="#181a18" stroke-width="2"/>
- <circle cx="980" cy="342" r="14" fill="#181a18"/>
- <g stroke="#181a18" stroke-width="1.2" fill="none">
-  <path d="M800 489Q940 386 1140 466"/>
-  <path d="M808 512Q950 405 1131 489"/>
- </g>
+<rect width="1200" height="630" fill="#fbfaf8"/>
+<rect x="46" y="42" width="1108" height="548" fill="none" stroke="#d3dce7"/>
+<path d="M76 126h1048M76 505h1048" stroke="#d6dee8"/>
+<g fill="#7e8fa3" font-family="monospace" font-size="16" letter-spacing="2">
+<text x="78" y="94">R·H  /  CREATIVE DEVELOPMENT</text>
+<text x="924" y="94">CASABLANCA • 2026</text>
+<text x="78" y="550">SOFTWARE  /  DATA  /  SIMULATION</text>
+</g>
+<g font-family="Arial,Helvetica,sans-serif" font-weight="600" fill="#23364d">
+<text x="65" y="293" font-size="145" letter-spacing="-12">Rudolf</text>
+<text x="65" y="434" font-size="145" letter-spacing="-13">Hounlete</text>
+</g>
+<g transform="translate(915 307)" fill="none">
+<circle r="164" stroke="#b3c3d6"/>
+<circle r="118" stroke="#c8d4e3"/>
+<circle r="69" stroke="#b3c3d6"/>
+<path d="M-190 0H190M0-190V190" stroke="#9eafc4"/>
+<path d="M-150-90C-80-145 63-150 150-88M-145 100C-69 156 90 147 154 87" stroke="#6e8cba" stroke-width="1.5"/>
+<circle r="10" fill="#557aab" stroke="none"/>
+<circle cx="112" cy="-115" r="6" fill="#88a4c8" stroke="none"/>
+</g>
 </svg>
