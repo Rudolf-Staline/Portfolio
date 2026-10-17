@@ -24,7 +24,7 @@ Tous les projets sont réunis dans une seule section panoramique, sans zone « E
 10. Analyse Forex — backtesting et validation hors échantillon
 11. Propagation de solitons — physique et simulation
 
-Chaque ligne montre jusqu'à deux réalisations documentées, les outils utilisés et, lorsque disponible, un résultat chiffré. Les **onze études de cas complètes** suivent dans une section unique : problème, méthode, résultats, limites et preuves. Les distinctions Kaggle/Zindi, le parcours, les compétences et le contact restent accessibles ensuite.
+Chaque projet constitue désormais **un chapitre autonome** : grande image panoramique et présentation courte, immédiatement suivies de la démarche technique, des choix, des résultats, des limites et des captures authentiques disponibles. Le visiteur passe ensuite directement au projet suivant — il n'a pas à parcourir les onze projets une première fois avant de retrouver leurs études de cas. Les liens « Lire la démarche » conduisent à la partie détaillée du même chapitre. Les distinctions Kaggle/Zindi, le parcours, les compétences et le contact restent accessibles ensuite.
 
 ## Images & provenance
 
