@@ -97,7 +97,7 @@ function GenerativeLab() {
     }
     const draw=(tick:number)=>{
       ctx.clearRect(0,0,width,height)
-      ctx.fillStyle='#17191a';ctx.fillRect(0,0,width,height)
+      ctx.fillStyle='#142338';ctx.fillRect(0,0,width,height)
       const t=tick*.011
       const px=point.current.x*width,py=point.current.y*height
       if(mode==='mesh') {
@@ -113,14 +113,14 @@ function GenerativeLab() {
         for(let j=0;j<rows;j++){
           ctx.beginPath()
           for(let i=0;i<cols;i++){const p=pos(i,j);if(i===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)}
-          ctx.strokeStyle=j%5===0?'rgba(221,255,92,.68)':'rgba(211,218,208,.23)';ctx.stroke()
+          ctx.strokeStyle=j%5===0?'rgba(172,204,255,.68)':'rgba(184,204,229,.28)';ctx.stroke()
         }
         for(let i=0;i<cols;i+=2){
           ctx.beginPath()
           for(let j=0;j<rows;j++){const p=pos(i,j);if(j===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)}
-          ctx.strokeStyle='rgba(195,205,196,.17)';ctx.stroke()
+          ctx.strokeStyle='rgba(164,185,218,.21)';ctx.stroke()
         }
-        for(let j=0;j<rows;j+=3)for(let i=0;i<cols;i+=3){const p=pos(i,j);ctx.beginPath();ctx.arc(p.x,p.y,1.55,0,Math.PI*2);ctx.fillStyle='#ddff5c';ctx.fill()}
+        for(let j=0;j<rows;j+=3)for(let i=0;i<cols;i+=3){const p=pos(i,j);ctx.beginPath();ctx.arc(p.x,p.y,1.55,0,Math.PI*2);ctx.fillStyle='#b7d0ff';ctx.fill()}
       } else if(mode==='wave') {
         for(let j=0;j<17;j++){
           ctx.beginPath()
@@ -131,7 +131,7 @@ function GenerativeLab() {
             if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)
           }
           ctx.lineWidth=j===8?2:1
-          ctx.strokeStyle=j===8?'#ddff5c':`rgba(226,231,225,${.15+j*.014})`
+          ctx.strokeStyle=j===8?'#b7d0ff':`rgba(186,204,230,${.15+j*.014})`
           ctx.stroke()
         }
       } else {
@@ -151,12 +151,12 @@ function GenerativeLab() {
             const d2=dx*dx+dy*dy
             if(d2>3400||d2<40)continue
             ctx.beginPath();ctx.moveTo(points[i].x,points[i].y);ctx.lineTo(points[j].x,points[j].y)
-            ctx.strokeStyle=`rgba(215,226,210,${.21*(1-d2/3400)})`;ctx.stroke()
+            ctx.strokeStyle=`rgba(182,201,224,${.21*(1-d2/3400)})`;ctx.stroke()
           }
         }
         points.forEach((p,i)=>{
           ctx.beginPath();ctx.arc(p.x,p.y,i%9===0?2.7:1.6,0,Math.PI*2)
-          ctx.fillStyle=i%9===0?'#ddff5c':'#e2ece7';ctx.fill()
+          ctx.fillStyle=i%9===0?'#b7d0ff':'#eff4fb';ctx.fill()
         })
       }
     }
@@ -170,9 +170,9 @@ function GenerativeLab() {
   },[mode,playing,reduced])
   return <section className="cc-lab" id="laboratoire" aria-labelledby="lab-title">
     <div className="cc-lab-head" data-enter>
-      <span className="cc-index"><span className="cc-mark"/> 01 / EXPÉRIENCE INTERACTIVE</span>
-      <h2 id="lab-title">Le code est aussi<br/><em>une matière à explorer.</em></h2>
-      <p>Un petit système génératif. Trois comportements, le même principe : des règles simples produisent des formes complexes. Déplace le pointeur pour perturber le champ.</p>
+      <span className="cc-index"><span className="cc-mark"/> 02 / LABORATOIRE NUMÉRIQUE</span>
+      <h2 id="lab-title">Des lignes, des règles.<br/><em>Et du mouvement.</em></h2>
+      <p>Une expérience de programmation graphique : trois systèmes génératifs et une interaction directe avec le pointeur. Une respiration visuelle entre les projets et le reste du parcours.</p>
     </div>
     <div className="cc-lab-stage" data-enter>
       <div className="cc-lab-screen"
@@ -299,13 +299,13 @@ function App() {
             <div className="cc-photo-corner cc-photo-corner-b" aria-hidden="true"/>
           </div>
         </div>
-        <div className="cc-hero-bottom"><span>01 — INGÉNIERIE</span><span>02 — MACHINE LEARNING</span><span>03 — CRÉATION LOGICIELLE</span><a href="#laboratoire" aria-label="Descendre vers le laboratoire"><Glyph name="down" size={20}/></a></div>
+        <div className="cc-hero-bottom"><span>01 — INGÉNIERIE</span><span>02 — MACHINE LEARNING</span><span>03 — CRÉATION LOGICIELLE</span><a href="#travaux" aria-label="Descendre vers les projets"><Glyph name="down" size={20}/></a></div>
       </section>
-      <GenerativeLab/>
       <section className="cc-work" id="travaux" aria-labelledby="work-title">
-        <div className="cc-section-intro" data-enter><div className="cc-idx"><span className="cc-mark"/> 02 / TRAVAUX CHOISIS</div><h2 id="work-title">Construire.<br/><em>Et montrer comment.</em></h2><p>Du modèle à l’interface, de l’expérience au résultat. Pas seulement des images : les choix techniques, les limites et les preuves sont présentés avec chaque projet.</p></div>
+        <div className="cc-section-intro" data-enter><div className="cc-idx"><span className="cc-mark"/> 01 / PROJETS SÉLECTIONNÉS</div><h2 id="work-title">Construire.<br/><em>Et montrer comment.</em></h2><p>Du modèle à l’interface, de l’expérience au résultat. Pas seulement des images : les choix techniques, les limites et les preuves sont présentés avec chaque projet.</p></div>
         <div className="cc-features">{focusIds.map((id,i)=><Feature id={id} n={i+1} key={id}/>)}</div>
       </section>
+      <GenerativeLab/>
       <section className="cc-archive" id="autres" aria-labelledby="archive-title">
         <div className="cc-archive-intro" data-enter><span className="cc-index">03 / AUTRES EXPÉRIENCES</span><h2 id="archive-title">L’atelier ne<br/><em>s’arrête pas là.</em></h2><p>Six autres expériences en vision, audio, raisonnement, finance et physique.</p></div>
         <div className="cc-archive-grid">{archiveIds.map((id,i)=><ArchiveCard id={id} n={i+6} key={id}/>)}</div>
