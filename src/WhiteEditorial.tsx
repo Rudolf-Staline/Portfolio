@@ -8,8 +8,11 @@ import { profile, contact } from './data/profile'
 import { IconMark, type IconName } from './components/PortfolioMotion'
 import type { Project } from './data/types'
 
-const featuredIds = ['risksim', 'financial-stress', 'geoai', '01', 'automl'] as const
-const otherIds = ['neurogolf', 'credit', 'waxal', '02', '03', '05'] as const
+/** Every documented project receives the same wide visual and full case study. */
+const projectIds = [
+  'risksim', 'financial-stress', 'geoai', '01', 'automl',
+  'neurogolf', 'credit', 'waxal', '02', '03', '05',
+] as const
 
 const labels: Record<string, string> = {
   risksim:'RiskSim',
@@ -123,8 +126,12 @@ function WideRow({id,index}:{id:string;index:number}) {
       <div className="we-row-heading"><Label>{categories[id]}</Label><a className="we-row-circle" aria-label={`Voir l’étude de cas ${labels[id]}`} href={`#etude-${id}`}><Arrow size={20}/></a></div>
       <h3><a href={`#etude-${id}`}>{labels[id]}</a></h3>
       <p>{p.tagline}</p>
+      <ul className="we-row-highlights">
+        {p.highlights.slice(0,2).map(highlight=><li key={highlight}>{highlight}</li>)}
+      </ul>
+      {p.fact && <div className="we-row-fact"><IconMark name={icons[id]??'code'} size={17}/>{p.fact}</div>}
       <div className="we-pills">{p.stack.slice(0,4).map(tag=><span key={tag}>{tag}</span>)}</div>
-      <div className="we-row-foot"><span>{p.period}</span><a href={`#etude-${id}`}>Étude de cas <Arrow size={15}/></a></div>
+      <div className="we-row-foot"><span>{p.period}</span><a href={`#etude-${id}`}>Étude de cas complète <Arrow size={15}/></a></div>
     </div>
   </article>
 }
@@ -162,16 +169,6 @@ function CaseStudy({id,index}:{id:string;index:number}) {
     </div>}
   </article>
 }
-function SmallProject({id}:{id:string}) {
- const p=byId(id)
- return <article className="we-mini" data-appear>
-  <a className="we-mini-image" href={`#etude-${id}`}><img src={media[id].src} alt={media[id].alt} loading="lazy"/><span aria-hidden="true"><Arrow size={19}/></span></a>
-  <div className="we-mini-copy"><div className="we-mini-meta"><IconMark name={icons[id]??'code'} size={18}/><Label>{categories[id]}</Label></div>
-    <h3><a href={`#etude-${id}`}>{labels[id]}</a></h3><p>{p.tagline}</p>
-    <a href={`#etude-${id}`}>Découvrir <Arrow size={16}/></a></div>
- </article>
-}
-
 export default function WhiteEditorial(){
   const [section,setSection]=useState('accueil')
   const progress=useRef<HTMLDivElement>(null)
@@ -224,19 +221,14 @@ export default function WhiteEditorial(){
         </figure>
       </section>
       <section id="projets" className="we-featured" aria-labelledby="we-featured-title">
-        <div className="we-section-top" data-appear><div><Label>Projets sélectionnés</Label><h2 id="we-featured-title">Selected <em>Work.</em></h2></div>
-          <div className="we-section-side"><p>Cinq réalisations en simulation, machine learning, géospatial et développement logiciel.</p><a href="#autres">Tous les projets <Arrow size={17}/></a></div>
+        <div className="we-section-top" data-appear><div><Label>Portfolio / 11 réalisations</Label><h2 id="we-featured-title">Tous les <em>projets.</em></h2></div>
+          <div className="we-section-side"><p>Simulation, finance, géospatial, intelligence artificielle, audio, systèmes industriels et physique. Chaque réalisation compte.</p><a href="#etudes">Explorer les études de cas <Arrow size={17}/></a></div>
         </div>
-        <div className="we-rows">{featuredIds.map((id,i)=><WideRow id={id} index={i+1} key={id}/>)}</div>
+        <div className="we-rows">{projectIds.map((id,i)=><WideRow id={id} index={i+1} key={id}/>)}</div>
       </section>
       <section className="we-studies" id="etudes" aria-labelledby="we-study-title">
-        <div className="we-section-top we-studies-top" data-appear><div><Label>Dans les coulisses</Label><h2 id="we-study-title">Au-delà <em>des images.</em></h2></div><p>Méthodes, décisions, résultats, limites : chaque projet est expliqué directement, sans écran à ouvrir.</p></div>
-        {featuredIds.map((id,i)=><CaseStudy id={id} index={i+1} key={id}/>)}
-      </section>
-      <section className="we-other" id="autres" aria-labelledby="we-other-title">
-        <div className="we-section-top" data-appear><div><Label>Explorations</Label><h2 id="we-other-title">Et aussi<span>…</span></h2></div><p>D’autres expériences, entre données, systèmes industriels, audio et physique.</p></div>
-        <div className="we-mini-grid">{otherIds.map(id=><SmallProject id={id} key={id}/>)}</div>
-        <div className="we-other-cases">{otherIds.map((id,i)=><CaseStudy id={id} index={i+6} key={id}/>)}</div>
+        <div className="we-section-top we-studies-top" data-appear><div><Label>Dans les coulisses</Label><h2 id="we-study-title">Au-delà <em>des images.</em></h2></div><p>Les onze projets disposent chacun d’une étude de cas complète : problématique, choix techniques, démarche, réalisations, résultats, preuves et limites.</p></div>
+        {projectIds.map((id,i)=><CaseStudy id={id} index={i+1} key={id}/>)}
       </section>
       <section className="we-honors" id="distinctions" aria-labelledby="we-honors-title">
         <div className="we-section-top" data-appear><div><Label>Kaggle & Zindi</Label><h2 id="we-honors-title">Résultats <em>mesurés.</em></h2></div><p>Des classements et des évaluations documentés, plutôt que des promesses.</p></div>
