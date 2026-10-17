@@ -324,3 +324,12 @@ img{max-width:100%}
   .we-featured .we-section-side{align-items:flex-start}
 }
 @media(max-width:390px){.we-row-highlights li{font-size:11px}}
+
+/* Ensure the panoramas cover their entire adaptive grid cell, even when
+   the technical copy is taller than the starting media height. */
+.we-row-media{position:relative}
+.we-row-media>a{position:absolute;inset:0;height:100%;width:100%}
+.we-row-media img{height:100%;width:100%}
+@media(prefers-reduced-motion:reduce){
+  .we-row-media img,.we-hero-media img{transform:none!important}
+}
