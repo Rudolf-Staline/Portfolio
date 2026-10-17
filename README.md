@@ -26,17 +26,23 @@ Tous les projets sont réunis dans une seule section panoramique, sans zone « E
 
 Chaque projet constitue désormais **un chapitre autonome** : grande image panoramique et présentation courte, immédiatement suivies de la démarche technique, des choix, des résultats, des limites et des captures authentiques disponibles. Le visiteur passe ensuite directement au projet suivant — il n'a pas à parcourir les onze projets une première fois avant de retrouver leurs études de cas. Les liens « Lire la démarche » conduisent à la partie détaillée du même chapitre. Les distinctions Kaggle/Zindi, le parcours, les compétences et le contact restent accessibles ensuite.
 
+## Navigation page par page
+
+Les projets ont retrouvé une **ouverture quasi plein écran** et une progression entre chapitres : navigation latérale en 11 repères numérotés sur ordinateur, lien vers le projet suivant en bas de chaque chapitre, défilement doux et `scroll-snap: proximity` sur bureau.
+
+Les descriptions longues ne sont **pas** enfermées dans un écran ni soumises au défilement forcé : le lecteur continue naturellement à parcourir l'étude de cas avant d'atteindre le projet suivant. Le défilement par pages n'est pas imposé aux petits écrans et s'adapte à `prefers-reduced-motion`.
+
 ## Images & provenance
 
 - `public/editorial-white/hero-panorama.svg` : paysage panoramique **illustratif** conçu pour cette maquette.
-- `public/editorial-white/financial-stress.svg` : représentation graphique conceptuelle d'une analyse transactionnelle, sans chiffres d'expérience inventés.
-- `public/editorial-white/geoai.svg` : représentation conceptuelle du traitement d'images satellitaires, **pas une vraie image satellite**.
-- `public/editorial-white/automl.svg` : représentation conceptuelle d'un pipeline, **pas une capture d'application**.
+- `public/cinema/financial-photo.webp` : photographie illustrative de documents financiers.
+- `public/cinema/geoai-aerial-photo.webp` : photographie illustrative de bassins aquacoles, **pas une image satellite tirée du projet**.
+- `public/cinema/automl-photo.webp` : photographie illustrative d'un espace de développement, **pas une capture du modèle**.
 - `public/cinema/risksim-photo.webp` : illustration d'ouverture RiskSim, distincte des vraies captures dans l'étude de cas.
 - `public/projects/risksim-dashboard.png` et `risksim-results.png` : captures authentiques sur scénarios synthétiques.
 - `public/projects/pediappend-interface-symptomes.jpg` et `shap_summary_bar.png` : capture du prototype et graphique SHAP ; aucune validation clinique.
 - `public/portrait-rudolf.webp` : portrait original conservé dans la section À propos.
-- Les photographies des autres projets demeurent des **illustrations**, pas des preuves ou captures réelles.
+- Les photographies des autres projets demeurent des **illustrations**, pas des preuves ou captures réelles. Une légende dans le site indique explicitement la provenance de chaque grande image. Les anciens SVG conceptuels restent dans le dépôt mais ne sont plus affichés comme images des trois projets correspondants.
 
 Aucun résultat, classement ou métrique de maquette n’a été introduit dans les données du portfolio.
 
