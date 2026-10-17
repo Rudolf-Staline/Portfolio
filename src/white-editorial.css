@@ -678,3 +678,10 @@ img{max-width:100%}
     animation:none!important;clip-path:none!important;transform:none!important;
   }
 }
+
+
+/* Keep the sticky navigation functional: clip does not create a scroll container. */
+.we-site{overflow:clip}
+@supports not (overflow:clip){.we-site{overflow:visible}}
+/* Long technical explanations remain normal page content, not scroll-locked panels. */
+.we-project-chapter .we-case{height:auto;overflow:visible}
