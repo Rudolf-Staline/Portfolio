@@ -178,7 +178,7 @@ function ProjectChapter({id,index}:{id:string;index:number}) {
 }
 
 export default function WhiteEditorial(){
-  const [section,setSection]=useState('accueil')
+  const [section,setSection]=useState('apropos')
   const [activeProject,setActiveProject]=useState(0)
   const progress=useRef<HTMLDivElement>(null)
   useShowOnView()
@@ -189,7 +189,7 @@ export default function WhiteEditorial(){
     const scan=()=>{
       const limit=Math.max(1,document.documentElement.scrollHeight-innerHeight)
       if(progress.current)progress.current.style.transform=`scaleX(${Math.min(1,scrollY/limit)})`
-      let current='accueil'
+      let current='apropos'
       for(const item of anchors)if(item.getBoundingClientRect().top<=innerHeight*.34)current=item.id
       setSection(prev=>prev===current?prev:current)
       const nearTop=innerHeight*.47
@@ -212,32 +212,41 @@ export default function WhiteEditorial(){
       <span className="we-rail-number">{String(activeProject+1).padStart(2,'0')} / {String(projectIds.length).padStart(2,'0')}</span>
     </nav>
     <header className="we-header">
-      <a className="we-logo" href="#accueil">R<span className="we-logo-dot">.</span> HOUNLETE</a>
+      <a className="we-logo" href="#apropos">R<span className="we-logo-dot">.</span> HOUNLETE</a>
       <nav className="we-main-nav" aria-label="Navigation principale">
-        <a href="#accueil" aria-current={section==='accueil'?'page':undefined}>Accueil</a>
-        <a href="#projets" aria-current={section==='projets'?'page':undefined}>Projets</a>
         <a href="#apropos" aria-current={section==='apropos'?'page':undefined}>À propos</a>
+        <a href="#projets" aria-current={section==='projets'?'page':undefined}>Projets</a>
+        <a href="#distinctions" aria-current={section==='distinctions'?'page':undefined}>Distinctions</a>
         <a href="#parcours" aria-current={section==='parcours'?'page':undefined}>Parcours</a>
         <a href="#contact" aria-current={section==='contact'?'page':undefined}>Contact</a>
       </nav>
       <a className="we-contact-link" href="#contact">Échanger <Arrow size={17}/></a>
     </header>
     <main>
-      <section id="accueil" className="we-hero" aria-labelledby="we-name">
+      <section id="apropos" className="we-hero we-hero-about" aria-labelledby="we-name">
         <div className="we-hero-copy">
-          <Label>Creative developer / Ingénierie</Label>
+          <Label>À propos / École Centrale Casablanca</Label>
           <h1 id="we-name">Rudolf<br/><em>Hounlete</em><span>.</span></h1>
-          <p>Des logiciels, des modèles et des expériences de données au service de problèmes concrets.</p>
-          <div className="we-hero-cta">
-            <a className="we-button" href="#projets">Voir mes projets <Arrow size={18}/></a>
-            <a className="we-text-link" href="#apropos">À propos <Arrow size={16}/></a>
+          <h2 className="we-hero-about-heading">Ingénieur en formation.<br/><em>Curieux par nature.</em></h2>
+          <div className="we-hero-about-intro">
+            {profile.about.map((part,i)=><p key={i}>{part}</p>)}
           </div>
-          <span className="we-hero-detail"><IconMark name="globe" size={15}/> Casablanca · Originaire du Bénin</span>
-          <a className="we-hero-scroll" href="#projets"><span>FAIRE DÉFILER POUR EXPLORER</span><IconMark name="arrow-down" size={17}/></a>
+          <div className="we-hero-cta">
+            <a className="we-button" href="#projets">Explorer mes projets <Arrow size={18}/></a>
+            <a className="we-text-link" href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download>Consulter mon CV <SiteGlyph name="download" size={17}/></a>
+          </div>
+          <div className="we-hero-about-facts" aria-label="Repères personnels">
+            <span><IconMark name="school" size={17}/> Centrale Casablanca</span>
+            <span><IconMark name="globe" size={17}/> Bénin → Maroc</span>
+            <span><IconMark name="layers" size={17}/> {projectIds.length} projets présentés</span>
+          </div>
+          <a className="we-hero-scroll" href="#projets"><span>FAIRE DÉFILER POUR DÉCOUVRIR LES PROJETS</span><IconMark name="arrow-down" size={17}/></a>
         </div>
-        <figure className="we-hero-media">
-          <img src="/editorial-white/hero-panorama.svg" alt="Paysage montagneux stylisé au bord d’un lac, illustration décorative" fetchPriority="high" />
-          <figcaption>CRÉER · TESTER · EXPLIQUER</figcaption>
+        <figure className="we-hero-media we-hero-portrait">
+          <div className="we-portrait-ring" aria-hidden="true"/>
+          <div className="we-portrait-mark" aria-hidden="true">RH<span>.</span></div>
+          <img src="/portrait-rudolf.webp" alt="Portrait original de Rudolf Hounlete" fetchPriority="high" decoding="async"/>
+          <figcaption><span>RUDOLF HOUNLETE</span><span>CASABLANCA · 2026</span></figcaption>
         </figure>
       </section>
       <section id="projets" className="we-featured" aria-labelledby="we-featured-title">
@@ -250,10 +259,6 @@ export default function WhiteEditorial(){
         <div className="we-section-top" data-appear><div><Label>Kaggle & Zindi</Label><h2 id="we-honors-title">Résultats <em>mesurés.</em></h2></div><p>Des classements et des évaluations documentés, plutôt que des promesses.</p></div>
         <div className="we-honors-list">{competitions.map((c,i)=><div className="we-honor" key={c.projectId} data-appear><span>{String(i+1).padStart(2,'0')}</span><div><strong>{c.name}</strong><small>{c.platform} · {c.year}</small></div><b>{c.result}</b>{c.href?<a href={c.href} target="_blank" rel="noopener noreferrer" aria-label={`Voir ${c.name}`}><Arrow diagonal size={19}/></a>:<IconMark name="award" size={20}/>}</div>)}</div>
       </section>
-      <section className="we-about" id="apropos" aria-labelledby="we-about-title">
-        <div className="we-about-photo"><img src="/portrait-rudolf.webp" alt="Portrait original de Rudolf Hounlete" loading="lazy"/><span>PORTRAIT / 2026</span></div>
-        <div className="we-about-copy" data-appear><Label>Un peu de contexte</Label><h2 id="we-about-title">Ingénieur en formation.<br/><em>Curieux par nature.</em></h2>{profile.about.map((part,i)=><p key={i}>{part}</p>)}<a href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download>Consulter le CV <SiteGlyph name="download" size={16}/></a></div>
-      </section>
       <section className="we-background" id="parcours" aria-labelledby="we-background-title">
         <div className="we-section-top" data-appear><div><Label>Parcours & savoir-faire</Label><h2 id="we-background-title">Une base <em>solide.</em></h2></div></div>
         <div className="we-background-cols"><div><h3><IconMark name="school" size={24}/> Formation</h3>{education.map((entry,i)=><div className="we-education" key={i}><span>{entry.period||'—'}</span><div><b>{entry.school}</b><p>{entry.detail}</p><small>{entry.location}</small></div></div>)}</div>
@@ -265,6 +270,6 @@ export default function WhiteEditorial(){
         <div className="we-footer-links"><span>Casablanca, Maroc · Bénin</span><a href={contact.github} target="_blank" rel="noopener noreferrer"><SiteGlyph name="github" size={16}/> GitHub <Arrow diagonal size={14}/></a><a href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download><SiteGlyph name="download" size={16}/> CV</a></div>
       </section>
     </main>
-    <footer className="we-footer"><a className="we-logo" href="#accueil">R<span className="we-logo-dot">.</span> HOUNLETE</a><span>© 2026 · Portfolio personnel</span><a href="#accueil">Retour en haut <IconMark name="arrow-up" size={16}/></a></footer>
+    <footer className="we-footer"><a className="we-logo" href="#apropos">R<span className="we-logo-dot">.</span> HOUNLETE</a><span>© 2026 · Portfolio personnel</span><a href="#apropos">Retour en haut <IconMark name="arrow-up" size={16}/></a></footer>
   </div>
 }
