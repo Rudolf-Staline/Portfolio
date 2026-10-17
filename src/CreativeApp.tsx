@@ -21,16 +21,16 @@ const alias: Record<string, string> = {
 }
 const media: Record<string, { src: string; alt: string; real?: boolean }> = {
   risksim: { src: '/projects/risksim-dashboard.png', alt: 'Capture réelle de l’interface RiskSim sur scénario de démonstration', real: true },
-  'financial-stress': { src: '/cinema/financial-photo.webp', alt: 'Illustration photographique du projet de prédiction du stress financier' },
-  geoai: { src: '/cinema/geoai-aerial-photo.webp', alt: 'Illustration aérienne des bassins aquacoles' },
+  'financial-stress': { src: '/editorial/financial-stress.svg', alt: 'Composition vectorielle illustrant des signaux financiers et des séries temporelles' },
+  geoai: { src: '/editorial/geoai.svg', alt: 'Illustration vectorielle conceptuelle de bassins aquacoles et de données satellite' },
   '01': { src: '/projects/pediappend-interface-symptomes.jpg', alt: 'Capture réelle du formulaire PediAppend', real: true },
-  automl: { src: '/cinema/automl-photo.webp', alt: 'Illustration photographique d’un environnement de développement AutoML' },
-  neurogolf: { src: '/cinema/neurogolf-photo.webp', alt: 'Illustration du raisonnement sur des grilles de couleur' },
-  waxal: { src: '/cinema/waxal-photo.webp', alt: 'Illustration de la reconnaissance vocale multilingue' },
-  credit: { src: '/cinema/credit-photo.webp', alt: 'Illustration de l’analyse de risque de crédit' },
-  '02': { src: '/cinema/traffic-night-photo.webp', alt: 'Illustration d’un carrefour en circulation nocturne' },
-  '03': { src: '/cinema/forex-photo.webp', alt: 'Illustration de graphiques de données de marché' },
-  '05': { src: '/cinema/soliton-photo.webp', alt: 'Illustration de propagation d’ondes' },
+  automl: { src: '/editorial/automl.svg', alt: 'Schéma vectoriel conceptuel de pipeline AutoML et de modèles' },
+  neurogolf: { src: '/editorial/neurogolf.svg', alt: 'Grilles de couleur géométriques illustrant le raisonnement visuel' },
+  waxal: { src: '/editorial/waxal.svg', alt: 'Représentation graphique de formes d’ondes pour la reconnaissance vocale' },
+  credit: { src: '/editorial/credit.svg', alt: 'Illustration vectorielle conceptuelle de variables du risque de crédit' },
+  '02': { src: '/editorial/02.svg', alt: 'Illustration schématique d’un carrefour piloté par capteurs' },
+  '03': { src: '/editorial/03.svg', alt: 'Illustration vectorielle de bougies et signaux de marché' },
+  '05': { src: '/editorial/05.svg', alt: 'Illustration vectorielle d’ondes en propagation' },
 }
 
 type GlyphName = 'arrow' | 'up' | 'down' | 'github' | 'mail' | 'play' | 'pause' | 'target' | 'layers' | 'sound' | 'star' | 'cross'
@@ -174,7 +174,7 @@ function GenerativeLab() {
   return <section className="cc-lab" id="laboratoire" aria-labelledby="lab-title">
     <div className="cc-lab-head" data-enter>
       <span className="cc-index"><StudioIcon name="flask" size={17}/><span className="cc-mark"/> 02 / LABORATOIRE NUMÉRIQUE</span>
-      <h2 id="lab-title">Des lignes, des règles.<br/><em>Et du mouvement.</em></h2>
+      <h2 id="lab-title">Un peu de code.<br/><em>Beaucoup de possibles.</em></h2>
       <p>Une expérience de programmation graphique : trois systèmes génératifs et une interaction directe avec le pointeur. Une respiration visuelle entre les projets et le reste du parcours.</p>
     </div>
     <div className="sd-lab-badges" data-enter><span><StudioIcon name="mouse" size={16}/> Interactif</span><span><StudioIcon name="settings" size={16}/> Génératif</span><span><StudioIcon name="cpu" size={16}/> Canvas 2D</span></div>
@@ -220,7 +220,7 @@ function Feature({id,n}:{id:string;n:number}) {
     </div>
     <figure className={`cc-feature-media ${isCapture?'cc-is-capture':''}`} data-enter>
       <img src={picture.src} alt={picture.alt} loading="lazy" decoding="async"/>
-      <figcaption>{isCapture?'Capture réelle du prototype · données de démonstration':'Illustration générée · distincte des résultats réels du projet'}</figcaption>
+      <figcaption>{isCapture?'Capture réelle du prototype · données de démonstration':'Illustration vectorielle créée pour ce portfolio · non issue de résultats du projet'}</figcaption>
     </figure>
     <div className="cc-feature-body" data-enter>
       <div className="cc-feature-side">
@@ -255,7 +255,7 @@ function ArchiveCard({id,n}:{id:string;n:number}) {
     {story.note && <p className="cc-archive-note">{story.note}</p>}
     <div className="cc-tags">{p.stack.slice(0,4).map(tag=><span key={tag}>{tag}</span>)}</div>
     <ProjectLinks project={p}/>
-    <span className="cc-archive-origin">{picture.real?'Capture réelle':'Illustration générée'}</span>
+    <span className="cc-archive-origin">{picture.real?'Capture réelle':'Illustration vectorielle conceptuelle'}</span>
   </article>
 }
 function App() {
@@ -298,12 +298,12 @@ function App() {
         <div className="cc-hero-main">
           <div className="cc-hero-copy">
             <div className="cc-hero-topline"><StudioIcon name="sparkles" size={17}/><span className="cc-dot"/>PORTFOLIO PERSONNEL · CASABLANCA / 2026</div>
-            <h1 id="hero-name">Rudolf<br/><span>Hounlete<span className="cc-terminal-dot">.</span></span></h1>
-            <p className="cc-hero-statement">Des idées aux systèmes.<br/><em>Du code au réel.</em></p>
+            <h1 id="hero-name"><span className="ns-h1-line">Rudolf</span><span className="ns-h1-line">Hounlete<span className="cc-terminal-dot">.</span></span></h1>
+            <p className="cc-hero-statement">Le code comme outil.<br/><em>La curiosité comme méthode.</em></p>
             <p className="cc-hero-description">Élève ingénieur à Centrale Casablanca. Logiciels, machine learning et simulation — conçus pour être testés, compris et utilisés.</p>
             <div className="cc-hero-actions"><a className="cc-action-main" href="#travaux"><StudioIcon name="layers" size={19}/> Explorer les projets <StudioIcon name="arrow-right" size={19}/></a><a className="cc-action-text" href="#laboratoire"><StudioIcon name="flask" size={17}/> Voir le laboratoire <StudioIcon name="arrow-down" size={17}/></a></div><div className="sd-social"><a href={contact.github} target="_blank" rel="noreferrer"><StudioIcon name="github" size={18}/> GitHub <StudioIcon name="arrow-up-right" size={13}/></a><a href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download><StudioIcon name="download" size={18}/> Curriculum vitæ <StudioIcon name="arrow-down" size={13}/></a></div>
           </div>
-          <div className="cc-hero-photo">
+          <div className="cc-hero-photo"><span className="ns-photo-index" aria-hidden="true">PORTRAIT / 01</span>
             <div className="cc-photo-corner cc-photo-corner-a" aria-hidden="true"/>
             <img src="/portrait-rudolf.webp" alt="Portrait original de Rudolf Hounlete" fetchPriority="high"/>
             <div className="cc-photo-corner cc-photo-corner-b" aria-hidden="true"/>
@@ -311,13 +311,21 @@ function App() {
         </div>
         <div className="cc-hero-bottom"><span><StudioIcon name="cpu" size={15}/> 01 — INGÉNIERIE</span><span><StudioIcon name="brain" size={15}/> 02 — MACHINE LEARNING</span><span><StudioIcon name="code" size={15}/> 03 — CRÉATION LOGICIELLE</span><a href="#travaux" aria-label="Descendre vers les projets"><Glyph name="down" size={20}/></a></div>
       </section>
+      <nav className="ns-selected" aria-label="Accès rapide aux projets sélectionnés">
+        <div className="ns-selected-heading"><span className="cc-index"><StudioIcon name="layers" size={17}/> PROJETS EN UN REGARD</span><strong>Quelques projets.<br/><em>Plusieurs façons de construire.</em></strong><a href="#travaux">Toutes les études de cas <StudioIcon name="arrow-up-right" size={17}/></a></div>
+        <div className="ns-selected-grid">{focusIds.map((id,i)=><a key={id} href={`#projet/${id}`} className="ns-selected-card">
+          <div className="ns-selected-art"><img src={media[id].src} alt="" loading="lazy"/><span className="ns-selected-tint" aria-hidden="true"/></div>
+          <span className="ns-selected-meta"><span>{String(i+1).padStart(2,'0')}</span><StudioIcon name={projectIcons[id]} size={18}/></span>
+          <strong>{alias[id]}</strong><span className="ns-selected-description">{selectProject(id).category}</span>
+        </a>)}</div>
+      </nav>
       <section className="cc-work" id="travaux" aria-labelledby="work-title">
-        <div className="cc-section-intro" data-enter><div className="cc-idx"><StudioIcon name="layers" size={19}/><span className="cc-mark"/> 01 / PROJETS SÉLECTIONNÉS</div><h2 id="work-title">Construire.<br/><em>Et montrer comment.</em></h2><p>Du modèle à l’interface, de l’expérience au résultat. Pas seulement des images : les choix techniques, les limites et les preuves sont présentés avec chaque projet.</p></div>
+        <div className="cc-section-intro" data-enter><div className="cc-idx"><StudioIcon name="layers" size={19}/><span className="cc-mark"/> 01 / PROJETS SÉLECTIONNÉS</div><h2 id="work-title">Des projets.<br/><em>Des choix assumés.</em></h2><p>Du modèle à l’interface, de l’expérience au résultat. Pas seulement des images : les choix techniques, les limites et les preuves sont présentés avec chaque projet.</p></div>
         <div className="cc-features">{focusIds.map((id,i)=><Feature id={id} n={i+1} key={id}/>)}</div>
       </section>
       <GenerativeLab/>
       <section className="cc-archive" id="autres" aria-labelledby="archive-title">
-        <div className="cc-archive-intro" data-enter><span className="cc-index sd-section-kicker"><StudioIcon name="orbit" size={19}/> 03 / AUTRES EXPÉRIENCES</span><h2 id="archive-title">L’atelier ne<br/><em>s’arrête pas là.</em></h2><p>Six autres expériences en vision, audio, raisonnement, finance et physique.</p></div>
+        <div className="cc-archive-intro" data-enter><span className="cc-index sd-section-kicker"><StudioIcon name="orbit" size={19}/> 03 / AUTRES EXPÉRIENCES</span><h2 id="archive-title">L’exploration<br/><em>continue.</em></h2><p>Six autres expériences en vision, audio, raisonnement, finance et physique.</p></div>
         <div className="cc-archive-grid">{archiveIds.map((id,i)=><ArchiveCard id={id} n={i+6} key={id}/>)}</div>
       </section>
       <section className="cc-proofwall" id="distinctions" aria-labelledby="proof-title">
