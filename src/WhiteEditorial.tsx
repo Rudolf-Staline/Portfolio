@@ -50,12 +50,12 @@ const media: Record<string,{src:string;alt:string;authentic?:boolean}> = {
     alt:'Illustration éditoriale consacrée aux simulations de risques',
   },
   'financial-stress':{
-    src:'/editorial-white/financial-stress.svg',
-    alt:'Illustration conceptuelle de séries transactionnelles et de distributions financières',
+    src:'/cinema/financial-photo.webp',
+    alt:'Photographie illustrative de documents financiers et d’analyse de dépenses',
   },
   geoai:{
-    src:'/editorial-white/geoai.svg',
-    alt:'Illustration géospatiale conceptuelle : parcelles et traitements satellitaires',
+    src:'/cinema/geoai-aerial-photo.webp',
+    alt:'Photographie aérienne illustrative de bassins et de parcelles aquacoles',
   },
   '01':{
     src:'/projects/pediappend-interface-symptomes.jpg',
@@ -63,8 +63,8 @@ const media: Record<string,{src:string;alt:string;authentic?:boolean}> = {
     authentic:true,
   },
   automl:{
-    src:'/editorial-white/automl.svg',
-    alt:'Illustration conceptuelle d’un pipeline AutoML, de ses modèles et évaluations',
+    src:'/cinema/automl-photo.webp',
+    alt:'Photographie illustrative d’un poste de développement et d’évaluation de modèles',
   },
   neurogolf:{src:'/cinema/neurogolf-photo.webp',alt:'Illustration du raisonnement sur des grilles'},
   credit:{src:'/cinema/credit-photo.webp',alt:'Illustration du scoring de crédit'},
@@ -118,6 +118,7 @@ function WideRow({id,index}:{id:string;index:number}) {
     <span className="we-row-no" aria-hidden="true">{String(index).padStart(2,'0')}<i/></span>
     <figure className={`we-row-media ${art.authentic?'we-row-real':''}`}>
       <img src={art.src} alt={art.alt} loading="lazy" decoding="async"/>
+      <figcaption className="we-art-source">{art.authentic?'Capture réelle du prototype':'Photographie illustrative · non issue du projet'}</figcaption>
     </figure>
     <div className="we-row-copy">
       <div className="we-row-heading"><Label>{categories[id]}</Label><IconMark name={icons[id]??'code'} size={22}/></div>
@@ -164,18 +165,26 @@ function CaseStudy({id,index}:{id:string;index:number}) {
 }
 
 function ProjectChapter({id,index}:{id:string;index:number}) {
-  return <article className="we-project-chapter" id={`projet-${id}`}>
+  const next=projectIds[index]
+  return <article className="we-project-chapter" id={`projet-${id}`} aria-label={`Projet ${index} sur ${projectIds.length} : ${labels[id]}`}>
+    <div className="we-chapter-eyebrow"><span>PROJECT / {String(index).padStart(2,'0')}</span><span>{categories[id]}</span><span>{String(index).padStart(2,'0')} — {String(projectIds.length).padStart(2,'0')}</span></div>
     <WideRow id={id} index={index}/>
     <CaseStudy id={id} index={index}/>
+    <div className="we-chapter-bottom">
+      <span>FIN DU PROJET {String(index).padStart(2,'0')}</span>
+      {next ? <a href={`#projet-${next}`} aria-label={`Passer au projet suivant : ${labels[next]}`}>Projet suivant <strong>{labels[next]}</strong><Arrow size={18}/></a> : <a href="#distinctions">Voir les distinctions <Arrow size={18}/></a>}
+    </div>
   </article>
 }
 
 export default function WhiteEditorial(){
   const [section,setSection]=useState('accueil')
+  const [activeProject,setActiveProject]=useState(0)
   const progress=useRef<HTMLDivElement>(null)
   useShowOnView()
   useEffect(()=>{
     const anchors=Array.from(document.querySelectorAll<HTMLElement>('main section[id]'))
+    const chapters=Array.from(document.querySelectorAll<HTMLElement>('.we-project-chapter'))
     let raf=0
     const scan=()=>{
       const limit=Math.max(1,document.documentElement.scrollHeight-innerHeight)
@@ -183,6 +192,10 @@ export default function WhiteEditorial(){
       let current='accueil'
       for(const item of anchors)if(item.getBoundingClientRect().top<=innerHeight*.34)current=item.id
       setSection(prev=>prev===current?prev:current)
+      const nearTop=innerHeight*.47
+      let page=0
+      for(let i=0;i<chapters.length;i++) if(chapters[i].getBoundingClientRect().top <= nearTop) page=i
+      setActiveProject(prev=>prev===page?prev:page)
       raf=0
     }
     const onScroll=()=>{if(!raf)raf=requestAnimationFrame(scan)}
@@ -193,6 +206,11 @@ export default function WhiteEditorial(){
   return <div className="we-site">
     <a className="we-skip" href="#projets">Aller aux projets</a>
     <div ref={progress} className="we-progress" aria-hidden="true"/>
+    <nav className="we-page-rail" aria-label="Navigation page par page des projets">
+      <span className="we-rail-title">PROJETS</span>
+      <div className="we-rail-dots">{projectIds.map((id,i)=><a key={id} href={`#projet-${id}`} aria-label={`Aller à la page ${i+1} : ${labels[id]}`} aria-current={section==='projets' && activeProject===i?'location':undefined} className={section==='projets'&&activeProject===i?'is-current':''}><span className="we-rail-tip">{labels[id]}</span></a>)}</div>
+      <span className="we-rail-number">{String(activeProject+1).padStart(2,'0')} / {String(projectIds.length).padStart(2,'0')}</span>
+    </nav>
     <header className="we-header">
       <a className="we-logo" href="#accueil">R<span className="we-logo-dot">.</span> HOUNLETE</a>
       <nav className="we-main-nav" aria-label="Navigation principale">
@@ -215,6 +233,7 @@ export default function WhiteEditorial(){
             <a className="we-text-link" href="#apropos">À propos <Arrow size={16}/></a>
           </div>
           <span className="we-hero-detail"><IconMark name="globe" size={15}/> Casablanca · Originaire du Bénin</span>
+          <a className="we-hero-scroll" href="#projets"><span>FAIRE DÉFILER POUR EXPLORER</span><IconMark name="arrow-down" size={17}/></a>
         </div>
         <figure className="we-hero-media">
           <img src="/editorial-white/hero-panorama.svg" alt="Paysage montagneux stylisé au bord d’un lac, illustration décorative" fetchPriority="high" />
