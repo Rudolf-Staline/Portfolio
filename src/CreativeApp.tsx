@@ -6,10 +6,13 @@ import { education } from './data/education'
 import { skills } from './data/skills'
 import { profile, contact } from './data/profile'
 import type { Project } from './data/types'
+import { StudioIcon, SideRail, StudioMotion, projectIcons, type StudioIconName } from './StudioIcons'
 
 const selectProject = (id: string) => projects.find(project => project.index === id)!
 const focusIds = ['risksim', 'financial-stress', 'geoai', '01', 'automl']
 const archiveIds = ['neurogolf', 'waxal', 'credit', '02', '03', '05']
+const skillIcons: StudioIconName[] = ['code','layers','brain','cpu']
+const schoolIcons: StudioIconName[] = ['graduation','database','flask','award']
 const alias: Record<string, string> = {
   risksim: 'RiskSim', 'financial-stress': 'Financial Stress', geoai: 'GeoAI',
   '01': 'PediAppend', automl: 'Autonomous AutoML', neurogolf: 'NeuroGolf',
@@ -170,29 +173,30 @@ function GenerativeLab() {
   },[mode,playing,reduced])
   return <section className="cc-lab" id="laboratoire" aria-labelledby="lab-title">
     <div className="cc-lab-head" data-enter>
-      <span className="cc-index"><span className="cc-mark"/> 02 / LABORATOIRE NUMÉRIQUE</span>
+      <span className="cc-index"><StudioIcon name="flask" size={17}/><span className="cc-mark"/> 02 / LABORATOIRE NUMÉRIQUE</span>
       <h2 id="lab-title">Des lignes, des règles.<br/><em>Et du mouvement.</em></h2>
       <p>Une expérience de programmation graphique : trois systèmes génératifs et une interaction directe avec le pointeur. Une respiration visuelle entre les projets et le reste du parcours.</p>
     </div>
+    <div className="sd-lab-badges" data-enter><span><StudioIcon name="mouse" size={16}/> Interactif</span><span><StudioIcon name="settings" size={16}/> Génératif</span><span><StudioIcon name="cpu" size={16}/> Canvas 2D</span></div>
     <div className="cc-lab-stage" data-enter>
       <div className="cc-lab-screen"
         onPointerMove={e=>{const rect=e.currentTarget.getBoundingClientRect();point.current={x:(e.clientX-rect.left)/rect.width,y:(e.clientY-rect.top)/rect.height,inside:true}}}
         onPointerLeave={()=>{point.current.inside=false}}>
         <canvas ref={ref} role="img" aria-label="Visualisation générative de lignes ou de particules réagissant au déplacement du pointeur"/>
-        <span className="cc-canvas-corner cc-canvas-top">SYSTEM / EXP–001</span>
-        <span className="cc-canvas-corner cc-canvas-bottom">REAL-TIME · CANVAS 2D</span>
+        <span className="cc-canvas-corner cc-canvas-top"><StudioIcon name="crosshair" size={13}/> SYSTEM / EXP–001</span>
+        <span className="cc-canvas-corner cc-canvas-bottom"><StudioIcon name="activity" size={13}/> REAL-TIME · CANVAS 2D</span>
         <div className="cc-canvas-cross" aria-hidden="true"><Glyph name="cross" size={20}/></div>
       </div>
       <div className="cc-lab-console">
-        <div><span className="cc-micro">MODÈLE ACTIF</span><strong>{mode==='mesh'?'01 / Champ':mode==='wave'?'02 / Onde':'03 / Réseau'}</strong></div>
+        <div><span className="cc-micro"><StudioIcon name="circle-dot" size={13}/> MODÈLE ACTIF</span><strong>{mode==='mesh'?'01 / Champ':mode==='wave'?'02 / Onde':'03 / Réseau'}</strong></div>
         <div className="cc-mode-switch" role="group" aria-label="Choisir la visualisation">
-          <button type="button" aria-pressed={mode==='mesh'} onClick={()=>setMode('mesh')}>Champ</button>
-          <button type="button" aria-pressed={mode==='wave'} onClick={()=>setMode('wave')}>Onde</button>
-          <button type="button" aria-pressed={mode==='particles'} onClick={()=>setMode('particles')}>Réseau</button>
+          <button type="button" aria-pressed={mode==='mesh'} onClick={()=>setMode('mesh')}><StudioIcon name="grid" size={16}/> Champ</button>
+          <button type="button" aria-pressed={mode==='wave'} onClick={()=>setMode('wave')}><StudioIcon name="activity" size={16}/> Onde</button>
+          <button type="button" aria-pressed={mode==='particles'} onClick={()=>setMode('particles')}><StudioIcon name="network" size={16}/> Réseau</button>
         </div>
         <button type="button" className="cc-pause" onClick={()=>setPlaying(p=>!p)}
           aria-label={playing?'Mettre en pause l’animation':'Reprendre l’animation'}>
-          <Glyph name={playing?'pause':'play'} size={18}/><span>{playing?'Pause':'Lecture'}</span>
+          <StudioIcon name={playing?'pause':'play'} size={18}/><span>{playing?'Pause':'Lecture'}</span>
         </button>
       </div>
     </div>
@@ -200,9 +204,9 @@ function GenerativeLab() {
 }
 function ProjectLinks({project}:{project:Project}) {
   return <div className="cc-project-links">
-    {project.links.code && <a href={project.links.code} target="_blank" rel="noreferrer">Code source <Glyph name="arrow" size={16}/></a>}
-    {project.evidence && <a href={project.evidence.href} target="_blank" rel="noreferrer">{project.evidence.label} <Glyph name="arrow" size={16}/></a>}
-    {project.links.demo && <a href={project.links.demo} target="_blank" rel="noreferrer">Voir le projet <Glyph name="arrow" size={16}/></a>}
+    {project.links.code && <a href={project.links.code} target="_blank" rel="noreferrer"><StudioIcon name="github" size={16}/> Code source <StudioIcon name="arrow-up-right" size={15}/></a>}
+    {project.evidence && <a href={project.evidence.href} target="_blank" rel="noreferrer"><StudioIcon name="award" size={16}/> {project.evidence.label} <StudioIcon name="arrow-up-right" size={15}/></a>}
+    {project.links.demo && <a href={project.links.demo} target="_blank" rel="noreferrer"><StudioIcon name="external" size={16}/> Voir le projet <StudioIcon name="arrow-up-right" size={15}/></a>}
   </div>
 }
 function Feature({id,n}:{id:string;n:number}) {
@@ -211,8 +215,8 @@ function Feature({id,n}:{id:string;n:number}) {
   return <article className={`cc-feature cc-feature-${id}`} id={`projet/${id}`}>
     <div className="cc-feature-top" data-enter>
       <div className="cc-feature-number">{String(n).padStart(2,'0')}<span>/ 05</span></div>
-      <div className="cc-feature-title"><span className="cc-micro">{project.context} · {project.period}</span><h3>{alias[id]}</h3><p>{story.subtitle}</p></div>
-      <span className="cc-feature-arrow" aria-hidden="true">↘</span>
+      <div className="cc-feature-title"><div className="sd-feature-label"><span className="sd-icon-cell"><StudioIcon name={projectIcons[id]} size={23}/></span><span className="cc-micro">{project.context} · {project.period}</span></div><h3>{alias[id]}</h3><p>{story.subtitle}</p></div>
+      <span className="cc-feature-arrow" aria-hidden="true"><StudioIcon name="arrow-down" size={36}/></span>
     </div>
     <figure className={`cc-feature-media ${isCapture?'cc-is-capture':''}`} data-enter>
       <img src={picture.src} alt={picture.alt} loading="lazy" decoding="async"/>
@@ -220,16 +224,16 @@ function Feature({id,n}:{id:string;n:number}) {
     </figure>
     <div className="cc-feature-body" data-enter>
       <div className="cc-feature-side">
-        <span className="cc-micro">PROCESS / {String(n).padStart(2,'0')}</span>
-        <h4>Du problème<br/>à la <em>preuve.</em></h4>
+        <span className="cc-micro sd-process-label"><StudioIcon name="settings" size={14}/> PROCESS / {String(n).padStart(2,'0')}</span>
+        <h4>Du problème<br/>à la <em>preuve.</em></h4><div className="sd-code-signature"><StudioIcon name="file-code" size={17}/> research / build / evaluate <span aria-hidden="true">_</span></div>
         <div className="cc-tags">{project.stack.map(tag=><span key={tag}>{tag}</span>)}</div>
         <ProjectLinks project={project}/>
       </div>
       <div className="cc-feature-story">
         {story.paragraphs.map((paragraph,i)=><p key={i}>{paragraph}</p>)}
         <div className="cc-outcome">
-          <div><span className="cc-micro">APPROCHE</span><p>{story.method}</p></div>
-          <div><span className="cc-micro">RÉSULTAT</span><p>{story.result}</p></div>
+          <div><span className="cc-micro"><StudioIcon name="flask" size={17}/> APPROCHE</span><p>{story.method}</p></div>
+          <div><span className="cc-micro"><StudioIcon name="check" size={17}/> RÉSULTAT</span><p>{story.result}</p></div>
         </div>
         {story.note && <p className="cc-disclaimer">{story.note}</p>}
       </div>
@@ -242,12 +246,12 @@ function ArchiveCard({id,n}:{id:string;n:number}) {
   const p=selectProject(id),story=projectStories[id],picture=media[id]
   return <article className="cc-archive-card" id={`projet/${id}`} data-enter>
     <div className="cc-archive-media"><img src={picture.src} alt={picture.alt} loading="lazy" decoding="async"/></div>
-    <div className="cc-archive-head"><span className="cc-micro">{String(n).padStart(2,'0')} / {p.period}</span><span aria-hidden="true">↗</span></div>
+    <div className="cc-archive-head"><span className="sd-archive-icon"><StudioIcon name={projectIcons[id]} size={23}/></span><span className="cc-micro">{String(n).padStart(2,'0')} / {p.period}</span><span className="sd-archive-arrow" aria-hidden="true"><StudioIcon name="arrow-up-right" size={23}/></span></div>
     <h3>{alias[id]}</h3><p className="cc-archive-subtitle">{story.subtitle}</p>
     <div className="cc-archive-story">
       {story.paragraphs.map((paragraph,i)=><p key={i}>{paragraph}</p>)}
     </div>
-    <div className="cc-archive-result"><span className="cc-micro">MÉTHODE</span><p>{story.method}</p><span className="cc-micro">RÉSULTAT</span><p>{story.result}</p></div>
+    <div className="cc-archive-result"><span className="cc-micro"><StudioIcon name="flask" size={15}/> MÉTHODE</span><p>{story.method}</p><span className="cc-micro"><StudioIcon name="check" size={15}/> RÉSULTAT</span><p>{story.result}</p></div>
     {story.note && <p className="cc-archive-note">{story.note}</p>}
     <div className="cc-tags">{p.stack.slice(0,4).map(tag=><span key={tag}>{tag}</span>)}</div>
     <ProjectLinks project={p}/>
@@ -274,24 +278,25 @@ function App() {
   return <div className="cc-app">
     <a className="cc-skip" href="#travaux">Aller aux projets</a>
     <div className="cc-progress" aria-hidden="true" style={{transform:`scaleX(${progress})`}}/>
+    <StudioMotion/><SideRail active={active}/>
     <header className="cc-header">
       <a className="cc-brand" href="#accueil" aria-label="Rudolf Hounlete, retour à l’accueil"><span>R<span className="cc-brand-dot">•</span>H</span><small>INDEX / 26</small></a>
       <nav className="cc-nav" aria-label="Navigation principale">
-        <a href="#travaux" aria-current={active==='travaux'?'page':undefined}>Travaux</a>
-        <a href="#laboratoire" aria-current={active==='laboratoire'?'page':undefined}>Laboratoire</a>
-        <a href="#parcours" aria-current={active==='parcours'?'page':undefined}>Parcours</a>
+        <a href="#travaux" aria-current={active==='travaux'?'page':undefined}><StudioIcon name="layers" size={15}/> Travaux</a>
+        <a href="#laboratoire" aria-current={active==='laboratoire'?'page':undefined}><StudioIcon name="flask" size={15}/> Laboratoire</a>
+        <a href="#parcours" aria-current={active==='parcours'?'page':undefined}><StudioIcon name="graduation" size={15}/> Parcours</a>
       </nav>
-      <a className="cc-nav-contact" href="#contact">Contact <Glyph name="arrow" size={17}/></a>
+      <a className="cc-nav-contact" href="#contact"><StudioIcon name="mail" size={16}/> Contact <StudioIcon name="arrow-up-right" size={17}/></a>
     </header>
     <main>
       <section className="cc-hero" id="accueil" aria-labelledby="hero-name">
         <div className="cc-hero-main">
           <div className="cc-hero-copy">
-            <div className="cc-hero-topline"><span className="cc-dot"/>PORTFOLIO PERSONNEL · CASABLANCA / 2026</div>
+            <div className="cc-hero-topline"><StudioIcon name="sparkles" size={17}/><span className="cc-dot"/>PORTFOLIO PERSONNEL · CASABLANCA / 2026</div>
             <h1 id="hero-name">Rudolf<br/><span>Hounlete<span className="cc-terminal-dot">.</span></span></h1>
             <p className="cc-hero-statement">Des idées aux systèmes.<br/><em>Du code au réel.</em></p>
             <p className="cc-hero-description">Élève ingénieur à Centrale Casablanca. Logiciels, machine learning et simulation — conçus pour être testés, compris et utilisés.</p>
-            <div className="cc-hero-actions"><a className="cc-action-main" href="#travaux">Explorer les projets <Glyph name="arrow"/></a><a className="cc-action-text" href="#laboratoire">Voir le laboratoire <Glyph name="down" size={17}/></a></div>
+            <div className="cc-hero-actions"><a className="cc-action-main" href="#travaux"><StudioIcon name="layers" size={19}/> Explorer les projets <StudioIcon name="arrow-right" size={19}/></a><a className="cc-action-text" href="#laboratoire"><StudioIcon name="flask" size={17}/> Voir le laboratoire <StudioIcon name="arrow-down" size={17}/></a></div><div className="sd-social"><a href={contact.github} target="_blank" rel="noreferrer"><StudioIcon name="github" size={18}/> GitHub <StudioIcon name="arrow-up-right" size={13}/></a><a href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download><StudioIcon name="download" size={18}/> Curriculum vitæ <StudioIcon name="arrow-down" size={13}/></a></div>
           </div>
           <div className="cc-hero-photo">
             <div className="cc-photo-corner cc-photo-corner-a" aria-hidden="true"/>
@@ -299,39 +304,39 @@ function App() {
             <div className="cc-photo-corner cc-photo-corner-b" aria-hidden="true"/>
           </div>
         </div>
-        <div className="cc-hero-bottom"><span>01 — INGÉNIERIE</span><span>02 — MACHINE LEARNING</span><span>03 — CRÉATION LOGICIELLE</span><a href="#travaux" aria-label="Descendre vers les projets"><Glyph name="down" size={20}/></a></div>
+        <div className="cc-hero-bottom"><span><StudioIcon name="cpu" size={15}/> 01 — INGÉNIERIE</span><span><StudioIcon name="brain" size={15}/> 02 — MACHINE LEARNING</span><span><StudioIcon name="code" size={15}/> 03 — CRÉATION LOGICIELLE</span><a href="#travaux" aria-label="Descendre vers les projets"><Glyph name="down" size={20}/></a></div>
       </section>
       <section className="cc-work" id="travaux" aria-labelledby="work-title">
-        <div className="cc-section-intro" data-enter><div className="cc-idx"><span className="cc-mark"/> 01 / PROJETS SÉLECTIONNÉS</div><h2 id="work-title">Construire.<br/><em>Et montrer comment.</em></h2><p>Du modèle à l’interface, de l’expérience au résultat. Pas seulement des images : les choix techniques, les limites et les preuves sont présentés avec chaque projet.</p></div>
+        <div className="cc-section-intro" data-enter><div className="cc-idx"><StudioIcon name="layers" size={19}/><span className="cc-mark"/> 01 / PROJETS SÉLECTIONNÉS</div><h2 id="work-title">Construire.<br/><em>Et montrer comment.</em></h2><p>Du modèle à l’interface, de l’expérience au résultat. Pas seulement des images : les choix techniques, les limites et les preuves sont présentés avec chaque projet.</p></div>
         <div className="cc-features">{focusIds.map((id,i)=><Feature id={id} n={i+1} key={id}/>)}</div>
       </section>
       <GenerativeLab/>
       <section className="cc-archive" id="autres" aria-labelledby="archive-title">
-        <div className="cc-archive-intro" data-enter><span className="cc-index">03 / AUTRES EXPÉRIENCES</span><h2 id="archive-title">L’atelier ne<br/><em>s’arrête pas là.</em></h2><p>Six autres expériences en vision, audio, raisonnement, finance et physique.</p></div>
+        <div className="cc-archive-intro" data-enter><span className="cc-index sd-section-kicker"><StudioIcon name="orbit" size={19}/> 03 / AUTRES EXPÉRIENCES</span><h2 id="archive-title">L’atelier ne<br/><em>s’arrête pas là.</em></h2><p>Six autres expériences en vision, audio, raisonnement, finance et physique.</p></div>
         <div className="cc-archive-grid">{archiveIds.map((id,i)=><ArchiveCard id={id} n={i+6} key={id}/>)}</div>
       </section>
       <section className="cc-proofwall" id="distinctions" aria-labelledby="proof-title">
-        <div className="cc-proof-intro" data-enter><span className="cc-index">04 / COMPÉTITIONS</span><h2 id="proof-title">Les résultats<br/>se <em>mesurent.</em></h2><p>Des problèmes imposés, une validation à défendre, des classements publics quand ils sont disponibles.</p></div>
+        <div className="cc-proof-intro" data-enter><span className="cc-index sd-section-kicker"><StudioIcon name="award" size={19}/> 04 / COMPÉTITIONS</span><h2 id="proof-title">Les résultats<br/>se <em>mesurent.</em></h2><p>Des problèmes imposés, une validation à défendre, des classements publics quand ils sont disponibles.</p></div>
         <div className="cc-proof-list">
           {competitions.map((c,i)=><a key={c.projectId} data-enter className="cc-proof-row" href={c.href || `#projet/${c.projectId}`} target={c.href?'_blank':undefined} rel={c.href?'noreferrer':undefined}>
-            <span className="cc-proof-index">{String(i+1).padStart(2,'0')}</span><span className="cc-proof-name">{c.name}<small>{c.platform}</small></span><span className="cc-proof-result">{c.medal?'● BRONZE':c.result}</span><Glyph name="arrow" size={21}/>
+            <span className="cc-proof-index"><StudioIcon name={projectIcons[c.projectId]} size={24}/><small>{String(i+1).padStart(2,'0')}</small></span><span className="cc-proof-name">{c.name}<small>{c.platform}</small></span><span className="cc-proof-result">{c.medal?<><StudioIcon name="award" size={17}/> BRONZE</>:c.result}</span><StudioIcon name="arrow-up-right" size={21}/>
           </a>)}
         </div>
       </section>
       <section className="cc-bio" id="parcours" aria-labelledby="bio-title">
-        <div className="cc-bio-head" data-enter><span className="cc-index">05 / PARCOURS</span><h2 id="bio-title">Curieux par nature.<br/><em>Ingénieur par formation.</em></h2><p>{profile.about[0]}</p><p>{profile.about[1]}</p></div>
+        <div className="cc-bio-head" data-enter><span className="cc-index sd-section-kicker"><StudioIcon name="graduation" size={19}/> 05 / PARCOURS</span><h2 id="bio-title">Curieux par nature.<br/><em>Ingénieur par formation.</em></h2><p>{profile.about[0]}</p><p>{profile.about[1]}</p></div>
         <div className="cc-bio-grid">
-          <div className="cc-education" data-enter><h3>Trajectoire</h3>{education.map((e,i)=><div className="cc-ed-row" key={i}><span>{e.period||'Formation scientifique'}</span><div><strong>{e.school}</strong><p>{e.detail}</p></div><small>{e.location}</small></div>)}</div>
-          <div className="cc-skills" data-enter><h3>Boîte à outils</h3>{skills.map((group,i)=><div className="cc-skill-row" key={group.label}><span>0{i+1}</span><div><h4>{group.label}</h4><p>{group.items.join(' · ')}</p></div></div>)}</div>
+          <div className="cc-education" data-enter><h3>Trajectoire</h3>{education.map((e,i)=><div className="cc-ed-row" key={i}><span className="sd-school-symbol"><StudioIcon name={schoolIcons[i]??'graduation'} size={22}/><small>{e.period||'Formation scientifique'}</small></span><div><strong>{e.school}</strong><p>{e.detail}</p></div><small>{e.location}</small></div>)}</div>
+          <div className="cc-skills" data-enter><h3>Boîte à outils</h3>{skills.map((group,i)=><div className="cc-skill-row" key={group.label}><span className="sd-skill-symbol"><StudioIcon name={skillIcons[i]??'code'} size={24}/><small>0{i+1}</small></span><div><h4>{group.label}</h4><p>{group.items.join(' · ')}</p></div></div>)}</div>
         </div>
       </section>
       <section className="cc-contact" id="contact" aria-labelledby="contact-title">
-        <div className="cc-contact-heading" data-enter><span className="cc-index">06 / CONTACT</span><h2 id="contact-title">Une idée en tête ?<br/><em>Écrivons la suite.</em></h2></div>
-        <a className="cc-mail-link" href={`mailto:${contact.email}`}>{contact.email}<Glyph name="arrow" size={40}/></a>
-        <div className="cc-contact-end"><p>Casablanca, Maroc · Originaire du Bénin</p><div><a href={contact.github} target="_blank" rel="noreferrer">GitHub <Glyph name="arrow" size={15}/></a><a href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download>CV <Glyph name="down" size={16}/></a></div></div>
+        <div className="cc-contact-heading" data-enter><span className="cc-index sd-section-kicker"><StudioIcon name="mail" size={19}/> 06 / CONTACT</span><h2 id="contact-title">Une idée en tête ?<br/><em>Écrivons la suite.</em></h2></div>
+        <a className="cc-mail-link" href={`mailto:${contact.email}`}><StudioIcon name="mail" size={29}/>{contact.email}<StudioIcon name="arrow-up-right" size={31}/></a>
+        <div className="cc-contact-end"><p><StudioIcon name="map-pin" size={17}/> Casablanca, Maroc · Originaire du Bénin</p><div><a href={contact.github} target="_blank" rel="noreferrer"><StudioIcon name="github" size={16}/> GitHub <StudioIcon name="arrow-up-right" size={14}/></a><a href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download><StudioIcon name="download" size={16}/> CV <StudioIcon name="arrow-down" size={14}/></a></div></div>
       </section>
     </main>
-    <footer className="cc-footer"><a href="#accueil">RH<span>°</span></a><span>© 2026 Rudolf Hounlete</span><button type="button" onClick={()=>window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})}>Retour en haut <Glyph name="up" size={15}/></button></footer>
+    <footer className="cc-footer"><a href="#accueil">RH<span>°</span></a><span>© 2026 Rudolf Hounlete</span><button type="button" onClick={()=>window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})}>Retour en haut <StudioIcon name="arrow-up" size={15}/></button></footer>
   </div>
 }
 export default App
