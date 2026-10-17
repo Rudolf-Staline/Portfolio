@@ -1,14 +1,30 @@
-# Portfolio — Rudolf Hounlete
+# Rudolf Hounlete — Fieldnotes / Creative Engineering
 
-Portfolio étudiant de Rudolf Hounlete, élève ingénieur à l’École Centrale Casablanca. Machine learning, développement logiciel, simulation et compétitions.
+Portfolio personnel consacré aux logiciels, à la simulation, aux compétitions de machine learning et à l'expérimentation graphique.
 
-**Site :** https://rudolf-hounlete-portfolio.vercel.app
+## Direction visuelle — Issue 03
 
-## Présentation
+Nouvelle direction **Fieldnotes** : papier chaud, anthracite, accent cuivre, typographie Space Grotesk et Instrument Serif, mise en page asymétrique. Accueil avec portrait authentique ; galerie éditoriale des cinq projets principaux donnant un accès direct aux récits détaillés.
 
-La page reprend la version blanche à cartes retenue en octobre 2026 : portrait et présentation, liens et distinctions, RiskSim, puis compétitions et projets, parcours et contact. Le défilement est vertical et natif. Chaque projet présente directement son image, son récit, son approche technique, son résultat et ses liens. Le thème sombre est facultatif. La typographie Figtree est hébergée avec l’application.
+### Illustrations
 
-RiskSim et PediAppend montrent des captures réelles agrandies, sans faux habillage d’interface ; les autres projets présentent des illustrations photographiques générées par IA, clairement identifiées sous l’image, sans texte ni boutons superposés. Les récits conservent les textes et limites actuels, avec les liens vers les dépôts et les preuves disponibles.
+Les neuf anciens visuels photographiques génériques ont été **remplacés par des illustrations vectorielles spécifiques aux sujets** dans `public/editorial/*.svg`, créées pour ce portfolio :
+
+- Stress financier — séries temporelles et profils de risque
+- GeoAI — tuiles satellitaires et bassins aquacoles stylisés
+- AutoML — graphe conceptuel de pipeline et de branches
+- NeuroGolf — grilles de couleur et transformation
+- WAXAL — trois tracés de signaux
+- Credit Scoring — données et séparation conceptuelle
+- Feux intelligents — carrefour schématique
+- Forex — chandeliers et courbe stylisés
+- Solitons — champ d'ondes en propagation
+
+**Ces illustrations sont des concepts graphiques et non des résultats d'expériences.** Une légende le précise. Les captures réelles RiskSim et PediAppend et le portrait personnel `public/portrait-rudolf.webp` n'ont pas été remplacés par des personnes inventées ou des interfaces artificielles.
+
+### Interactions
+
+Lab Canvas 2D natif avec trois modes (champ, onde, réseau), suivi de la souris, pause/lecture. Ensemble de 43 icônes SVG et navigation latérale contextuelle sur bureau ; navigation et composition responsives sur mobile. Les apparitions et effets respectent `prefers-reduced-motion`. Les textes, méthodes, résultats, limites et liens restent consultables directement.
 
 ## Développement
 
@@ -19,19 +35,15 @@ npm run build
 npm run preview
 ```
 
-`npm run build` vérifie TypeScript et produit `dist/`. Vercel utilise le preset Vite et `vercel.json`. La page active est `src/App.tsx`, avec les styles `src/horizontal.css`, `src/vertical.css`, `src/expanded.css`, `src/cinema.css`, `src/white-return.css` et `src/pedi-inline.css`. La nouvelle finition éditoriale est appliquée dans `src/folio-refresh.css` : portrait agrandi, capture RiskSim présentée à plat, images pleine largeur et légendes hors des visuels. Les anciennes propositions de design demeurent archivées dans le dépôt sans être chargées.
+Entrée active : `src/CreativeApp.tsx` → `src/main.tsx`, avec les CSS `creative.css`, `studio-edition.css`, `studio-motion.css` et `edition-03.css` (appliqué en dernier). L'ancienne interface reste dans le dépôt mais n'est pas chargée.
 
-## Sources
+## Sources fiables
 
-- `src/data/` : projets, classements, parcours, compétences, contact, résumés et récits techniques. Les médailles et rangs sont repris du CV de Rudolf de septembre 2026.
-- `public/portrait-rudolf.webp` : portrait original optimisé.
-- `public/cinema/*-photo.webp` : illustrations de projet créées par IA, signalées sur la page.
-- `public/projects/risksim-dashboard.png` et `risksim-results.png` : captures S5 de RiskSim sur un scénario de démonstration, avec montants illustratifs.
-- `public/projects/pediappend-interface-symptomes.jpg` et `shap_summary_bar.png` : interface du prototype académique et graphique d’explication. PediAppend n’a pas de validation clinique et n’est pas destiné aux soins.
+- `src/data/` : textes, classements et récits techniques.
+- `public/portrait-rudolf.webp` : portrait original.
+- `public/projects/risksim-dashboard.png`, `risksim-results.png` : captures de démonstration de RiskSim.
+- `public/projects/pediappend-interface-symptomes.jpg`, `shap_summary_bar.png` : captures du prototype académique et graphique SHAP. Aucun usage clinique revendiqué.
+- `public/editorial/*.svg` : illustrations thématiques originales.
 - `public/CV_Rudolf_HOUNLETE.pdf` : CV téléchargeable.
 
-Les liens absents ne produisent pas de bouton vide. Le dépôt de l’entreprise pour RiskSim n’est pas public.
-
-## Navigation
-
-Ancres directes vers les sections et les projets, lien d’évitement, focus visible, prise en charge de `prefers-reduced-motion`, mise en page mobile et impression. La lecture des projets ne nécessite aucune ouverture de fiche.
+Le code RiskSim n'est pas public et aucun faux lien de dépôt n'est ajouté. Les réalisations techniques sont présentées avec leurs limitations et sans données client privées.

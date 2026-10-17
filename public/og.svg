@@ -1,1 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#fafafa"/><g fill="#fff" stroke="#ececec"><rect x="55" y="75" width="600" height="480" rx="28"/><rect x="680" y="75" width="210" height="225" rx="28"/><rect x="915" y="75" width="230" height="225" rx="28"/><rect x="680" y="325" width="465" height="230" rx="28"/></g><g font-family="Arial,sans-serif"><circle cx="100" cy="129" r="5" fill="#52c7a2"/><text x="120" y="135" font-size="19" fill="#777">ÉTUDIANT INGÉNIEUR</text><text x="90" y="250" font-size="55" letter-spacing="-2" fill="#252525">Rudolf Hounlete.</text><text x="90" y="326" font-size="27" fill="#777">Développement logiciel,</text><text x="90" y="370" font-size="27" fill="#777">machine learning et simulation.</text><text x="90" y="510" font-size="18" fill="#777">École Centrale Casablanca · Bénin → Maroc</text><text x="708" y="166" font-size="63" fill="#bd8859">3</text><text x="708" y="214" font-size="18" fill="#252525">médailles de bronze</text><text x="708" y="247" font-size="16" fill="#999">Kaggle &amp; Zindi</text><text x="945" y="166" font-size="63" fill="#252525">11</text><text x="945" y="214" font-size="18" fill="#252525">projets à explorer</text><text x="710" y="402" font-size="27" fill="#252525">Python · TypeScript · React</text><text x="710" y="452" font-size="19" fill="#777">Projets, expériences et résultats.</text><text x="710" y="511" font-size="17" fill="#999">rudolf-hounlete-portfolio.vercel.app</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#f7f3ed"/>
+<path d="M70 110H1130M70 515H1130" stroke="#d5c6bb"/>
+<g font-family="Arial,Helvetica,sans-serif" fill="#27333d">
+<text x="73" y="76" font-size="18" letter-spacing="4">FIELDNOTES / R·H</text>
+<text x="73" y="288" font-size="143" font-weight="600" letter-spacing="-12">Rudolf</text>
+<text x="73" y="430" font-size="143" font-weight="600" letter-spacing="-12">Hounlete.</text>
+<text x="73" y="570" font-size="19" letter-spacing="2">MACHINE LEARNING / LOGICIEL / SIMULATION</text>
+</g>
+<g fill="none" stroke="#b77762">
+<circle cx="972" cy="314" r="130" stroke-width="2"/>
+<circle cx="972" cy="314" r="90" stroke-width="1"/>
+<circle cx="972" cy="314" r="49" stroke-width="1.5"/>
+<path d="M819 314H1125M972 161V467" stroke-width="1"/>
+</g>
+<circle cx="972" cy="314" r="9" fill="#b77762"/>
+<circle cx="1076" cy="237" r="8" fill="#d3a695"/>
+</svg>
