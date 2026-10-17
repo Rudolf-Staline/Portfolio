@@ -1,0 +1,370 @@
+/* Studio / Motion vocabulary — independent, restrained and consistent. 
+   The existing ivory & midnight-blue studio art direction remains intact. */
+@media (min-width: 1051px) {
+  .cc-app { padding-right: 0; }
+  .sd-rail {
+    position:fixed; z-index:79; right:14px; top:50%;
+    display:flex; flex-direction:column; gap:8px;
+    transform:translateY(-50%);
+    border:1px solid #d4deeb;
+    background:#fbfaf8f1; backdrop-filter:blur(18px);
+    padding:9px; border-radius:100px;
+    box-shadow:0 12px 38px #1d3c6022;
+  }
+  .sd-rail a {
+    display:grid; place-items:center; width:38px; height:38px;
+    border-radius:50%; color:#687f9d;
+    position:relative;
+    transition:color .35s,background .35s,transform .35s;
+  }
+  .sd-rail a:hover { background:#ecf2fb; color:#285b9d; transform:scale(1.13); }
+  .sd-rail a.is-active { background:#305781; color:#fff; }
+  .sd-rail a>span {
+    position:absolute; right:47px; top:50%; transform:translate(8px,-50%);
+    padding:9px 13px; border-radius:6px; border:1px solid #d8e1ed;
+    background:#fbfaf8; color:#2e4769; box-shadow:0 5px 20px #1d3c6012;
+    font:500 11px/1.25 'IBM Plex Mono',monospace;
+    white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s,transform .25s;
+  }
+  .sd-rail a:hover>span,.sd-rail a:focus-visible>span {
+    transform:translate(0,-50%);opacity:1;
+  }
+}
+@media(max-width:1050px){.sd-rail{display:none}}
+
+/* Icon language: coherent scale, color and movement. */
+.cc-nav a { display:inline-flex;align-items:center;gap:9px; }
+.cc-nav a>svg { color:#7c95b4; transition:transform .32s,color .32s; }
+.cc-nav a:hover>svg,.cc-nav a[aria-current]>svg {color:#3f6a9c;transform:translateY(-3px)}
+.cc-nav-contact { display:inline-flex;align-items:center;gap:9px; }
+.cc-nav-contact svg:first-child{color:#7395b9;transition:transform .3s}
+.cc-nav-contact:hover svg:first-child{transform:rotate(-12deg)}
+.cc-nav-contact svg:last-child{transition:transform .3s}
+.cc-nav-contact:hover svg:last-child{transform:translate(3px,-3px)}
+.cc-hero-topline>svg {color:#6186b4;animation:sd-star-turn 18s linear infinite;flex-shrink:0}
+.cc-hero-topline .cc-dot{display:none}
+.cc-hero-bottom>span{display:inline-flex;align-items:center;gap:11px}
+.cc-hero-bottom>span svg{color:#7590b6}
+.cc-hero-bottom>a>svg{animation:sd-prompt-down 2.8s ease-in-out infinite}
+.cc-action-main { gap:15px; }
+.cc-action-main svg:first-child {color:#b9d0ec; flex-shrink:0; transition:transform .32s}
+.cc-action-main:hover svg:first-child {transform:rotate(-14deg)}
+.cc-action-main svg:last-child {margin-left:auto}
+.cc-action-text>svg:first-child {color:#6e91bb;transition:transform .3s}
+.cc-action-text:hover>svg:first-child {transform:rotate(-10deg)}
+.cc-action-text:hover>svg:last-child {transform:translateY(3px)}
+.sd-social{
+  display:flex;gap:25px;align-items:center;flex-wrap:wrap;
+  margin-top:28px;padding-top:20px;border-top:1px solid #e0e6ed;
+}
+.sd-social a{display:inline-flex;align-items:center;gap:8px;
+  color:#697f9c;font:500 11px/1.3 'IBM Plex Mono',monospace;
+  transition:color .25s,transform .25s;
+}
+.sd-social a:hover{color:#315b8e;transform:translateY(-3px)}
+.sd-social a svg:last-child{opacity:.65}
+
+/* Opening choreography — no flickering, no perpetual element transforms. */
+@media (prefers-reduced-motion:no-preference) {
+  .cc-hero-topline{animation:sd-arrive 800ms 90ms cubic-bezier(.16,1,.3,1) both}
+  .cc-hero h1 { animation:sd-arrive 1000ms 180ms cubic-bezier(.16,1,.3,1) both}
+  .cc-hero-statement { animation:sd-arrive 950ms 310ms cubic-bezier(.16,1,.3,1) both}
+  .cc-hero-description { animation:sd-arrive 950ms 420ms cubic-bezier(.16,1,.3,1) both}
+  .cc-hero-actions,.sd-social { animation:sd-arrive 950ms 570ms cubic-bezier(.16,1,.3,1) both}
+  .cc-hero-photo {animation:sd-photo-arrive 1250ms 80ms cubic-bezier(.16,1,.3,1) both}
+  .cc-hero-photo img {animation:sd-portrait-focus 1350ms 180ms cubic-bezier(.16,1,.3,1) both}
+  .cc-header{animation:sd-header-enter 720ms ease both}
+}
+@keyframes sd-arrive {
+  from { opacity:0; transform:translateY(25px) }
+  to { opacity:1; transform:translateY(0) }
+}
+@keyframes sd-photo-arrive {
+  from {opacity:0;clip-path:inset(0 0 100% 0)}
+  to {opacity:1;clip-path:inset(0 0 0 0)}
+}
+@keyframes sd-portrait-focus {from{filter:blur(9px);transform:scale(1.055)}to{filter:blur(0);transform:scale(1)}}
+@keyframes sd-header-enter {from{transform:translateY(-12px);opacity:.5}to{transform:translateY(0);opacity:1}}
+@keyframes sd-prompt-down{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
+@keyframes sd-star-turn {to{transform:rotate(360deg)}}
+@keyframes sd-symbol-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.055)}}
+
+/* Section section labels stay editorial; icons make them readable. */
+.cc-idx,.sd-section-kicker,.cc-lab .cc-index {
+  display:flex;align-items:center;gap:12px;
+  width:max-content;max-width:100%;
+}
+.cc-idx>svg,.sd-section-kicker>svg,.cc-lab .cc-index>svg{
+  color:#5076a9;flex-shrink:0;
+  transition:transform .5s cubic-bezier(.16,1,.3,1);
+}
+.cc-idx:hover>svg,.sd-section-kicker:hover>svg,.cc-lab .cc-index:hover>svg{
+  transform:rotate(-14deg) scale(1.12);
+}
+.cc-idx>.cc-mark,.cc-lab .cc-index>.cc-mark{display:none}
+.cc-proof-intro .sd-section-kicker,.cc-proof-intro .sd-section-kicker>svg{color:#c8dcf5}
+.cc-contact-heading .sd-section-kicker,.cc-contact-heading .sd-section-kicker>svg{color:#547ba9}
+.cc-lab .cc-index>svg{color:#678ebd}
+
+/* Richer case-study headers, without adding any overlay over photographs. */
+.sd-feature-label{display:flex;align-items:center;gap:19px;margin-bottom:13px}
+.sd-feature-label .cc-micro{display:block;margin:0}
+.sd-icon-cell{
+  --mx:50%;--my:50%;
+  position:relative;
+  display:grid;place-items:center;
+  height:58px;width:58px;flex-shrink:0;
+  background:#edf3fa;border:1px solid #d8e3f0;border-radius:14px;
+  color:#416c9d;
+  overflow:hidden;
+  transition:transform .5s cubic-bezier(.16,1,.3,1),background .35s,border-color .35s,box-shadow .35s;
+}
+.sd-icon-cell:before{
+  content:'';inset:0;position:absolute;
+  opacity:0;transition:opacity .3s;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),#fff 0%,#bed2eb 90%);
+}
+.sd-icon-cell>svg{position:relative;z-index:2;transition:transform .55s cubic-bezier(.16,1,.3,1)}
+.cc-feature-top:hover .sd-icon-cell{
+  background:#dce9f8;border-color:#b6cde8;
+  transform:rotate(-7deg) scale(1.07);
+  box-shadow:0 9px 25px #31588616;
+}
+.cc-feature-top:hover .sd-icon-cell>svg{transform:rotate(11deg) scale(1.07)}
+.cc-feature-top:hover .sd-icon-cell:before{opacity:.5}
+.cc-feature-arrow{display:grid;place-items:center;color:#a6b7ca}
+.cc-feature-arrow>svg{transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.cc-feature-top:hover .cc-feature-arrow{transform:none}
+.cc-feature-top:hover .cc-feature-arrow svg{transform:translate(0,7px)}
+.cc-feature-top{position:relative;isolation:isolate}
+.cc-feature-top:before{
+  content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(540px circle at var(--mx,60%) var(--my,40%),#c1d6ef4a,transparent 70%);
+  opacity:0;transition:opacity .5s;
+}
+.cc-feature-top:hover:before{opacity:1}
+.cc-feature-number{transition:color .5s,transform .65s cubic-bezier(.16,1,.3,1)}
+.cc-feature-top:hover .cc-feature-number{color:#aec5e3;transform:translateX(-3px)}
+.cc-feature-title h3{transition:color .4s}
+.cc-feature-top:hover .cc-feature-title h3{color:#385a82}
+.cc-feature-media {isolation:isolate;}
+.cc-feature-media img {
+  transition:transform 1s cubic-bezier(.2,.75,.2,1),filter .6s;
+}
+.cc-feature-media:not(.cc-is-capture):hover img{transform:scale(1.04)}
+.cc-feature-media.cc-is-capture:hover img{transform:none}
+.sd-process-label{display:inline-flex;align-items:center;gap:9px;color:#6b819e}
+.sd-process-label svg{color:#527fae}
+.sd-code-signature{
+  display:flex;align-items:center;gap:9px;
+  font:400 10px/1.5 'IBM Plex Mono',monospace;
+  color:#9aa9b9;margin:-8px 0 24px;letter-spacing:.01em;
+}
+.sd-code-signature>svg{color:#829ab9}
+.sd-code-signature>span{color:#7399c9;animation:sd-caret 1.2s steps(1,end) infinite}
+@keyframes sd-caret{0%,50%{opacity:1}51%,100%{opacity:0}}
+.cc-outcome .cc-micro,.cc-archive-result .cc-micro {display:inline-flex;align-items:center;gap:9px}
+.cc-outcome .cc-micro svg,.cc-archive-result .cc-micro svg {color:#6287b6}
+.cc-project-links a{gap:8px;transition:transform .3s,color .3s,border-color .3s}
+.cc-project-links a:hover{transform:translateY(-2px)}
+.cc-project-links a svg:first-child{color:#7497c3}
+.cc-project-links a svg:last-child{transition:transform .3s}
+.cc-project-links a:hover svg:last-child{transform:translate(4px,-3px)}
+.cc-tags span{transition:background .3s,border-color .3s,color .3s,transform .3s}
+.cc-tags span:hover{transform:translateY(-3px);border-color:#adc2dc;color:#385f92;background:#eff5fb}
+
+/* Archive: abundant iconography with subtle pointer interaction. */
+.cc-archive-card{position:relative;isolation:isolate}
+.cc-archive-card:before{
+  content:'';z-index:-1;position:absolute;inset:-12px;
+  border-radius:7px;pointer-events:none;opacity:0;
+  background:radial-gradient(480px circle at var(--mx,50%) var(--my,40%),#d9e7f684,transparent 65%);
+  transition:opacity .35s;
+}
+.cc-archive-card:hover:before{opacity:.55}
+.cc-archive-head{gap:12px}
+.cc-archive-head>.cc-micro{margin-right:auto}
+.sd-archive-icon{
+  display:grid;place-items:center;flex-shrink:0;
+  width:50px;height:50px;border-radius:12px;
+  background:#e7eef6;border:1px solid #d4dfed;color:#577ca9;
+  transition:background .35s,transform .45s,box-shadow .35s;
+}
+.cc-archive-card:hover .sd-archive-icon{
+  background:#dce8f6;transform:rotate(-6deg) scale(1.05);
+  box-shadow:0 8px 18px #1638600d;
+}
+.cc-archive-head>.sd-archive-arrow{
+  display:grid;place-items:center;color:#8ba7c8;
+}
+.sd-archive-arrow svg{transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.cc-archive-card:hover .sd-archive-arrow svg{transform:translate(5px,-5px)}
+.cc-archive-card h3{transition:color .35s}
+.cc-archive-card:hover h3{color:#3c618e}
+
+/* Evidence wall: icon + typography, with an actual hover hierarchy. */
+.cc-proof-row{isolation:isolate;position:relative}
+.cc-proof-index{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  color:#c3d6ec;transition:color .3s;
+}
+.cc-proof-index svg{color:#bacfec;transition:transform .45s}
+.cc-proof-index small{font:400 10px/1.2 'IBM Plex Mono',monospace}
+.cc-proof-row:hover .cc-proof-index svg{transform:rotate(-7deg) scale(1.16);color:#e8f3ff}
+.cc-proof-result{display:inline-flex;justify-content:flex-end;align-items:center;gap:9px}
+.cc-proof-result svg{color:#e5c9a4;transition:transform .4s}
+.cc-proof-row:hover .cc-proof-result svg{transform:rotate(-9deg)}
+.cc-proof-row>svg:last-child{transition:transform .35s}
+.cc-proof-row:hover>svg:last-child{transform:translate(5px,-4px)}
+/* Journey: visually track movement through schools and tools. */
+.cc-ed-row,.cc-skill-row{position:relative;isolation:isolate}
+.cc-ed-row:before,.cc-skill-row:before{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(380px circle at var(--mx,35%) var(--my,50%),#d9e7f670,transparent 80%);
+  opacity:0;transition:opacity .4s;
+}
+.cc-ed-row:hover:before,.cc-skill-row:hover:before{opacity:1}
+.sd-school-symbol,.sd-skill-symbol{
+  display:flex;flex-direction:column;gap:9px;align-items:flex-start;
+  font-size:10px;min-width:0;color:#7793b8;
+}
+.sd-school-symbol svg,.sd-skill-symbol svg{
+  color:#5f83b1;transition:transform .4s;
+}
+.sd-school-symbol small,.sd-skill-symbol small{
+  font:400 10px/1.6 'IBM Plex Mono',monospace;color:#8c99a8;
+  overflow-wrap:anywhere;
+}
+.cc-ed-row:hover .sd-school-symbol svg,.cc-skill-row:hover .sd-skill-symbol svg{
+  transform:rotate(-9deg) scale(1.12);
+}
+.cc-ed-row,.cc-skill-row{transition:padding .3s,border-color .3s}
+.cc-ed-row:hover,.cc-skill-row:hover{border-top-color:#a7bad4}
+.cc-bio h3{display:flex;align-items:center;gap:14px}
+
+/* The big email now has a meaningful mail glyph, not just an arrow. */
+.cc-mail-link{gap:17px}
+.cc-mail-link svg:first-child{color:#799cc5;flex-shrink:0;transition:transform .4s}
+.cc-mail-link:hover svg:first-child{transform:translateY(-4px) rotate(-12deg)}
+.cc-mail-link svg:last-child{margin-left:auto;flex-shrink:0;transition:transform .4s}
+.cc-mail-link:hover svg:last-child{transform:translate(7px,-7px)}
+.cc-contact-end p,.cc-contact-end a{display:inline-flex;align-items:center;gap:9px}
+.cc-contact-end p svg,.cc-contact-end a svg{color:#7e9abe}
+.cc-contact-end a:last-child svg{transition:transform .3s}
+.cc-contact-end a:hover svg:last-child{transform:translate(3px,-2px)}
+
+/* Experiment controls: all three affordances are now directly recognizable. */
+.sd-lab-badges{display:flex;flex-wrap:wrap;gap:10px;margin:-19px 0 24px}
+.sd-lab-badges>span{
+  display:inline-flex;align-items:center;gap:9px;
+  border:1px solid #cad9e9;background:#f2f6fb;
+  padding:9px 14px;border-radius:50px;
+  color:#5b7698;font:400 10px/1.2 'IBM Plex Mono',monospace;
+  transition:transform .3s,border-color .3s;
+}
+.sd-lab-badges>span:hover{transform:translateY(-3px);border-color:#9db7d7}
+.sd-lab-badges svg{color:#638ab7}
+.cc-lab-console .cc-micro{display:flex;gap:8px;align-items:center}
+.cc-lab-console .cc-micro svg{color:#6086b4}
+.cc-mode-switch button{display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:background .3s,color .3s,box-shadow .3s}
+.cc-mode-switch button svg{color:#7397c6;transition:transform .3s}
+.cc-mode-switch button[aria-pressed=true] svg{color:#d7e8ff;transform:scale(1.11)}
+.cc-mode-switch button:hover svg{transform:rotate(-7deg)}
+.cc-canvas-corner{display:flex;align-items:center;gap:8px}
+
+/* Entrance transitions: section internals reveal sequentially, with bounded delays.
+   The existing IntersectionObserver owns parent visibility state. */
+@media (prefers-reduced-motion:no-preference){
+  .cc-motion-ready .cc-feature-top[data-enter]:not(.is-in) .sd-icon-cell,
+  .cc-motion-ready .cc-feature-top[data-enter]:not(.is-in) .cc-feature-title h3,
+  .cc-motion-ready .cc-feature-top[data-enter]:not(.is-in) .cc-feature-title p{
+    opacity:0;transform:translateY(20px);
+  }
+  .cc-feature-top .sd-icon-cell,.cc-feature-top .cc-feature-title h3,
+  .cc-feature-top .cc-feature-title p{
+    transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);
+  }
+  .cc-feature-top .cc-feature-title h3{transition-delay:100ms}
+  .cc-feature-top .cc-feature-title p{transition-delay:230ms}
+  .cc-motion-ready .cc-feature-media[data-enter]:not(.is-in) img{
+    filter:blur(7px);transform:scale(1.035);
+  }
+  .cc-feature-media[data-enter] img{transition:filter 1s,transform 1.2s cubic-bezier(.16,1,.3,1)}
+  .cc-feature-media[data-enter].is-in img{filter:blur(0);transform:scale(1)}
+  .cc-feature-media:not(.cc-is-capture)[data-enter].is-in:hover img{transform:scale(1.03)}
+  .cc-motion-ready .cc-feature-body[data-enter]:not(.is-in) .cc-feature-side{
+    opacity:0;transform:translateY(23px)
+  }
+  .cc-feature-body .cc-feature-side{transition:opacity .7s,transform .75s cubic-bezier(.16,1,.3,1) .05s}
+  .cc-motion-ready .cc-feature-body[data-enter]:not(.is-in) .cc-feature-story{
+    opacity:0;transform:translateY(28px)
+  }
+  .cc-feature-body .cc-feature-story{transition:opacity .85s,transform .85s cubic-bezier(.16,1,.3,1) .16s}
+  .cc-proof-row.is-in .cc-proof-index svg{animation:sd-award-enter .85s cubic-bezier(.16,1,.3,1) both}
+  .cc-proof-row:nth-child(2n).is-in .cc-proof-index svg{animation-delay:110ms}
+  .sd-school-symbol svg{transform-origin:center}
+  .sd-rail a.is-active svg{animation:sd-icon-select .36s cubic-bezier(.16,1,.3,1)}
+}
+@keyframes sd-icon-select{from{transform:scale(.7) rotate(-15deg)}to{transform:scale(1) rotate(0)}}
+@keyframes sd-award-enter{from{opacity:.15;transform:translateY(14px) rotate(-14deg)}to{opacity:1;transform:translateY(0) rotate(0)}}
+
+/* Tablet: still abundant icons but nothing squeezes or blocks the copy. */
+@media(max-width:1050px){
+  .sd-social{gap:13px;margin-top:18px}
+  .sd-social a{font-size:10px}
+  .sd-feature-label{gap:13px}
+  .sd-icon-cell{width:48px;height:48px}
+  .sd-icon-cell svg{width:21px;height:21px}
+}
+@media(max-width:740px){
+  .cc-nav a{gap:0}
+  .cc-nav a svg{display:none}
+  .cc-nav-contact{gap:6px}
+  .cc-nav-contact svg:first-child{display:none}
+  .cc-hero-topline svg{width:14px;height:14px}
+  .cc-hero-bottom>span svg{width:13px;height:13px}
+  .cc-hero-actions{gap:15px}
+  .cc-action-main{gap:11px}
+  .cc-action-main svg:first-child{width:16px;height:16px}
+  .sd-social{margin-top:24px;gap:15px;flex-wrap:wrap}
+  .sd-social a{font-size:10px}
+  .sd-feature-label{gap:11px;margin-bottom:14px}
+  .sd-icon-cell{width:44px;height:44px;border-radius:10px}
+  .sd-feature-label .cc-micro{font-size:9px;line-height:1.6}
+  .cc-feature-arrow>svg{width:27px;height:27px}
+  .sd-code-signature{font-size:9px}
+  .cc-proof-index svg{width:19px;height:19px}
+  .cc-proof-result{gap:5px}
+  .cc-proof-result svg{width:13px;height:13px}
+  .sd-archive-icon{width:44px;height:44px}
+  .sd-archive-icon svg{width:20px;height:20px}
+  .sd-archive-arrow svg{width:19px;height:19px}
+  .sd-lab-badges{margin:0 0 17px}
+  .sd-lab-badges>span{font-size:9px;padding:8px 10px;gap:5px}
+  .sd-lab-badges svg{width:13px;height:13px}
+  .cc-mode-switch button{gap:5px}
+  .cc-mode-switch button svg{width:13px;height:13px}
+  .cc-contact-end p{display:flex;font-size:10px}
+  .cc-contact-end a{gap:6px}
+  .cc-mail-link svg:first-child{width:20px;height:20px}
+  .cc-mail-link svg:last-child{width:22px;height:22px}
+}
+@media(max-width:390px){
+  .cc-nav-contact svg:first-child{display:none}
+  .sd-social{gap:10px}
+  .sd-social a{font-size:9px}
+  .cc-mail-link{gap:7px}
+  .cc-mail-link svg:first-child{display:none}
+}
+
+/* All decorative motion is disabled for OS reduced-motion preferences. */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+  .cc-hero-photo img,.cc-feature-media img,.cc-archive-media img{filter:none!important;transform:none!important}
+  .cc-motion-ready [data-enter],.cc-motion-ready [data-enter] *{opacity:1!important;transform:none!important}
+  .sd-code-signature>span{opacity:1!important}
+}
