@@ -1,14 +1,14 @@
-# Portfolio — Rudolf Hounlete
+# Rudolf Hounlete — Creative Developer Lab
 
-Portfolio étudiant de Rudolf Hounlete, élève ingénieur à l’École Centrale Casablanca. Machine learning, développement logiciel, simulation et compétitions.
+Portfolio personnel, entre logiciel, machine learning, simulation et expérimentation visuelle.
 
-**Site :** https://rudolf-hounlete-portfolio.vercel.app
+## Direction
 
-## Présentation
+Une refonte complète, et non une couche CSS supplémentaire sur l’ancienne page : typographie expressive, composition de type atelier, portrait original, navigation verticale, projets en grands chapitres et laboratoire génératif manipulable.
 
-La page reprend la version blanche à cartes retenue en octobre 2026 : portrait et présentation, liens et distinctions, RiskSim, puis compétitions et projets, parcours et contact. Le défilement est vertical et natif. Chaque projet présente directement son image, son récit, son approche technique, son résultat et ses liens. Le thème sombre est facultatif. La typographie Figtree est hébergée avec l’application.
+Le laboratoire est réalisé en **Canvas 2D natif**. Trois modes (« Champ », « Onde », « Réseau ») réagissent à la position du pointeur et offrent un contrôle pause/lecture. Aucun faux graphique ne remplace les résultats réels des projets.
 
-RiskSim et PediAppend montrent des captures réelles agrandies, sans faux habillage d’interface ; les autres projets présentent des illustrations photographiques générées par IA, clairement identifiées sous l’image, sans texte ni boutons superposés. Les récits conservent les textes et limites actuels, avec les liens vers les dépôts et les preuves disponibles.
+**Les projets restent lisibles sans clic supplémentaire.** Cinq projets sont développés en grands chapitres et six autres gardent leurs méthodes, récits, résultats et notes directement dans la page. Les captures d’écran RiskSim et PediAppend restent authentiques ; les autres photographies illustratives générées sont indiquées comme telles. Aucun texte n’est incrusté dans les photographies.
 
 ## Développement
 
@@ -19,19 +19,17 @@ npm run build
 npm run preview
 ```
 
-`npm run build` vérifie TypeScript et produit `dist/`. Vercel utilise le preset Vite et `vercel.json`. La page active est `src/App.tsx`, avec les styles `src/horizontal.css`, `src/vertical.css`, `src/expanded.css`, `src/cinema.css`, `src/white-return.css` et `src/pedi-inline.css`. La nouvelle finition éditoriale est appliquée dans `src/folio-refresh.css` : portrait agrandi, capture RiskSim présentée à plat, images pleine largeur et légendes hors des visuels. Les anciennes propositions de design demeurent archivées dans le dépôt sans être chargées.
+Entrée active : `src/CreativeApp.tsx` via `src/main.tsx`. Styles : `src/creative.css`. L’ancien site et ses feuilles de style restent dans le dépôt pour faciliter une comparaison ou un retour arrière, mais **ne sont plus chargés** par l’entrée active.
 
-## Sources
+Le portfolio n’ajoute pas de bibliothèque de motion ou de graphiques : Canvas 2D, CSS et React suffisent. Les animations tiennent compte de `prefers-reduced-motion`. Une navigation clavier, des libellés, des liens d’évitement et une version mobile restent disponibles.
 
-- `src/data/` : projets, classements, parcours, compétences, contact, résumés et récits techniques. Les médailles et rangs sont repris du CV de Rudolf de septembre 2026.
-- `public/portrait-rudolf.webp` : portrait original optimisé.
-- `public/cinema/*-photo.webp` : illustrations de projet créées par IA, signalées sur la page.
-- `public/projects/risksim-dashboard.png` et `risksim-results.png` : captures S5 de RiskSim sur un scénario de démonstration, avec montants illustratifs.
-- `public/projects/pediappend-interface-symptomes.jpg` et `shap_summary_bar.png` : interface du prototype académique et graphique d’explication. PediAppend n’a pas de validation clinique et n’est pas destiné aux soins.
-- `public/CV_Rudolf_HOUNLETE.pdf` : CV téléchargeable.
+## Provenance
 
-Les liens absents ne produisent pas de bouton vide. Le dépôt de l’entreprise pour RiskSim n’est pas public.
+- `src/data/` : textes, résultats des compétitions, méthodes, limites, parcours.
+- `public/portrait-rudolf.webp` : portrait réel fourni pour le portfolio.
+- `public/projects/risksim-*.png` : captures S5 sur scénarios synthétiques.
+- `public/projects/pediappend-interface-symptomes.jpg`, `shap_summary_bar.png` : prototype académique et analyse SHAP. Aucun usage clinique n’est revendiqué.
+- `public/cinema/*.webp` : illustrations photographiques générées, signalées sous chaque image.
+- `public/CV_Rudolf_HOUNLETE.pdf` : CV.
 
-## Navigation
-
-Ancres directes vers les sections et les projets, lien d’évitement, focus visible, prise en charge de `prefers-reduced-motion`, mise en page mobile et impression. La lecture des projets ne nécessite aucune ouverture de fiche.
+Le code RiskSim n’est pas public. Aucun lien de dépôt n’est fabriqué pour les projets qui n’en possèdent pas.
