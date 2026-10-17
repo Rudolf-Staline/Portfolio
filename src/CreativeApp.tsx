@@ -55,6 +55,8 @@ function useEntrance() {
       nodes.forEach(node=>node.classList.add('is-in'))
       return
     }
+    const root = document.querySelector('.cc-app')
+    root?.classList.add('cc-motion-ready')
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return
@@ -63,7 +65,7 @@ function useEntrance() {
       })
     }, { threshold: 0.06, rootMargin: '0px 0px -25px 0px' })
     nodes.forEach(node => observer.observe(node))
-    return () => observer.disconnect()
+    return () => {observer.disconnect();root?.classList.remove('cc-motion-ready')}
   }, [])
 }
 type Mode = 'mesh' | 'wave' | 'particles'
