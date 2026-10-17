@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { projects } from './data/projects'
 import { projectStories } from './data/projectStories'
 import { competitions } from './data/competitions'
