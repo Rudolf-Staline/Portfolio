@@ -1,23 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-<rect width="1200" height="630" fill="#fbfaf8"/>
-<rect x="46" y="42" width="1108" height="548" fill="none" stroke="#d3dce7"/>
-<path d="M76 126h1048M76 505h1048" stroke="#d6dee8"/>
-<g fill="#7e8fa3" font-family="monospace" font-size="16" letter-spacing="2">
-<text x="78" y="94">R·H  /  CREATIVE DEVELOPMENT</text>
-<text x="924" y="94">CASABLANCA • 2026</text>
-<text x="78" y="550">SOFTWARE  /  DATA  /  SIMULATION</text>
+<rect width="1200" height="630" fill="#f7f3ed"/>
+<path d="M70 110H1130M70 515H1130" stroke="#d5c6bb"/>
+<g font-family="Arial,Helvetica,sans-serif" fill="#27333d">
+<text x="73" y="76" font-size="18" letter-spacing="4">FIELDNOTES / R·H</text>
+<text x="73" y="288" font-size="143" font-weight="600" letter-spacing="-12">Rudolf</text>
+<text x="73" y="430" font-size="143" font-weight="600" letter-spacing="-12">Hounlete.</text>
+<text x="73" y="570" font-size="19" letter-spacing="2">MACHINE LEARNING / LOGICIEL / SIMULATION</text>
 </g>
-<g font-family="Arial,Helvetica,sans-serif" font-weight="600" fill="#23364d">
-<text x="65" y="293" font-size="145" letter-spacing="-12">Rudolf</text>
-<text x="65" y="434" font-size="145" letter-spacing="-13">Hounlete</text>
+<g fill="none" stroke="#b77762">
+<circle cx="972" cy="314" r="130" stroke-width="2"/>
+<circle cx="972" cy="314" r="90" stroke-width="1"/>
+<circle cx="972" cy="314" r="49" stroke-width="1.5"/>
+<path d="M819 314H1125M972 161V467" stroke-width="1"/>
 </g>
-<g transform="translate(915 307)" fill="none">
-<circle r="164" stroke="#b3c3d6"/>
-<circle r="118" stroke="#c8d4e3"/>
-<circle r="69" stroke="#b3c3d6"/>
-<path d="M-190 0H190M0-190V190" stroke="#9eafc4"/>
-<path d="M-150-90C-80-145 63-150 150-88M-145 100C-69 156 90 147 154 87" stroke="#6e8cba" stroke-width="1.5"/>
-<circle r="10" fill="#557aab" stroke="none"/>
-<circle cx="112" cy="-115" r="6" fill="#88a4c8" stroke="none"/>
-</g>
+<circle cx="972" cy="314" r="9" fill="#b77762"/>
+<circle cx="1076" cy="237" r="8" fill="#d3a695"/>
 </svg>
