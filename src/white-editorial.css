@@ -860,10 +860,9 @@ img{max-width:100%}
   .we-hero-about .we-hero-cta{gap:18px}
 }
 @media(max-width:720px){
-  /* Five links are present: prioritize About, Projects, Contact on mobile. */
-  .we-main-nav a:nth-child(1),.we-main-nav a:nth-child(5){display:flex}
-  .we-main-nav a:nth-child(3),.we-main-nav a:nth-child(4){display:none}
-  .we-main-nav a:nth-child(5){display:none} /* Contact remains accessible in the header action. */
+  /* Keep About and Projects; the contact CTA remains available in the header. */
+  .we-main-nav a:nth-child(1){display:flex}
+  .we-main-nav a:nth-child(3),.we-main-nav a:nth-child(4),.we-main-nav a:nth-child(5){display:none}
 }
 @media(prefers-reduced-motion:reduce){
   .we-hero.we-hero-about .we-hero-portrait img{transition:none!important;transform:none!important}
