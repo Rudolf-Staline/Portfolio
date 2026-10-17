@@ -76,6 +76,13 @@ const byId = (id:string) => projects.find(item => item.index===id)!
 function Arrow({diagonal=false,size=17}:{diagonal?:boolean;size?:number}) {
   return diagonal ? <IconMark name="external" size={size}/> : <IconMark name="arrow-right" size={size}/>
 }
+function SiteGlyph({name,size=18}:{name:'github'|'download';size?:number}) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.55" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {name==='github'
+      ? <><path d="M9 20c-4 1-4-2-6-2m12 3v-3a3 3 0 0 0-1-2c4-.5 6-2.4 6-6A4.8 4.8 0 0 0 19 7a5 5 0 0 0 0-3s-1-.4-3 1a12 12 0 0 0-8 0C6 3.6 5 4 5 4a5 5 0 0 0 0 3 4.8 4.8 0 0 0-1 3c0 3.6 2 5.5 6 6a3 3 0 0 0-1 2v3"/></>
+      : <><path d="M12 3v13m-5-5 5 5 5-5M4 18v3h16v-3"/></>}
+  </svg>
+}
 function Label({children}:{children:React.ReactNode}) {
   return <span className="we-label">{children}</span>
 }
@@ -237,7 +244,7 @@ export default function WhiteEditorial(){
       </section>
       <section className="we-about" id="apropos" aria-labelledby="we-about-title">
         <div className="we-about-photo"><img src="/portrait-rudolf.webp" alt="Portrait original de Rudolf Hounlete" loading="lazy"/><span>PORTRAIT / 2026</span></div>
-        <div className="we-about-copy" data-appear><Label>Un peu de contexte</Label><h2 id="we-about-title">Ingénieur en formation.<br/><em>Curieux par nature.</em></h2>{profile.about.map((part,i)=><p key={i}>{part}</p>)}<a href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download>Consulter le CV <IconMark name="download" size={16}/></a></div>
+        <div className="we-about-copy" data-appear><Label>Un peu de contexte</Label><h2 id="we-about-title">Ingénieur en formation.<br/><em>Curieux par nature.</em></h2>{profile.about.map((part,i)=><p key={i}>{part}</p>)}<a href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download>Consulter le CV <SiteGlyph name="download" size={16}/></a></div>
       </section>
       <section className="we-background" id="parcours" aria-labelledby="we-background-title">
         <div className="we-section-top" data-appear><div><Label>Parcours & savoir-faire</Label><h2 id="we-background-title">Une base <em>solide.</em></h2></div></div>
@@ -247,7 +254,7 @@ export default function WhiteEditorial(){
       <section id="contact" className="we-contact" aria-labelledby="we-contact-title">
         <Label>Contact</Label><h2 id="we-contact-title">Un projet commence<br/>par une <em>conversation.</em></h2>
         <a className="we-contact-email" href={`mailto:${contact.email}`}><IconMark name="mail" size={26}/>{contact.email}<Arrow diagonal size={25}/></a>
-        <div className="we-footer-links"><span>Casablanca, Maroc · Bénin</span><a href={contact.github} target="_blank" rel="noopener noreferrer"><IconMark name="github" size={16}/> GitHub <Arrow diagonal size={14}/></a><a href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download><IconMark name="download" size={16}/> CV</a></div>
+        <div className="we-footer-links"><span>Casablanca, Maroc · Bénin</span><a href={contact.github} target="_blank" rel="noopener noreferrer"><SiteGlyph name="github" size={16}/> GitHub <Arrow diagonal size={14}/></a><a href={contact.cv??'/CV_Rudolf_HOUNLETE.pdf'} download><SiteGlyph name="download" size={16}/> CV</a></div>
       </section>
     </main>
     <footer className="we-footer"><a className="we-logo" href="#accueil">R<span className="we-logo-dot">.</span> HOUNLETE</a><span>© 2026 · Portfolio personnel</span><a href="#accueil">Retour en haut <IconMark name="arrow-up" size={16}/></a></footer>
