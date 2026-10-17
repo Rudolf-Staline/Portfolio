@@ -114,39 +114,32 @@ function ProjectActions({project}:{project:Project}) {
 function WideRow({id,index}:{id:string;index:number}) {
   const p=byId(id)
   const art=media[id]
-  return <article className="we-row" id={`projet-${id}`} data-appear>
+  return <div className="we-row" data-appear>
     <span className="we-row-no" aria-hidden="true">{String(index).padStart(2,'0')}<i/></span>
     <figure className={`we-row-media ${art.authentic?'we-row-real':''}`}>
-      <a href={`#etude-${id}`} aria-label={`Lire l’étude de cas ${labels[id]}`}>
-        <img src={art.src} alt={art.alt} loading="lazy" decoding="async"/>
-        <span className="we-image-action" aria-hidden="true"><Arrow size={23}/></span>
-      </a>
+      <img src={art.src} alt={art.alt} loading="lazy" decoding="async"/>
     </figure>
     <div className="we-row-copy">
-      <div className="we-row-heading"><Label>{categories[id]}</Label><a className="we-row-circle" aria-label={`Voir l’étude de cas ${labels[id]}`} href={`#etude-${id}`}><Arrow size={20}/></a></div>
-      <h3><a href={`#etude-${id}`}>{labels[id]}</a></h3>
+      <div className="we-row-heading"><Label>{categories[id]}</Label><IconMark name={icons[id]??'code'} size={22}/></div>
+      <h3>{labels[id]}</h3>
       <p>{p.tagline}</p>
       <ul className="we-row-highlights">
         {p.highlights.slice(0,2).map(highlight=><li key={highlight}>{highlight}</li>)}
       </ul>
       {p.fact && <div className="we-row-fact"><IconMark name={icons[id]??'code'} size={17}/>{p.fact}</div>}
       <div className="we-pills">{p.stack.slice(0,4).map(tag=><span key={tag}>{tag}</span>)}</div>
-      <div className="we-row-foot"><span>{p.period}</span><a href={`#etude-${id}`}>Étude de cas complète <Arrow size={15}/></a></div>
+      <div className="we-row-foot"><span>{p.period}</span><a href={`#details-${id}`}>Lire la démarche <Arrow size={15}/></a></div>
     </div>
-  </article>
+  </div>
 }
 function CaseStudy({id,index}:{id:string;index:number}) {
   const p=byId(id),story=projectStories[id]
-  return <article className="we-case" id={`etude-${id}`} data-appear>
-    <div className="we-case-head">
-      <div><Label>{String(index).padStart(2,'0')} / ÉTUDE DE CAS</Label><h3>{labels[id]}</h3><p>{story.subtitle}</p></div>
-      <div className="we-case-symbol"><IconMark name={icons[id]??'code'} size={39}/></div>
-    </div>
+  return <div className="we-case" id={`details-${id}`} data-appear>
+    <div className="we-case-intro"><Label>Projet {String(index).padStart(2,'0')} — Conception, démarche et résultats</Label></div>
     <div className="we-case-content">
       <div className="we-case-aside">
+        <span className="we-case-aside-icon"><IconMark name={icons[id]??'code'} size={26}/></span>
         <strong>{p.context}</strong>
-        <span>{p.period}</span>
-        <div className="we-pills">{p.stack.map(tag=><span key={tag}>{tag}</span>)}</div>
         <ProjectActions project={p}/>
       </div>
       <div className="we-case-writing">
@@ -167,8 +160,16 @@ function CaseStudy({id,index}:{id:string;index:number}) {
       <figure><img src="/projects/pediappend-interface-symptomes.jpg" loading="lazy" alt="Capture authentique du prototype Flask de saisie des observations"/><figcaption>Interface du prototype académique PediAppend</figcaption></figure>
       <figure><img src="/projects/shap_summary_bar.png" loading="lazy" alt="Importance moyenne des variables analysée avec SHAP dans PediAppend"/><figcaption>Interprétabilité globale avec SHAP · ne constitue pas un diagnostic clinique</figcaption></figure>
     </div>}
+  </div>
+}
+
+function ProjectChapter({id,index}:{id:string;index:number}) {
+  return <article className="we-project-chapter" id={`projet-${id}`}>
+    <WideRow id={id} index={index}/>
+    <CaseStudy id={id} index={index}/>
   </article>
 }
+
 export default function WhiteEditorial(){
   const [section,setSection]=useState('accueil')
   const progress=useRef<HTMLDivElement>(null)
@@ -222,13 +223,9 @@ export default function WhiteEditorial(){
       </section>
       <section id="projets" className="we-featured" aria-labelledby="we-featured-title">
         <div className="we-section-top" data-appear><div><Label>Portfolio / 11 réalisations</Label><h2 id="we-featured-title">Tous les <em>projets.</em></h2></div>
-          <div className="we-section-side"><p>Simulation, finance, géospatial, intelligence artificielle, audio, systèmes industriels et physique. Chaque réalisation compte.</p><a href="#etudes">Explorer les études de cas <Arrow size={17}/></a></div>
+          <div className="we-section-side"><p>Onze projets racontés dans leur intégralité : visuel, contexte, démarche, résultats et preuves. Chaque étude suit immédiatement sa présentation.</p></div>
         </div>
-        <div className="we-rows">{projectIds.map((id,i)=><WideRow id={id} index={i+1} key={id}/>)}</div>
-      </section>
-      <section className="we-studies" id="etudes" aria-labelledby="we-study-title">
-        <div className="we-section-top we-studies-top" data-appear><div><Label>Dans les coulisses</Label><h2 id="we-study-title">Au-delà <em>des images.</em></h2></div><p>Les onze projets disposent chacun d’une étude de cas complète : problématique, choix techniques, démarche, réalisations, résultats, preuves et limites.</p></div>
-        {projectIds.map((id,i)=><CaseStudy id={id} index={i+1} key={id}/>)}
+        <div className="we-rows">{projectIds.map((id,i)=><ProjectChapter id={id} index={i+1} key={id}/>)}</div>
       </section>
       <section className="we-honors" id="distinctions" aria-labelledby="we-honors-title">
         <div className="we-section-top" data-appear><div><Label>Kaggle & Zindi</Label><h2 id="we-honors-title">Résultats <em>mesurés.</em></h2></div><p>Des classements et des évaluations documentés, plutôt que des promesses.</p></div>
