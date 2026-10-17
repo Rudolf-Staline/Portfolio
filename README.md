@@ -4,7 +4,7 @@ Portfolio personnel de Rudolf Hounlete, élève ingénieur à Centrale Casablanc
 
 ## Design — version blanche panoramique
 
-Cette branche implémente la maquette blanche retenue : navigation discrète, typographie éditoriale, accueil avec un grand paysage, et **les onze projets présentés en lignes avec une image panoramique à gauche et leurs réalisations, technologies et résultats à droite**.
+Cette version conserve l'esthétique blanche et éditoriale avec **les onze projets en chapitres panoramiques**, mais l'accueil est désormais directement la section **« À propos »** : portrait original de Rudolf, formation à Centrale Casablanca, parcours Bénin → Maroc, concours Kaggle/Zindi et liens vers les réalisations et le CV. L'ancienne section À propos, autrefois placée après les distinctions, a été retirée pour ne pas répéter le même contenu.
 
 Les sections déroulantes cachées, carrousels à flèches et animations décoratives excessives ne sont pas utilisés. Chaque projet possède une **étude de cas intégralement visible en descendant la page**, avec méthode, résultats, limites, technologies et, lorsqu'elles existent, preuves et liens.
 
@@ -34,14 +34,14 @@ Les descriptions longues ne sont **pas** enfermées dans un écran ni soumises a
 
 ## Images & provenance
 
-- `public/editorial-white/hero-panorama.svg` : paysage panoramique **illustratif** conçu pour cette maquette.
+- `public/portrait-rudolf.webp` : **portrait original de Rudolf**, maintenant mis en valeur sur l'accueil et non une illustration générée. L'ancien panorama SVG reste dans le dépôt, mais n'est plus utilisé.
 - `public/cinema/financial-photo.webp` : photographie illustrative de documents financiers.
 - `public/cinema/geoai-aerial-photo.webp` : photographie illustrative de bassins aquacoles, **pas une image satellite tirée du projet**.
 - `public/cinema/automl-photo.webp` : photographie illustrative d'un espace de développement, **pas une capture du modèle**.
 - `public/cinema/risksim-photo.webp` : illustration d'ouverture RiskSim, distincte des vraies captures dans l'étude de cas.
 - `public/projects/risksim-dashboard.png` et `risksim-results.png` : captures authentiques sur scénarios synthétiques.
 - `public/projects/pediappend-interface-symptomes.jpg` et `shap_summary_bar.png` : capture du prototype et graphique SHAP ; aucune validation clinique.
-- `public/portrait-rudolf.webp` : portrait original conservé dans la section À propos.
+- La navigation « À propos » revient en haut de page et la navigation « Accueil » redondante a été supprimée.
 - Les photographies des autres projets demeurent des **illustrations**, pas des preuves ou captures réelles. Une légende dans le site indique explicitement la provenance de chaque grande image. Les anciens SVG conceptuels restent dans le dépôt mais ne sont plus affichés comme images des trois projets correspondants.
 
 Aucun résultat, classement ou métrique de maquette n’a été introduit dans les données du portfolio.
