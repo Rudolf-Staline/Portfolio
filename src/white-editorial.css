@@ -685,3 +685,186 @@ img{max-width:100%}
 @supports not (overflow:clip){.we-site{overflow:visible}}
 /* Long technical explanations remain normal page content, not scroll-locked panels. */
 .we-project-chapter .we-case{height:auto;overflow:visible}
+
+
+/* ABOUT IS THE HOME PAGE · one introduction instead of separate hero/about sections.
+   The portrait is original (public/portrait-rudolf.webp), not an AI likeness. */
+.we-hero.we-hero-about{
+  grid-template-columns:minmax(0,1.13fr) minmax(355px,.87fr);
+  gap:clamp(38px,6vw,105px);
+  min-height:calc(100svh - 82px);
+  max-width:1850px;
+  padding:clamp(38px,4vw,73px) clamp(28px,5.15vw,88px) clamp(48px,5vw,85px);
+}
+.we-hero-about .we-hero-copy{min-width:0}
+.we-hero-about .we-label{color:#718aab}
+.we-hero-about h1{
+  font-size:clamp(61px,6.3vw,112px);
+  margin:clamp(15px,2.1vw,33px) 0 clamp(17px,2.3vw,35px);
+  line-height:.93;
+}
+.we-hero-about-heading{
+  margin:0 0 clamp(17px,2vw,30px);
+  font-weight:450;
+  font-size:clamp(24px,2.35vw,41px);
+  line-height:1.13;
+  letter-spacing:-.052em;
+  color:#2a3e55;
+}
+.we-hero-about-heading em{color:#718caf}
+.we-hero-about-intro{
+  display:grid;gap:clamp(12px,1vw,19px);
+  margin-bottom:clamp(18px,2.4vw,35px);
+  max-width:730px;
+}
+.we-hero-about-intro p{
+  margin:0;
+  font-size:clamp(13px,1vw,16px);
+  line-height:1.78;
+  font-weight:400;
+  color:#69788a;
+}
+.we-hero-about .we-hero-cta{gap:clamp(21px,2.5vw,35px)}
+.we-hero-about .we-hero-scroll{
+  margin-top:clamp(24px,3vw,48px);
+  color:#98a9bb;
+}
+.we-hero-about-facts{
+  display:flex;align-items:center;flex-wrap:wrap;
+  gap:10px 20px;
+  border-top:1px solid #e6ecf3;
+  padding-top:clamp(18px,2.2vw,31px);
+  margin-top:clamp(25px,3vw,45px);
+}
+.we-hero-about-facts span{
+  display:inline-flex;align-items:center;gap:8px;
+  color:#6d829b;
+  font-size:clamp(10px,.78vw,12px);
+  font-weight:500;
+  line-height:1.4;
+}
+.we-hero-about-facts svg{color:#7293bd;flex-shrink:0}
+.we-hero.we-hero-about .we-hero-portrait{
+  min-width:0;
+  height:clamp(480px,44vw,745px);
+  align-self:stretch;
+  min-height:0;
+  margin:0;
+  display:block;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:linear-gradient(148deg,#f6f9fc 0%,#e9f0f7 46%,#d6e2ee 100%);
+  border:1px solid #e6edf4;
+  border-radius:4px;
+  box-shadow:18px 18px 0 #f2f5f9;
+}
+.we-hero.we-hero-about .we-hero-portrait:before{
+  content:'';
+  pointer-events:none;
+  position:absolute;inset:0;z-index:0;
+  background-image:linear-gradient(to right,#b8c9dc47 1px,transparent 1px),
+    linear-gradient(to bottom,#b8c9dc47 1px,transparent 1px);
+  background-size:clamp(60px,5vw,90px) clamp(60px,5vw,90px);
+  mask-image:linear-gradient(90deg,transparent,#0003 45%,#0006);
+}
+.we-hero.we-hero-about .we-hero-portrait:after{
+  content:'';
+  position:absolute;inset:0;z-index:2;
+  pointer-events:none;
+  background:linear-gradient(180deg,transparent 73%,#2b425b20 100%);
+}
+.we-portrait-ring{
+  position:absolute;z-index:0;
+  width:min(78%,550px);aspect-ratio:1;
+  border:1px solid #9bb2cb89;
+  border-radius:50%;
+  left:50%;top:43%;transform:translate(-50%,-50%);
+  box-shadow:0 0 0 40px #fff3,0 0 0 90px #fff2;
+}
+.we-portrait-ring:after{
+  content:'';
+  display:block;position:absolute;inset:14%;
+  border:1px dashed #a6bbd265;border-radius:50%;
+}
+.we-portrait-mark{
+  position:absolute;left:6%;top:5%;z-index:1;
+  font:400 clamp(60px,7vw,115px)/1 Georgia,serif;
+  color:#9baec52b;letter-spacing:-.08em;
+  user-select:none;
+}
+.we-portrait-mark span{color:#6b8cab65}
+.we-hero.we-hero-about .we-hero-portrait img{
+  position:absolute;inset:auto 0 0;
+  z-index:1;
+  width:100%;height:95%;
+  object-fit:contain;object-position:center bottom;
+  max-width:none;filter:none;
+  transition:transform .9s cubic-bezier(.16,1,.3,1);
+}
+.we-hero.we-hero-about .we-hero-portrait:hover img{
+  transform:scale(1.025);
+}
+.we-hero.we-hero-about .we-hero-portrait figcaption{
+  position:absolute;z-index:3;left:0;right:0;bottom:0;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border:0;border-top:1px solid #ffffff8c;
+  background:#fffffff1;
+  color:#667d9a;
+  font:500 10px/1.3 'DM Mono',monospace;
+  letter-spacing:.085em;
+  padding:17px 22px;
+}
+@media(max-width:1250px){
+  .we-hero.we-hero-about{grid-template-columns:minmax(0,1.1fr) minmax(310px,.9fr);gap:clamp(25px,3vw,45px)}
+  .we-hero-about h1{font-size:clamp(57px,6.5vw,85px)}
+  .we-hero-about-heading{font-size:clamp(23px,2.6vw,34px)}
+  .we-hero-about-intro p{font-size:13px;line-height:1.68}
+  .we-hero.we-hero-about .we-hero-portrait{height:clamp(470px,54vw,685px)}
+}
+@media(max-width:960px){
+  .we-hero.we-hero-about{grid-template-columns:minmax(0,1fr) minmax(285px,.78fr);padding:34px 25px 65px;gap:27px}
+  .we-hero-about h1{font-size:clamp(50px,6.4vw,70px)}
+  .we-hero-about-heading{font-size:clamp(22px,2.8vw,29px)}
+  .we-hero.we-hero-about .we-hero-portrait{height:clamp(470px,65vw,640px)}
+  .we-hero-about-facts{gap:9px 14px}
+}
+@media(max-width:720px){
+  .we-hero.we-hero-about{
+    min-height:0;
+    display:flex;flex-direction:column;
+    align-items:stretch;gap:34px;
+    padding:30px 19px 65px;
+  }
+  /* Show the real portrait while the introductory text remains readable. */
+  .we-hero.we-hero-about .we-hero-portrait{
+    order:-1;
+    height:clamp(280px,76vw,460px);
+    box-shadow:9px 9px 0 #f2f5f9;
+  }
+  .we-hero.we-hero-about .we-hero-portrait img{height:100%}
+  .we-hero.we-hero-about .we-hero-portrait figcaption{padding:11px 13px;font-size:9px}
+  .we-hero-about h1{
+    font-size:clamp(58px,12.2vw,87px);
+    margin:18px 0 25px;
+  }
+  .we-hero-about-heading{font-size:clamp(28px,6.2vw,38px)}
+  .we-hero-about-intro{gap:16px}
+  .we-hero-about-intro p{font-size:14px;line-height:1.8}
+  .we-hero-about-facts{gap:12px 20px;padding-top:21px}
+  .we-hero-about-facts span{font-size:11px}
+}
+@media(max-width:390px){
+  .we-hero-about h1{font-size:clamp(50px,12vw,67px)}
+  .we-hero.we-hero-about .we-hero-portrait figcaption{font-size:8px}
+  .we-hero-about .we-hero-cta{gap:18px}
+}
+@media(max-width:720px){
+  /* Five links are present: prioritize About, Projects, Contact on mobile. */
+  .we-main-nav a:nth-child(1),.we-main-nav a:nth-child(5){display:flex}
+  .we-main-nav a:nth-child(3),.we-main-nav a:nth-child(4){display:none}
+  .we-main-nav a:nth-child(5){display:none} /* Contact remains accessible in the header action. */
+}
+@media(prefers-reduced-motion:reduce){
+  .we-hero.we-hero-about .we-hero-portrait img{transition:none!important;transform:none!important}
+}
