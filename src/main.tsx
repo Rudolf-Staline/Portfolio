@@ -9,6 +9,7 @@ import './expanded.css'
 import './white-return.css'
 import './pedi-inline.css'
 import './folio-refresh.css'
+import './kinetic-atelier.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
