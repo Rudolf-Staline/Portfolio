@@ -244,8 +244,11 @@ function ArchiveCard({id,n}:{id:string;n:number}) {
     <div className="cc-archive-media"><img src={picture.src} alt={picture.alt} loading="lazy" decoding="async"/></div>
     <div className="cc-archive-head"><span className="cc-micro">{String(n).padStart(2,'0')} / {p.period}</span><span aria-hidden="true">↗</span></div>
     <h3>{alias[id]}</h3><p className="cc-archive-subtitle">{story.subtitle}</p>
-    <p className="cc-archive-summary">{story.paragraphs[0]}</p>
-    <div className="cc-archive-result"><span className="cc-micro">RÉSULTAT</span><p>{story.result}</p></div>
+    <div className="cc-archive-story">
+      {story.paragraphs.map((paragraph,i)=><p key={i}>{paragraph}</p>)}
+    </div>
+    <div className="cc-archive-result"><span className="cc-micro">MÉTHODE</span><p>{story.method}</p><span className="cc-micro">RÉSULTAT</span><p>{story.result}</p></div>
+    {story.note && <p className="cc-archive-note">{story.note}</p>}
     <div className="cc-tags">{p.stack.slice(0,4).map(tag=><span key={tag}>{tag}</span>)}</div>
     <ProjectLinks project={p}/>
     <span className="cc-archive-origin">{picture.real?'Capture réelle':'Illustration générée'}</span>
