@@ -181,6 +181,10 @@ img{max-width:100%}
 .cc-archive-card h3{font-size:clamp(37px,3.7vw,64px);letter-spacing:-.07em;line-height:1.03;font-weight:600;margin:18px 0 15px}
 .cc-archive-subtitle{font-size:clamp(18px,1.5vw,23px);line-height:1.45;letter-spacing:-.035em;margin:0 0 23px;color:#4a5747}
 .cc-archive-summary{font-size:15px;line-height:1.78;color:#687168;max-width:610px;margin:0 0 26px}
+.cc-archive-story>p{font-size:14px;line-height:1.76;color:#626d60;margin:0 0 17px}
+.cc-archive-story>p:first-child{font-size:15px;color:#354134}
+.cc-archive-result>.cc-micro:not(:first-child){display:block;margin-top:18px}
+.cc-archive-note{font-size:12px;line-height:1.75;color:#70776d;border-left:2px solid #a1b77e;padding-left:14px;margin:20px 0}
 .cc-archive-result{border-top:1px solid #bcc4b9;padding:20px 0 17px;margin-top:25px}
 .cc-archive-result p{font-size:13px;line-height:1.72;color:#3d473b;margin:9px 0 0}
 .cc-archive-card .cc-tags{margin-top:11px}
