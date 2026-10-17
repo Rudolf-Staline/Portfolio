@@ -406,7 +406,7 @@ html { scroll-behavior:smooth; }
 .return-top:hover svg {transform:translateY(-3px);}
 
 /* Keyframes — movement with a job and a controllable intensity. */
-@keyframes atelier-marquee {0%{transform:translateX(0)}100%{transform:translateX(-40%)}}
+@keyframes atelier-marquee {0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes editorial-turn {to{transform:rotate(360deg)}}
 @keyframes atelier-float {0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-7px) rotate(-5deg)}}
 @keyframes atelier-nudge {0%,100%{transform:translate(0,0)}50%{transform:translate(3px,-3px)}}
@@ -483,7 +483,6 @@ html { scroll-behavior:smooth; }
 }
 @media(max-width:430px) {
   .top-links {gap:11px;}
-  .top-links>a:nth-child(4) {display:none;}
   .intro-actions {align-items:flex-start;flex-direction:column;}
   .social-card strong {font-size:12px;}
   .email-card {font-size:11px;}
