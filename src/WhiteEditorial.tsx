@@ -8,7 +8,7 @@ import { profile, contact } from './data/profile'
 import { IconMark, type IconName } from './components/PortfolioMotion'
 import type { Project } from './data/types'
 
-/** Every documented project receives the same wide visual and full case study. */
+/** Three lead case studies, then eight concise introductions with the same full technical documentation. */
 const projectIds = [
   'risksim', 'financial-stress', 'geoai', '01', 'automl',
   'neurogolf', 'credit', 'waxal', '02', '03', '05',
@@ -46,8 +46,9 @@ const icons: Record<string,IconName> = {
 }
 const media: Record<string,{src:string;alt:string;authentic?:boolean}> = {
   risksim:{
-    src:'/cinema/risksim-photo.webp',
-    alt:'Illustration éditoriale consacrée aux simulations de risques',
+    src:'/projects/risksim-dashboard.png',
+    alt:'Capture authentique du tableau de bord RiskSim sur un scénario synthétique',
+    authentic:true,
   },
   'financial-stress':{
     src:'/cinema/financial-photo.webp',
@@ -74,6 +75,19 @@ const media: Record<string,{src:string;alt:string;authentic?:boolean}> = {
   '05':{src:'/cinema/soliton-photo.webp',alt:'Illustration de propagation d’ondes'},
 }
 
+const figures: Record<string,{value:string;caption:string}> = {
+  risksim:{value:'P50 · P80 · P90',caption:'Percentiles de coûts simulés'},
+  'financial-stress':{value:'4e / 262',caption:'Classement privé Zindi'},
+  geoai:{value:'Bronze',caption:'Médaille Zindi · GeoAI'},
+  '01':{value:'782',caption:'Patients · données de recherche'},
+  automl:{value:'393',caption:'Tests automatisés'},
+  neurogolf:{value:'220e / 2 963',caption:'Bronze Kaggle'},
+  credit:{value:'2e / 77',caption:'Classement Zindi'},
+  waxal:{value:'Bronze',caption:'Médaille Zindi · 3 langues'},
+  '02':{value:'YOLOv8',caption:'Détection des véhicules'},
+  '03':{value:'Walk-forward',caption:'Validation hors échantillon'},
+  '05':{value:'20',caption:'Cellules simulées dans LTspice'},
+}
 const byId = (id:string) => projects.find(item => item.index===id)!
 
 function Arrow({diagonal=false,size=17}:{diagonal?:boolean;size?:number}) {
@@ -114,7 +128,7 @@ function ProjectActions({project}:{project:Project}) {
 function WideRow({id,index}:{id:string;index:number}) {
   const p=byId(id)
   const art=media[id]
-  return <div className="we-row" data-appear>
+  return <div className={`we-row ${index<=3?'we-row-lead':'we-row-secondary'}`} data-appear>
     <span className="we-row-no" aria-hidden="true">{String(index).padStart(2,'0')}<i/></span>
     <figure className={`we-row-media ${art.authentic?'we-row-real':''}`}>
       <img src={art.src} alt={art.alt} loading="lazy" decoding="async"/>
@@ -123,6 +137,7 @@ function WideRow({id,index}:{id:string;index:number}) {
     <div className="we-row-copy">
       <div className="we-row-heading"><Label>{categories[id]}</Label><IconMark name={icons[id]??'code'} size={22}/></div>
       <h3>{labels[id]}</h3>
+      <div className="we-impact"><strong>{figures[id].value}</strong><span>{figures[id].caption}</span></div>
       <p>{p.tagline}</p>
       <ul className="we-row-highlights">
         {p.highlights.slice(0,2).map(highlight=><li key={highlight}>{highlight}</li>)}
@@ -141,6 +156,7 @@ function CaseStudy({id,index}:{id:string;index:number}) {
       <div className="we-case-aside">
         <span className="we-case-aside-icon"><IconMark name={icons[id]??'code'} size={26}/></span>
         <strong>{p.context}</strong>
+        <div className="we-case-side-facts"><span>REPÈRES TECHNIQUES</span>{p.highlights.slice(0,2).map(point=><p key={point}>{point}</p>)}</div>
         <ProjectActions project={p}/>
       </div>
       <div className="we-case-writing">
@@ -153,8 +169,7 @@ function CaseStudy({id,index}:{id:string;index:number}) {
         {p.limitation&&<p className="we-note"><strong>Limites :</strong> {p.limitation}</p>}
       </div>
     </div>
-    {id==='risksim'&& <div className="we-proof-grid" aria-label="Captures réelles de RiskSim">
-      <figure><img src="/projects/risksim-dashboard.png" loading="lazy" alt="Capture authentique du tableau de bord RiskSim sur un cas synthétique"/><figcaption>Tableau de bord de RiskSim · scénario synthétique</figcaption></figure>
+    {id==='risksim'&& <div className="we-proof-grid we-proof-single" aria-label="Seconde capture réelle de RiskSim">
       <figure><img src="/projects/risksim-results.png" loading="lazy" alt="Capture authentique des résultats, percentiles et sensibilités RiskSim"/><figcaption>Résultats de simulation · aucune donnée client réelle</figcaption></figure>
     </div>}
     {id==='01'&& <div className="we-proof-grid" aria-label="Captures réelles de PediAppend">
@@ -166,7 +181,7 @@ function CaseStudy({id,index}:{id:string;index:number}) {
 
 function ProjectChapter({id,index}:{id:string;index:number}) {
   const next=projectIds[index]
-  return <article className="we-project-chapter" id={`projet-${id}`} aria-label={`Projet ${index} sur ${projectIds.length} : ${labels[id]}`}>
+  return <article className={`we-project-chapter ${index<=3?'we-project-featured':'we-project-compact'}`} id={`projet-${id}`} aria-label={`Projet ${index} sur ${projectIds.length} : ${labels[id]}`}>
     <div className="we-chapter-eyebrow"><span>PROJECT / {String(index).padStart(2,'0')}</span><span>{categories[id]}</span><span>{String(index).padStart(2,'0')} — {String(projectIds.length).padStart(2,'0')}</span></div>
     <WideRow id={id} index={index}/>
     <CaseStudy id={id} index={index}/>
@@ -179,6 +194,7 @@ function ProjectChapter({id,index}:{id:string;index:number}) {
 
 export default function WhiteEditorial(){
   const [section,setSection]=useState('apropos')
+  const [menuOpen,setMenuOpen]=useState(false)
   const [activeProject,setActiveProject]=useState(0)
   const progress=useRef<HTMLDivElement>(null)
   useShowOnView()
@@ -213,14 +229,15 @@ export default function WhiteEditorial(){
     </nav>
     <header className="we-header">
       <a className="we-logo" href="#apropos">R<span className="we-logo-dot">.</span> HOUNLETE</a>
-      <nav className="we-main-nav" aria-label="Navigation principale">
+      <button type="button" className="we-menu-toggle" aria-controls="we-primary-links" aria-expanded={menuOpen} onClick={()=>setMenuOpen(current=>!current)}><span className="we-menu-lines" aria-hidden="true"><i/><i/></span>{menuOpen?'Fermer':'Menu'}</button>
+      <nav id="we-primary-links" className={`we-main-nav ${menuOpen?'is-open':''}`} aria-label="Navigation principale" onClick={()=>setMenuOpen(false)}>
         <a href="#apropos" aria-current={section==='apropos'?'page':undefined}>À propos</a>
         <a href="#projets" aria-current={section==='projets'?'page':undefined}>Projets</a>
         <a href="#distinctions" aria-current={section==='distinctions'?'page':undefined}>Distinctions</a>
         <a href="#parcours" aria-current={section==='parcours'?'page':undefined}>Parcours</a>
         <a href="#contact" aria-current={section==='contact'?'page':undefined}>Contact</a>
       </nav>
-      <a className="we-contact-link" href="#contact">Échanger <Arrow size={17}/></a>
+      <a className="we-contact-link" href="#contact"><IconMark name="mail" size={17}/> <span>Contact</span></a>
     </header>
     <main>
       <section id="apropos" className="we-hero we-hero-about" aria-labelledby="we-name">
@@ -228,6 +245,11 @@ export default function WhiteEditorial(){
           <Label>À propos / École Centrale Casablanca</Label>
           <h1 id="we-name">Rudolf<br/><em>Hounlete</em><span>.</span></h1>
           <h2 className="we-hero-about-heading">Ingénieur en formation.<br/><em>Curieux par nature.</em></h2>
+          <div className="we-hero-proof" aria-label="Distinctions et classements">
+            <a href="#distinctions"><strong>3</strong><span>Médailles<br/>de bronze</span></a>
+            <a href="#distinctions"><strong>2e <small>/ 77</small></strong><span>Crédit · Zindi</span></a>
+            <a href="#distinctions"><strong>4e <small>/ 262</small></strong><span>Stress financier · Zindi</span></a>
+          </div>
           <div className="we-hero-about-intro">
             {profile.about.map((part,i)=><p key={i}>{part}</p>)}
           </div>
@@ -240,7 +262,7 @@ export default function WhiteEditorial(){
             <span><IconMark name="globe" size={17}/> Bénin → Maroc</span>
             <span><IconMark name="layers" size={17}/> {projectIds.length} projets présentés</span>
           </div>
-          <a className="we-hero-scroll" href="#projets"><span>FAIRE DÉFILER POUR DÉCOUVRIR LES PROJETS</span><IconMark name="arrow-down" size={17}/></a>
+          <span className="we-hero-endnote">Simulation · Intelligence artificielle · Développement logiciel</span>
         </div>
         <figure className="we-hero-media we-hero-portrait">
           <div className="we-portrait-ring" aria-hidden="true"/>
@@ -250,8 +272,8 @@ export default function WhiteEditorial(){
         </figure>
       </section>
       <section id="projets" className="we-featured" aria-labelledby="we-featured-title">
-        <div className="we-section-top" data-appear><div><Label>Portfolio / 11 réalisations</Label><h2 id="we-featured-title">Tous les <em>projets.</em></h2></div>
-          <div className="we-section-side"><p>Onze projets racontés dans leur intégralité : visuel, contexte, démarche, résultats et preuves. Chaque étude suit immédiatement sa présentation.</p></div>
+        <div className="we-section-top" data-appear><div><Label>Portfolio / 11 réalisations</Label><h2 id="we-featured-title">Projets <em>sélectionnés.</em></h2></div>
+          <div className="we-section-side"><p>Trois réalisations à la une, puis huit autres projets présentés plus sobrement. Tous conservent leur démarche, leurs résultats et leurs limites, directement dans la page.</p></div>
         </div>
         <div className="we-rows">{projectIds.map((id,i)=><ProjectChapter id={id} index={i+1} key={id}/>)}</div>
       </section>
