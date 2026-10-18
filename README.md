@@ -1,50 +1,40 @@
-# Rudolf Hounlete — Selected Work
+# Rudolf Hounlete — Portfolio
 
 Portfolio personnel de Rudolf Hounlete, élève ingénieur à Centrale Casablanca.
 
-## Design — version blanche panoramique
+## Direction et hiérarchie
 
-Cette version conserve l'esthétique blanche et éditoriale avec **les onze projets en chapitres panoramiques**, mais l'accueil est désormais directement la section **« À propos »** : portrait original de Rudolf, formation à Centrale Casablanca, parcours Bénin → Maroc, concours Kaggle/Zindi et liens vers les réalisations et le CV. L'ancienne section À propos, autrefois placée après les distinctions, a été retirée pour ne pas répéter le même contenu.
+Le site utilise une **direction blanche éditoriale**, sans lourdes animations ni navigation horizontale. La première section est « À propos » : portrait original, parcours Bénin → Maroc et **preuves immédiatement lisibles** (trois bronzes Kaggle/Zindi, 2e/77 African Credit Scoring et 4e/262 Financial Stress).
 
-Les sections déroulantes cachées, carrousels à flèches et animations décoratives excessives ne sont pas utilisés. Chaque projet possède une **étude de cas intégralement visible en descendant la page**, avec méthode, résultats, limites, technologies et, lorsqu'elles existent, preuves et liens.
+**Trois études de cas principales** ouvrent les projets : RiskSim, Financial Stress et GeoAI. Elles bénéficient d'un traitement visuel panoramique. Les huit réalisations suivantes ont des couvertures plus compactes. Les onze projets conservent néanmoins leurs **textes, méthodes, résultats, limitations et preuves directement dans leur propre chapitre** ; aucun second passage ni clic d'ouverture n'est nécessaire.
 
-### Présentation uniforme des onze projets
+Chaque chapitre commence par un résultat ou un repère vérifié, suivi du contexte et d'un résumé. La colonne latérale comporte les repères techniques utiles. Les détails sont composés avec des lignes limitées à environ 68 caractères typographiques (68ch) pour faciliter la lecture. Le bronze est la couleur chaude réservée aux distinctions.
 
-Tous les projets sont réunis dans une seule section panoramique, sans zone « Et aussi » et sans différenciation entre projets principaux et secondaires :
+Les projets restent accessibles par les repères numérotés du rail latéral sur ordinateur ; les longs chapitres utilisent un défilement normal, avec `scroll-snap: proximity` à l'ouverture. Sur mobile, un menu explicite et un lien Contact visible remplacent la navigation tronquée.
 
-1. RiskSim — simulation de risques projet
-2. Financial Stress — prédiction financière
-3. GeoAI — détection de bassins aquacoles
-4. PediAppend — projet académique de machine learning, non clinique
-5. Autonomous AutoML — automatisation et validation
-6. NeuroGolf — raisonnement sur grilles colorées (Kaggle)
-7. African Credit Scoring — risque de crédit (Zindi)
-8. WAXAL ASR — reconnaissance vocale multilingue (Zindi)
-9. Feux rouges intelligents — vision et maquette embarquée
-10. Analyse Forex — backtesting et validation hors échantillon
-11. Propagation de solitons — physique et simulation
+## Réalisations (11)
 
-Chaque projet constitue désormais **un chapitre autonome** : grande image panoramique et présentation courte, immédiatement suivies de la démarche technique, des choix, des résultats, des limites et des captures authentiques disponibles. Le visiteur passe ensuite directement au projet suivant — il n'a pas à parcourir les onze projets une première fois avant de retrouver leurs études de cas. Les liens « Lire la démarche » conduisent à la partie détaillée du même chapitre. Les distinctions Kaggle/Zindi, le parcours, les compétences et le contact restent accessibles ensuite.
+1. RiskSim — simulation de risques et scénarios de coûts
+2. Financial Stress — prédiction financière, 4e / 262
+3. GeoAI — bassins aquacoles sur séries satellitaires, bronze Zindi
+4. PediAppend — prototype académique avec explications SHAP
+5. Autonomous AutoML — validation, reprise des expériences, 393 tests
+6. NeuroGolf — raisonnement sur grilles, bronze Kaggle
+7. African Credit Scoring — 2e / 77
+8. WAXAL ASR — reconnaissance vocale, bronze Zindi
+9. Feux intelligents — YOLOv8 et Raspberry Pi
+10. Analyse Forex — protocole walk-forward et résultat négatif documenté
+11. Propagation de solitons — expériences et simulation de 20 cellules
 
-## Navigation page par page
+## Images et provenance
 
-Les projets ont retrouvé une **ouverture quasi plein écran** et une progression entre chapitres : navigation latérale en 11 repères numérotés sur ordinateur, lien vers le projet suivant en bas de chaque chapitre, défilement doux et `scroll-snap: proximity` sur bureau.
+- `public/portrait-rudolf.webp` : portrait original en tête du site.
+- `public/projects/risksim-dashboard.png` : **capture authentique montrée en grand dès l'ouverture de RiskSim** ; `risksim-results.png` en complément dans le même chapitre. Scénarios synthétiques.
+- `public/projects/pediappend-interface-symptomes.jpg` : capture authentique en ouverture de PediAppend ; `shap_summary_bar.png` pour les analyses SHAP. Prototype académique sans validation clinique.
+- Les autres projets ne disposent pas de captures applicatives certifiées dans ce dépôt : leurs images existantes demeurent des **photographies illustratives**, clairement légendées comme telles. Ne pas les présenter comme données, mesures ou captures du travail.
+- `public/editorial-white/hero-panorama.svg` : ancien visuel désormais inutilisé. L'attribut de dégradé mal formé a été réparé afin que le SVG reste valide si réutilisé.
 
-Les descriptions longues ne sont **pas** enfermées dans un écran ni soumises au défilement forcé : le lecteur continue naturellement à parcourir l'étude de cas avant d'atteindre le projet suivant. Le défilement par pages n'est pas imposé aux petits écrans et s'adapte à `prefers-reduced-motion`.
-
-## Images & provenance
-
-- `public/portrait-rudolf.webp` : **portrait original de Rudolf**, maintenant mis en valeur sur l'accueil et non une illustration générée. L'ancien panorama SVG reste dans le dépôt, mais n'est plus utilisé.
-- `public/cinema/financial-photo.webp` : photographie illustrative de documents financiers.
-- `public/cinema/geoai-aerial-photo.webp` : photographie illustrative de bassins aquacoles, **pas une image satellite tirée du projet**.
-- `public/cinema/automl-photo.webp` : photographie illustrative d'un espace de développement, **pas une capture du modèle**.
-- `public/cinema/risksim-photo.webp` : illustration d'ouverture RiskSim, distincte des vraies captures dans l'étude de cas.
-- `public/projects/risksim-dashboard.png` et `risksim-results.png` : captures authentiques sur scénarios synthétiques.
-- `public/projects/pediappend-interface-symptomes.jpg` et `shap_summary_bar.png` : capture du prototype et graphique SHAP ; aucune validation clinique.
-- La navigation « À propos » revient en haut de page et la navigation « Accueil » redondante a été supprimée.
-- Les photographies des autres projets demeurent des **illustrations**, pas des preuves ou captures réelles. Une légende dans le site indique explicitement la provenance de chaque grande image. Les anciens SVG conceptuels restent dans le dépôt mais ne sont plus affichés comme images des trois projets correspondants.
-
-Aucun résultat, classement ou métrique de maquette n’a été introduit dans les données du portfolio.
+Le site ne comporte ni classements ni métriques inventés.
 
 ## Développement
 
@@ -55,11 +45,8 @@ npm run build
 npm run preview
 ```
 
-Le point d’entrée actif est `src/WhiteEditorial.tsx` depuis `src/main.tsx`, avec **une seule feuille de style active** : `src/white-editorial.css`. Les anciens composants et styles sont conservés pour revenir en arrière, mais ils ne sont plus chargés.
+`src/main.tsx` importe `src/WhiteEditorial.tsx` et `src/white-editorial.css`. Familles de typographie actives : Georgia (titres), DM Sans (texte) et DM Mono (métadonnées), avec leurs polices de repli. La dépendance Figtree n'est plus importée à l'exécution.
 
-Le suivi du défilement évite les nouveaux rendus à chaque pixel, les révélations progressives utilisent IntersectionObserver et `prefers-reduced-motion` est respecté. Mise en page responsive, contrastes, focus clavier, descriptions textuelles et liens d'évitement prévus.
+Accessibilité : libellés de navigation, menu mobile avec état `aria-expanded`, contraste des textes renforcé, mode `prefers-reduced-motion`, navigation clavier et liens d'évitement.
 
-Le code RiskSim n'est pas public. Pas de liens artificiels pour les dépôts indisponibles.
-
-**Site public actuel :** https://rudolf-hounlete-portfolio.vercel.app  
-**Cette version :** branche GitHub `design/white-wide-editorial-20261017`, avec prévisualisation Vercel à valider avant fusion dans `main`.
+La diffusion publique actuelle reste sur `main`. Les changements de cette passe d'audit sont sur la branche `design/portfolio-audit-polish-20261018` jusqu'à validation visuelle.
