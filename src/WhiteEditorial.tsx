@@ -139,10 +139,6 @@ function WideRow({id,index}:{id:string;index:number}) {
       <h3>{labels[id]}</h3>
       <div className="we-impact"><strong>{figures[id].value}</strong><span>{figures[id].caption}</span></div>
       <p>{p.tagline}</p>
-      <ul className="we-row-highlights">
-        {p.highlights.slice(0,2).map(highlight=><li key={highlight}>{highlight}</li>)}
-      </ul>
-      {p.fact && <div className="we-row-fact"><IconMark name={icons[id]??'code'} size={17}/>{p.fact}</div>}
       <div className="we-pills">{p.stack.slice(0,4).map(tag=><span key={tag}>{tag}</span>)}</div>
       <div className="we-row-foot"><span>{p.period}</span><a href={`#details-${id}`}>Lire la démarche <Arrow size={15}/></a></div>
     </div>
@@ -279,7 +275,7 @@ export default function WhiteEditorial(){
       </section>
       <section className="we-honors" id="distinctions" aria-labelledby="we-honors-title">
         <div className="we-section-top" data-appear><div><Label>Kaggle & Zindi</Label><h2 id="we-honors-title">Résultats <em>mesurés.</em></h2></div><p>Des classements et des évaluations documentés, plutôt que des promesses.</p></div>
-        <div className="we-honors-list">{competitions.map((c,i)=><div className="we-honor" key={c.projectId} data-appear><span>{String(i+1).padStart(2,'0')}</span><div><strong>{c.name}</strong><small>{c.platform} · {c.year}</small></div><b>{c.result}</b>{c.href?<a href={c.href} target="_blank" rel="noopener noreferrer" aria-label={`Voir ${c.name}`}><Arrow diagonal size={19}/></a>:<IconMark name="award" size={20}/>}</div>)}</div>
+        <div className="we-honors-list">{competitions.map((c,i)=><div className="we-honor" key={c.projectId} data-appear><span>{String(i+1).padStart(2,'0')}</span><div><strong>{c.name}</strong><small>{c.platform} · {c.year}</small></div><b className={c.medal?'we-medal':''}>{c.result}</b>{c.href?<a href={c.href} target="_blank" rel="noopener noreferrer" aria-label={`Voir ${c.name}`}><Arrow diagonal size={19}/></a>:<IconMark name="award" size={20}/>}</div>)}</div>
       </section>
       <section className="we-background" id="parcours" aria-labelledby="we-background-title">
         <div className="we-section-top" data-appear><div><Label>Parcours & savoir-faire</Label><h2 id="we-background-title">Une base <em>solide.</em></h2></div></div>
