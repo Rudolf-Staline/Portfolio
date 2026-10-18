@@ -867,3 +867,164 @@ img{max-width:100%}
 @media(prefers-reduced-motion:reduce){
   .we-hero.we-hero-about .we-hero-portrait img{transition:none!important;transform:none!important}
 }
+
+/* Audit pass — evidence-first hierarchy and readable editorial pacing.
+   Added after legacy rules to keep the existing production styling reversible. */
+:root{font-family:'DM Sans',Arial,sans-serif}
+.we-site{--ink:#1c293b;--soft:#45566c}
+.we-label{color:#415878;font-size:11px;letter-spacing:.12em}
+.we-case-intro .we-label,.we-chapter-eyebrow,.we-chapter-eyebrow span:first-child{color:#385473}
+.we-hero-about .we-label{color:#405c7d}
+.we-row-copy>p,.we-case-writing>p,.we-case-writing p,
+.we-hero-about-intro p{color:#47566a}
+.we-case-writing{max-width:68ch}
+.we-case-writing>p,.we-project-chapter .we-case-writing>p{max-width:68ch;font-size:16px;line-height:1.76}
+.we-case-writing>p:first-child,.we-project-chapter .we-case-writing>p:first-child{
+  max-width:54ch;font-size:clamp(18px,1.45vw,23px);line-height:1.6;
+  color:#293c54;font-weight:500
+}
+.we-row-copy>p{max-width:42ch;line-height:1.65;color:#40526a}
+.we-case-findings p,.we-project-chapter .we-case-findings p{color:#44566d;font-size:14px;max-width:37ch}
+.we-pills span{color:#405a7b;background:#f1f5fa;border-color:#d5e0ed}
+.we-honor small,.we-footer-links,.we-education p,.we-skill p{color:#51647c}
+.we-contact-link{background:transparent;color:#344d6b;border:1px solid #b8c8d9;box-shadow:none;gap:10px}
+.we-contact-link:hover{background:#eaf0f7;color:#243b59;box-shadow:none}
+.we-contact-link svg{color:#5b7596}
+.we-menu-toggle{display:none}
+/* Portfolio evidence at first glance. These values are from documented competition results. */
+.we-hero-proof{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;margin:0 0 clamp(21px,2vw,34px);
+  max-width:560px
+}
+.we-hero-proof>a{
+  min-width:0;display:flex;flex-direction:column;align-items:flex-start;
+  padding:14px 12px 15px;
+  border-top:2px solid #aabbd0;background:#f7f9fc;
+  transition:background .25s,border-color .25s,transform .25s
+}
+.we-hero-proof>a:first-child{border-color:#ac6749;background:#fbf4f0}
+.we-hero-proof>a:hover{background:#edf3f9;border-color:#567aa9;transform:translateY(-3px)}
+.we-hero-proof strong{
+  color:#273e59;font:600 clamp(22px,2.2vw,36px)/1.05 'DM Sans',Arial,sans-serif;
+  letter-spacing:-.065em;font-variant-numeric:tabular-nums;white-space:nowrap
+}
+.we-hero-proof>a:first-child strong{color:#945136}
+.we-hero-proof strong small{font-size:.5em;letter-spacing:-.01em;font-weight:500;color:#74859a}
+.we-hero-proof span{margin-top:9px;color:#445c79;font:500 11px/1.4 'DM Sans',sans-serif}
+.we-hero-about .we-hero-about-heading{margin-bottom:21px}
+.we-hero-about .we-hero-about-intro{max-width:65ch}
+.we-hero-about .we-hero-about-intro p{font-size:14px;line-height:1.72}
+.we-hero-about-facts{margin-top:23px;padding-top:20px}
+.we-hero-endnote{display:block;margin-top:23px;color:#516985;font:500 10px/1.5 'DM Mono',monospace;letter-spacing:.04em}
+/* The three lead chapters are full-screen studies. The remaining eight are
+   lean introductions followed immediately by the same exhaustive content. */
+.we-project-featured .we-row{min-height:clamp(610px,calc(100svh - 160px),1040px)}
+.we-project-featured .we-row-media{height:clamp(410px,40vw,660px)}
+.we-project-featured .we-row-copy h3{font-size:clamp(34px,3.6vw,59px)}
+.we-project-compact{min-height:0;padding:clamp(35px,4vw,62px) 0 clamp(45px,5vw,78px)}
+.we-project-compact .we-row{
+  min-height:0;
+  grid-template-columns:28px minmax(0,1.35fr) minmax(245px,1fr);
+  align-items:center;gap:clamp(16px,2vw,31px);padding-top:16px
+}
+.we-project-compact .we-row-media{height:clamp(275px,26vw,385px);box-shadow:0 12px 35px #1d344710}
+.we-project-compact .we-row-copy{padding:12px 0 15px}
+.we-project-compact .we-row-copy h3{font-size:clamp(26px,2.45vw,39px);margin:12px 0}
+.we-project-compact .we-row-no{font-size:13px}
+.we-project-compact .we-row-copy>p{font-size:14px;max-width:45ch}
+.we-project-compact .we-row-foot{padding-top:15px}
+.we-project-compact .we-case{margin-top:25px;padding-top:26px}
+.we-project-compact .we-case-intro{margin-bottom:24px}
+.we-project-compact .we-chapter-bottom{margin-top:30px}
+.we-impact{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin:11px 0 18px}
+.we-impact strong{
+  display:block;color:#264c79;
+  font:600 clamp(29px,3vw,49px)/1.07 'DM Sans',sans-serif;
+  letter-spacing:-.07em;font-variant-numeric:tabular-nums
+}
+.we-impact span{font-size:12px;line-height:1.45;color:#486480;font-weight:530}
+.we-project-compact .we-impact strong{font-size:clamp(24px,2.6vw,37px)}
+.we-project-chapter .we-row-copy .we-row-heading>svg{color:#416c9a}
+.we-row-media .we-art-source{color:#304a6a;font-size:10px}
+.we-row-real .we-art-source{color:#254b76}
+.we-case-aside{min-width:0}
+.we-case-side-facts{
+  margin:20px 0 6px;padding:17px 17px 4px 0;
+  border-top:1px solid #d5e0eb;width:100%;max-width:310px
+}
+.we-case-side-facts>span{
+  color:#42668d;font:600 10px/1.5 'DM Mono',monospace;letter-spacing:.08em
+}
+.we-case-side-facts p{font-size:13px;line-height:1.6;color:#42536b;margin:12px 0}
+.we-project-chapter .we-case-content{grid-template-columns:minmax(225px,.35fr) minmax(0,1fr)}
+.we-proof-single{grid-template-columns:minmax(0,1fr);max-width:1050px}
+.we-proof-single img{height:clamp(330px,36vw,565px)}
+.we-medal{color:#b77750!important}
+.we-honor:hover .we-medal{color:#a65d37!important}
+.we-honor b:not(.we-medal){color:#375575}
+@media(max-width:1070px){
+  .we-project-compact .we-row{grid-template-columns:25px minmax(0,1.1fr) minmax(225px,.9fr)}
+  .we-project-chapter .we-case-content{grid-template-columns:minmax(185px,.32fr) minmax(0,1fr)}
+  .we-hero-proof span{font-size:10px}
+}
+@media(max-width:720px){
+  .we-header{gap:9px;padding:0 16px}
+  .we-logo{font-size:14px;letter-spacing:.09em}
+  .we-menu-toggle{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:12px;font-weight:600;padding:11px 6px;margin-left:auto;
+    border:0;background:transparent;color:#334e70
+  }
+  .we-menu-lines{display:flex;flex-direction:column;gap:4px;width:17px}
+  .we-menu-lines i{height:2px;width:17px;background:#45668d;border-radius:3px}
+  .we-main-nav{display:none!important}
+  .we-main-nav.is-open{
+    position:absolute;top:calc(100% - 1px);left:0;right:0;z-index:91;
+    display:flex!important;flex-direction:column;align-items:stretch;gap:0;
+    background:#fff;border:1px solid #dce4ee;
+    padding:9px 20px 18px;box-shadow:0 17px 27px #2438541c;
+    margin:0;max-height:calc(100svh - 70px);overflow-y:auto
+  }
+  .we-main-nav.is-open a{
+    display:flex!important;min-height:48px;justify-content:flex-start;
+    border-bottom:1px solid #e6edf4;color:#314866;font-size:14px;
+  }
+  .we-main-nav.is-open a:after{display:none}
+  .we-contact-link{font-size:12px;gap:5px;padding:10px 11px;white-space:nowrap}
+  .we-contact-link span{display:inline}
+  .we-contact-link svg{width:15px;height:15px}
+  .we-hero-proof{gap:7px;margin-bottom:23px}
+  .we-hero-proof>a{padding:12px 9px;min-height:90px}
+  .we-hero-proof strong{font-size:clamp(22px,6.4vw,30px)}
+  .we-hero-proof span{font-size:10px}
+  .we-hero-endnote{font-size:10px}
+  .we-project-featured .we-row{min-height:0}
+  .we-project-featured .we-row-media{height:clamp(295px,69vw,480px)}
+  .we-project-compact{padding:34px 0 57px;min-height:0}
+  .we-project-compact .we-row{
+    min-height:0;display:grid;grid-template-columns:25px minmax(0,1fr);
+    align-items:stretch;gap:10px
+  }
+  .we-project-compact .we-row-media{grid-column:2;grid-row:1;height:clamp(230px,57vw,390px)}
+  .we-project-compact .we-row-copy{grid-column:2;grid-row:2}
+  .we-project-compact .we-row-no{grid-column:1;grid-row:1}
+  .we-project-compact .we-case{margin:24px 0 0 35px}
+  .we-project-chapter .we-case-content{grid-template-columns:1fr}
+  .we-case-side-facts{max-width:100%;margin:10px 0 8px}
+  .we-project-chapter .we-case-aside{display:flex;flex-direction:column;align-items:flex-start}
+  .we-case-side-facts p{font-size:12px}
+  .we-impact strong{font-size:clamp(28px,7.2vw,37px)}
+  .we-case-writing>p,.we-project-chapter .we-case-writing>p{font-size:15px;max-width:68ch}
+  .we-hero.we-hero-about .we-hero-portrait{order:0;height:clamp(280px,80vw,420px)}
+}
+@media(max-width:390px){
+  .we-logo{font-size:12px;letter-spacing:.065em}
+  .we-menu-toggle{font-size:11px}
+  .we-contact-link{padding:8px;font-size:11px}
+  .we-hero-proof>a{padding:10px 7px}
+  .we-hero-proof span{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+  .we-hero-proof>a{transition:none}
+}
