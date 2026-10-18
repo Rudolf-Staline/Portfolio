@@ -960,8 +960,8 @@ img{max-width:100%}
 .we-project-chapter .we-case-content{grid-template-columns:minmax(225px,.35fr) minmax(0,1fr)}
 .we-proof-single{grid-template-columns:minmax(0,1fr);max-width:1050px}
 .we-proof-single img{height:clamp(330px,36vw,565px)}
-.we-medal{color:#b77750!important}
-.we-honor:hover .we-medal{color:#a65d37!important}
+.we-medal{color:#975334!important}
+.we-honor:hover .we-medal{color:#8f4e32!important}
 .we-honor b:not(.we-medal){color:#375575}
 @media(max-width:1070px){
   .we-project-compact .we-row{grid-template-columns:25px minmax(0,1.1fr) minmax(225px,.9fr)}
