@@ -1,10 +1,13 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import '@fontsource-variable/manrope'
 import App from './App'
 import './style.css'
 import './project-gallery.css'
+import './positioning.css'
+import './engineering.css'
 
-createRoot(document.getElementById('root')!).render(<StrictMode><App /></StrictMode>)
-
-import "./positioning.css"
+const root = document.getElementById('root')!
+const app = <StrictMode><App pathname={window.location.pathname}/></StrictMode>
+if (root.querySelector('main')) hydrateRoot(root, app)
+else createRoot(root).render(app)

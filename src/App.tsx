@@ -1,206 +1,142 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, ArrowRight, ArrowDown, ArrowUp, X, List, DownloadSimple, GithubLogo, Moon, Sun, Copy, Check, Medal, Image as ImageIcon, EnvelopeSimple } from '@phosphor-icons/react'
-import { projects } from './data/projects'
-import { projectStories } from './data/projectStories'
+import { ArrowUpRight, ArrowRight, ArrowDown, ArrowUp, X, List, DownloadSimple, GithubLogo, Moon, Sun, Copy, Check, Medal, ArrowLeft } from '@phosphor-icons/react'
 import { contact } from './data/profile'
-import { skills } from './data/skills'
-import { competitions } from './data/competitions'
-import { additionalProjects } from './data/additionalProjects'
-import { pitches } from './data/pitches'
 import { projectVisuals } from './data/projectVisuals'
+import type { Locale } from './data/architecture'
+import type { Work } from './data/work'
+import { getWork, getPitch, homePath, projectPath, routeFor } from './routes'
+import Architecture from './components/Architecture'
+import { imageSet, portraitSet, portraitSizes, cardSizes, featureSizes, studySizes } from './images'
 
-// Art direction: editorial, variance 8 / motion 6 / density 3.
-// Real project captures and an existing portrait. One vermilion accent.
-// Layer scale: header 20, chapter controls 25, mobile menu 30, native dialog top layer.
-const plain = (text: string) => text.replace(/[—–]/g, '-')
-type Work = {
-  id: string; title: string; group: string; context: string; period: string;
-  summary: string; result: string; method: string; paragraphs: string[];
-  stack: string[]; code: string | null; note?: string;
-}
-const titles: Record<string, string> = { risksim: 'RiskSim', neurogolf: 'NeuroGolf', credit: 'African Credit Scoring', 'financial-stress': 'Stress financier', geoai: 'GeoAI Aquaculture', waxal: 'WAXAL ASR', automl: 'Autonomous AutoML', '01': 'PediAppend', '02': 'Feux intelligents', '03': 'Analyse Forex', '05': 'Propagation de solitons' }
-const work: Work[] = projects.map(p => {
-  const story = projectStories[p.index]
-  return {
-    id: p.index, title: titles[p.index] || p.title,
-    group: ['risksim', 'automl', '03'].includes(p.index) ? 'Logiciel' : ['02', '05'].includes(p.index) ? 'Expérimentation' : 'Machine learning',
-    context: plain(p.context), period: plain(p.period), summary: plain(p.cardDescription || p.tagline),
-    result: plain(story.result), method: plain(story.method), paragraphs: story.paragraphs.map(plain),
-    stack: p.stack, code: p.links.code || null, note: story.note ? plain(story.note) : undefined,
-  }
-})
-work.splice(1, 0, {
-  id: 'dossier-jaune', title: 'Dossier Jaune', group: 'Logiciel', context: 'Projet d’innovation · Centrale Casablanca', period: '2026',
-  summary: 'Réunir les documents d’une commande textile et donner à chaque intervenant un accès adapté.',
-  result: 'Un prototype avec dossiers par commande, espace client, droits par sous-dossier et annotations PDF versionnées.',
-  method: 'Une application web avec FastAPI, PostgreSQL et stockage Supabase. Les annotations PDF sont enregistrées dans une nouvelle version du document.',
-  paragraphs: [
-    'Dans une commande textile, les documents circulent entre plusieurs intervenants. Le projet Dossier Jaune rassemble les pièces d’une commande dans un dossier commun, organisé en sous-dossiers métier.',
-    'Le prototype prévoit un espace interne et un espace client. Chaque utilisateur accède aux documents selon ses droits. Un lecteur PDF permet d’annoter un fichier et de sauvegarder une nouvelle version.',
-    'Je développe la plateforme et fais évoluer son ergonomie au fil des échanges du projet d’innovation. Le périmètre continue de s’affiner avec les retours du terrain.',
+// Editorial portfolio for technical recruiters. Variance 6 / motion 3 / density 4.
+// Layers: sticky header 20, mobile menu 30. All content is available without JS.
+const text = {
+ fr: {
+  nav: ['Projets', 'Compétences', 'Parcours', 'Contact'], cv: 'Mon CV',
+  eyebrow: 'Rudolf Hounlete · Élève ingénieur à Centrale Casablanca', hero: ['Du modèle', 'à la décision.'],
+  intro: 'Je développe des modèles de machine learning et les logiciels qui les rendent utiles.',
+  explore: 'Voir les projets', reach: 'Me contacter', field: 'Machine learning & développement logiciel',
+  bronze: 'Médailles de bronze', outOf: 'sur', participants: 'participants',
+  projectsTitle: 'Des projets, des choix, des preuves.', projectsText: 'Le besoin, ma contribution et le résultat : chaque projet se lit aussi comme une étude de cas.',
+  read: 'Lire l’étude de cas', summary: 'Synthèse', technical: 'Architecture et validation',
+  groups: ['Tous', 'Logiciel', 'Machine learning', 'Expérimentation'], search: 'Rechercher un projet', reset: 'Réinitialiser', empty: 'Aucun projet trouvé.', emptyText: 'Essaie un autre mot ou enlève le filtre.', count: 'projets',
+  capture: 'Capture du projet', generated: 'Image générée', generatedCaption: 'Image générée pour évoquer le sujet du projet.', catalogue: 'Catalogue complet',
+  skillsTitle: 'Les compétences, dans le travail.', skillsIntro: 'Une compétence compte lorsqu’elle permet de résoudre une difficulté concrète.',
+  pillars: [
+   ['Modéliser et vérifier', 'Construire les variables, comparer les modèles et concevoir une validation qui reproduit les conditions du test.', 'LightGBM / PyTorch / Optuna / SHAP', 'financial-stress'],
+   ['Construire l’outil autour', 'Passer d’un moteur Python à une interface, à des droits d’accès et à une distribution utilisable.', 'Python / React / TypeScript / SQL', 'risksim'],
+   ['Relier au système réel', 'Faire communiquer perception, décision et commande ; confronter une simulation à des mesures.', 'YOLOv8 / Raspberry Pi / LTspice', '02']
   ],
-  stack: ['FastAPI', 'JavaScript', 'PostgreSQL', 'Supabase', 'PyMuPDF'], code: 'https://github.com/Rudolf-Staline/Framatex',
-  note: 'Projet d’innovation en cours ; la capture présente une version du prototype.',
-})
-work.push(...additionalProjects)
-const order = ['risksim', 'financial-stress', 'dossier-jaune', 'automl', 'neurogolf', 'credit', 'geoai', 'waxal', '01', 'churn-dashboard', '02', 'biohub', '03', '05']
-work.sort((a,b) => order.indexOf(a.id) - order.indexOf(b.id))
-work.forEach(p => { p.summary = pitches[p.id].summary })
-const groups = ['Tous', 'Logiciel', 'Machine learning', 'Expérimentation']
-const chapters = [
-  { id: 'accueil', label: 'Accueil' }, { id: 'projets', label: 'Projets' },
-  { id: 'competitions', label: 'Compétitions' }, { id: 'apropos', label: 'À propos' }, { id: 'contact', label: 'Contact' },
-]
-
-function CaseStudy({ project, onClose }: { project: Work | null; onClose: () => void }) {
-  const dialog = useRef<HTMLDialogElement>(null)
-  useEffect(() => {
-    const el = dialog.current
-    if (!project || !el) return
-    const trigger = document.activeElement as HTMLElement | null
-    el.showModal()
-    const old = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => { el.close(); document.body.style.overflow = old; trigger?.focus({ preventScroll: true }) }
-  }, [project])
-  if (!project) return null
-  return <dialog className="case-dialog" ref={dialog} aria-labelledby="case-title" onCancel={e => { e.preventDefault(); onClose() }} onClick={e => { if (e.target === e.currentTarget) onClose() }}>
-    <article className="case-sheet">
-      <div className="case-top"><span>{project.context}</span><button className="icon-button close-case" onClick={onClose} aria-label="Fermer le projet"><X size={25}/></button></div>
-      <header className="case-heading"><p className="case-category">{project.group} / {project.period}</p><h2 id="case-title">{project.title}</h2><p className="case-intro">{pitches[project.id].headline}</p><p className="case-proof">{pitches[project.id].proof}</p></header>
-      <div className="case-brief"><div><h3>Le problème</h3><p>{project.summary}</p></div><div><h3>Ma contribution</h3><p>{pitches[project.id].role}</p></div><div><h3>Le résultat</h3><p>{pitches[project.id].value}</p></div></div>
-      <figure className={`case-figure case-figure-${projectVisuals[project.id].kind}`}><img src={projectVisuals[project.id].src} alt={projectVisuals[project.id].alt} width={projectVisuals[project.id].width} height={projectVisuals[project.id].height} decoding="async"/><figcaption>{projectVisuals[project.id].caption}</figcaption></figure>
-      <div className="case-content"><div className="case-prose"><h3>Le projet en détail</h3>{project.paragraphs.map((p, i) => <p key={i}>{p}</p>)}</div><aside><h3>Le choix qui compte</h3><p>{pitches[project.id].decision}</p><h3>Approche</h3><p>{project.method}</p><div className="tech-list">{project.stack.map(s => <span key={s}>{s}</span>)}</div></aside></div>
-      {project.note && <p className="case-note">{project.note}</p>}
-      <footer className="case-footer">{project.code ? <a className="button primary" href={project.code} target="_blank" rel="noreferrer">Code source <GithubLogo size={21}/><span className="sr-only"> (nouvel onglet)</span></a> : <span>Présentation du projet</span>}<button className="text-button" onClick={onClose}>Revenir au portfolio <ArrowRight size={20}/></button></footer>
-    </article>
-  </dialog>
+  compTitle: 'Des résultats qui se comparent.', compText: 'Trois médailles de bronze et deux classements de tête, sur des problèmes de raisonnement, d’audio, de données satellitaires et de finance.',
+  aboutTitle: 'Le même soin pour le modèle et pour son usage.', aboutLead: 'Je m’intéresse à ce qui se passe entre un bon résultat technique et un outil dont quelqu’un peut se servir.',
+  aboutText: 'Chez CHOUBEL CONSULTING, cela m’a conduit à travailler sur la restitution des simulations et l’interface de RiskSim. Sur Dossier Jaune, cela signifie reprendre les parcours à partir des retours des utilisateurs.',
+  origin: 'Originaire du Bénin, formé aux mathématiques et aux TIC à l’IMSP, j’ai rejoint Centrale Casablanca en 2025. Je poursuis ce double travail de modélisation et de développement, avec un intérêt particulier pour le risque et la finance.',
+  journey: 'Le parcours', engineering: 'Cycle ingénieur généraliste', internship: 'Stage de développement logiciel · RiskSim', degree: 'Licence en technologies de l’information et de la communication', morocco: 'Maroc', benin: 'Bénin',
+  contactTitle: 'Construisons la suite.', contactText: 'Vous cherchez un profil capable de travailler sur les données et de construire l’application autour ? Parlons de votre équipe et de vos projets.',
+  copy: 'Copier l’adresse e-mail', copied: 'Adresse copiée.', copyError: 'Copie indisponible. Tu peux sélectionner l’adresse ou cliquer dessus.',
+  back: 'Revenir aux projets', problem: 'Le problème', role: 'Ma contribution', result: 'Le résultat', detail: 'Le projet en détail', decision: 'Le choix qui compte', method: 'Approche', limits: 'Périmètre et limites', code: 'Code source',
+  next: 'Projet suivant', notFound: 'Cette page n’existe pas.', skip: 'Aller au contenu', top: 'Retour en haut', dark: 'Activer le thème sombre', light: 'Activer le thème clair', open: 'Ouvrir le menu', close: 'Fermer le menu', newTab: 'nouvel onglet'
+ },
+ en: {
+  nav: ['Projects', 'Skills', 'Background', 'Contact'], cv: 'CV (French)',
+  eyebrow: 'Rudolf Hounlete · Engineering student at Centrale Casablanca', hero: ['From model', 'to decision.'],
+  intro: 'I build machine learning models and the software that makes them useful.',
+  explore: 'View projects', reach: 'Get in touch', field: 'Machine learning & software development',
+  bronze: 'Bronze medals', outOf: 'out of', participants: 'participants',
+  projectsTitle: 'Projects, decisions and evidence.', projectsText: 'The problem, my contribution and the outcome: each project also has its own case study.',
+  read: 'Read the case study', summary: 'Overview', technical: 'Architecture and validation',
+  groups: ['All', 'Software', 'Machine learning', 'Experimentation'], search: 'Search projects', reset: 'Reset', empty: 'No projects found.', emptyText: 'Try another term or remove the filter.', count: 'projects',
+  capture: 'Project screenshot', generated: 'Generated image', generatedCaption: 'Generated image evoking the subject of the project.', catalogue: 'Complete catalogue',
+  skillsTitle: 'Skills, demonstrated through work.', skillsIntro: 'A skill matters when it helps solve a concrete problem.',
+  pillars: [
+   ['Model and validate', 'Engineer features, compare models and design validation that reflects the actual test conditions.', 'LightGBM / PyTorch / Optuna / SHAP', 'financial-stress'],
+   ['Build the surrounding tool', 'Connect a Python engine to an interface, access controls and a usable distribution.', 'Python / React / TypeScript / SQL', 'risksim'],
+   ['Connect to the physical system', 'Link perception, decision and control, and compare numerical simulation with measurements.', 'YOLOv8 / Raspberry Pi / LTspice', '02']
+  ],
+  compTitle: 'Results against a common benchmark.', compText: 'Three bronze medals and two leading ranks across visual reasoning, speech, satellite data and finance.',
+  aboutTitle: 'The same care for the model and its use.', aboutLead: 'I am interested in the gap between a good technical result and a tool someone can actually use.',
+  aboutText: 'At CHOUBEL CONSULTING, that meant working on simulation visualisations and the RiskSim interface. On Dossier Jaune, it means revising workflows based on user feedback.',
+  origin: 'Originally from Benin, I studied mathematics and ICT at IMSP before joining Centrale Casablanca in 2025. I combine modelling and software development, with a particular interest in risk and finance.',
+  journey: 'Background', engineering: 'General engineering degree programme', internship: 'Software development internship · RiskSim', degree: 'Bachelor’s degree in Information and Communication Technologies', morocco: 'Morocco', benin: 'Benin',
+  contactTitle: 'Let’s build what comes next.', contactText: 'Looking for someone who can work on the data and build the application around it? Tell me about your team and projects.',
+  copy: 'Copy email address', copied: 'Address copied.', copyError: 'Copy unavailable. Select the address or click it to send an email.',
+  back: 'Back to projects', problem: 'The problem', role: 'My contribution', result: 'The outcome', detail: 'Inside the project', decision: 'The key decision', method: 'Approach', limits: 'Scope and limitations', code: 'Source code',
+  next: 'Next project', notFound: 'This page does not exist.', skip: 'Skip to content', top: 'Back to top', dark: 'Use dark theme', light: 'Use light theme', open: 'Open menu', close: 'Close menu', newTab: 'new tab'
+ }
 }
 
-function ProjectButton({ id, className = '', children, labelledBy }: { id: string; className?: string; children: React.ReactNode; labelledBy?: string }) {
-  return <a className={className} href={`#projet/${id}`} aria-labelledby={labelledBy}>{children}</a>
+function ProjectCard({ project: p, locale }: { project: Work; locale: Locale }) {
+ const v = projectVisuals[p.id], t = text[locale], pitch = getPitch(p.id, locale)
+ return <a href={projectPath(p.id, locale)} className="archive-item">
+  <div className={`archive-visual archive-visual-${v.kind}`}><img src={v.src} srcSet={imageSet(p.id)} sizes={cardSizes} alt={locale === 'fr' ? v.alt : `${v.kind === 'capture' ? t.capture : t.generated}: ${p.title}`} width={v.width} height={v.height} loading="lazy" decoding="async"/></div>
+  <div className="archive-item-body"><div className="archive-item-top"><span>{p.group}</span><ArrowUpRight size={22} aria-hidden="true"/></div><h3 id={`card-${p.id}`}>{p.title}</h3><p>{p.summary}</p><strong className="archive-proof">{pitch.proof}</strong><span className="archive-context">{p.stack.slice(0, 3).join(' / ')}</span></div>
+ </a>
 }
 
-function ProjectCard({ project, index }: { project: Work; index: number }) {
-  const visual = projectVisuals[project.id]
-  return <ProjectButton id={project.id} className="archive-item" labelledBy={`card-${project.id}`}>
-    <div className={`archive-visual archive-visual-${visual.kind}`}>
-      <img src={visual.src} alt={visual.alt} width={visual.width} height={visual.height} loading="lazy" decoding="async"/>
-      <span className="visual-kind">{visual.kind === 'capture' ? <ImageIcon size={13} aria-hidden="true"/> : <ImageIcon size={13} aria-hidden="true"/>}{visual.kind === 'capture' ? 'Capture du projet' : 'Visuel généré'}</span>
-    </div>
-    <div className="archive-item-body">
-      <div className="archive-item-top"><span>{String(index + 1).padStart(2, '0')} / {project.group}</span><ArrowUpRight size={22} aria-hidden="true"/></div>
-      <h3 id={`card-${project.id}`}>{project.title}</h3><p>{project.summary}</p>
-      <span className="archive-proof">{pitches[project.id].proof}</span><span className="archive-context">{project.stack.slice(0, 3).join(' · ')}</span>
-    </div>
-  </ProjectButton>
+function StudyPage({ project: p, locale }: { project: Work; locale: Locale }) {
+ const t = text[locale], pitch = getPitch(p.id, locale), list = getWork(locale), v = projectVisuals[p.id]
+ const next = list[(list.findIndex(w => w.id === p.id) + 1) % list.length]
+ return <main id="contenu" className="study-page wrap">
+  <a href={`${homePath(locale)}#projets`} className="text-button study-back"><ArrowLeft size={19}/>{t.back}</a>
+  <header className="study-heading"><p className="study-context">{p.context} / {p.period}</p><h1>{p.title}</h1><p className="study-headline">{pitch.headline}</p><p className="study-proof">{pitch.proof}</p></header>
+  <nav className="study-navigation" aria-label={locale === 'fr' ? 'Dans cette étude' : 'On this page'}><a href="#synthese">{t.summary}</a><a href="#technique">{t.technical}<ArrowDown size={16}/></a>{p.code && <a href={p.code} target="_blank" rel="noreferrer">{t.code}<ArrowUpRight size={16}/><span className="sr-only"> ({t.newTab})</span></a>}</nav>
+  <section className="study-brief" id="synthese" aria-label={t.summary}>{[[t.problem, p.problem || p.summary], [t.role, pitch.role], [t.result, pitch.value]].map(([heading, value]) => <div key={heading}><h2>{heading}</h2><p>{value}</p></div>)}</section>
+  <figure className={`project-image project-image-large project-image-${v.kind}`}><img src={v.src} srcSet={imageSet(p.id)} sizes={studySizes} alt={locale === 'fr' ? v.alt : `${v.kind === 'capture' ? t.capture : t.generated}: ${p.title}`} width={v.width} height={v.height} decoding="async"/><figcaption>{locale === 'fr' ? v.caption : v.kind === 'generated' ? t.generatedCaption : `${p.title}: prototype screenshot.`}</figcaption></figure>
+  <section className="study-detail" id="technique"><div className="study-prose"><h2>{t.detail}</h2>{p.paragraphs.map(value => <p key={value}>{value}</p>)}</div><aside><h2>{t.decision}</h2><p>{pitch.decision}</p><h2>{t.method}</h2><p>{p.method}</p><div className="tech-list">{p.stack.map(s => <span key={s}>{s}</span>)}</div></aside></section>
+  <Architecture id={p.id} locale={locale}/>
+  <section className="study-result"><div><h2>{t.result}</h2><p>{p.result}</p></div>{p.note && <div><h2>{t.limits}</h2><p>{p.note}</p></div>}</section>
+  <footer className="study-footer"><a className="text-button" href={`${homePath(locale)}#projets`}><ArrowLeft size={19}/>{t.back}</a><a className="next-project" href={projectPath(next.id, locale)}><span>{t.next}</span><strong>{next.title}<ArrowRight size={23}/></strong></a></footer>
+ </main>
 }
 
-function App() {
-  const [theme, setTheme] = useState(() => { try { return localStorage.getItem('rudolf-theme') || 'light' } catch { return 'light' } })
-  const [menu, setMenu] = useState(false)
-  const [active, setActive] = useState('accueil')
-  const [projectId, setProjectId] = useState<string | null>(null)
-  const [group, setGroup] = useState('Tous')
-  const [query, setQuery] = useState('')
-  const [copied, setCopied] = useState(false)
-  const [copyError, setCopyError] = useState(false)
-  const copyTimer = useRef<ReturnType<typeof setTimeout>>()
-  const returnHash = useRef('#projets')
-  const hashOpened = useRef(false)
+function HomePage({ locale }: { locale: Locale }) {
+ const t = text[locale], list = getWork(locale)
+ const [group, setGroup] = useState(t.groups[0]), [query, setQuery] = useState(''), [copyStatus, setCopyStatus] = useState('')
+ const timer = useRef<ReturnType<typeof setTimeout>>()
+ useEffect(() => () => clearTimeout(timer.current), [])
+ const filtered = list.filter(p => (group === t.groups[0] || p.group === group) && `${p.title} ${p.summary} ${p.stack.join(' ')}`.toLocaleLowerCase(locale).includes(query.toLocaleLowerCase(locale)))
+ const copy = async () => { clearTimeout(timer.current); try { await navigator.clipboard.writeText(contact.email); setCopyStatus(t.copied); timer.current = setTimeout(() => setCopyStatus(''), 2400) } catch { setCopyStatus(t.copyError) } }
+ return <main id="contenu">
+  <section className="hero chapter wrap" id="accueil" aria-labelledby="hero-title"><div className="hero-copy"><p className="eyebrow">{t.eyebrow}</p><h1 id="hero-title">{t.hero[0]}<br/><span className="accent">{t.hero[1]}</span></h1><p className="hero-description">{t.intro}</p><div className="hero-actions"><a className="button primary" href="#projets">{t.explore}<ArrowDown size={20}/></a><a className="text-button" href={`mailto:${contact.email}`}>{t.reach}<ArrowUpRight size={20}/></a></div></div><figure className="hero-portrait"><div className="portrait-frame"><div className="portrait-accent"/><img src="/images/portrait.webp" srcSet={portraitSet} sizes={portraitSizes} alt="Rudolf Hounlete" width="1000" height="1000"/></div><figcaption>{t.field}</figcaption></figure></section>
+  <div className="credential-strip wrap"><a href="#competitions"><strong>3</strong><span>{t.bronze}<br/>Kaggle & Zindi</span><Medal size={28} weight="light"/></a><a href={projectPath('credit', locale)}><strong>2<sup>{locale === 'fr' ? 'e' : 'nd'}</sup></strong><span>African Credit Scoring<br/>{t.outOf} 77 {t.participants}</span><ArrowUpRight size={22}/></a><a href={projectPath('financial-stress', locale)}><strong>4<sup>{locale === 'fr' ? 'e' : 'th'}</sup></strong><span>Financial Stress Prediction<br/>{t.outOf} 262 {t.participants}</span><ArrowUpRight size={22}/></a></div>
+  <section className="projects chapter wrap" id="projets" aria-labelledby="projects-title"><header className="section-head"><h2 id="projects-title">{t.projectsTitle}</h2><p>{t.projectsText}</p></header>
+   <div className="selected-work">{['risksim', 'financial-stress', 'dossier-jaune'].map((id, i) => {
+    const p = list.find(p => p.id === id)!, pitch = getPitch(id, locale), v = projectVisuals[id]
+    return <article className={`selected-case selected-case-${i}`} key={id}><a className={`selected-image selected-image-${v.kind}`} href={projectPath(id, locale)} aria-labelledby={`feature-${id}`}><img src={v.src} srcSet={imageSet(id)} sizes={featureSizes} alt={locale === 'fr' ? v.alt : p.title} width={v.width} height={v.height} loading="lazy"/></a><div className="selected-copy"><p className="selected-context">{p.title} / {p.group}</p><h3 id={`feature-${id}`}><a href={projectPath(id, locale)}>{pitch.headline}</a></h3><p>{pitch.summary}</p><strong className="selected-proof">{pitch.proof}</strong><a className="text-button" href={projectPath(id, locale)}>{t.read}<ArrowUpRight size={20}/></a></div></article>
+   })}</div>
+   <div className="archive-panel" id="index"><div className="catalogue-heading"><h3>{t.catalogue}</h3><span>14 {t.count}</span></div><div className="archive-toolbar"><div className="filters" role="group" aria-label={t.search}>{t.groups.map(g => <button key={g} onClick={() => setGroup(g)} aria-pressed={group === g}>{g}</button>)}</div><label className="search-label"><span className="sr-only">{t.search}</span><input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder={`${t.search}…`} name="project-search" autoComplete="off"/></label></div><p className="result-count" role="status">{filtered.length} / 14 {t.count}</p><div className="archive-grid">{filtered.map(p => <ProjectCard project={p} locale={locale} key={p.id}/>)}</div>{!filtered.length && <div className="empty-state"><h3>{t.empty}</h3><p>{t.emptyText}</p><button className="text-button" onClick={() => { setGroup(t.groups[0]); setQuery('') }}>{t.reset}<ArrowRight size={19}/></button></div>}</div>
+  </section>
+  <section className="expertise chapter wrap" id="competences" aria-labelledby="expertise-title"><header className="section-head"><h2 id="expertise-title">{t.skillsTitle}</h2><p>{t.skillsIntro}</p></header><div className="expertise-list">{t.pillars.map(([title, value, tools, id]) => <a className="expertise-row" href={projectPath(id, locale)} key={title}><h3>{title}</h3><div><p>{value}</p><span>{tools}</span></div><ArrowUpRight size={27}/></a>)}</div></section>
+  <section className="competitions chapter wrap" id="competitions" aria-labelledby="competitions-title"><div className="competition-intro"><h2 id="competitions-title">{t.compTitle}</h2><p>{t.compText}</p></div><div className="competition-layout"><div className="medal-feature"><Medal size={64} weight="light"/><div className="medal-number">3</div><h3>{t.bronze}.</h3><p>Kaggle & Zindi</p></div><div className="competition-rows">{['neurogolf', 'waxal', 'geoai', 'financial-stress', 'credit'].map(id => {
+   const p = list.find(p => p.id === id)!, pitch = getPitch(id, locale)
+   return <a href={projectPath(id, locale)} className="competition-row" key={id}><div><span>{id === 'neurogolf' ? 'Kaggle' : 'Zindi'}</span><h3>{p.title}</h3><p className="competition-detail">{pitch.summary}</p></div><div className="competition-result"><strong>{id === 'credit' ? '2 / 77' : id === 'financial-stress' ? '4 / 262' : 'Bronze'}</strong><ArrowUpRight size={23}/></div></a>
+  })}</div></div></section>
+  <section className="about chapter wrap" id="apropos" aria-labelledby="about-title"><h2 id="about-title">{t.aboutTitle}</h2><div className="about-grid"><p className="about-lead">{t.aboutLead}</p><div className="about-copy"><p>{t.aboutText}</p><p>{t.origin}</p></div></div><div className="journey"><h3>{t.journey}</h3>{[
+   ['2025 - 2028', 'École Centrale Casablanca', t.engineering, t.morocco], ['2026', 'CHOUBEL CONSULTING', t.internship, 'Casablanca'], ['2022 - 2025', 'Institut de mathématiques et de sciences physiques', t.degree, t.benin]
+  ].map(([date, title, subtitle, place]) => <div className="journey-entry" key={title}><span className="journey-date">{date}</span><div><h4>{title}</h4><p>{subtitle}</p></div><span className="journey-place">{place}</span></div>)}</div></section>
+  <section className="contact chapter" id="contact" aria-labelledby="contact-title"><div className="wrap"><h2 id="contact-title">{t.contactTitle}</h2><p className="contact-intro">{t.contactText}</p><div className="contact-main"><a href={`mailto:${contact.email}`} className="email-link">{contact.email}<ArrowUpRight size={40}/></a><button className="icon-button copy-email" onClick={copy} aria-label={t.copy}>{copyStatus === t.copied ? <Check size={24}/> : <Copy size={24}/>}</button></div><p className="copy-status" role="status">{copyStatus || '\u00a0'}</p><div className="contact-secondary"><a className="button primary" href={`mailto:${contact.email}`}>{t.reach}<ArrowUpRight size={21}/></a><a className="text-button" href={contact.github} target="_blank" rel="noreferrer">GitHub<GithubLogo size={22}/><span className="sr-only"> ({t.newTab})</span></a><a className="text-button" href={contact.cv!} download>{t.cv}<DownloadSimple size={21}/></a></div></div></section>
+ </main>
+}
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    try { localStorage.setItem('rudolf-theme', theme) } catch { /* storage may be disabled */ }
-  }, [theme])
-  useEffect(() => {
-    const follow = () => {
-      let hash: string
-      try { hash = decodeURIComponent(location.hash.slice(1)) } catch { return }
-      if (hash.startsWith('projet/')) { setProjectId(hash.slice(7)); setMenu(false) }
-      else { setProjectId(null); returnHash.current = location.hash || '#projets'; hashOpened.current = false }
-    }
-    follow()
-    window.addEventListener('hashchange', follow)
-    const markOpening = (event: MouseEvent) => {
-      const a = (event.target as Element).closest('a[href^="#projet/"]')
-      if (a) hashOpened.current = true
-    }
-    document.addEventListener('click', markOpening)
-    return () => { window.removeEventListener('hashchange', follow); document.removeEventListener('click', markOpening) }
-  }, [])
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) setActive(entry.target.id) })
-    }, { rootMargin: '-18% 0px -60% 0px', threshold: 0 })
-    chapters.forEach(({ id }) => { const el = document.getElementById(id); if (el) observer.observe(el) })
-    const reveals = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); reveals.unobserve(entry.target) } })
-    }, { threshold: 0.08 })
-    document.querySelectorAll('[data-reveal]').forEach(el => reveals.observe(el))
-    return () => { observer.disconnect(); reveals.disconnect(); clearTimeout(copyTimer.current) }
-  }, [])
-  useEffect(() => {
-    const onEscape = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenu(false) }
-    window.addEventListener('keydown', onEscape)
-    return () => window.removeEventListener('keydown', onEscape)
-  }, [])
-  const closeProject = () => {
-    if (hashOpened.current) history.back()
-    else { history.replaceState(null, '', returnHash.current); setProjectId(null) }
+export default function App({ pathname = '/' }: { pathname?: string }) {
+ const { locale, id, notFound } = routeFor(pathname), t = text[locale]
+ const [theme, setTheme] = useState('light'), [menu, setMenu] = useState(false)
+ const home = homePath(locale), project = getWork(locale).find(p => p.id === id), other: Locale = locale === 'fr' ? 'en' : 'fr'
+ const anchors = ['projets', 'competences', 'apropos', 'contact']
+ useEffect(() => {
+  setTheme(document.documentElement.dataset.theme || 'light')
+  if (location.hash.startsWith('#projet/')) {
+   let oldId: string
+   try { oldId = decodeURIComponent(location.hash.slice(8)) } catch { return }
+   if (getWork(locale).some(p => p.id === oldId)) location.replace(projectPath(oldId, locale))
   }
-  const filtered = work.filter(p => (group === 'Tous' || p.group === group) && `${p.title} ${p.summary} ${p.stack.join(' ')}`.toLocaleLowerCase('fr').includes(query.toLocaleLowerCase('fr')))
-  const selected = work.find(p => p.id === projectId) || null
-  const activeIndex = chapters.findIndex(c => c.id === active)
-  const copyEmail = async () => {
-    try { await navigator.clipboard.writeText(contact.email); setCopied(true); setCopyError(false); copyTimer.current = setTimeout(() => setCopied(false), 2400) }
-    catch { setCopyError(true) }
-  }
-
-  return <>
-    <a className="skip-link" href="#contenu">Aller au contenu</a>
-    <header className="site-header">
-      <a className="brand" href="#accueil" aria-label="Rudolf Hounlete, accueil">rh<span>.</span></a>
-      <nav className="desktop-nav" aria-label="Navigation principale">{chapters.slice(1).map(c => <a href={`#${c.id}`} key={c.id} aria-current={active === c.id ? 'location' : undefined}>{c.label}</a>)}</nav>
-      <div className="header-actions"><a className="cv-nav" href={contact.cv!} download>Mon CV <DownloadSimple size={18}/></a><button className="icon-button theme-toggle" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'Activer le thème clair' : 'Activer le thème sombre'}>{theme === 'dark' ? <Sun size={20}/> : <Moon size={20}/>}</button><button className="icon-button menu-toggle" aria-label={menu ? 'Fermer le menu' : 'Ouvrir le menu'} aria-expanded={menu} aria-controls="mobile-nav" onClick={() => setMenu(!menu)}>{menu ? <X size={24}/> : <List size={24}/>}</button></div>
-      {menu && <nav id="mobile-nav" className="mobile-nav" aria-label="Navigation mobile">{chapters.map(c => <a href={`#${c.id}`} key={c.id} onClick={() => setMenu(false)}>{c.label}<ArrowUpRight size={24}/></a>)}<a href={contact.cv!} download>Mon CV <DownloadSimple size={23}/></a></nav>}
-    </header>
-    <main id="contenu">
-      <section className="hero chapter wrap" id="accueil" aria-labelledby="hero-title">
-        <div className="hero-copy"><p className="eyebrow">Rudolf Hounlete · Élève ingénieur à Centrale Casablanca</p><h1 id="hero-title">Du modèle<br/>à <span className="accent">la décision.</span></h1><p className="hero-description">Je développe des modèles de machine learning et les logiciels qui les rendent utiles.</p><div className="hero-actions"><a className="button primary" href="#projets">Voir les projets <ArrowDown size={20}/></a><a className="text-button" href={`mailto:${contact.email}`}>Me contacter <ArrowUpRight size={20}/></a></div></div>
-        <figure className="hero-portrait"><div className="portrait-frame"><div className="portrait-accent"/><img src="/images/portrait.webp" alt="Portrait de Rudolf Hounlete" width="1000" height="1000" fetchPriority="high"/></div><figcaption><span>Machine learning & développement logiciel</span><span>Casablanca</span></figcaption></figure>
-      </section>
-      <div className="credential-strip wrap" data-reveal><a href="#competitions"><strong>3</strong><span>Médailles de bronze<br/>Kaggle & Zindi</span><Medal size={28} weight="light"/></a><a href="#projet/credit"><strong>2<sup>e</sup></strong><span>African Credit Scoring<br/>sur 77 participants</span><ArrowUpRight size={22}/></a><a href="#projet/financial-stress"><strong>4<sup>e</sup></strong><span>Financial Stress Prediction<br/>sur 262 participants</span><ArrowUpRight size={22}/></a></div>
-      <section className="projects chapter wrap" id="projets" aria-labelledby="projects-title">
-        <header className="section-head" data-reveal><h2 id="projects-title">Ce que je sais<br/><span className="muted">faire avancer.</span></h2><p>Un outil développé en entreprise, un résultat en compétition, un produit construit autour d’un besoin métier.</p></header>
-        <div className="selected-work">{['risksim', 'financial-stress', 'dossier-jaune'].map((id, i) => {
-          const p = work.find(p => p.id === id)!, pitch = pitches[id], visual = projectVisuals[id]
-          return <article className={`selected-case selected-case-${i}`} key={id} data-reveal>
-            <ProjectButton id={id} className={`selected-image selected-image-${visual.kind}`} labelledBy={`selected-${id}`}><img src={visual.src} alt={visual.alt} width={visual.width} height={visual.height} loading="lazy"/><span className="selected-number">0{i+1}</span><span className="cover-action" aria-hidden="true"><ArrowUpRight size={28}/></span></ProjectButton>
-            <div className="selected-copy"><p className="selected-context">{p.title} · {i === 0 ? 'Expérience en entreprise' : i === 1 ? 'Machine learning compétitif' : 'Développement produit'}</p><h3 id={`selected-${id}`}><ProjectButton id={id}>{pitch.headline}</ProjectButton></h3><p>{pitch.summary}</p><strong className="selected-proof">{pitch.proof}</strong><ProjectButton id={id} className="text-button">Lire l’étude de cas <ArrowUpRight size={20}/></ProjectButton></div>
-          </article>
-        })}</div>
-        <div className="engineering-note" data-reveal><span className="engineering-number">393</span><div><h3>Automatiser demande aussi de vérifier.</h3><p>Autonomous AutoML : des expériences reprenables, un contrôle des fuites de données et 393 tests pour encadrer le passage du CSV au modèle.</p><ProjectButton id="automl" className="text-button">Voir le projet <ArrowUpRight size={20}/></ProjectButton></div></div>
-        <div className="archive-panel" id="index">
-          <div id="all-projects" className="archive-content"><div className="archive-toolbar"><div className="filters" role="group" aria-label="Filtrer les projets">{groups.map(g => <button key={g} onClick={() => setGroup(g)} aria-pressed={group === g}>{g}</button>)}</div><label className="search-label"><span className="sr-only">Rechercher un projet</span><input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher un projet…" name="project-search" autoComplete="off"/></label></div><p className="result-count" role="status">{filtered.length} projet{filtered.length > 1 ? 's' : ''}</p><div className="archive-grid">{filtered.map((p, i) => <ProjectCard key={p.id} project={p} index={i}/>)}</div>{!filtered.length && <div className="empty-state"><h3>Aucun projet trouvé.</h3><p>Essaie un autre mot ou enlève le filtre.</p><button className="text-button" onClick={() => { setQuery(''); setGroup('Tous') }}>Réinitialiser <ArrowRight size={20}/></button></div>}</div>
-        </div>
-      </section>
-      <section className="competitions chapter wrap" id="competitions" aria-labelledby="competitions-title">
-        <div className="competition-intro" data-reveal><p className="eyebrow">Kaggle & Zindi</p><h2 id="competitions-title">Des résultats qui<br/>se comparent.</h2><p>Trois médailles de bronze sur des problèmes de raisonnement visuel, de reconnaissance vocale et de données satellitaires. Deux classements de tête en finance.</p></div>
-        <div className="competition-layout" data-reveal><div className="medal-feature"><Medal size={64} weight="light"/><div className="medal-number">3</div><h3>Médailles<br/>de bronze.</h3><p>Raisonnement visuel, reconnaissance vocale et données satellitaires.</p></div><div className="competition-rows">{competitions.map(c => <ProjectButton id={c.projectId} key={c.projectId} className="competition-row"><div><span>{c.platform}</span><h3>{c.name}</h3><p className="competition-detail">{c.detail}</p></div><div className="competition-result"><strong>{c.medal ? 'Bronze' : c.result}</strong><ArrowUpRight size={23}/></div></ProjectButton>)}</div></div>
-      </section>
-      <section className="about chapter wrap" id="apropos" aria-labelledby="about-title">
-        <div className="about-top" data-reveal><h2 id="about-title">Le même soin pour le modèle<br/><span className="muted">et pour son usage.</span></h2><div className="about-grid"><p className="about-lead">Je m’intéresse à ce qui se passe entre un bon résultat technique et un outil dont quelqu’un peut se servir.</p><div className="about-copy"><p>Chez CHOUBEL CONSULTING, cela m’a conduit à travailler sur la restitution des simulations et l’interface de RiskSim. Sur Dossier Jaune, cela signifie reprendre les parcours à partir des retours des utilisateurs.</p><p>Originaire du Bénin, formé aux mathématiques et aux TIC à l’IMSP, j’ai rejoint Centrale Casablanca en 2025. Je poursuis ce double travail de modélisation et de développement, avec un intérêt particulier pour le risque et la finance.</p></div></div></div>
-        <div className="journey" id="parcours" data-reveal><h3>Le parcours</h3><div className="journey-entry"><span className="journey-date">2025 - 2028</span><div><h4>École Centrale Casablanca</h4><p>Cycle ingénieur généraliste</p></div><span className="journey-place">Maroc</span></div><div className="journey-entry"><span className="journey-date">2026</span><div><h4>CHOUBEL CONSULTING</h4><p>Stage de développement logiciel · RiskSim</p></div><span className="journey-place">Casablanca</span></div><div className="journey-entry"><span className="journey-date">2022 - 2025</span><div><h4>Institut de mathématiques et de sciences physiques</h4><p>Licence en technologies de l’information et de la communication</p></div><span className="journey-place">Bénin</span></div></div>
-        <div className="skills-block" id="competences" data-reveal><h3>Mes outils de travail</h3><div className="skills-grid">{skills.map(g => <div key={g.label}><h4>{g.label}</h4><p>{g.items.join(', ')}</p></div>)}</div></div>
-      </section>
-      <section className="contact chapter" id="contact" aria-labelledby="contact-title"><div className="wrap" data-reveal><p className="eyebrow">Stage · Machine learning · Développement logiciel</p><h2 id="contact-title">Construisons<br/>la suite<span className="accent">.</span></h2><p className="contact-intro">Vous cherchez un profil capable de travailler sur les données et de construire l’application autour ? Parlons de votre équipe et de vos projets.</p><div className="contact-main"><a href={`mailto:${contact.email}`} className="email-link">{contact.email}<ArrowUpRight size={40}/></a><button className="icon-button copy-email" onClick={copyEmail} aria-label={copied ? 'Adresse copiée' : 'Copier l’adresse e-mail'}>{copied ? <Check size={24}/> : <Copy size={24}/>}</button></div><p className="copy-status" role="status">{copied ? 'Adresse copiée.' : copyError ? 'Copie indisponible. Tu peux sélectionner l’adresse ou cliquer dessus.' : '\u00a0'}</p><div className="contact-secondary"><a className="button primary" href={`mailto:${contact.email}`}>Me contacter <EnvelopeSimple size={21}/></a><a className="text-button" href={contact.github} target="_blank" rel="noreferrer">GitHub <GithubLogo size={22}/><span className="sr-only"> (nouvel onglet)</span></a><a className="text-button" href={contact.cv!} download>Mon CV <DownloadSimple size={21}/></a></div></div></section>
-    </main>
-    <footer className="site-footer wrap"><a className="brand" href="#accueil" aria-label="Retour à l’accueil">rh<span>.</span></a><span>© {new Date().getFullYear()} Rudolf Hounlete</span><a href="#accueil">Retour en haut <ArrowUp size={17}/></a></footer>
-    <nav className="chapter-control" aria-label="Parcourir les sections"><span>{chapters[activeIndex]?.label}</span><a href={`#${chapters[Math.max(0, activeIndex - 1)].id}`} aria-label="Section précédente" aria-disabled={activeIndex === 0} tabIndex={activeIndex === 0 ? -1 : 0}><ArrowUp size={18}/></a><a href={`#${chapters[Math.min(chapters.length - 1, activeIndex + 1)].id}`} aria-label="Section suivante" aria-disabled={activeIndex === chapters.length - 1} tabIndex={activeIndex === chapters.length - 1 ? -1 : 0}><ArrowDown size={18}/></a></nav>
-    {projectId && !selected && <div className="missing-project" role="alert"><p>Ce projet n’est pas disponible.</p><button onClick={closeProject}>Revenir aux projets</button></div>}
-    <CaseStudy project={selected} onClose={closeProject}/>
-  </>
+ }, [locale])
+ useEffect(() => { const close = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenu(false) }; window.addEventListener('keydown', close); return () => window.removeEventListener('keydown', close) }, [])
+ const toggleTheme = () => { const next = theme === 'dark' ? 'light' : 'dark'; setTheme(next); document.documentElement.dataset.theme = next; try { localStorage.setItem('rudolf-theme', next) } catch { /* Optional storage. */ } }
+ return <>
+  <a className="skip-link" href="#contenu">{t.skip}</a>
+  <header className="site-header"><a className="brand" href={home} aria-label="rh. Rudolf Hounlete">rh<span>.</span></a><nav className="desktop-nav" aria-label={locale === 'fr' ? 'Navigation principale' : 'Main navigation'}>{anchors.map((anchor, i) => <a key={anchor} href={`${home}#${anchor}`}>{t.nav[i]}</a>)}</nav><div className="header-actions"><a className="locale-switch" href={id ? projectPath(id, other) : homePath(other)} hrefLang={other} lang={other} aria-label={locale === 'fr' ? 'EN - Read in English' : 'FR - Lire en français'}>{other.toUpperCase()}</a><a className="cv-nav" href={contact.cv!} download>{t.cv}<DownloadSimple size={18}/></a><button className="icon-button theme-toggle" onClick={toggleTheme} aria-label={theme === 'dark' ? t.light : t.dark}>{theme === 'dark' ? <Sun size={20}/> : <Moon size={20}/>}</button><button className="icon-button menu-toggle" aria-label={menu ? t.close : t.open} aria-expanded={menu} aria-controls="mobile-nav" onClick={() => setMenu(!menu)}>{menu ? <X size={24}/> : <List size={24}/>}</button></div>{menu && <nav id="mobile-nav" className="mobile-nav" aria-label={locale === 'fr' ? 'Navigation mobile' : 'Mobile navigation'}>{anchors.map((anchor, i) => <a href={`${home}#${anchor}`} key={anchor} onClick={() => setMenu(false)}>{t.nav[i]}<ArrowUpRight size={24}/></a>)}<a href={contact.cv!} download>{t.cv}<DownloadSimple size={23}/></a></nav>}</header>
+  {notFound ? <main id="contenu" className="not-found wrap"><h1>404</h1><p>{t.notFound}</p><a className="text-button" href={home}>{t.back}<ArrowRight size={19}/></a></main> : project ? <StudyPage project={project} locale={locale}/> : <HomePage locale={locale}/>}
+  <footer className="site-footer wrap"><a className="brand" href={home} aria-label="rh. Rudolf Hounlete">rh<span>.</span></a><span>© 2026 Rudolf Hounlete</span><a href="#contenu">{t.top}<ArrowUp size={17}/></a></footer>
+ </>
 }
-
-export default App

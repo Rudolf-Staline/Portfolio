@@ -18,7 +18,7 @@ export const projectVisuals: Record<string, ProjectVisual> = {
     src: '/projects/risksim-dashboard.webp',
     alt: 'Interface RiskSim : registre des risques, distribution simulée des coûts et indicateurs de réserve.',
     caption: 'Capture de RiskSim sur un scénario de démonstration.',
-    kind: 'capture', width: 1440, height: 900,
+    kind: 'capture', width: 1440, height: 1100,
   },
   'dossier-jaune': {
     src: '/projects/dossier-jaune.jpg',
@@ -30,7 +30,7 @@ export const projectVisuals: Record<string, ProjectVisual> = {
     src: '/projects/pediappend-interface-symptomes.jpg',
     alt: 'Formulaire de symptômes et paramètres du prototype académique PediAppend.',
     caption: 'Capture de l’interface du prototype académique PediAppend.',
-    kind: 'capture', width: 1440, height: 900,
+    kind: 'capture', width: 1357, height: 932,
   },
   'neurogolf': generated('neurogolf', 'Cubes colorés composant un puzzle de raisonnement sur une grille sombre.'),
   'credit': generated('credit', 'Balance en laiton, pièces et dossiers de crédit sous une lumière chaude.'),
