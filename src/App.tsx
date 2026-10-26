@@ -1,169 +1,206 @@
-import { useEffect, useState } from 'react'
-import { competitions } from './data/competitions'
+import { useEffect, useRef, useState } from 'react'
+import { ArrowUpRight, ArrowRight, ArrowDown, ArrowUp, X, List, DownloadSimple, GithubLogo, Moon, Sun, Copy, Check, Medal, Image as ImageIcon, EnvelopeSimple } from '@phosphor-icons/react'
 import { projects } from './data/projects'
-import { education } from './data/education'
-import { skills } from './data/skills'
-import { contact, profile } from './data/profile'
-import { editorial } from './data/editorial'
 import { projectStories } from './data/projectStories'
-import type { Project } from './data/types'
-import { ProjectGallery } from './features/projects/ProjectGallery'
-import { ProjectVisual, projectVisualKind } from './features/projects/ProjectVisual'
-import { IconMark, MotionEnhancer, type IconName } from './components/PortfolioMotion'
+import { contact } from './data/profile'
+import { skills } from './data/skills'
+import { competitions } from './data/competitions'
+import { additionalProjects } from './data/additionalProjects'
+import { pitches } from './data/pitches'
+import { projectVisuals } from './data/projectVisuals'
 
-const panels = [
-  { id: 'accueil', label: 'Présentation' }, { id: 'liens', label: 'Liens & distinctions' },
-  { id: 'experience', label: 'RiskSim' }, { id: 'competitions', label: 'Compétitions' },
-  { id: 'projets', label: 'Projets' }, { id: 'apropos', label: 'À propos' },
-  { id: 'parcours', label: 'Formation' }, { id: 'competences', label: 'Compétences' }, { id: 'contact', label: 'Contact' },
-] as const
-const shortNames: Record<string, string> = {
-  neurogolf: 'NeuroGolf', credit: 'African Credit Scoring', 'financial-stress': 'Stress financier',
-  geoai: 'GeoAI Aquaculture', automl: 'Autonomous AutoML', risksim: 'RiskSim',
-  waxal: 'WAXAL ASR', '01': 'PediAppend', '02': 'Feux intelligents', '03': 'Analyse Forex', '05': 'Solitons',
+// Art direction: editorial, variance 8 / motion 6 / density 3.
+// Real project captures and an existing portrait. One vermilion accent.
+// Layer scale: header 20, chapter controls 25, mobile menu 30, native dialog top layer.
+const plain = (text: string) => text.replace(/[—–]/g, '-')
+type Work = {
+  id: string; title: string; group: string; context: string; period: string;
+  summary: string; result: string; method: string; paragraphs: string[];
+  stack: string[]; code: string | null; note?: string;
 }
-const visibleProjects = projects.filter(project => !project.placeholder)
-const competitionProjects = competitions.map(entry => visibleProjects.find(project => project.index === entry.projectId)!)
-const softwareProjects = ['automl', '01', '02', '03', '05'].map(id => visibleProjects.find(project => project.index === id)!)
-const risksim = visibleProjects.find(project => project.index === 'risksim')!
-const projectMarks: Record<string, IconName> = {
-  neurogolf: 'grid', credit: 'shield', 'financial-stress': 'trend',
-  geoai: 'planet', automl: 'terminal', risksim: 'radar',
-  waxal: 'audio', '01': 'heart', '02': 'radar',
-  '03': 'chart', '05': 'audio',
-}
-
-function Icon({ name, size = 23 }: { name: 'arrow' | 'mail' | 'github' | 'code' | 'sun' | 'moon' | 'download'; size?: number }) {
-  const paths = {
-    arrow: <path d="M6 18 18 6M6 6h12v12" />,
-    mail: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 6 9 7 9-7" /></>,
-    github: <path d="M9 19c-4 1.3-4-2-6-2m12 5v-3.4c0-1 .1-1.5-.5-2.1 3.3-.4 6.5-1.6 6.5-7A5.3 5.3 0 0 0 19.5 6a5 5 0 0 0-.1-3s-1.2-.4-3.6 1.3a12.2 12.2 0 0 0-6.6 0C6.8 2.6 5.6 3 5.6 3a5 5 0 0 0-.1 3A5.3 5.3 0 0 0 4 9.5c0 5.4 3.2 6.6 6.5 7-.6.6-.5 1.4-.5 2.1V22" />,
-    code: <path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18" />,
-    sun: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" /></>,
-    moon: <path d="M21 13A9 9 0 0 1 11 3 9 9 0 1 0 21 13Z" />,
-    download: <path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4" />,
+const titles: Record<string, string> = { risksim: 'RiskSim', neurogolf: 'NeuroGolf', credit: 'African Credit Scoring', 'financial-stress': 'Stress financier', geoai: 'GeoAI Aquaculture', waxal: 'WAXAL ASR', automl: 'Autonomous AutoML', '01': 'PediAppend', '02': 'Feux intelligents', '03': 'Analyse Forex', '05': 'Propagation de solitons' }
+const work: Work[] = projects.map(p => {
+  const story = projectStories[p.index]
+  return {
+    id: p.index, title: titles[p.index] || p.title,
+    group: ['risksim', 'automl', '03'].includes(p.index) ? 'Logiciel' : ['02', '05'].includes(p.index) ? 'Expérimentation' : 'Machine learning',
+    context: plain(p.context), period: plain(p.period), summary: plain(p.cardDescription || p.tagline),
+    result: plain(story.result), method: plain(story.method), paragraphs: story.paragraphs.map(plain),
+    stack: p.stack, code: p.links.code || null, note: story.note ? plain(story.note) : undefined,
   }
-  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>
-}
-function Medal({ small = false }: { small?: boolean }) {
-  return <svg className={small ? 'bronze-icon small' : 'bronze-icon'} viewBox="0 0 64 76" fill="none" aria-hidden="true"><path d="M11 2h15l10 26-15 8L11 2Z" fill="#b4ac9a"/><path d="M38 2h15L43 36l-15-8L38 2Z" fill="#ddd7c8"/><circle cx="32" cy="48" r="24" fill="#bd8859"/><circle cx="32" cy="48" r="18.5" stroke="#f0d6b6" strokeWidth="1.5"/><path d="m32 36 3.5 7 8 1-6 6 1.5 8-7-4-7 4 1.5-8-6-6 8-1 3.5-7Z" fill="#f8e5ce"/></svg>
-}
-// Original decorative sphere; not a geographic map.
-const globeDots = Array.from({ length: 29 }, (_, row) => {
-  const lat = -Math.PI / 2 + (row + 1) * Math.PI / 30
-  return Array.from({ length: 54 }, (_, col) => {
-    const lon = -Math.PI / 2 + col * Math.PI / 53
-    const patch = Math.sin(lon * 3.7 + lat * 2) + Math.cos(lat * 6.1 - lon * 2.8)
-    return <circle key={`${row}-${col}`} cx={120 + Math.cos(lat) * Math.sin(lon) * 112} cy={120 + Math.sin(lat) * 112} r={patch > .1 ? 1.2 : .55} opacity={Math.cos(lat) * Math.cos(lon) * (patch > .1 ? .58 : .15)}/>
-  })
 })
-function Globe() { return <div className="dot-globe" aria-hidden="true"><svg viewBox="0 0 240 240" fill="currentColor">{globeDots}</svg></div> }
+work.splice(1, 0, {
+  id: 'dossier-jaune', title: 'Dossier Jaune', group: 'Logiciel', context: 'Projet d’innovation · Centrale Casablanca', period: '2026',
+  summary: 'Réunir les documents d’une commande textile et donner à chaque intervenant un accès adapté.',
+  result: 'Un prototype avec dossiers par commande, espace client, droits par sous-dossier et annotations PDF versionnées.',
+  method: 'Une application web avec FastAPI, PostgreSQL et stockage Supabase. Les annotations PDF sont enregistrées dans une nouvelle version du document.',
+  paragraphs: [
+    'Dans une commande textile, les documents circulent entre plusieurs intervenants. Le projet Dossier Jaune rassemble les pièces d’une commande dans un dossier commun, organisé en sous-dossiers métier.',
+    'Le prototype prévoit un espace interne et un espace client. Chaque utilisateur accède aux documents selon ses droits. Un lecteur PDF permet d’annoter un fichier et de sauvegarder une nouvelle version.',
+    'Je développe la plateforme et fais évoluer son ergonomie au fil des échanges du projet d’innovation. Le périmètre continue de s’affiner avec les retours du terrain.',
+  ],
+  stack: ['FastAPI', 'JavaScript', 'PostgreSQL', 'Supabase', 'PyMuPDF'], code: 'https://github.com/Rudolf-Staline/Framatex',
+  note: 'Projet d’innovation en cours ; la capture présente une version du prototype.',
+})
+work.push(...additionalProjects)
+const order = ['risksim', 'financial-stress', 'dossier-jaune', 'automl', 'neurogolf', 'credit', 'geoai', 'waxal', '01', 'churn-dashboard', '02', 'biohub', '03', '05']
+work.sort((a,b) => order.indexOf(a.id) - order.indexOf(b.id))
+work.forEach(p => { p.summary = pitches[p.id].summary })
+const groups = ['Tous', 'Logiciel', 'Machine learning', 'Expérimentation']
+const chapters = [
+  { id: 'accueil', label: 'Accueil' }, { id: 'projets', label: 'Projets' },
+  { id: 'competitions', label: 'Compétitions' }, { id: 'apropos', label: 'À propos' }, { id: 'contact', label: 'Contact' },
+]
 
-function ProjectArticle({ project }: { project: Project }) {
-  const competition = competitions.find(entry => entry.projectId === project.index)
-  const story = projectStories[project.index]
-  const Heading = project.index === 'risksim' ? 'h2' : 'h3'
-  return <article className={`card project-expanded project-${project.index}`} id={`projet/${project.index}`} data-project-id={project.index} aria-labelledby={`title-${project.index}`}>
-    <div className="expanded-media"><div className="expanded-media-inner">
-      {project.index === 'risksim' ? <ProjectGallery kind="risksim"/> : project.index === '01' ? <ProjectGallery kind="clinical"/> : <ProjectVisual kind={projectVisualKind[project.index] ?? 'automl'}/>}
-      <div className="expanded-stack">{project.stack.map(item => <span key={item}>{item}</span>)}</div>
-      <div className="expanded-links">{project.links.code && <a className="solid-link" href={project.links.code} target="_blank" rel="noreferrer">Explorer le dépôt <Icon name="github" size={18}/><span className="sr-only"> (nouvel onglet)</span></a>}{project.evidence && <a className="inline-link" href={project.evidence.href} target="_blank" rel="noreferrer">{project.evidence.label} <Icon name="arrow" size={17}/><span className="sr-only"> (nouvel onglet)</span></a>}</div>
-    </div></div>
-    <div className="expanded-copy"><header className="case-header"><div className="case-icon" aria-hidden="true"><IconMark name={projectMarks[project.index] ?? 'code'} size={26}/></div><span className="case-kicker">PROJET <span className="case-kicker-star">✳</span> {project.category}</span><span className="overline">{project.context} · {project.period}</span><Heading id={`title-${project.index}`}>{shortNames[project.index]}</Heading>{competition && <p className="expanded-ranking">{competition.medal && <Medal small/>}{competition.medal ? `Bronze · ${competition.platform}` : competition.result + ' · ' + competition.platform}{competition.projectId === 'neurogolf' && <span>220e / 2 963 équipes · top 7,4 %</span>}</p>}<p className="expanded-subtitle">{story.subtitle}</p></header>
-      <div className="expanded-prose">{story.paragraphs.map(text => <p key={text}>{text}</p>)}</div>
-      <div className="expanded-summary"><div><h4><IconMark name="flask" size={18}/> Approche technique</h4><p>{story.method}</p></div><div><h4><IconMark name="check" size={18}/> Ce qui a été réalisé</h4><p>{story.result}</p></div></div>
-      {story.note && <p className="project-note">{story.note}</p>}
+function CaseStudy({ project, onClose }: { project: Work | null; onClose: () => void }) {
+  const dialog = useRef<HTMLDialogElement>(null)
+  useEffect(() => {
+    const el = dialog.current
+    if (!project || !el) return
+    const trigger = document.activeElement as HTMLElement | null
+    el.showModal()
+    const old = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { el.close(); document.body.style.overflow = old; trigger?.focus({ preventScroll: true }) }
+  }, [project])
+  if (!project) return null
+  return <dialog className="case-dialog" ref={dialog} aria-labelledby="case-title" onCancel={e => { e.preventDefault(); onClose() }} onClick={e => { if (e.target === e.currentTarget) onClose() }}>
+    <article className="case-sheet">
+      <div className="case-top"><span>{project.context}</span><button className="icon-button close-case" onClick={onClose} aria-label="Fermer le projet"><X size={25}/></button></div>
+      <header className="case-heading"><p className="case-category">{project.group} / {project.period}</p><h2 id="case-title">{project.title}</h2><p className="case-intro">{pitches[project.id].headline}</p><p className="case-proof">{pitches[project.id].proof}</p></header>
+      <div className="case-brief"><div><h3>Le problème</h3><p>{project.summary}</p></div><div><h3>Ma contribution</h3><p>{pitches[project.id].role}</p></div><div><h3>Le résultat</h3><p>{pitches[project.id].value}</p></div></div>
+      <figure className={`case-figure case-figure-${projectVisuals[project.id].kind}`}><img src={projectVisuals[project.id].src} alt={projectVisuals[project.id].alt} width={projectVisuals[project.id].width} height={projectVisuals[project.id].height} decoding="async"/><figcaption>{projectVisuals[project.id].caption}</figcaption></figure>
+      <div className="case-content"><div className="case-prose"><h3>Le projet en détail</h3>{project.paragraphs.map((p, i) => <p key={i}>{p}</p>)}</div><aside><h3>Le choix qui compte</h3><p>{pitches[project.id].decision}</p><h3>Approche</h3><p>{project.method}</p><div className="tech-list">{project.stack.map(s => <span key={s}>{s}</span>)}</div></aside></div>
+      {project.note && <p className="case-note">{project.note}</p>}
+      <footer className="case-footer">{project.code ? <a className="button primary" href={project.code} target="_blank" rel="noreferrer">Code source <GithubLogo size={21}/><span className="sr-only"> (nouvel onglet)</span></a> : <span>Présentation du projet</span>}<button className="text-button" onClick={onClose}>Revenir au portfolio <ArrowRight size={20}/></button></footer>
+    </article>
+  </dialog>
+}
+
+function ProjectButton({ id, className = '', children, labelledBy }: { id: string; className?: string; children: React.ReactNode; labelledBy?: string }) {
+  return <a className={className} href={`#projet/${id}`} aria-labelledby={labelledBy}>{children}</a>
+}
+
+function ProjectCard({ project, index }: { project: Work; index: number }) {
+  const visual = projectVisuals[project.id]
+  return <ProjectButton id={project.id} className="archive-item" labelledBy={`card-${project.id}`}>
+    <div className={`archive-visual archive-visual-${visual.kind}`}>
+      <img src={visual.src} alt={visual.alt} width={visual.width} height={visual.height} loading="lazy" decoding="async"/>
+      <span className="visual-kind">{visual.kind === 'capture' ? <ImageIcon size={13} aria-hidden="true"/> : <ImageIcon size={13} aria-hidden="true"/>}{visual.kind === 'capture' ? 'Capture du projet' : 'Visuel généré'}</span>
     </div>
-  </article>
+    <div className="archive-item-body">
+      <div className="archive-item-top"><span>{String(index + 1).padStart(2, '0')} / {project.group}</span><ArrowUpRight size={22} aria-hidden="true"/></div>
+      <h3 id={`card-${project.id}`}>{project.title}</h3><p>{project.summary}</p>
+      <span className="archive-proof">{pitches[project.id].proof}</span><span className="archive-context">{project.stack.slice(0, 3).join(' · ')}</span>
+    </div>
+  </ProjectButton>
 }
 
 function App() {
-  const [active, setActive] = useState(0)
-  const [dark, setDark] = useState(() => {
-    try { return localStorage.getItem('portfolio-horizontal-theme') === 'dark' } catch { return false }
-  })
-  const navigate = (id: string, behavior: ScrollBehavior = 'smooth', push = true) => {
-    const element = document.getElementById(id)
-    if (!element) return
-    const motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior
-    const offset = window.innerWidth <= 760 ? 92 : 112
-    window.scrollTo({ top: element.getBoundingClientRect().top + window.scrollY - offset, behavior: motion })
-    const index = panels.findIndex(panel => panel.id === id)
-    if (index >= 0) setActive(index)
-    if (push && window.location.hash !== `#${id}`) history.pushState(null, '', `#${id}`)
+  const [theme, setTheme] = useState(() => { try { return localStorage.getItem('rudolf-theme') || 'light' } catch { return 'light' } })
+  const [menu, setMenu] = useState(false)
+  const [active, setActive] = useState('accueil')
+  const [projectId, setProjectId] = useState<string | null>(null)
+  const [group, setGroup] = useState('Tous')
+  const [query, setQuery] = useState('')
+  const [copied, setCopied] = useState(false)
+  const [copyError, setCopyError] = useState(false)
+  const copyTimer = useRef<ReturnType<typeof setTimeout>>()
+  const returnHash = useRef('#projets')
+  const hashOpened = useRef(false)
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    try { localStorage.setItem('rudolf-theme', theme) } catch { /* storage may be disabled */ }
+  }, [theme])
+  useEffect(() => {
+    const follow = () => {
+      let hash: string
+      try { hash = decodeURIComponent(location.hash.slice(1)) } catch { return }
+      if (hash.startsWith('projet/')) { setProjectId(hash.slice(7)); setMenu(false) }
+      else { setProjectId(null); returnHash.current = location.hash || '#projets'; hashOpened.current = false }
+    }
+    follow()
+    window.addEventListener('hashchange', follow)
+    const markOpening = (event: MouseEvent) => {
+      const a = (event.target as Element).closest('a[href^="#projet/"]')
+      if (a) hashOpened.current = true
+    }
+    document.addEventListener('click', markOpening)
+    return () => { window.removeEventListener('hashchange', follow); document.removeEventListener('click', markOpening) }
+  }, [])
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) setActive(entry.target.id) })
+    }, { rootMargin: '-18% 0px -60% 0px', threshold: 0 })
+    chapters.forEach(({ id }) => { const el = document.getElementById(id); if (el) observer.observe(el) })
+    const reveals = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); reveals.unobserve(entry.target) } })
+    }, { threshold: 0.08 })
+    document.querySelectorAll('[data-reveal]').forEach(el => reveals.observe(el))
+    return () => { observer.disconnect(); reveals.disconnect(); clearTimeout(copyTimer.current) }
+  }, [])
+  useEffect(() => {
+    const onEscape = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenu(false) }
+    window.addEventListener('keydown', onEscape)
+    return () => window.removeEventListener('keydown', onEscape)
+  }, [])
+  const closeProject = () => {
+    if (hashOpened.current) history.back()
+    else { history.replaceState(null, '', returnHash.current); setProjectId(null) }
   }
-  useEffect(() => {
-    const followLocation = () => {
-      const hash = decodeURIComponent(location.hash.slice(1))
-      if (hash.startsWith('projet/') && visibleProjects.some(project => project.index === hash.slice(7))) { navigate(hash, 'instant', false); return }
-      if (hash === 'fiche/about') { navigate('apropos', 'instant', false); return }
-      if (hash === 'fiche/skills') { navigate('competences', 'instant', false); return }
-      if (panels.some(panel => panel.id === hash)) navigate(hash, 'instant', false)
-    }
-    const initial = requestAnimationFrame(followLocation)
-    window.addEventListener('load', followLocation)
-    const anchors = (event: MouseEvent) => {
-      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
-      const anchor = event.target instanceof Element ? event.target.closest('a') : null
-      const panel = panels.find(item => `#${item.id}` === anchor?.getAttribute('href'))
-      if (!panel) return
-      event.preventDefault(); navigate(panel.id)
-    }
-    window.addEventListener('popstate', followLocation); window.addEventListener('hashchange', followLocation)
-    document.addEventListener('click', anchors)
-    return () => {
-      cancelAnimationFrame(initial); window.removeEventListener('load', followLocation); window.removeEventListener('popstate', followLocation); window.removeEventListener('hashchange', followLocation)
-      document.removeEventListener('click', anchors)
-    }
-  }, [])
-  useEffect(() => {
-    let frame = 0
-    const anchors = panels.map(panel => panel.id)
-    const position = () => {
-      cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() => {
-        let current = 0
-        anchors.forEach(id => {
-          if ((document.getElementById(id)?.getBoundingClientRect().top ?? Infinity) <= 130) current = panels.findIndex(panel => panel.id === id)
-        })
-        setActive(current)
-      })
-    }
-    window.addEventListener('scroll', position, { passive: true })
-    window.addEventListener('resize', position)
-    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', position); window.removeEventListener('resize', position) }
-  }, [])
-  const changeTheme = () => setDark(current => {
-    try { localStorage.setItem('portfolio-horizontal-theme', current ? 'light' : 'dark') } catch { /* Theme works without storage. */ }
-    return !current
-  })
+  const filtered = work.filter(p => (group === 'Tous' || p.group === group) && `${p.title} ${p.summary} ${p.stack.join(' ')}`.toLocaleLowerCase('fr').includes(query.toLocaleLowerCase('fr')))
+  const selected = work.find(p => p.id === projectId) || null
+  const activeIndex = chapters.findIndex(c => c.id === active)
+  const copyEmail = async () => {
+    try { await navigator.clipboard.writeText(contact.email); setCopied(true); setCopyError(false); copyTimer.current = setTimeout(() => setCopied(false), 2400) }
+    catch { setCopyError(true) }
+  }
 
-  return <div className="horizontal-site" data-theme={dark ? 'dark' : 'light'}>
-    <a className="skip-link" href="#main">Aller au contenu</a><MotionEnhancer/>
-    <header className="topbar"><nav className="top-links" aria-label="Navigation principale"><a href="#accueil" aria-current={active < 3 ? 'location' : undefined}><span className="brand-sigil">R<span>·</span>H</span><span className="brand-title">Rudolf Hounlete</span></a><span aria-hidden="true">/</span><a href="#competitions" aria-current={active === 3 ? 'location' : undefined}>Compétitions</a><a href="#projets" aria-current={active === 4 ? 'location' : undefined}>Projets</a><a href="#contact" aria-current={active === 8 ? 'location' : undefined}>Contact</a></nav><div className="header-end"><span className="chapter-counter"><span>SECTION</span> {String(active + 1).padStart(2, '0')}<small> / 09</small></span><button type="button" className="theme-switch" onClick={changeTheme} aria-label={dark ? 'Activer le thème clair' : 'Activer le thème sombre'} title={dark ? 'Thème clair' : 'Thème sombre'}><span className={!dark ? 'chosen' : ''}><Icon name="sun" size={16}/></span><span className={dark ? 'chosen' : ''}><Icon name="moon" size={16}/></span></button></div></header>
-    <main className="horizontal-track" id="main" tabIndex={-1} aria-label="Portfolio de Rudolf Hounlete">
-      <section className="rail-panel profile-panel motion-in" id="accueil" aria-labelledby="profile-name"><article className="card intro-card"><div className="intro-edition"><IconMark name="spark" size={17}/> PORTFOLIO / 2026 <span>—</span> ÉDITION PERSONNELLE</div><div className="person-line"><img src="/portrait-rudolf.webp" alt="Portrait de Rudolf Hounlete" width="840" height="840" fetchPriority="high"/><div><h1 id="profile-name">Rudolf <em>Hounlete<span className="hero-period">.</span></em></h1><p><span className="status-dot"/>Étudiant ingénieur</p></div></div><p className="intro-text">Des applications et des modèles de <span>machine learning</span> pour des problèmes de simulation, de données et de systèmes. À <span>Centrale Casablanca,</span> du calcul au logiciel utilisable.</p><div className="intro-actions"><a className="intro-primary" href="#projets">Explorer les projets <IconMark name="arrow-right" size={19}/></a><a className="inline-link intro-more" href="#apropos">En savoir plus <IconMark name="external" size={16}/></a></div><div className="location"><p><IconMark name="globe" size={16}/> Casablanca, Maroc</p><span>Originaire du Bénin</span></div><Globe/></article></section>
-      <section className="rail-panel links-panel motion-in" id="liens" aria-label="Liens et distinctions"><div className="social-grid">
-        <a className="card social-card github-card icon-card" href={contact.github} target="_blank" rel="noreferrer"><div className="social-glyph"><Icon name="github" size={28}/></div><div><strong>@Rudolf-Staline</strong><span>Mes dépôts GitHub</span></div><span className="card-corner"><Icon name="arrow" size={16}/></span><span className="sr-only"> (nouvel onglet)</span></a>
-        <a className="card social-card medal-card" href="#competitions"><Medal/><div><strong>3 médailles</strong><span>de bronze</span></div></a>
-        <a className="card social-card cv-card" href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download><Icon name="download"/><strong>Mon CV</strong></a>
-        <a className="card email-card" href={`mailto:${contact.email}`}><Icon name="mail"/><span>{contact.email}</span></a>
-        <a className="card social-card kaggle-card" href="#competitions"><span className="brand-letter">k</span><div><strong>Kaggle</strong><span>1 médaille de bronze</span></div></a>
-        <a className="card social-card zindi-card" href="#competitions"><span className="brand-letter">z.</span><div><strong>Zindi</strong><span>2 médailles de bronze</span></div></a>
-        <a className="card social-card skills-link icon-card" href="#competences"><IconMark name="terminal" size={27}/><strong>Mes outils</strong></a>
-      </div></section>
-      <div className="kinetic-divider motion-in" aria-hidden="true"><div className="kinetic-loop"><span>SIMULER <i>✳</i> CONSTRUIRE <i>✳</i> COMPRENDRE <i>✳</i> SIMULER <i>✳</i> CONSTRUIRE <i>✳</i> COMPRENDRE <i>✳</i></span></div></div>
-      <section className="rail-panel feature-panel motion-in" id="experience" aria-labelledby="risk-heading"><article className="card risk-card"><div className="risk-open"><div className="risk-image"><div className="risk-window"><div className="risk-window-bar"><span/><span/><span/><small>RiskSim</small></div><img src="/projects/risksim-dashboard.png" alt="Capture de l’interface RiskSim sur un scénario de démonstration" width="1440" height="1100" decoding="async"/></div><span className="risk-chip">Python + React</span></div><div className="risk-copy"><span className="overline">Logiciel · CHOUBEL · 2026</span><h2 id="risk-heading">RiskSim</h2><p>{projectStories.risksim.subtitle}</p><span className="tile-meta">Simulation Monte Carlo · Application Windows</span><div className="risk-keywords"><span><IconMark name="chart" size={16}/> P50 / P80 / P90</span><span><IconMark name="layers" size={16}/> Comparaison de scénarios</span></div><a className="risk-case-link" href="#projet/risksim">Découvrir le cas d’étude <IconMark name="arrow-right" size={19}/></a></div></div></article></section>
-      <section className="rail-panel expanded-risk-panel motion-in" aria-labelledby="title-risksim"><ProjectArticle project={risksim}/></section>
-      <section className="rail-panel collection-panel" id="competitions" aria-labelledby="competitions-heading"><div className="project-grid"><article className="card collection-intro motion-in"><div className="section-emblem"><IconMark name="award" size={33}/><span>01 / DISTINCTIONS</span></div><div><span className="overline">Kaggle & Zindi</span><h2 id="competitions-heading">En compétition.</h2><p>Des grilles à transformer, des voix à transcrire, des données satellitaires incomplètes. À chaque participation, une autre façon d’aborder le machine learning.</p></div><div className="three-medals"><Medal/><Medal/><Medal/><span>3 médailles<br/>de bronze</span><IconMark name="spark" size={25}/></div></article>{competitionProjects.map(item => <ProjectArticle key={item.index} project={item}/>)}</div></section>
-      <section className="rail-panel collection-panel" id="projets" aria-labelledby="projects-heading"><div className="project-grid"><article className="card collection-intro software-intro motion-in"><div className="section-emblem"><IconMark name="code" size={33}/><span>02 / RÉALISATIONS</span></div><div><span className="overline">Logiciel & expérimentation</span><h2 id="projects-heading">Mes projets.</h2><p>Du notebook à l’interface, de la caméra à la maquette. Voici ce que j’ai construit et les questions que j’ai voulu explorer.</p></div><a className="inline-link" href="#competences">Les outils utilisés <Icon name="arrow" size={16}/></a></article>{softwareProjects.map(item => <ProjectArticle key={item.index} project={item}/>)}</div></section>
-      <section className="rail-panel about-panel motion-in" id="apropos" aria-labelledby="about-heading"><article className="card about-card"><div className="section-emblem"><IconMark name="compass" size={29}/><span>03 / PROFIL</span></div><span className="overline">À propos</span><h2 id="about-heading">Derrière les projets.</h2>{profile.about.map(text => <p key={text}>{text}</p>)}<div className="about-facts">{profile.facts.slice(0, 3).map(fact => <div key={fact.k}><span>{fact.k}</span><strong>{fact.v}</strong></div>)}</div><div className="expanded-stack">{profile.interests.map(item => <span key={item}>{item}</span>)}</div></article></section>
-      <section className="rail-panel education-panel motion-in" id="parcours" aria-labelledby="education-heading"><article className="card education-card"><div className="section-emblem"><IconMark name="school" size={29}/><span>04 / PARCOURS</span></div><span className="overline">Formation</span><h2 id="education-heading">Bénin → Maroc.</h2><div className="education-entries">{education.map(item => <div key={item.school + item.detail}><span className="education-date">{item.period || 'Formation scientifique'}</span><h3>{item.school}</h3><p>{item.detail}</p><span className="education-country">{item.location}</span></div>)}</div></article></section>
-      <section className="rail-panel expanded-skills-panel motion-in" id="competences" aria-labelledby="skills-heading"><article className="card expanded-skills-card"><header><div className="section-emblem"><IconMark name="layers" size={29}/><span>05 / BOÎTE À OUTILS</span></div><span className="overline">Compétences</span><h2 id="skills-heading">Mes outils.</h2><p>{editorial.skillsIntro}</p></header><div className="expanded-skills-grid">{skills.map((group, i) => <section key={group.label}><div className="skill-icon"><IconMark name={(['code', 'chart', 'flask', 'terminal'] as IconName[])[i % 4]} size={22}/></div><h3>{group.label}</h3><p>{editorial.skillContexts[i]}</p><div className="expanded-stack">{group.items.map(item => <span key={item}>{item}</span>)}</div></section>)}</div></article></section>
-      <section className="rail-panel contact-panel motion-in" id="contact" aria-labelledby="contact-heading"><article className="card contact-card"><div className="contact-mark"><IconMark name="mail" size={38}/></div><div><span className="overline">Contact</span><h2 id="contact-heading">Un projet commence <em>par une conversation.</em></h2><p>Une question sur un projet, une expérience à comparer ou une idée à développer ensemble ?</p><a className="contact-address" href={`mailto:${contact.email}`}>{contact.email} <Icon name="arrow" size={18}/></a></div><div className="contact-bottom"><a href={contact.github} target="_blank" rel="noreferrer">GitHub <Icon name="arrow" size={15}/><span className="sr-only"> (nouvel onglet)</span></a><a href={contact.cv ?? '/CV_Rudolf_HOUNLETE.pdf'} download>Télécharger mon CV <Icon name="download" size={15}/></a></div></article></section>
+  return <>
+    <a className="skip-link" href="#contenu">Aller au contenu</a>
+    <header className="site-header">
+      <a className="brand" href="#accueil" aria-label="Rudolf Hounlete, accueil">rh<span>.</span></a>
+      <nav className="desktop-nav" aria-label="Navigation principale">{chapters.slice(1).map(c => <a href={`#${c.id}`} key={c.id} aria-current={active === c.id ? 'location' : undefined}>{c.label}</a>)}</nav>
+      <div className="header-actions"><a className="cv-nav" href={contact.cv!} download>Mon CV <DownloadSimple size={18}/></a><button className="icon-button theme-toggle" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'Activer le thème clair' : 'Activer le thème sombre'}>{theme === 'dark' ? <Sun size={20}/> : <Moon size={20}/>}</button><button className="icon-button menu-toggle" aria-label={menu ? 'Fermer le menu' : 'Ouvrir le menu'} aria-expanded={menu} aria-controls="mobile-nav" onClick={() => setMenu(!menu)}>{menu ? <X size={24}/> : <List size={24}/>}</button></div>
+      {menu && <nav id="mobile-nav" className="mobile-nav" aria-label="Navigation mobile">{chapters.map(c => <a href={`#${c.id}`} key={c.id} onClick={() => setMenu(false)}>{c.label}<ArrowUpRight size={24}/></a>)}<a href={contact.cv!} download>Mon CV <DownloadSimple size={23}/></a></nav>}
+    </header>
+    <main id="contenu">
+      <section className="hero chapter wrap" id="accueil" aria-labelledby="hero-title">
+        <div className="hero-copy"><p className="eyebrow">Rudolf Hounlete · Élève ingénieur à Centrale Casablanca</p><h1 id="hero-title">Du modèle<br/>à <span className="accent">la décision.</span></h1><p className="hero-description">Je développe des modèles de machine learning et les logiciels qui les rendent utiles.</p><div className="hero-actions"><a className="button primary" href="#projets">Voir les projets <ArrowDown size={20}/></a><a className="text-button" href={`mailto:${contact.email}`}>Me contacter <ArrowUpRight size={20}/></a></div></div>
+        <figure className="hero-portrait"><div className="portrait-frame"><div className="portrait-accent"/><img src="/images/portrait.webp" alt="Portrait de Rudolf Hounlete" width="1000" height="1000" fetchPriority="high"/></div><figcaption><span>Machine learning & développement logiciel</span><span>Casablanca</span></figcaption></figure>
+      </section>
+      <div className="credential-strip wrap" data-reveal><a href="#competitions"><strong>3</strong><span>Médailles de bronze<br/>Kaggle & Zindi</span><Medal size={28} weight="light"/></a><a href="#projet/credit"><strong>2<sup>e</sup></strong><span>African Credit Scoring<br/>sur 77 participants</span><ArrowUpRight size={22}/></a><a href="#projet/financial-stress"><strong>4<sup>e</sup></strong><span>Financial Stress Prediction<br/>sur 262 participants</span><ArrowUpRight size={22}/></a></div>
+      <section className="projects chapter wrap" id="projets" aria-labelledby="projects-title">
+        <header className="section-head" data-reveal><h2 id="projects-title">Ce que je sais<br/><span className="muted">faire avancer.</span></h2><p>Un outil développé en entreprise, un résultat en compétition, un produit construit autour d’un besoin métier.</p></header>
+        <div className="selected-work">{['risksim', 'financial-stress', 'dossier-jaune'].map((id, i) => {
+          const p = work.find(p => p.id === id)!, pitch = pitches[id], visual = projectVisuals[id]
+          return <article className={`selected-case selected-case-${i}`} key={id} data-reveal>
+            <ProjectButton id={id} className={`selected-image selected-image-${visual.kind}`} labelledBy={`selected-${id}`}><img src={visual.src} alt={visual.alt} width={visual.width} height={visual.height} loading="lazy"/><span className="selected-number">0{i+1}</span><span className="cover-action" aria-hidden="true"><ArrowUpRight size={28}/></span></ProjectButton>
+            <div className="selected-copy"><p className="selected-context">{p.title} · {i === 0 ? 'Expérience en entreprise' : i === 1 ? 'Machine learning compétitif' : 'Développement produit'}</p><h3 id={`selected-${id}`}><ProjectButton id={id}>{pitch.headline}</ProjectButton></h3><p>{pitch.summary}</p><strong className="selected-proof">{pitch.proof}</strong><ProjectButton id={id} className="text-button">Lire l’étude de cas <ArrowUpRight size={20}/></ProjectButton></div>
+          </article>
+        })}</div>
+        <div className="engineering-note" data-reveal><span className="engineering-number">393</span><div><h3>Automatiser demande aussi de vérifier.</h3><p>Autonomous AutoML : des expériences reprenables, un contrôle des fuites de données et 393 tests pour encadrer le passage du CSV au modèle.</p><ProjectButton id="automl" className="text-button">Voir le projet <ArrowUpRight size={20}/></ProjectButton></div></div>
+        <div className="archive-panel" id="index">
+          <div id="all-projects" className="archive-content"><div className="archive-toolbar"><div className="filters" role="group" aria-label="Filtrer les projets">{groups.map(g => <button key={g} onClick={() => setGroup(g)} aria-pressed={group === g}>{g}</button>)}</div><label className="search-label"><span className="sr-only">Rechercher un projet</span><input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher un projet…" name="project-search" autoComplete="off"/></label></div><p className="result-count" role="status">{filtered.length} projet{filtered.length > 1 ? 's' : ''}</p><div className="archive-grid">{filtered.map((p, i) => <ProjectCard key={p.id} project={p} index={i}/>)}</div>{!filtered.length && <div className="empty-state"><h3>Aucun projet trouvé.</h3><p>Essaie un autre mot ou enlève le filtre.</p><button className="text-button" onClick={() => { setQuery(''); setGroup('Tous') }}>Réinitialiser <ArrowRight size={20}/></button></div>}</div>
+        </div>
+      </section>
+      <section className="competitions chapter wrap" id="competitions" aria-labelledby="competitions-title">
+        <div className="competition-intro" data-reveal><p className="eyebrow">Kaggle & Zindi</p><h2 id="competitions-title">Des résultats qui<br/>se comparent.</h2><p>Trois médailles de bronze sur des problèmes de raisonnement visuel, de reconnaissance vocale et de données satellitaires. Deux classements de tête en finance.</p></div>
+        <div className="competition-layout" data-reveal><div className="medal-feature"><Medal size={64} weight="light"/><div className="medal-number">3</div><h3>Médailles<br/>de bronze.</h3><p>Raisonnement visuel, reconnaissance vocale et données satellitaires.</p></div><div className="competition-rows">{competitions.map(c => <ProjectButton id={c.projectId} key={c.projectId} className="competition-row"><div><span>{c.platform}</span><h3>{c.name}</h3><p className="competition-detail">{c.detail}</p></div><div className="competition-result"><strong>{c.medal ? 'Bronze' : c.result}</strong><ArrowUpRight size={23}/></div></ProjectButton>)}</div></div>
+      </section>
+      <section className="about chapter wrap" id="apropos" aria-labelledby="about-title">
+        <div className="about-top" data-reveal><h2 id="about-title">Le même soin pour le modèle<br/><span className="muted">et pour son usage.</span></h2><div className="about-grid"><p className="about-lead">Je m’intéresse à ce qui se passe entre un bon résultat technique et un outil dont quelqu’un peut se servir.</p><div className="about-copy"><p>Chez CHOUBEL CONSULTING, cela m’a conduit à travailler sur la restitution des simulations et l’interface de RiskSim. Sur Dossier Jaune, cela signifie reprendre les parcours à partir des retours des utilisateurs.</p><p>Originaire du Bénin, formé aux mathématiques et aux TIC à l’IMSP, j’ai rejoint Centrale Casablanca en 2025. Je poursuis ce double travail de modélisation et de développement, avec un intérêt particulier pour le risque et la finance.</p></div></div></div>
+        <div className="journey" id="parcours" data-reveal><h3>Le parcours</h3><div className="journey-entry"><span className="journey-date">2025 - 2028</span><div><h4>École Centrale Casablanca</h4><p>Cycle ingénieur généraliste</p></div><span className="journey-place">Maroc</span></div><div className="journey-entry"><span className="journey-date">2026</span><div><h4>CHOUBEL CONSULTING</h4><p>Stage de développement logiciel · RiskSim</p></div><span className="journey-place">Casablanca</span></div><div className="journey-entry"><span className="journey-date">2022 - 2025</span><div><h4>Institut de mathématiques et de sciences physiques</h4><p>Licence en technologies de l’information et de la communication</p></div><span className="journey-place">Bénin</span></div></div>
+        <div className="skills-block" id="competences" data-reveal><h3>Mes outils de travail</h3><div className="skills-grid">{skills.map(g => <div key={g.label}><h4>{g.label}</h4><p>{g.items.join(', ')}</p></div>)}</div></div>
+      </section>
+      <section className="contact chapter" id="contact" aria-labelledby="contact-title"><div className="wrap" data-reveal><p className="eyebrow">Stage · Machine learning · Développement logiciel</p><h2 id="contact-title">Construisons<br/>la suite<span className="accent">.</span></h2><p className="contact-intro">Vous cherchez un profil capable de travailler sur les données et de construire l’application autour ? Parlons de votre équipe et de vos projets.</p><div className="contact-main"><a href={`mailto:${contact.email}`} className="email-link">{contact.email}<ArrowUpRight size={40}/></a><button className="icon-button copy-email" onClick={copyEmail} aria-label={copied ? 'Adresse copiée' : 'Copier l’adresse e-mail'}>{copied ? <Check size={24}/> : <Copy size={24}/>}</button></div><p className="copy-status" role="status">{copied ? 'Adresse copiée.' : copyError ? 'Copie indisponible. Tu peux sélectionner l’adresse ou cliquer dessus.' : '\u00a0'}</p><div className="contact-secondary"><a className="button primary" href={`mailto:${contact.email}`}>Me contacter <EnvelopeSimple size={21}/></a><a className="text-button" href={contact.github} target="_blank" rel="noreferrer">GitHub <GithubLogo size={22}/><span className="sr-only"> (nouvel onglet)</span></a><a className="text-button" href={contact.cv!} download>Mon CV <DownloadSimple size={21}/></a></div></div></section>
     </main>
-    <footer className="rail-footer"><p>© 2026 Rudolf Hounlete</p><a className="inline-link" href="#accueil">Retour en haut ↑</a></footer>
-
-  </div>
+    <footer className="site-footer wrap"><a className="brand" href="#accueil" aria-label="Retour à l’accueil">rh<span>.</span></a><span>© {new Date().getFullYear()} Rudolf Hounlete</span><a href="#accueil">Retour en haut <ArrowUp size={17}/></a></footer>
+    <nav className="chapter-control" aria-label="Parcourir les sections"><span>{chapters[activeIndex]?.label}</span><a href={`#${chapters[Math.max(0, activeIndex - 1)].id}`} aria-label="Section précédente" aria-disabled={activeIndex === 0} tabIndex={activeIndex === 0 ? -1 : 0}><ArrowUp size={18}/></a><a href={`#${chapters[Math.min(chapters.length - 1, activeIndex + 1)].id}`} aria-label="Section suivante" aria-disabled={activeIndex === chapters.length - 1} tabIndex={activeIndex === chapters.length - 1 ? -1 : 0}><ArrowDown size={18}/></a></nav>
+    {projectId && !selected && <div className="missing-project" role="alert"><p>Ce projet n’est pas disponible.</p><button onClick={closeProject}>Revenir aux projets</button></div>}
+    <CaseStudy project={selected} onClose={closeProject}/>
+  </>
 }
+
 export default App

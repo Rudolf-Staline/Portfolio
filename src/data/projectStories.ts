@@ -16,7 +16,7 @@ export const projectStories: Record<string, ProjectStory> = {
     ],
     method: 'Graphes ONNX de logique pure, sans poids entraînables, pour des transformations de grilles ARC-AGI sous contrainte de taille.',
     result: 'Médaille de bronze Kaggle · 220e sur 2 963 équipes · top 7,4 %.',
-    note: 'Le code de la participation n’est pas publié ici ; le classement est accessible depuis la fiche.',
+    note: 'Les grilles de la scène sont illustratives ; elles ne montrent pas une solution soumise.',
   },
   credit: {
     subtitle: 'Estimer le risque d’un crédit avant de l’accorder.',
@@ -128,6 +128,6 @@ export const projectStories: Record<string, ProjectStory> = {
     ],
     method: 'Montage d’une ligne électrique non linéaire, acquisitions à l’oscilloscope, simulation LTspice et traitement des signaux en Python.',
     result: 'Une comparaison entre acquisitions expérimentales et simulation d’une chaîne de vingt cellules.',
-    note: 'Le schéma illustre le principe de propagation. Il ne présente ni photographie du montage ni courbe de mesure.',
+    note: 'Le visuel de couverture est une image générée ; les mesures et la simulation sont décrites dans le projet.',
   },
 }

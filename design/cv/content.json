@@ -1,0 +1,195 @@
+{
+  "name": "Rudolf HOUNLETE",
+  "role": "Élève ingénieur à Centrale Casablanca",
+  "focus": "Machine learning et développement logiciel",
+  "location": "Casablanca, Maroc",
+  "phone": "+212 7 75 39 01 60",
+  "email": "rudolfhounlete1@gmail.com",
+  "portfolio": "https://rudolf-portfolio.rudolf43.chatgpt.site",
+  "github": "https://github.com/rudolf-staline",
+  "profile": "Je développe des modèles de prédiction et des applications Python/React pour exploiter leurs résultats. Mes réalisations associent modélisation du risque, validation expérimentale et intégration logicielle, avec une application Windows réalisée en stage et des classements en compétition ML.",
+  "skills": [
+    ["Modélisation", "Python, scikit-learn, LightGBM, PyTorch, Optuna, SHAP"],
+    ["Applications", "React, TypeScript, FastAPI, Flask, SQL, PostgreSQL, SQLite"],
+    ["Outils", "Pandas, NumPy, Git, Linux, tests automatisés"],
+    ["Langues", "Français courant ; anglais intermédiaire"]
+  ],
+  "education": [
+    ["École Centrale Casablanca", "2025 - 2028", "Cycle ingénieur généraliste ; diplôme prévu en 2028."],
+    ["IMSP, Bénin", "2022 - 2025", "Licence en technologies de l’information et de la communication."],
+    ["Classes préparatoires scientifiques", "", "MPSI / PCSI à l’IMSP, avant l’entrée en cycle ingénieur."]
+  ],
+  "projects": [
+    {
+      "id": "risksim",
+      "name": "RiskSim",
+      "subject": "Simulation des coûts de projet",
+      "proof": "Application Windows",
+      "stack": "Python, React, TypeScript, Excel",
+      "url": null,
+      "bullets": [
+        "Conçu le **registre Excel**, les visualisations et l’analyse de sensibilité pour comparer les scénarios de coûts et examiner la réserve budgétaire à prévoir.",
+        "Proposé puis développé l’interface **React/TypeScript** reliée au moteur Python porté par mon binôme Daniel Awaga ; préparé la distribution Windows et la documentation."
+      ],
+      "context": "Stage chez CHOUBEL CONSULTING, Casablanca. Application vérifiée sur des cas synthétiques."
+    },
+    {
+      "id": "financial-stress",
+      "name": "Financial Stress Prediction",
+      "subject": "Prédiction du stress financier",
+      "proof": "4e sur 262 au classement privé",
+      "stack": "Zindi, LightGBM, Optuna",
+      "url": "https://github.com/Rudolf-Staline/financial-stress-prediction",
+      "bullets": [
+        "Construit des **variables mensuelles et des agrégats** sur six mois de transactions pour représenter l’évolution de la situation financière.",
+        "Comparé les préparations de données et réglé LightGBM avec Optuna ; conservé les paramètres, importances et résultats pour suivre l’apport de chaque expérience."
+      ]
+    },
+    {
+      "id": "dossier-jaune",
+      "name": "Dossier Jaune",
+      "subject": "Gestion documentaire textile",
+      "proof": "Prototype en cours",
+      "stack": "React, TypeScript, Supabase",
+      "url": "https://github.com/Rudolf-Staline/Framatex",
+      "bullets": [
+        "Développé un espace documentaire par commande, avec **espaces interne/client**, droits par sous-dossier et annotations PDF versionnées.",
+        "Traduit les retours métier en parcours et règles d’accès, avec une création progressive des dossiers pour démarrer sans disposer de toutes les informations."
+      ]
+    },
+    {
+      "id": "automl",
+      "name": "Autonomous AutoML",
+      "subject": "Ingénierie machine learning",
+      "proof": "393 tests automatisés",
+      "stack": "Python, scikit-learn, Optuna, SQLite",
+      "url": "https://github.com/Rudolf-Staline/autonomous-automl",
+      "bullets": [
+        "Spécifié et développé, avec Codex comme assistant, une **CLI du CSV au modèle évalué**, aux prédictions et au rapport HTML ; trois démonstrations couvrent classification, régression et fuite de données.",
+        "Ajusté les prétraitements dans chaque fold et ajouté des contrôles de fuite ; organisé les essais dans SQLite pour **reprendre une expérience interrompue** et contrôler les exports."
+      ]
+    },
+    {
+      "id": "neurogolf",
+      "name": "NeuroGolf Championship",
+      "subject": "Raisonnement visuel sous contrainte",
+      "proof": "Bronze Kaggle, top 7,4 %",
+      "stack": "ONNX, ARC-AGI, logique algorithmique",
+      "url": "https://www.kaggle.com/competitions/neurogolf-2026/leaderboard",
+      "bullets": [
+        "Encodé des règles de transformation de grilles ARC-AGI dans des **graphes ONNX de logique pure**, sans poids entraînables ; classement : **220e sur 2 963 équipes**.",
+        "Optimisé la taille des graphes pour respecter une **contrainte de compacité** prise en compte dans le score."
+      ]
+    },
+    {
+      "id": "credit",
+      "name": "African Credit Scoring",
+      "subject": "Modélisation du risque de crédit",
+      "proof": "2e sur 77 participants",
+      "stack": "Zindi, machine learning appliqué à la finance",
+      "url": null,
+      "bullets": [
+        "Développé une solution de **prédiction du risque associé à une demande de crédit**."
+      ]
+    },
+    {
+      "id": "geoai",
+      "name": "GeoAI Aquaculture",
+      "subject": "Identification de bassins aquacoles",
+      "proof": "Bronze Zindi",
+      "stack": "Sentinel-1/2, LightGBM, PyTorch, GRU",
+      "url": "https://github.com/Rudolf-Staline/GeoAi",
+      "bullets": [
+        "Préparé des séries radar et optiques incomplètes et conçu une **validation reproduisant les mois manquants** du jeu de test.",
+        "Comparé gradient boosting et GRU sur **1 821 observations**, avec cinq folds et trois répétitions ; analysé les résultats selon les capteurs disponibles et la durée d’observation."
+      ]
+    },
+    {
+      "id": "waxal",
+      "name": "WAXAL ASR",
+      "subject": "Reconnaissance vocale multilingue",
+      "proof": "Bronze Zindi",
+      "stack": "Python, PyTorch, CTC, traitement audio",
+      "url": null,
+      "bullets": [
+        "Construit une chaîne de transcription en **lingala, luganda et shona**, de la préparation audio à l’entraînement CTC et à l’évaluation WER/CER par langue.",
+        "Séparé les locuteurs entre entraînement et validation pour tester des voix inédites ; audité **4 253 prédictions historiques** pour distinguer les erreurs de transcription des échecs techniques."
+      ]
+    },
+    {
+      "id": "01",
+      "name": "PediAppend",
+      "subject": "Prédiction explicable en santé",
+      "proof": "782 patients, 4 classifieurs",
+      "stack": "Coding Week, scikit-learn, SHAP, Flask",
+      "url": "https://github.com/Rudolf-Staline/Coding-week-project",
+      "bullets": [
+        "Préparé 53 variables brutes et comparé SVM, Random Forest, LightGBM et CatBoost pour la classification de l’appendicite pédiatrique, avec attention particulière au **rappel**.",
+        "Intégré les prédictions et leurs **explications SHAP dans Flask**, avec tests automatisés. Prototype académique sans validation clinique."
+      ]
+    },
+    {
+      "id": "churn-dashboard",
+      "name": "Churn Dashboard",
+      "subject": "Application de prédiction du départ client",
+      "proof": "Pipeline ML, API et interface",
+      "stack": "Python, scikit-learn, FastAPI, React, TypeScript",
+      "url": "https://github.com/Rudolf-Staline/explainable-churn-ml-dashboard",
+      "bullets": [
+        "Construit une chaîne d’entraînement comparant régression logistique, Random Forest et Gradient Boosting, avec sélection par **ROC-AUC, rappel puis F1**.",
+        "Exposé la prédiction **individuelle et par lot dans FastAPI**, puis relié l’API à une interface React présentant probabilité de départ, niveau de risque et facteurs locaux approximatifs."
+      ],
+      "context": "Prototype sur données synthétiques ; les facteurs affichés ne sont pas des explications causales."
+    },
+    {
+      "id": "02",
+      "name": "Feux rouges intelligents",
+      "subject": "Vision et commande embarquée",
+      "proof": "Maquette physique pilotée",
+      "stack": "YOLOv8, K-Means, Python, Raspberry Pi",
+      "url": null,
+      "bullets": [
+        "Relié la **détection des véhicules par caméra** à une estimation des flux par voie avec YOLOv8 et K-Means.",
+        "Conçu une logique de sélection des phases respectant les **voies compatibles**, puis assuré le pilotage d’un carrefour miniature sur Raspberry Pi."
+      ],
+      "context": "Projet Learning by Doing à Centrale Casablanca, 2025-2026."
+    },
+    {
+      "id": "biohub",
+      "name": "BioHub Cell Tracker",
+      "subject": "Suivi cellulaire dans des volumes 3D+t",
+      "proof": "Baseline V0 reproductible",
+      "stack": "Python, NumPy, SciPy, Zarr",
+      "url": "https://github.com/Rudolf-Staline/biohub-cell-tracker",
+      "bullets": [
+        "Construit une chaîne de lecture Zarr, détection multi-échelle par **Laplacien de Gauss** et association des cellules entre volumes successifs.",
+        "Effectué l’**appariement hongrois en unités physiques**, proposé des hypothèses de division et contrôlé les invariants du graphe avant l’export de soumission."
+      ]
+    },
+    {
+      "id": "03",
+      "name": "Analyse Forex",
+      "subject": "Analyse quantitative et backtesting",
+      "proof": "Protocole et verdict documentés",
+      "stack": "Python, Pandas, Streamlit, SQLite",
+      "url": "https://github.com/Rudolf-Staline/forex-supervised-scanner",
+      "bullets": [
+        "Développé une application séparant données, signaux et backtests ; exploité les pivots seulement après confirmation pour éviter l’**information future**.",
+        "Fixé le protocole **walk-forward avant l’évaluation** et intégré les coûts de transaction. L’espérance nette hors échantillon étant négative, clôturé la stratégie et documenté le verdict."
+      ]
+    },
+    {
+      "id": "05",
+      "name": "Propagation de solitons",
+      "subject": "Physique expérimentale et simulation",
+      "proof": "Ligne non linéaire de 20 cellules",
+      "stack": "Python, LTspice, oscilloscope, traitement du signal",
+      "url": null,
+      "bullets": [
+        "Acquis à l’oscilloscope les signaux cellule par cellule pour étudier la propagation d’une impulsion dans une ligne électrique non linéaire.",
+        "Simulé une chaîne de **20 cellules dans LTspice**, puis traité les mesures en Python pour confronter directement les observations au modèle numérique."
+      ],
+      "context": "Projet expérimental à Centrale Casablanca."
+    }
+  ]
+}

@@ -1,9 +1,0 @@
-/* Original PediAppend interface and model explanation, displayed in the project card. */
-.pedi-showcase{padding:24px;background:var(--soft);border:1px solid var(--edge);border-radius:17px}
-.pedi-visual-intro h4{font-size:25px;line-height:1.2;letter-spacing:-.7px;font-weight:550;margin:13px 0}
-.pedi-visual-intro p,.pedi-chart-reading{font-size:13px;line-height:1.7;color:var(--secondary);margin:0}
-.pedi-visual-grid{display:grid;grid-template-columns:1fr;gap:25px;margin-top:27px}
-.pedi-view{margin:0;min-width:0}.pedi-view-heading{display:flex;align-items:baseline;gap:12px;margin-bottom:11px}.pedi-view-heading h4{font-size:13px;margin:0;font-weight:550}.pedi-step{font-size:11px;color:var(--muted)}
-.pedi-image-frame{background:#fff;border:1px solid var(--edge);border-radius:9px;overflow:hidden}.pedi-image-frame img{width:100%;height:auto;max-height:450px;object-fit:contain}.pedi-window-bar{display:flex;align-items:center;gap:5px;padding:9px 11px;background:#e9ecec;color:#596367;font-size:10px}.pedi-window-bar i{width:5px;height:5px;border-radius:50%;background:#9ca5a7}.pedi-window-bar span{margin-left:7px}
-.pedi-chart-reading{margin:12px 0 0}.pedi-view figcaption{font-size:11px;line-height:1.6;color:var(--muted);margin-top:10px}
-@media(max-width:760px){.pedi-showcase{padding:18px 14px}.pedi-visual-intro h4{font-size:21px}.pedi-image-frame img{max-height:380px}}
