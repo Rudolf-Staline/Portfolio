@@ -14,7 +14,7 @@ const text = {
  fr: {
   nav: ['Projets', 'Compétences', 'Parcours', 'Contact'], cv: 'Mon CV',
   eyebrow: 'Rudolf Hounlete · Élève ingénieur à Centrale Casablanca', hero: ['Du modèle', 'à la décision.'],
-  intro: 'Je développe des modèles de machine learning et les logiciels qui les rendent utiles.',
+  intro: 'J’étudie les données complexes, valide les modèles et construis des outils logiciels pour l’aide à la décision quantitative.',
   explore: 'Voir les projets', reach: 'Me contacter', field: 'Machine learning & développement logiciel',
   bronze: 'Médailles de bronze', outOf: 'sur', participants: 'participants',
   projectsTitle: 'Des projets, des choix, des preuves.', projectsText: 'Le besoin, ma contribution et le résultat : chaque projet se lit aussi comme une étude de cas.',
@@ -40,7 +40,7 @@ const text = {
  en: {
   nav: ['Projects', 'Skills', 'Background', 'Contact'], cv: 'CV (French)',
   eyebrow: 'Rudolf Hounlete · Engineering student at Centrale Casablanca', hero: ['From model', 'to decision.'],
-  intro: 'I build machine learning models and the software that makes them useful.',
+  intro: 'I investigate noisy data, validate machine learning models and build software for quantitative decisions.',
   explore: 'View projects', reach: 'Get in touch', field: 'Machine learning & software development',
   bronze: 'Bronze medals', outOf: 'out of', participants: 'participants',
   projectsTitle: 'Projects, decisions and evidence.', projectsText: 'The problem, my contribution and the outcome: each project also has its own case study.',
@@ -97,10 +97,10 @@ function HomePage({ locale }: { locale: Locale }) {
  const filtered = list.filter(p => (group === t.groups[0] || p.group === group) && `${p.title} ${p.summary} ${p.stack.join(' ')}`.toLocaleLowerCase(locale).includes(query.toLocaleLowerCase(locale)))
  const copy = async () => { clearTimeout(timer.current); try { await navigator.clipboard.writeText(contact.email); setCopyStatus(t.copied); timer.current = setTimeout(() => setCopyStatus(''), 2400) } catch { setCopyStatus(t.copyError) } }
  return <main id="contenu">
-  <section className="hero chapter wrap" id="accueil" aria-labelledby="hero-title"><div className="hero-copy"><p className="eyebrow">{t.eyebrow}</p><h1 id="hero-title">{t.hero[0]}<br/><span className="accent">{t.hero[1]}</span></h1><p className="hero-description">{t.intro}</p><div className="hero-actions"><a className="button primary" href="#projets">{t.explore}<ArrowDown size={20}/></a><a className="text-button" href={`mailto:${contact.email}`}>{t.reach}<ArrowUpRight size={20}/></a></div></div><figure className="hero-portrait"><div className="portrait-frame"><div className="portrait-accent"/><img src="/images/portrait.webp" srcSet={portraitSet} sizes={portraitSizes} alt="Rudolf Hounlete" width="1000" height="1000"/></div><figcaption>{t.field}</figcaption></figure></section>
+  <section className="hero chapter wrap" id="accueil" aria-labelledby="hero-title"><div className="hero-copy"><p className="eyebrow">{t.eyebrow}</p><h1 id="hero-title">{t.hero[0]}<br/><span className="accent">{t.hero[1]}</span></h1><p className="hero-description">{t.intro}</p><div className="hero-actions"><a className="button primary" href="#projets">{t.explore}<ArrowDown size={20}/></a><a className="text-button" href={`mailto:${contact.email}`}>{t.reach}<ArrowUpRight size={20}/></a><a className="text-button" href="/quant-research/">{locale === "en" ? "Quant research portfolio" : "Portfolio quantitatif"}<ArrowUpRight size={20}/></a></div></div><figure className="hero-portrait"><div className="portrait-frame"><div className="portrait-accent"/><img src="/images/portrait.webp" srcSet={portraitSet} sizes={portraitSizes} alt="Rudolf Hounlete" width="1000" height="1000"/></div><figcaption>{t.field}</figcaption></figure></section>
   <div className="credential-strip wrap"><a href="#competitions"><strong>3</strong><span>{t.bronze}<br/>Kaggle & Zindi</span><Medal size={28} weight="light"/></a><a href={projectPath('credit', locale)}><strong>2<sup>{locale === 'fr' ? 'e' : 'nd'}</sup></strong><span>African Credit Scoring<br/>{t.outOf} 77 {t.participants}</span><ArrowUpRight size={22}/></a><a href={projectPath('financial-stress', locale)}><strong>4<sup>{locale === 'fr' ? 'e' : 'th'}</sup></strong><span>Financial Stress Prediction<br/>{t.outOf} 262 {t.participants}</span><ArrowUpRight size={22}/></a></div>
   <section className="projects chapter wrap" id="projets" aria-labelledby="projects-title"><header className="section-head"><h2 id="projects-title">{t.projectsTitle}</h2><p>{t.projectsText}</p></header>
-   <div className="selected-work">{['risksim', 'financial-stress', 'dossier-jaune'].map((id, i) => {
+   <div className="selected-work">{['financial-stress', 'automl', 'risksim'].map((id, i) => {
     const p = list.find(p => p.id === id)!, pitch = getPitch(id, locale), v = projectVisuals[id]
     return <article className={`selected-case selected-case-${i}`} key={id}><a className={`selected-image selected-image-${v.kind}`} href={projectPath(id, locale)} aria-labelledby={`feature-${id}`}><img src={v.src} srcSet={imageSet(id)} sizes={featureSizes} alt={locale === 'fr' ? v.alt : p.title} width={v.width} height={v.height} loading="lazy"/></a><div className="selected-copy"><p className="selected-context">{p.title} / {p.group}</p><h3 id={`feature-${id}`}><a href={projectPath(id, locale)}>{pitch.headline}</a></h3><p>{pitch.summary}</p><strong className="selected-proof">{pitch.proof}</strong><a className="text-button" href={projectPath(id, locale)}>{t.read}<ArrowUpRight size={20}/></a></div></article>
    })}</div>
